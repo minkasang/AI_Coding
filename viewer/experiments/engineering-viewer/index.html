@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>CARLAB · 工程查看器样板</title>
+  <link rel="stylesheet" href="./styles.css"/>
+  <script>if (new URLSearchParams(location.search).get('embedded') === '1') document.documentElement.classList.add('embedded');</script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "/node_modules/three/build/three.module.js",
+      "three/addons/": "/node_modules/three/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <strong>CARLAB</strong>
+      <span>Engineering Viewer · 样板</span>
+    </div>
+    <div class="truth-badges" id="truthBadges" aria-label="真实性标注"></div>
+    <div class="mode-toggle" role="group" aria-label="查看模式">
+      <button type="button" class="mode on" data-mode="engineering">工程</button>
+      <button type="button" class="mode" data-mode="showcase">展示</button>
+    </div>
+  </header>
+
+  <aside class="panel tree" aria-label="装配树">
+    <h2>装配树</h2>
+    <p class="hint">点选零件；爆炸仅为演示位移，不代表真实约束。</p>
+    <ul id="partTree"></ul>
+  </aside>
+
+  <main class="viewport">
+    <canvas id="canvas" aria-label="三维装配视图"></canvas>
+    <div id="loadError" class="load-error" hidden></div>
+    <div class="toolbar" aria-label="视图工具">
+      <button type="button" id="btnShowAll">显示全部</button>
+      <button type="button" id="btnIsolate">隔离选中</button>
+      <button type="button" id="btnXray">X 光</button>
+      <label class="explode">
+        <span>爆炸</span>
+        <input type="range" id="explode" min="0" max="100" value="0"/>
+      </label>
+    </div>
+  </main>
+
+  <aside class="panel inspector" aria-label="检查器">
+    <h2>检查器</h2>
+    <div id="inspectEmpty" class="hint">点击模型或树节点选择零件。</div>
+    <div id="inspectBody" hidden>
+      <h3 id="partName">—</h3>
+      <p class="meta" id="partNode">—</p>
+      <dl id="partMeta"></dl>
+      <p class="disclaimer" id="partDisclaimer"></p>
+    </div>
+  </aside>
+
+  <p id="status" class="status" role="status" aria-live="polite">正在加载…</p>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{
+  "assembly_name": "wheel_hub_bearing_assembly",
+  "unit": "mm",
+  "fidelity": "DEMONSTRATION_PROTOTYPE",
+  "engineering_standards": [
+    "ISO 273:1979 (Clearance holes for bolts and screws)",
+    "ISO 4014 (Hexagon head bolts)",
+    "ISO 15 (Rolling bearings - boundary dimensions)"
+  ],
+  "clearance_fit_check": {
+    "hole_diameter_mm": 15.5,
+    "stud_diameter_mm": 14.0,
+    "radial_clearance_mm": 0.75,
+    "iso273_series_matched": "medium",
+    "iso273_reference_options": {
+      "fine": 15.0,
+      "medium": 15.5,
+      "coarse": 16.5
+    },
+    "status": "PASS"
+  },
+  "fidelity_disclaimers": {
+    "bearing": "DAC42800042 is modeled as a GEOMETRIC_ENVELOPE_ONLY representation (ASSUMPTION). Internal rolling elements, contact kinematics, press-fit tolerances, raceway stress, and preloads are NOT simulated.",
+    "studs": "Nominal cylinder plus metadata; threads are schematic, not physical helical sweeps (ASSUMPTION).",
+    "assembly": "Three separate mesh nodes prove visual and hierarchical separation in WebGL; physical stiffness and bolted joint clamping force are NOT validated (ASSUMPTION)."
+  },
+  "components": {
+    "hub": {
+      "solid_valid": true,
+      "volume_mm3": 227427.26,
+      "bbox_size_mm": [
+        152.0,
+        152.0,
+        32.0
+      ],
+      "files": {
+        "step": "wheel_hub_assembly_hub.step",
+        "stl": "wheel_hub_assembly_hub.stl"
+      }
+    },
+    "bearing": {
+      "solid_valid": true,
+      "volume_mm3": 118098.75,
+      "bbox_size_mm": [
+        80.0,
+        80.0,
+        42.0
+      ],
+      "files": {
+        "step": "wheel_hub_assembly_bearing.step",
+        "stl": "wheel_hub_assembly_bearing.stl"
+      }
+    },
+    "studs": {
+      "solid_valid": true,
+      "volume_mm3": 46040.04,
+      "bbox_size_mm": [
+        125.385,
+        130.706,
+        51.0
+      ],
+      "files": {
+        "step": "wheel_hub_assembly_studs.step",
+        "stl": "wheel_hub_assembly_studs.stl"
+      }
+    }
+  },
+  "assembly": {
+    "total_volume_mm3": 345526.01,
+    "bbox_size_mm": [
+      152.0,
+      152.0,
+      87.0
+    ],
+    "step_file": "wheel_hub_assembly_assembly.step"
+  }
+}

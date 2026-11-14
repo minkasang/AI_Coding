@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "dashboard": "node command-center/server.mjs"
+    "dashboard": "node command-center/server.mjs",
+    "viewer:engineering": "node viewer/experiments/engineering-viewer/server.mjs"
   },
   "keywords": [
     "three.js",

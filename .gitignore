@@ -72,6 +72,8 @@ cad/**/renders-*/
 *.obj
 *.fbx
 *.glb
+# One small project-owned model keeps the integrated viewer usable after clone.
+!viewer/experiments/engineering-viewer/assets/*.glb
 *.gltf
 *.ply
 *.usd

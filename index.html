@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>小车工程工坊 · Vehicle Lab / Three.js + Cannon-es</title>
+<title>CARLAB · 小车工程工坊 | 汽车结构与机械实验室</title>
 <link rel="stylesheet" href="./styles.css" />
 <script type="importmap">
 {
@@ -43,23 +43,33 @@
   <div class="brand-row">
     <div class="mark" aria-hidden="true">C</div>
     <div class="title-block">
-      <h1>小车工程工坊 <span>/ Vehicle Lab</span></h1>
+      <h1>小车工程工坊 <span>/ CARLAB ENGINEERING</span></h1>
       <p id="modeSubtitle">Cannon-es 3D 物理 · 四轮悬架与机械传动联动</p>
     </div>
-    <div class="tech-badge"><span class="status-dot" aria-hidden="true"></span>THREE r170 · CANNON-ES</div>
+    <div class="tech-badge"><span class="status-dot" aria-hidden="true"></span>WORKSPACE · THREE.JS / CAD</div>
   </div>
 
   <nav aria-label="工坊模式切换">
     <div class="mode-tabs" focusgroup="tablist nomemory" role="tablist" aria-label="视图模式">
-      <button type="button" role="tab" id="tab-vehicle" data-mode="vehicle" aria-selected="true" focusgroupstart>整车物理试验台</button>
-      <button type="button" role="tab" id="tab-tire" data-mode="tire" aria-selected="false">轮胎总成特写</button>
-      <button type="button" role="tab" id="tab-suspension" data-mode="suspension" aria-selected="false">避震弹簧特写</button>
-      <button type="button" role="tab" id="tab-drivetrain" data-mode="drivetrain" aria-selected="false">机械传动特写</button>
+      <button type="button" role="tab" id="tab-vehicle" data-mode="vehicle" aria-selected="true" focusgroupstart>整车实验</button>
+      <button type="button" role="tab" id="tab-tire" data-mode="tire" aria-selected="false">轮胎与轮辋</button>
+      <button type="button" role="tab" id="tab-suspension" data-mode="suspension" aria-selected="false">悬架机构</button>
+      <button type="button" role="tab" id="tab-drivetrain" data-mode="drivetrain" aria-selected="false">机械传动</button>
+      <button type="button" role="tab" id="tab-assembly" data-mode="assembly" aria-selected="false">零件装配 <span class="tab-new">NEW</span></button>
     </div>
   </nav>
 </header>
 
 <main>
+  <section class="workspace-intro" id="workspaceIntro" aria-label="当前实验模块">
+    <div class="intro-eyebrow"><span class="intro-kicker" id="introKicker">01 / VEHICLE SIMULATION</span><span class="intro-live"><i></i> EXPERIMENTAL</span></div>
+    <h2 id="introTitle">从一辆小车，开始理解整车机械。</h2>
+    <p id="introDesc">探索轮胎、悬架与传动系统；对照真实零件数据，逐步构建可复用的汽车平台。</p>
+    <div class="intro-tags" id="introTags"><span>实时 3D</span><span>交互实验</span><span>工程探索</span></div>
+  </section>
+  <section class="assembly-workspace" id="assemblyWorkspace" aria-label="零件装配查看工作台" hidden>
+    <iframe id="assemblyFrame" title="轮端机械总成查看器" data-src="/viewer/experiments/engineering-viewer/index.html?embedded=1" loading="lazy" allow="fullscreen"></iframe>
+  </section>
   <p role="status" id="liveStatus" class="visually-hidden" aria-live="polite"></p>
 
   <!-- 右上：控制与调参面板（按不同模式切换专属控制区） -->
@@ -229,5 +239,6 @@
 </div>
 
 <script type="module" src="./src/main.js"></script>
+<script type="module" src="./src/workbench-ui.js"></script>
 </body>
 </html>

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "VIEW-01-manifest/1.1",
+  "title": "轮端总成 · 工程查看样板",
+  "glbLinearUnit": "meter",
+  "glbScaleNote": "Blender 导出已 apply 0.001；浏览器端不得再缩放",
+  "glbPath": "/cad/experiments/planning_feasibility/out/wheel_hub_assembly.glb",
+  "glbFallbackPath": "./assets/wheel_hub_assembly.glb",
+  "metadataPath": "/cad/experiments/planning_feasibility/out/wheel_hub_assembly_metadata.json",
+  "metadataFallbackPath": "./assets/wheel_hub_assembly_metadata.json",
+  "validationLevel": "VISUAL",
+  "dimensionProvenance": "ASSUMED",
+  "motionPlaybackKind": "NONE",
+  "evidenceStatus": "PARTIAL",
+  "parts": [
+    {
+      "nodeMatch": "Part_Hub",
+      "id": "hub",
+      "displayName": "轮毂法兰",
+      "explodeAxis": [0, 1, 0],
+      "explodeMm": 28
+    },
+    {
+      "nodeMatch": "Part_Bearing",
+      "id": "bearing",
+      "displayName": "轴承包络",
+      "explodeAxis": [0, 0, 1],
+      "explodeMm": 35
+    },
+    {
+      "nodeMatch": "Part_WheelStuds",
+      "id": "studs",
+      "displayName": "车轮螺柱",
+      "explodeAxis": [0, -1, 0],
+      "explodeMm": 40
+    }
+  ]
+}

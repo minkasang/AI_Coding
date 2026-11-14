@@ -984,6 +984,9 @@ const prevChassisPos = new THREE.Vector3().copy(physicsWorld.chassisBody.positio
 function tick() {
   requestAnimationFrame(tick);
   const dt = Math.min(clock.getDelta(), 0.05);
+  // Pause the legacy render/physics loop while the CAD inspector is active;
+  // it owns a separate Three.js canvas in the same browser tab.
+  if (document.body.classList.contains('workbench-assembly-active')) return;
 
   if (state.mode === 'vehicle') {
     const fwd = (keysHeld.has('w') || keysHeld.has('arrowup') || touchDrive.forward ? 1 : 0)
