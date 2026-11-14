@@ -121,3 +121,16 @@ body{background:radial-gradient(1000px 600px at 76% -20%,rgba(83,91,145,.10),tra
 .artifact-entry>span{min-width:0;overflow-wrap:anywhere;color:#c3cfdf;font-family:Consolas,monospace;font-size:10px;line-height:1.65}
 .artifact-entry button{flex:none;border:1px solid #485676;background:#293751;color:#c8c6ee;border-radius:8px;padding:7px 9px;font-size:10px}
 .hint-line{color:#8fa9c5;font-size:10px;line-height:1.7;margin-top:9px}
+
+/* 简洁的下一轮任务区，避免首页被历史“已验收”任务淹没。 */
+.next-agent-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:26px}
+.next-agent-card{display:flex;flex-direction:column;align-items:stretch;text-align:left;gap:8px;min-width:0;border:1px solid #304058;border-radius:14px;background:#182337;padding:17px 18px;color:#d8e0ef;transition:background .18s,border-color .18s}
+.next-agent-card:hover:not(:disabled){background:#24334a;border-color:#7681b4;cursor:pointer}
+.next-agent-card:disabled{opacity:.72;cursor:default}
+.next-agent-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.next-agent-head strong{font-size:12px;font-weight:700}
+.next-agent-title{font-size:12px;line-height:1.6;font-weight:650;white-space:normal}
+.next-agent-title span{color:#a9a7ee}
+.next-agent-note{font-size:10px;color:#8798b2;line-height:1.6}
+.next-head{margin-top:21px}
+@media(max-width:690px){.next-agent-grid{grid-template-columns:1fr}.next-agent-card{padding:14px 16px}}

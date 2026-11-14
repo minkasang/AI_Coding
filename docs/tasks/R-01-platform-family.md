@@ -1,6 +1,6 @@
 # R-01｜整车平台家族、硬点与车型变型研究
 
-- 类型：RESEARCH，优先级 P0，状态 BACKLOG，建议给 Gemini Flash。
+- 类型：RESEARCH，优先级 P0，负责模型以任务卡为准（当前为 Qwen4）；任务状态随主模型领取和更新，本文不复制静态状态。
 - 只读输入：`MASTER_PLAN.md`、`docs/vehicle-platform-architecture-research.md`、`docs/research/RESEARCH_BASELINE.md`、`src/specs.js`、`src/parts/chassis.js`。
 - 可写：`docs/research/R-01-platform-family-report.md`、`docs/research/R-01-platform-family-example.json`、`docs/tasks/reports/R-01-report.md`；不得修改 `src/`、CAD、总计划或通用 Schema。
 - 目标：给总控一套可落到数据结构/校验算法的“平台家族 + 固定/可变/可换 + 依赖传播”设计，而不是复述汽车行业概念。

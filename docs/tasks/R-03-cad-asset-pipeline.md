@@ -1,31 +1,41 @@
-# R-03｜CAD 关节/装配、网格化和 GLB 资产链路研究
+# R-03｜多零件 CAD 资产链路的可复现规范与质量验证（Gemini Flash）
 
-- 类型：RESEARCH（允许在 `cad/experiments` 内做隔离最小实验，不许改现有前端），优先级 P0。
-- 只读参考：`docs/environment-build123d.md`、`cad/experiments/hello_flange`、`docs/research/RESEARCH_BASELINE.md`。
-- 可写：`docs/research/R-03-cad-pipeline-report.md`、`cad/experiments/research_assembly/**`、`docs/tasks/reports/R-03-report.md`；不得覆盖 hello_flange 结果或新增生产零件库。
-- 目标：把“单法兰可导出”提升为“两个及以上零件能稳定保留身份和装配关系”的技术路线。
+> 阶段：首轮 RP-04 经总控复审后续深化。**不是重新做一遍已完成的法兰/轮端试验**。真实任务状态唯一来自 `agent-workspace/agents/gemini-3-8-flash/tasks/R-03.md`。
 
-## 调查/实验
-1. 使用**已安装 build123d 0.13.0**，验证 Compound、RigidJoint、RevoluteJoint/连接 API（注意当前文档与新版 API 差异），记录可执行版本验证。
-2. 最小实验：法兰 + 螺栓（或法兰 + 制动盘），不同 `partId` 的两个实体、至少 2 个安装 Frame、一组固定装配关系。
-3. STEP 多实体导出/回读及 STL 网格化时，确认哪个层级的 name/ID/坐标/材质会丢失；以外部 manifest 解决不可保留的工程元信息。
-4. Blender 批处理验证：单位从 mm 转成 m、不同部件作为不同对象、法线/面朝向、GLB 后各自包围盒、轴向和相对位置。
-5. 资产链路的重跑/缓存策略：同一输入参数同一版本的确定性构建、文件哈希；源文件与临时缓存的保留/删除规则。
-6. 提出浏览器最小 GLB Viewer 的需求：每 PartInstance 可选择、隐藏、单独着色、替换、爆炸/还原。
+## 本轮愿景和目标
 
-## 交付
-- 可运行的小实验 `.py`、`.json`、`.step`、`.stl`、`.glb` 和在 F 盘执行的复现命令。
-- CAD 与 GLB 元素计数/包围盒/米制转换对照；失败或信息丢失清单；生成不具备工程真实性的结构时标明演示性质。
-- 对最终流水线给出输入输出契约/失败处理/生成日志格式；列出需要总控决策的 API 依赖。
-- **不得安装新的大型软件，不得默认重新创建大体积 UV 缓存，不得写 C 盘**。
+我们希望最终拥有一座高细节、可拆解、可装配、可延伸出不同车型的机械零件库，能稳定从 CAD 产生 Chrome 可显示的资产。之前 RP-04 已经证明单个轮端的多零件建模、GLB 节点及 extras 可以导出；现在需要回答：
 
-## 验收
-两个部件在浏览器格式中仍然能被单独识别/定位，装配相对距离可校验；同样的脚本可重新执行；没有破坏原 hello_flange 的文件和测试。
+**当零件数量和变型增加时，我们怎样保证构建结果可重复、零件身份不丢失、安装位置有依据、质量检测不会误报？**
 
-## 参考
-- build123d v0.13 关节：https://build123d.readthedocs.io/en/v0.13.0/direct_api_reference.html
-- 最新装配文档仅用来作对照：https://build123d.readthedocs.io/en/latest/assemblies.html
-- Three.js GLTFLoader：https://threejs.org/docs/pages/GLTFLoader.html
+这轮任务的核心产出是一个**可供后续 Agent 稳定复用的资产生产方案和少量独立可运行实验**，不是一次生成上百个零件。由执行 AI 自主规划方法和子任务，不必机械照抄我给的研究顺序。
 
-## 提交
-`R-03 SUBMITTED；实验路径；命令与结果；已识别的丢失数据；建议方案和风险`。
+## 可直接使用的输入
+
+- `cad/experiments/hello_flange/` 原单件样例；
+- `cad/experiments/planning_feasibility/` RP-04 多零件样例、`verify_assembly.py`、`params.json`；
+- `docs/planning/reports/RP-04-cad-production.md`、返工复审 `docs/command/reviews/AUDIT_2026-11-14_RP04_RECHECK.md`；
+- `docs/command/FILE_HANDOFF_PROTOCOL.md`、`docs/command/PROMPT_AND_DELEGATION_STANDARD.md`；
+- DeepSeek 正在研究 `R-02` PartDefinition/PartInstance/Joint 接口，**其 schema 尚未冻结**。
+
+## 必须回答的工程问题
+
+- 多个零件的 `partId / instanceId / revision` 如何与 STEP、网格、GLB、材料、安装点和参数生成脚本一一对应？重复螺栓如何保留各自独立实例？
+- **坐标与单位**：build123d(mm)、Blender、glTF(m)、浏览器世界坐标如何转换并验证，不允许因为几何看起来贴合就认为装配正确。
+- **增量重建与资产缓存**：某个零件参数变化后哪些文件需要重新生成？如何保证输入相同输出可重复，旧结果不混入新车型？
+- 如何检测零件无效、孔位不一致、元数据丢失、BOM 不对应、装配间隙/相交、导出尺度错误？哪些需要 CAD B-rep 测试，哪些只能在浏览器/Blender 验证？
+- 复杂零件、紧固件和材质应该怎样分级做精度与 LOD，且明确哪些工程属性只能作为显式假设而非真实量产参数？
+- 与 DeepSeek R-02 的未来 Schema 如何解耦：**先提出适配与映射提案，不擅自写成项目统一正式协议。**
+
+## 希望交付什么
+
+- 研究报告：`docs/research/R-03-cad-asset-pipeline-report.md`，重点是可实现的流水线设计、真实验证证据、信息损失/失效边界和对 R-02 的字段建议。
+- 结构化样例：`docs/research/R-03-asset-manifest.example.json`（示意字段、来源等级和版本）。
+- 如需要隔离代码实验，可放 `cad/experiments/asset_pipeline_v1/**`，包含生成脚本、参数和测试；尽量复用既有 F 盘的 build123d、Blender 和 Python 环境，不重新安装大型软件。
+- 个人回报：`agent-workspace/agents/gemini-3-8-flash/reports/R-03.md`；具体子任务在个人 `tasks/` 中自主创建并关联 `parentId: R-03`。
+
+## 边界与验收
+
+不能修改 `src/`、`MASTER_PLAN.md`、其他模型任务卡，不能在未批准前修改共享生产 Schema；严禁把演示尺寸写成 OEM 真实尺寸。没有必要为凑数量拆成大量任务。研究完成后总控应能以其产物安排真正的资产管线实现，且有可复现的正例、反例和明确的失效报告。
+
+若跨模型接口决定尚不成熟，优先交付解耦设计和隔离实验，把阻塞条件写入回报，不要以想象的字段强行冻结工程架构。

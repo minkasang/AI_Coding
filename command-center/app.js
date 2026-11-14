@@ -47,9 +47,15 @@ const stepText = task => {
   if (task.status === 'blocked') return '遇到阻塞：' + task.lastNote;
   return task.currentStep;
 };
-const firstRelevant = items => items.find(t=>t.status==='in_progress') ||
-  items.find(t=>t.status==='submitted') || items.find(t=>t.status==='needs_work') ||
-  items.find(t=>t.status==='ready') || items[0];
+const firstRelevant = items => {
+  const parents = items.filter(t=>!t.parentId);
+  return parents.find(t=>t.status==='in_progress') ||
+    parents.find(t=>t.status==='needs_work') ||
+    parents.find(t=>t.status==='ready') ||
+    parents.find(t=>t.status==='submitted') ||
+    parents.find(t=>t.status==='blocked') ||
+    parents.find(t=>t.status==='backlog') || null;
+};
 
 function statCard(label, value, note, symbol) {
   return `<div class="stat-card"><div class="stat-top"><span>${escapeHTML(label)}</span><span class="stat-icon">${symbol}</span></div>
@@ -127,6 +133,7 @@ function renderOverview() {
     ${statCard('进行中',active,'由任务文件申报','◌')}
     ${statCard('待审核 / 已验收',`${submitted} / ${approved}`,'有证据才算完成','✓')}
   </div>
+  ${renderNextQueue()}
   <div class="section-head"><div><h2>AI 研发团队</h2><p>点开成员，查看专属任务和具体步骤</p></div>
     <button type="button" class="text-link" data-nav="agents">全部成员 ↗</button></div>
   <div class="agent-grid">${snapshot.agents.map(renderAgentCard).join('')}</div>
@@ -475,6 +482,7 @@ function renderDispatch() {
       <p><strong style="color:#e5e8f5">派发 → AI 执行 → 收取回报 → GPT-6 审核</strong><br/>
       对拥有本地文件权限的 AI，主任务开始后由它内部调度子任务并保存成果；你只需定期叫 GPT-6 直接检查文件。只有纯网页聊天模型才需要手动中转。</p></div>
       <div class="dispatch-number">${needsAction}<small>待派发 / 返工</small></div></div>
+    ${renderNextQueue()}
     <div class="dispatch-layout">
       <section class="dispatch-panel"><div class="dispatch-panel-title"><h2>主任务入口</h2><small>${candidates.length} 张可协作任务卡</small></div>
         <div class="dispatch-list">${candidates.length?candidates.map(renderDispatchCard).join(''):'<div class="dispatch-empty">暂时没有待执行的任务。</div>'}</div>
@@ -563,3 +571,32 @@ document.addEventListener('click', ev=>{
   if(!btn)return;
   copyToClipboard(btn.dataset.copyPath,'本地成果文件路径已复制');
 });
+
+/* 续派工作区：由真实父任务队列计算，绝不把已验收的历史任务冒充下一轮。 */
+function renderNextQueue() {
+  if (!snapshot) return '';
+  const order=['in_progress','needs_work','ready','submitted','blocked','backlog'];
+  const cards=snapshot.agents.map(agent=>{
+    const main=snapshot.tasks.filter(t=>t.owner===agent.id && !t.parentId);
+    const focus=order.map(state=>main.find(t=>t.status===state)).find(Boolean);
+    const waiting=focus?.status==='backlog';
+    const title=focus ? (waiting?'尚未解锁：':'')+focus.title : '暂无新的任务';
+    const note=focus ? (focus.status==='needs_work'?'有审核返工要求，执行模型应直接读取 reviewReport':
+      focus.status==='in_progress'?'已领取，执行进度以文件为准':
+      focus.status==='ready'?'可以启动主任务，模型自行拆解子任务':
+      focus.status==='submitted'?'等待 GPT-6 审核文件':
+      focus.status==='blocked'?'存在前置阻塞，查看任务详情':
+      '等待前置研究或总控解锁') : '已验收成果保留在历史任务中，等待总控继续安排';
+    return `<button class="next-agent-card" type="button"
+      ${focus?`data-task="${escapeHTML(focus.id)}"`:'disabled'}
+      aria-label="${escapeHTML(agent.name+'，'+title)}">
+      <div class="next-agent-head"><strong>${escapeHTML(agent.name)}</strong>
+        ${focus?badge(focus.status):'<span class="badge">待派发</span>'}</div>
+      <div class="next-agent-title">${focus?`<span>${escapeHTML(humanCode(focus))}</span> · `:''}${escapeHTML(title)}</div>
+      <div class="next-agent-note">${escapeHTML(note)}</div>
+    </button>`;
+  }).join('');
+  return `<div class="section-head next-head"><div><h2>各模型下一步</h2>
+    <p>只展示每人的下一项主任务；点开查看要求与交付。已验收历史不等于当前工作。</p></div></div>
+    <div class="next-agent-grid">${cards}</div>`;
+}
