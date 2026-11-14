@@ -1,0 +1,2963 @@
+{
+  "schemaVersion": "carlab.adapter-fixture/0.1.0-proposal",
+  "status": "PROPOSAL",
+  "date": "2026-11-14",
+  "sourceInputs": [
+    {
+      "source": "r06",
+      "path": "docs/research/R-06-minimal-assembly-bom.json",
+      "sha256": "10d352a08cf97e7101b96e51a0ff6c2612bcb3639f345ff9da109ec2fb2814a4"
+    },
+    {
+      "source": "r03",
+      "path": "docs/research/R-03-asset-manifest.example.json",
+      "sha256": "f5a70fa83eea5b660e985f0e8c4091a69773f6edfcb9eaa1cfab9a99a8ceed2a"
+    },
+    {
+      "source": "r04",
+      "path": "docs/research/R-04-kinematics-fixture.json",
+      "sha256": "704ffea77a2deddd2670ad41260d548ad38d63ec3a5532deddffdf0d7f082c47"
+    },
+    {
+      "source": "r09",
+      "path": "src-experiments/kinematics/fixture-demo.json",
+      "sha256": "9cdc6e8241a5f539f56dafb6ae1d6e68b0ec02ff8fb4e8bc3a05c0f5cf0b6ed1"
+    },
+    {
+      "source": "r02",
+      "path": "docs/research/R-02-example-assembly.json",
+      "sha256": "31d9db6ae186d4f331b97d0fdbd12b758be8ba0e4756c6d64b27c7c5991bf1bc"
+    },
+    {
+      "source": "r07",
+      "path": "docs/research/R-07-schema-mapping.example.json",
+      "sha256": "dd023952fbd3ce11e73556144c5e50230ee258d0e0b365b6d52116e781d1c999"
+    },
+    {
+      "source": "r08",
+      "path": "docs/research/R-08-quality-gates.json",
+      "sha256": "ce1cda9ddb84a2dd64892e3b0eb6c020e7812fc266798d8976e32b111f839483"
+    }
+  ],
+  "adapterRules": {
+    "canonicalPartId": "RP-01 PART-* / ASSY-*; external SYS-* only via aliases",
+    "revision": "human rNNN; contentFingerprint separate; file sha256 separate",
+    "units": "CAD mm -> runtime m via unitScale 0.001; no mesh.scale",
+    "qty": "BOM qty per parent assembly/corner; vehicle total separately derived",
+    "mirror": "explicit mirror flag; det(R)=+1; no negative scale",
+    "truth": "fidelity/evidence/verification/reviewStatus separate",
+    "jointBoundary": "R-04 constraints stay constraints; no Joint until Grok/GPT-6 agree"
+  },
+  "counts": {
+    "r06Bom": 60,
+    "r06PartRefs": 58,
+    "r06AssyRefs": 2,
+    "r06Params": 30,
+    "r06UnknownParams": 21,
+    "r06CriticalParams": 20,
+    "r06CriticalUnknown": 17,
+    "r06Interfaces": 12,
+    "r06BlockedInterfaces": 12,
+    "r03Parts": 4,
+    "r03Instances": 5,
+    "r03MountFrames": 3,
+    "r03AliasesProposed": 4,
+    "kinHardpoints": 13,
+    "kinConstraints": 7,
+    "kinJoints": 0
+  },
+  "r06": {
+    "bomLines": [
+      {
+        "bomLineId": "BOM-20-016",
+        "source": "R-06",
+        "sourceRef": "PART-20-016",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-016",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": "STRUCTURAL_ANCHOR",
+        "parameterRefs": [
+          "PR-12",
+          "PR-15",
+          "PR-17",
+          "PR-20",
+          "PR-29"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "整个纵切样板的几何锚；所有硬点相对它定义",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-001",
+        "source": "R-06",
+        "sourceRef": "PART-20-001",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-001",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-18"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "左右件用镜像标志，不用负缩放",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-002",
+        "source": "R-06",
+        "sourceRef": "PART-20-002",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-002",
+        "qtyPerCorner": 2,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-18",
+          "PR-30"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-003",
+        "source": "R-06",
+        "sourceRef": "PART-20-003",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-003",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-17"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "外购件，内部不建模",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-004",
+        "source": "R-06",
+        "sourceRef": "PART-20-004",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-004",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "密封必需但尺寸可后补；R03 证明可独立更换",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-005",
+        "source": "R-06",
+        "sourceRef": "PART-20-005",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-005",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-006",
+        "source": "R-06",
+        "sourceRef": "PART-20-006",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-006",
+        "qtyPerCorner": 2,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-008",
+        "source": "R-06",
+        "sourceRef": "PART-20-008",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-008",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-19"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-009",
+        "source": "R-06",
+        "sourceRef": "PART-20-009",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-009",
+        "qtyPerCorner": 2,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-19",
+          "PR-30"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-010",
+        "source": "R-06",
+        "sourceRef": "PART-20-010",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-010",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-17"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-011",
+        "source": "R-06",
+        "sourceRef": "PART-20-011",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-011",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "密封必需件，外形尺寸可后补；R03 证明防尘罩可独立更换，不影响机构可解性",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-012",
+        "source": "R-06",
+        "sourceRef": "PART-20-012",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-012",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-013",
+        "source": "R-06",
+        "sourceRef": "PART-20-013",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-013",
+        "qtyPerCorner": 2,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-014",
+        "source": "R-06",
+        "sourceRef": "PART-20-014",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-014",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-21"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-017",
+        "source": "R-06",
+        "sourceRef": "PART-20-017",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-017",
+        "qtyPerCorner": 2,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-17",
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-019",
+        "source": "R-06",
+        "sourceRef": "PART-20-019",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-019",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-22"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-020",
+        "source": "R-06",
+        "sourceRef": "PART-20-020",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-020",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-21"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-021",
+        "source": "R-06",
+        "sourceRef": "PART-20-021",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-021",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-21"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-022",
+        "source": "R-06",
+        "sourceRef": "PART-20-022",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-022",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-21"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-023",
+        "source": "R-06",
+        "sourceRef": "PART-20-023",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-023",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-21"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-025",
+        "source": "R-06",
+        "sourceRef": "PART-20-025",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-025",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "旋转/往复唇形密封，ISO 6194 适用性需确认，不得硬套",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-026",
+        "source": "R-06",
+        "sourceRef": "PART-20-026",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-026",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "属外购减振器内部件，首轮按总成包络处理，不单独定尺寸",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-027",
+        "source": "R-06",
+        "sourceRef": "PART-20-027",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-027",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "R03 证明可独立更换",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-028",
+        "source": "R-06",
+        "sourceRef": "PART-20-028",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-028",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-21"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "决定压缩极限，运动学必需",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-029",
+        "source": "R-06",
+        "sourceRef": "PART-20-029",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-029",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-21"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-030",
+        "source": "R-06",
+        "sourceRef": "PART-20-030",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-030",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-002",
+        "source": "R-06",
+        "sourceRef": "ASSY-30-002",
+        "refKind": "ASSY",
+        "canonicalRef": "ASSY-30-002",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": "PURCHASED_NON_SERVICEABLE",
+        "parameterRefs": [
+          "PR-11",
+          "PR-12",
+          "PR-13",
+          "PR-14",
+          "PR-15"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "首轮只建外形包络，不建内部滚道/球/保持架",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-006",
+        "source": "R-06",
+        "sourceRef": "PART-30-006",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-006",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-06",
+          "PR-07",
+          "PR-16"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-007",
+        "source": "R-06",
+        "sourceRef": "PART-30-007",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-007",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-008",
+        "source": "R-06",
+        "sourceRef": "PART-30-008",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-008",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-13"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-009",
+        "source": "R-06",
+        "sourceRef": "PART-30-009",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-009",
+        "qtyPerCorner": 5,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-06",
+          "PR-09",
+          "PR-10"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-019",
+        "source": "R-06",
+        "sourceRef": "PART-30-019",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-019",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-03",
+          "PR-05",
+          "PR-06",
+          "PR-07",
+          "PR-08"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-005",
+        "source": "R-06",
+        "sourceRef": "ASSY-30-005",
+        "refKind": "ASSY",
+        "canonicalRef": "ASSY-30-005",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": "PURCHASED_NON_SERVICEABLE",
+        "parameterRefs": [
+          "PR-01",
+          "PR-02",
+          "PR-03",
+          "PR-04",
+          "PR-29"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "分层仅示意，不作为可建模实体",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-029",
+        "source": "R-06",
+        "sourceRef": "PART-30-029",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-029",
+        "qtyPerCorner": 5,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-09",
+          "PR-10",
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-031",
+        "source": "R-06",
+        "sourceRef": "PART-30-031",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-031",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-046",
+        "source": "R-06",
+        "sourceRef": "PART-40-046",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-046",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-23"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "身份归 SYS-40，装配位置在轮端；沿用 RP-01 的 REF 规则不复制实体",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-034",
+        "source": "R-06",
+        "sourceRef": "PART-40-034",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-034",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-24"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-035",
+        "source": "R-06",
+        "sourceRef": "PART-40-035",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-035",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-24"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-036",
+        "source": "R-06",
+        "sourceRef": "PART-40-036",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-036",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "RP-01 已标 OPEN：矩形截面挤压密封不是 ISO 6194 唇形密封，不得硬套标准",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-038",
+        "source": "R-06",
+        "sourceRef": "PART-40-038",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-038",
+        "qtyPerCorner": 2,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-24"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-041",
+        "source": "R-06",
+        "sourceRef": "PART-40-041",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-041",
+        "qtyPerCorner": 2,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-042",
+        "source": "R-06",
+        "sourceRef": "PART-40-042",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-042",
+        "qtyPerCorner": 2,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-25"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-048",
+        "source": "R-06",
+        "sourceRef": "PART-40-048",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-048",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-24"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-049",
+        "source": "R-06",
+        "sourceRef": "PART-40-049",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-049",
+        "qtyPerCorner": 2,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-074",
+        "source": "R-06",
+        "sourceRef": "PART-20-074",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-074",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-26"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "与外拉杆端是两个不同零件，不得合并（RP-01 §7.2 案例 8）",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-075",
+        "source": "R-06",
+        "sourceRef": "PART-20-075",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-075",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-17",
+          "PR-26"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-076",
+        "source": "R-06",
+        "sourceRef": "PART-20-076",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-076",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-078",
+        "source": "R-06",
+        "sourceRef": "PART-20-078",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-078",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-28"
+        ],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-60-021",
+        "source": "R-06",
+        "sourceRef": "PART-60-021",
+        "refKind": "PART",
+        "canonicalRef": "PART-60-021",
+        "qtyPerCorner": 1,
+        "necessity": "MECHANISM_REQUIRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [
+          "PR-27"
+        ],
+        "applicability": "CONDITIONAL_DRIVEN_WHEEL",
+        "qtyWhenIncluded": null,
+        "deferReason": null,
+        "note": "仅驱动轮需要；驱动形式未定，不擅自定案",
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-018",
+        "source": "R-06",
+        "sourceRef": "PART-20-018",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-018",
+        "qtyPerCorner": 0,
+        "necessity": "FUNCTION_REQUIRED_DEFERRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": 1,
+        "deferReason": "属电子功能必需，不影响本轮机械运动链；气隙与孔位无来源（R10）",
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-016",
+        "source": "R-06",
+        "sourceRef": "PART-30-016",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-016",
+        "qtyPerCorner": 0,
+        "necessity": "FUNCTION_REQUIRED_DEFERRED",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": 1,
+        "deferReason": "Gen1 方案下编码环为选配（R05/R10）；首轮不建",
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-007",
+        "source": "R-06",
+        "sourceRef": "PART-20-007",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-007",
+        "qtyPerCorner": 0,
+        "necessity": "VISUAL_OPTIONAL",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": "首轮用固定硬点，调整件延期；不影响机构可解性",
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-027",
+        "source": "R-06",
+        "sourceRef": "PART-30-027",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-027",
+        "qtyPerCorner": 0,
+        "necessity": "VISUAL_OPTIONAL",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": "视觉细节，不影响机械装配",
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-028",
+        "source": "R-06",
+        "sourceRef": "PART-30-028",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-028",
+        "qtyPerCorner": 0,
+        "necessity": "VISUAL_OPTIONAL",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": "视觉细节",
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-030",
+        "source": "R-06",
+        "sourceRef": "PART-30-030",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-030",
+        "qtyPerCorner": 0,
+        "necessity": "VISUAL_OPTIONAL",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": "视觉细节",
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-30-032",
+        "source": "R-06",
+        "sourceRef": "PART-30-032",
+        "refKind": "PART",
+        "canonicalRef": "PART-30-032",
+        "qtyPerCorner": 0,
+        "necessity": "VISUAL_OPTIONAL",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": "视觉/防护细节，首轮延期",
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-024",
+        "source": "R-06",
+        "sourceRef": "PART-20-024",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-024",
+        "qtyPerCorner": 0,
+        "necessity": "DEFERRED_OUT_OF_SCOPE",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": "减振器内部阀系属动力学建模，RP-01 已标 DEFERRED；首轮只建外形与行程",
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-043",
+        "source": "R-06",
+        "sourceRef": "PART-40-043",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-043",
+        "qtyPerCorner": 0,
+        "necessity": "DEFERRED_OUT_OF_SCOPE",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": "NVH 细节，不影响机构装配",
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-40-044",
+        "source": "R-06",
+        "sourceRef": "PART-40-044",
+        "refKind": "PART",
+        "canonicalRef": "PART-40-044",
+        "qtyPerCorner": 0,
+        "necessity": "DEFERRED_OUT_OF_SCOPE",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": "摩擦片固定硬件，R07 证明存在但尺寸无来源；首轮延期",
+        "note": null,
+        "status": "CONVERTED"
+      },
+      {
+        "bomLineId": "BOM-20-031",
+        "source": "R-06",
+        "sourceRef": "PART-20-031",
+        "refKind": "PART",
+        "canonicalRef": "PART-20-031",
+        "qtyPerCorner": 0,
+        "necessity": "DEFERRED_OUT_OF_SCOPE",
+        "assemblyBoundary": null,
+        "parameterRefs": [],
+        "applicability": null,
+        "qtyWhenIncluded": null,
+        "deferReason": "稳定杆联动左右两角，单角样板无法闭合其约束；需两角样板再纳入",
+        "note": null,
+        "status": "CONVERTED"
+      }
+    ],
+    "parameters": [
+      {
+        "paramId": "PR-01",
+        "name": "轮胎断面宽",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-005"
+        ],
+        "critical": false,
+        "grade": "DEMO_ASSUMPTION",
+        "value": 205,
+        "sourceId": "M01",
+        "blockingDownstream": null,
+        "status": "CONVERTED",
+        "openReason": null
+      },
+      {
+        "paramId": "PR-02",
+        "name": "扁平比",
+        "unit": "%",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-005"
+        ],
+        "critical": false,
+        "grade": "DEMO_ASSUMPTION",
+        "value": 55,
+        "sourceId": "M01",
+        "blockingDownstream": null,
+        "status": "CONVERTED",
+        "openReason": null
+      },
+      {
+        "paramId": "PR-03",
+        "name": "轮辋直径",
+        "unit": "in",
+        "unitConversionMm": 406.4,
+        "appliesTo": [
+          "BOM-30-019",
+          "BOM-30-005"
+        ],
+        "critical": false,
+        "grade": "DEMO_ASSUMPTION",
+        "value": 16,
+        "sourceId": "M01",
+        "blockingDownstream": null,
+        "status": "CONVERTED",
+        "openReason": null
+      },
+      {
+        "paramId": "PR-04",
+        "name": "轮胎名义外径",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-005"
+        ],
+        "critical": false,
+        "grade": "ENGINEERING_INFERENCE",
+        "value": 631.9,
+        "sourceId": "M02",
+        "blockingDownstream": null,
+        "status": "CONVERTED",
+        "openReason": null
+      },
+      {
+        "paramId": "PR-05",
+        "name": "轮辋宽度与法兰轮廓",
+        "unit": "in",
+        "unitConversionMm": 165.1,
+        "appliesTo": [
+          "BOM-30-019"
+        ],
+        "critical": false,
+        "grade": "DEMO_ASSUMPTION",
+        "value": 6.5,
+        "sourceId": "M01",
+        "blockingDownstream": null,
+        "status": "CONVERTED",
+        "openReason": null
+      },
+      {
+        "paramId": "PR-06",
+        "name": "车轮螺栓孔节圆 PCD",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-019",
+          "BOM-30-006"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": "N05",
+        "blockingDownstream": "Gemini 不得生成车轮/轮毂螺栓孔；Grok 不得固定轮心横向位置",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-07",
+        "name": "中心孔直径 CB",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-019",
+          "BOM-30-006"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": "N05",
+        "blockingDownstream": "Gemini 不得生成中心孔与导向凸台配合",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-08",
+        "name": "轮辋偏距 ET",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-019"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": "N05",
+        "blockingDownstream": "Gemini 不得定位车轮安装面；Grok 不得计算主销偏距/ scrub radius",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-09",
+        "name": "车轮螺栓数量",
+        "unit": "count",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-029"
+        ],
+        "critical": false,
+        "grade": "DEMO_ASSUMPTION",
+        "value": 5,
+        "sourceId": "M01",
+        "blockingDownstream": null,
+        "status": "CONVERTED",
+        "openReason": null
+      },
+      {
+        "paramId": "PR-10",
+        "name": "车轮螺栓/螺母螺纹与座型",
+        "unit": "thread+seat",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-029",
+          "BOM-30-009"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Gemini 不得生成螺栓/螺母与座面",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-11",
+        "name": "轮毂轴承内径 d",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-002"
+        ],
+        "critical": true,
+        "grade": "SOURCED_SECONDARY",
+        "value": 42,
+        "sourceId": "N02",
+        "blockingDownstream": null,
+        "status": "CONVERTED",
+        "openReason": null
+      },
+      {
+        "paramId": "PR-12",
+        "name": "轮毂轴承外径 D",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-002",
+          "BOM-20-016"
+        ],
+        "critical": true,
+        "grade": "SOURCED_SECONDARY",
+        "value": 80,
+        "sourceId": "N02",
+        "blockingDownstream": null,
+        "status": "CONVERTED",
+        "openReason": null
+      },
+      {
+        "paramId": "PR-13",
+        "name": "轮毂轴承宽度 B",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-002"
+        ],
+        "critical": true,
+        "grade": "SOURCED_SECONDARY",
+        "value": 42,
+        "sourceId": "N02",
+        "blockingDownstream": null,
+        "status": "CONVERTED",
+        "openReason": null
+      },
+      {
+        "paramId": "PR-14",
+        "name": "轴承内部几何（球数/接触角/保持架/滚道）",
+        "unit": "mixed",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-002"
+        ],
+        "critical": false,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": "R05",
+        "blockingDownstream": "Gemini 不得凭想象画滚道/球/保持架",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-15",
+        "name": "轴承配合公差（转向节孔/轴颈）",
+        "unit": "tolerance",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-002",
+          "BOM-20-016"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": "R22",
+        "blockingDownstream": "Gemini 不得生成过盈/间隙配合；不得声称装配已验证",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-16",
+        "name": "轮毂法兰几何（PCD/导向凸台/法兰外径/厚度）",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-006"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Gemini 不得生成轮毂法兰；RP-04 的 OD152/thk14/pilot84 均为演示假设（M05）",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-17",
+        "name": "球铰锥度/螺纹/安装高度",
+        "unit": "mixed",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-20-003",
+          "BOM-20-010"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Gemini 不得生成锥柄；Grok 不得固定球心硬点",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-18",
+        "name": "上摆臂枢轴中心距与衬套尺寸",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-20-001",
+          "BOM-20-002"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Grok 不得求解上摆臂约束；Gemini 不得定臂长",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-19",
+        "name": "下摆臂枢轴中心距/球铰中心距",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-20-008",
+          "BOM-20-009"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Grok 不得求解下摆臂约束；R-01 已证明现有代码用 scale 拉伸达标（M04）",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-20",
+        "name": "转向节硬点几何（上下球铰中心/轴承孔轴线/拉杆安装点）",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-20-016"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Gemini 不得生成转向节；Grok 只能用明确标注虚构的硬点做隔离原型",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-21",
+        "name": "减振器行程/伸展长度/压缩长度/安装点距",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-20-022",
+          "BOM-20-023"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": "R03",
+        "blockingDownstream": "Grok 不得设定行程限位；Gemini 不得定筒身/杆长",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-22",
+        "name": "弹簧刚度/自由长/线径/圈数",
+        "unit": "mixed",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-20-019"
+        ],
+        "critical": false,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Grok 不得声称操稳/侧倾真实",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-23",
+        "name": "制动盘直径/厚度/帽高/摩擦环内径",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-40-046"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": "R07",
+        "blockingDownstream": "Gemini 不得生成制动盘与卡钳相对位置",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-24",
+        "name": "卡钳活塞径/桥跨距/安装孔距",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-40-034",
+          "BOM-40-035",
+          "BOM-40-048"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": "R07",
+        "blockingDownstream": "Gemini 不得生成卡钳体/支架",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-25",
+        "name": "摩擦片轮廓/厚度/背板尺寸",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-40-042"
+        ],
+        "critical": false,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": "R07",
+        "blockingDownstream": null,
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-26",
+        "name": "内外拉杆长度/螺纹/球铰锥度",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-20-074",
+          "BOM-20-075"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Grok 不得求解转向约束；Gemini 不得定拉杆长",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-27",
+        "name": "半轴外端 CV 关节包络/ plunging 行程/花键规格",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-60-021"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Gemini 不得生成半轴；驱动形式未定前本项 applicability=CONDITIONAL",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-28",
+        "name": "紧固件性能等级/拧紧扭矩/预紧力",
+        "unit": "class+N·m",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-20-006",
+          "BOM-20-013",
+          "BOM-20-017",
+          "BOM-40-041",
+          "BOM-40-049"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Gemini 可按演示假设画螺栓外形，但不得标注等级/扭矩为已验证",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-29",
+        "name": "轮罩/翼子板干涉包络",
+        "unit": "mm",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-30-005",
+          "BOM-20-016"
+        ],
+        "critical": true,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": "Gemini/Grok 不得声称无干涉",
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      },
+      {
+        "paramId": "PR-30",
+        "name": "摆臂衬套内外径/宽度/刚度",
+        "unit": "mixed",
+        "unitConversionMm": null,
+        "appliesTo": [
+          "BOM-20-002",
+          "BOM-20-009"
+        ],
+        "critical": false,
+        "grade": "UNKNOWN",
+        "value": null,
+        "sourceId": null,
+        "blockingDownstream": null,
+        "status": "OPEN",
+        "openReason": "UNKNOWN; value must remain null until source exists"
+      }
+    ],
+    "interfaces": [
+      {
+        "mountId": "IF-01",
+        "between": [
+          "BOM-30-002",
+          "BOM-20-016"
+        ],
+        "sourceType": "PRESS_FIT_OUTER_RING",
+        "mappedType": null,
+        "mappingStatus": "OPEN_UNMAPPED_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "conflictRisk": "外径有名义值但配合公差无来源，不得声称压装正确",
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-02",
+        "between": [
+          "BOM-30-006",
+          "BOM-30-019"
+        ],
+        "sourceType": "BOLTED_FLANGE_PILOTED",
+        "mappedType": "HUB_PILOTED_BOLTED",
+        "mappingStatus": "PROPOSED",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "conflictRisk": "PCD/CB 必须双向一致；演示代码两处常量互相矛盾（M01 vs M03）",
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-03",
+        "between": [
+          "BOM-30-009",
+          "BOM-30-029"
+        ],
+        "sourceType": "THREADED_STUD_NUT_SEAT",
+        "mappedType": "THREADED",
+        "mappingStatus": "OPEN_SEAT_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "conflictRisk": "座型必须匹配；唯一可引用来源属商用车（CC-02）",
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-04",
+        "between": [
+          "BOM-20-003",
+          "BOM-20-016"
+        ],
+        "sourceType": "TAPERED_BALL_JOINT_STUD",
+        "mappedType": null,
+        "mappingStatus": "OPEN_UNMAPPED_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "conflictRisk": "锥度不一致则无法紧固；球心是运动学硬点",
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-05",
+        "between": [
+          "BOM-20-010",
+          "BOM-20-016"
+        ],
+        "sourceType": "TAPERED_BALL_JOINT_STUD",
+        "mappedType": null,
+        "mappingStatus": "OPEN_UNMAPPED_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-06",
+        "between": [
+          "BOM-20-002",
+          "BOM-20-016"
+        ],
+        "sourceType": "BUSHING_PIVOT_BOLTED",
+        "mappedType": null,
+        "mappingStatus": "OPEN_UNMAPPED_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "conflictRisk": "现有代码枢轴写死并拉伸摆臂（M04），不得沿用",
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-07",
+        "between": [
+          "BOM-20-009",
+          "BOM-20-016"
+        ],
+        "sourceType": "BUSHING_PIVOT_BOLTED",
+        "mappedType": null,
+        "mappingStatus": "OPEN_UNMAPPED_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-08",
+        "between": [
+          "BOM-20-014",
+          "BOM-20-022"
+        ],
+        "sourceType": "BOLTED_EYE_BUSHING",
+        "mappedType": null,
+        "mappingStatus": "OPEN_UNMAPPED_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-09",
+        "between": [
+          "BOM-40-046",
+          "BOM-30-006"
+        ],
+        "sourceType": "BOLTED_ROTOR_TO_HUB",
+        "mappedType": null,
+        "mappingStatus": "OPEN_UNMAPPED_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "conflictRisk": "盘帽安装孔必须与轮毂法兰一致",
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-10",
+        "between": [
+          "BOM-40-048",
+          "BOM-20-016"
+        ],
+        "sourceType": "BOLTED_CALIPER_BRACKET",
+        "mappedType": null,
+        "mappingStatus": "OPEN_UNMAPPED_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-11",
+        "between": [
+          "BOM-20-075",
+          "BOM-20-016"
+        ],
+        "sourceType": "TAPERED_TIE_ROD_END",
+        "mappedType": null,
+        "mappingStatus": "OPEN_UNMAPPED_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      },
+      {
+        "mountId": "IF-12",
+        "between": [
+          "BOM-60-021",
+          "BOM-30-006"
+        ],
+        "sourceType": "SPLINED_CV_STUB",
+        "mappedType": null,
+        "mappingStatus": "OPEN_UNMAPPED_TYPE",
+        "grade": "UNKNOWN",
+        "blockedDownstream": true,
+        "status": "BLOCKED",
+        "assemblyClaim": false
+      }
+    ],
+    "assemblyGroups": [
+      {
+        "id": "ASSY-SAMPLE",
+        "name": "左前轮端—双叉臂纵切样板（根）",
+        "rp01Ref": "ASSY-30-001 + ASSY-20-001"
+      },
+      {
+        "id": "BOM-20-002A",
+        "name": "上摆臂总成",
+        "rp01Ref": "ASSY-20-002"
+      },
+      {
+        "id": "BOM-20-003A",
+        "name": "下摆臂总成",
+        "rp01Ref": "ASSY-20-003"
+      },
+      {
+        "id": "BOM-20-005A",
+        "name": "前弹簧与减振器",
+        "rp01Ref": "ASSY-20-005"
+      },
+      {
+        "id": "BOM-20-006A",
+        "name": "减振器总成",
+        "rp01Ref": "ASSY-20-006"
+      },
+      {
+        "id": "BOM-30-004A",
+        "name": "车轮总成",
+        "rp01Ref": "ASSY-30-004"
+      },
+      {
+        "id": "BOM-40-008A",
+        "name": "卡钳总成",
+        "rp01Ref": "ASSY-40-008"
+      },
+      {
+        "id": "BOM-20-014A",
+        "name": "转向拉杆组（仅轮端侧）",
+        "rp01Ref": "ASSY-20-014"
+      }
+    ],
+    "conflictCases": [
+      {
+        "id": "CC-01",
+        "kind": "CATALOG_TOPOLOGY_MISMATCH",
+        "mustRemainUnknown": [
+          "PR-14",
+          "PR-15"
+        ],
+        "errorToEmit": "CATALOG_TOPOLOGY_MISMATCH: 代号 DAC42800042 的类型在来源 N02 与 N04 之间不一致（single-row deep groove vs double-row angular contact）；已拒绝据此生成内部几何，需制造商正文裁决。"
+      },
+      {
+        "id": "CC-02",
+        "kind": "MIXED_VEHICLE_PART",
+        "mustRemainUnknown": [
+          "PR-10"
+        ],
+        "errorToEmit": "MIXED_VEHICLE_PART: 样板 vehicleClass=PASSENGER，但来源 N08 的零件 vehicleClass=COMMERCIAL；已拒绝用于 PR-10。"
+      },
+      {
+        "id": "CC-03",
+        "kind": "INTERFACE_DIMENSION_CONFLICT",
+        "mustRemainUnknown": [
+          "PR-06",
+          "PR-07",
+          "PR-08"
+        ],
+        "errorToEmit": "INTERFACE_DIMENSION_CONFLICT: PCD 在 M01(112.0) 与 M03(114.3) 之间不一致，且两者 grade 均为演示常量；已拒绝填值，需车轮/轮毂厂商尺寸图。"
+      },
+      {
+        "id": "CC-04",
+        "kind": "CRITICAL_PARAM_FILLED_BY_DEMO",
+        "mustRemainUnknown": [],
+        "errorToEmit": "CRITICAL_PARAM_FILLED_BY_DEMO: 若把 PR-06/PR-07 等 critical 参数用演示常量填值，必须拒绝；非 critical 的演示值需带 demoNote。"
+      }
+    ]
+  },
+  "r03": {
+    "parts": [
+      {
+        "assetId": "ASSET-SYS-30-HUB-001",
+        "externalId": "SYS-30-HUB-001",
+        "canonicalRef": "PART-30-006",
+        "refKind": "PART",
+        "aliasStatus": "PROPOSED_NEEDS_CONFIRMATION",
+        "contentFingerprint": "4656a3d39589d4dc",
+        "revision": null,
+        "revisionStatus": "OPEN_NEEDS_HUMAN_REVISION",
+        "modelingFidelity": "EXACT_DECLARED",
+        "fidelityClaim": null,
+        "massProperties": {
+          "volume_mm3": 227427.26,
+          "material": "A356_T6",
+          "density_kg_m3": 2700,
+          "mass_kg": 0.6141,
+          "valueBasis": "DEMO_ASSUMPTION",
+          "usableForProductionClearance": false
+        },
+        "assets": {
+          "step": "parts\\SYS-30-HUB-001.step",
+          "stl": "parts\\SYS-30-HUB-001.stl"
+        },
+        "mountFrameCount": 2,
+        "instanceCount": 0,
+        "status": "CONVERTED_WITH_OPEN"
+      },
+      {
+        "assetId": "ASSET-SYS-40-ROTOR-001",
+        "externalId": "SYS-40-ROTOR-001",
+        "canonicalRef": "PART-40-046",
+        "refKind": "PART",
+        "aliasStatus": "PROPOSED_NEEDS_CONFIRMATION",
+        "contentFingerprint": "67bc8bd8bacc7bb1",
+        "revision": null,
+        "revisionStatus": "OPEN_NEEDS_HUMAN_REVISION",
+        "modelingFidelity": "EXACT_DECLARED",
+        "fidelityClaim": null,
+        "massProperties": {
+          "volume_mm3": 1407686.97,
+          "material": "HT250_cast_iron",
+          "density_kg_m3": 7200,
+          "mass_kg": 10.1353,
+          "valueBasis": "DEMO_ASSUMPTION",
+          "usableForProductionClearance": false
+        },
+        "assets": {
+          "step": "parts\\SYS-40-ROTOR-001.step",
+          "stl": "parts\\SYS-40-ROTOR-001.stl"
+        },
+        "mountFrameCount": 1,
+        "instanceCount": 0,
+        "status": "CONVERTED_WITH_OPEN"
+      },
+      {
+        "assetId": "ASSET-SYS-30-BRG-DAC4280",
+        "externalId": "SYS-30-BRG-DAC4280",
+        "canonicalRef": "ASSY-30-002",
+        "refKind": "ASSY",
+        "aliasStatus": "PROPOSED_NEEDS_CONFIRMATION",
+        "contentFingerprint": "07c76680d71810cf",
+        "revision": null,
+        "revisionStatus": "OPEN_NEEDS_HUMAN_REVISION",
+        "modelingFidelity": "GEOMETRIC_ENVELOPE_ONLY",
+        "fidelityClaim": "FID-V",
+        "massProperties": null,
+        "assets": {
+          "step": "parts\\SYS-30-BRG-DAC4280.step",
+          "stl": "parts\\SYS-30-BRG-DAC4280.stl"
+        },
+        "mountFrameCount": 0,
+        "instanceCount": 0,
+        "status": "CONVERTED_WITH_OPEN"
+      },
+      {
+        "assetId": "ASSET-SYS-30-STUD-M14",
+        "externalId": "SYS-30-STUD-M14",
+        "canonicalRef": "PART-30-009",
+        "refKind": "PART",
+        "aliasStatus": "PROPOSED_NEEDS_CONFIRMATION",
+        "contentFingerprint": "1165d43dd98945ca",
+        "revision": null,
+        "revisionStatus": "OPEN_NEEDS_HUMAN_REVISION",
+        "modelingFidelity": "NOMINAL_CYLINDER_PLUS_METADATA",
+        "fidelityClaim": "FID-V",
+        "massProperties": null,
+        "assets": {
+          "step": "parts\\SYS-30-STUD-M14.step",
+          "stl": "parts\\SYS-30-STUD-M14.stl"
+        },
+        "mountFrameCount": 0,
+        "instanceCount": 5,
+        "status": "CONVERTED_WITH_OPEN"
+      }
+    ],
+    "instances": [
+      {
+        "externalId": "SYS-30-STUD-M14#inst_0",
+        "proposedInstanceId": "INST-STUD-FL-1",
+        "canonicalRef": "PART-30-009",
+        "sourceTransformMm": {
+          "translation": [
+            57.15,
+            0,
+            0
+          ],
+          "rotation_deg": [
+            0,
+            0,
+            0
+          ]
+        },
+        "frameStatus": "PROPOSED_NEEDS_CONFIRMATION",
+        "status": "CONVERTED_WITH_OPEN"
+      },
+      {
+        "externalId": "SYS-30-STUD-M14#inst_1",
+        "proposedInstanceId": "INST-STUD-FL-2",
+        "canonicalRef": "PART-30-009",
+        "sourceTransformMm": {
+          "translation": [
+            17.6603,
+            54.3529,
+            0
+          ],
+          "rotation_deg": [
+            0,
+            0,
+            72
+          ]
+        },
+        "frameStatus": "PROPOSED_NEEDS_CONFIRMATION",
+        "status": "CONVERTED_WITH_OPEN"
+      },
+      {
+        "externalId": "SYS-30-STUD-M14#inst_2",
+        "proposedInstanceId": "INST-STUD-FL-3",
+        "canonicalRef": "PART-30-009",
+        "sourceTransformMm": {
+          "translation": [
+            -46.2353,
+            33.5919,
+            0
+          ],
+          "rotation_deg": [
+            0,
+            0,
+            144
+          ]
+        },
+        "frameStatus": "PROPOSED_NEEDS_CONFIRMATION",
+        "status": "CONVERTED_WITH_OPEN"
+      },
+      {
+        "externalId": "SYS-30-STUD-M14#inst_3",
+        "proposedInstanceId": "INST-STUD-FL-4",
+        "canonicalRef": "PART-30-009",
+        "sourceTransformMm": {
+          "translation": [
+            -46.2353,
+            -33.5919,
+            0
+          ],
+          "rotation_deg": [
+            0,
+            0,
+            216
+          ]
+        },
+        "frameStatus": "PROPOSED_NEEDS_CONFIRMATION",
+        "status": "CONVERTED_WITH_OPEN"
+      },
+      {
+        "externalId": "SYS-30-STUD-M14#inst_4",
+        "proposedInstanceId": "INST-STUD-FL-5",
+        "canonicalRef": "PART-30-009",
+        "sourceTransformMm": {
+          "translation": [
+            17.6603,
+            -54.3529,
+            0
+          ],
+          "rotation_deg": [
+            0,
+            0,
+            288
+          ]
+        },
+        "frameStatus": "PROPOSED_NEEDS_CONFIRMATION",
+        "status": "CONVERTED_WITH_OPEN"
+      }
+    ],
+    "frames": [
+      {
+        "frameId": "FR-SYS-30-HUB-001-hub_wheel_mating_face",
+        "frameKind": "MOUNT",
+        "sourceExternalId": "SYS-30-HUB-001",
+        "originM": [
+          0,
+          0,
+          0.014
+        ],
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "units": "m",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "status": "CONVERTED_WITH_OPEN"
+      },
+      {
+        "frameId": "FR-SYS-30-HUB-001-hub_bearing_seat",
+        "frameKind": "MOUNT",
+        "sourceExternalId": "SYS-30-HUB-001",
+        "originM": [
+          0,
+          0,
+          0
+        ],
+        "axis": [
+          0,
+          0,
+          -1
+        ],
+        "units": "m",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "status": "CONVERTED_WITH_OPEN"
+      },
+      {
+        "frameId": "FR-SYS-40-ROTOR-001-rotor_hat_mating_face",
+        "frameKind": "MOUNT",
+        "sourceExternalId": "SYS-40-ROTOR-001",
+        "originM": [
+          0,
+          0,
+          0
+        ],
+        "axis": [
+          0,
+          0,
+          -1
+        ],
+        "units": "m",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "status": "CONVERTED_WITH_OPEN"
+      }
+    ],
+    "mounts": [
+      {
+        "mountId": "MI-SYS-30-HUB-001-hub_wheel_mating_face",
+        "sourceExternalId": "SYS-30-HUB-001",
+        "frameId": "FR-SYS-30-HUB-001-hub_wheel_mating_face",
+        "sourceType": null,
+        "matingSpecs": null,
+        "pilot": {
+          "centerBoreMm": null,
+          "fit": null
+        },
+        "fastenerPattern": null,
+        "tolerance": null,
+        "status": "OPEN_MISSING_CB_FIT_TOLERANCE"
+      },
+      {
+        "mountId": "MI-SYS-30-HUB-001-hub_bearing_seat",
+        "sourceExternalId": "SYS-30-HUB-001",
+        "frameId": "FR-SYS-30-HUB-001-hub_bearing_seat",
+        "sourceType": null,
+        "matingSpecs": null,
+        "pilot": {
+          "centerBoreMm": null,
+          "fit": null
+        },
+        "fastenerPattern": null,
+        "tolerance": null,
+        "status": "OPEN_MISSING_CB_FIT_TOLERANCE"
+      },
+      {
+        "mountId": "MI-SYS-40-ROTOR-001-rotor_hat_mating_face",
+        "sourceExternalId": "SYS-40-ROTOR-001",
+        "frameId": "FR-SYS-40-ROTOR-001-rotor_hat_mating_face",
+        "sourceType": null,
+        "matingSpecs": null,
+        "pilot": {
+          "centerBoreMm": null,
+          "fit": null
+        },
+        "fastenerPattern": null,
+        "tolerance": null,
+        "status": "OPEN_MISSING_CB_FIT_TOLERANCE"
+      }
+    ],
+    "coordinateConventions": {
+      "cad_source": {
+        "up": "+Z",
+        "forward": "+Y",
+        "units": "mm"
+      },
+      "blender_export": {
+        "up": "+Y",
+        "forward": "-Z",
+        "units": "m",
+        "scale_multiplier": 0.001
+      },
+      "browser_viewer": {
+        "up": "+Y",
+        "forward": "+Z",
+        "units": "m"
+      }
+    },
+    "assemblyExternalId": "SYS-30-WHEEL-END-ASSY"
+  },
+  "kinematics": {
+    "frames": [
+      {
+        "frameId": "FR-KIN-upperAxisA",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.28,
+          0.22,
+          0.13
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-upperAxisB",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.24,
+          0.2,
+          -0.13
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-upperBall",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.55,
+          0.18,
+          0.01
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-lowerAxisA",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.32,
+          -0.04,
+          0.16
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-lowerAxisB",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.26,
+          -0.07,
+          -0.16
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-lowerBall",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.62,
+          -0.06,
+          0
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-tieInner",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.26,
+          0.06,
+          0.15
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-tieOuter",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.54,
+          0.05,
+          0.13
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-wheelCenter",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.72,
+          0,
+          0
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-spindleAxis",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          1,
+          -0.04,
+          0.015
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-shockChassis",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.36,
+          0.34,
+          0.02
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-diffOutput",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.12,
+          -0.02,
+          0
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      },
+      {
+        "frameId": "FR-KIN-strutTop",
+        "frameKind": "PROPOSED_KINEMATIC_POINT",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.42,
+          0.56,
+          0.02
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "provenance": "FICTIONAL_FIXTURE",
+        "status": "OPEN_PENDING_R02_ENUM"
+      }
+    ],
+    "constraints": [
+      {
+        "constraintId": "CON-SLA-UPPER-ARM-CIRCLE",
+        "type": "POINT_ON_CIRCLE",
+        "jointOrConstraint": "CONSTRAINT",
+        "status": "OPEN_PENDING_GROK",
+        "source": "R-04 constraintModel.sla"
+      },
+      {
+        "constraintId": "CON-SLA-LOWER-ARM-CIRCLE",
+        "type": "POINT_ON_CIRCLE",
+        "jointOrConstraint": "CONSTRAINT",
+        "status": "OPEN_PENDING_GROK",
+        "source": "R-04 constraintModel.sla"
+      },
+      {
+        "constraintId": "CON-KINGPIN-LENGTH",
+        "type": "DISTANCE",
+        "jointOrConstraint": "CONSTRAINT",
+        "status": "OPEN_PENDING_GROK",
+        "source": "R-04 upright distances"
+      },
+      {
+        "constraintId": "CON-TIE-ROD-LENGTH",
+        "type": "DISTANCE",
+        "jointOrConstraint": "CONSTRAINT",
+        "status": "OPEN_PENDING_GROK",
+        "source": "R-04 tie-rod length"
+      },
+      {
+        "constraintId": "CON-UPRIGHT-TRIANGLE",
+        "type": "DISTANCE_SET",
+        "jointOrConstraint": "CONSTRAINT",
+        "status": "OPEN_PENDING_GROK",
+        "source": "R-04 upright three distances"
+      },
+      {
+        "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+        "type": "PRESCRIBED_POSITION",
+        "jointOrConstraint": "CONSTRAINT",
+        "status": "OPEN_PENDING_GROK",
+        "source": "R-04 drivenCoordinate=wheelCenter.y"
+      },
+      {
+        "constraintId": "CON-SHOCK-LENGTH-OUTPUT",
+        "type": "OUTPUT_NOT_CONSTRAINT",
+        "jointOrConstraint": "OUTPUT",
+        "status": "OPEN_PENDING_GROK",
+        "source": "R-04 shock length is output"
+      }
+    ],
+    "joints": [],
+    "jointBoundary": "OPEN_PENDING_GROK",
+    "provenance": "FICTIONAL_FIXTURE",
+    "frame": {
+      "x": "left, outboard on the left wheel",
+      "y": "up",
+      "z": "forward",
+      "units": {
+        "length": "m",
+        "angle": "rad"
+      }
+    },
+    "tests": {
+      "r04": 21,
+      "r09PassCount": "see R-09 report"
+    },
+    "verification": {
+      "status": "PASS_FOR_FIXTURE",
+      "reviewStatus": "NOT_REVIEWED",
+      "testRefs": [
+        "R-04 T11..T21",
+        "R-09 P01..P08"
+      ]
+    }
+  },
+  "handoffs": [
+    {
+      "handoffId": "H-01-HUB",
+      "from": [
+        "R-06",
+        "R-03"
+      ],
+      "r06BomId": "BOM-30-006",
+      "canonicalRef": "PART-30-006",
+      "r03ExternalId": "SYS-30-HUB-001",
+      "aliasStatus": "PROPOSED_NEEDS_CONFIRMATION",
+      "contentFingerprint": "4656a3d39589d4dc",
+      "revision": null,
+      "fidelityClaim": "FID-V",
+      "massPropertiesBasis": "DEMO_ASSUMPTION",
+      "blockedInterfaces": [
+        "IF-01",
+        "IF-02"
+      ],
+      "status": "PARTIAL_OPEN"
+    },
+    {
+      "handoffId": "H-02-STUD",
+      "from": [
+        "R-06",
+        "R-03"
+      ],
+      "r06BomId": "BOM-30-009",
+      "canonicalRef": "PART-30-009",
+      "r03ExternalId": "SYS-30-STUD-M14",
+      "aliasStatus": "PROPOSED_NEEDS_CONFIRMATION",
+      "contentFingerprint": "1165d43dd98945ca",
+      "qtyPerCorner": 5,
+      "instanceCount": 5,
+      "blockedInterfaces": [
+        "IF-03"
+      ],
+      "status": "PARTIAL_OPEN"
+    },
+    {
+      "handoffId": "H-03-ROTOR",
+      "from": [
+        "R-06",
+        "R-03"
+      ],
+      "r06BomId": "BOM-40-046",
+      "canonicalRef": "PART-40-046",
+      "r03ExternalId": "SYS-40-ROTOR-001",
+      "aliasStatus": "PROPOSED_NEEDS_CONFIRMATION",
+      "contentFingerprint": "67bc8bd8bacc7bb1",
+      "blockedInterfaces": [
+        "IF-02"
+      ],
+      "status": "PARTIAL_OPEN"
+    },
+    {
+      "handoffId": "H-04-KINEMATICS",
+      "from": [
+        "R-04",
+        "R-09",
+        "R-02"
+      ],
+      "canonicalRef": null,
+      "jointBoundary": "OPEN_PENDING_GROK",
+      "hardpoints": 13,
+      "constraints": 7,
+      "joints": 0,
+      "status": "OPEN_PROPOSED"
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "U-IF-01",
+      "topic": "R-06 interface IF-01 blockedDownstream",
+      "reason": "外径有名义值但配合公差无来源，不得声称压装正确"
+    },
+    {
+      "id": "U-IF-02",
+      "topic": "R-06 interface IF-02 blockedDownstream",
+      "reason": "PCD/CB 必须双向一致；演示代码两处常量互相矛盾（M01 vs M03）"
+    },
+    {
+      "id": "U-IF-03",
+      "topic": "R-06 interface IF-03 blockedDownstream",
+      "reason": "座型必须匹配；唯一可引用来源属商用车（CC-02）"
+    },
+    {
+      "id": "U-IF-04",
+      "topic": "R-06 interface IF-04 blockedDownstream",
+      "reason": "锥度不一致则无法紧固；球心是运动学硬点"
+    },
+    {
+      "id": "U-IF-05",
+      "topic": "R-06 interface IF-05 blockedDownstream"
+    },
+    {
+      "id": "U-IF-06",
+      "topic": "R-06 interface IF-06 blockedDownstream",
+      "reason": "现有代码枢轴写死并拉伸摆臂（M04），不得沿用"
+    },
+    {
+      "id": "U-IF-07",
+      "topic": "R-06 interface IF-07 blockedDownstream"
+    },
+    {
+      "id": "U-IF-08",
+      "topic": "R-06 interface IF-08 blockedDownstream"
+    },
+    {
+      "id": "U-IF-09",
+      "topic": "R-06 interface IF-09 blockedDownstream",
+      "reason": "盘帽安装孔必须与轮毂法兰一致"
+    },
+    {
+      "id": "U-IF-10",
+      "topic": "R-06 interface IF-10 blockedDownstream"
+    },
+    {
+      "id": "U-IF-11",
+      "topic": "R-06 interface IF-11 blockedDownstream"
+    },
+    {
+      "id": "U-IF-12",
+      "topic": "R-06 interface IF-12 blockedDownstream"
+    },
+    {
+      "id": "U-PR-06",
+      "topic": "critical parameter PR-06 UNKNOWN",
+      "reason": "车轮螺栓孔节圆 PCD"
+    },
+    {
+      "id": "U-PR-07",
+      "topic": "critical parameter PR-07 UNKNOWN",
+      "reason": "中心孔直径 CB"
+    },
+    {
+      "id": "U-PR-08",
+      "topic": "critical parameter PR-08 UNKNOWN",
+      "reason": "轮辋偏距 ET"
+    },
+    {
+      "id": "U-PR-10",
+      "topic": "critical parameter PR-10 UNKNOWN",
+      "reason": "车轮螺栓/螺母螺纹与座型"
+    },
+    {
+      "id": "U-PR-15",
+      "topic": "critical parameter PR-15 UNKNOWN",
+      "reason": "轴承配合公差（转向节孔/轴颈）"
+    },
+    {
+      "id": "U-PR-16",
+      "topic": "critical parameter PR-16 UNKNOWN",
+      "reason": "轮毂法兰几何（PCD/导向凸台/法兰外径/厚度）"
+    },
+    {
+      "id": "U-PR-17",
+      "topic": "critical parameter PR-17 UNKNOWN",
+      "reason": "球铰锥度/螺纹/安装高度"
+    },
+    {
+      "id": "U-PR-18",
+      "topic": "critical parameter PR-18 UNKNOWN",
+      "reason": "上摆臂枢轴中心距与衬套尺寸"
+    },
+    {
+      "id": "U-PR-19",
+      "topic": "critical parameter PR-19 UNKNOWN",
+      "reason": "下摆臂枢轴中心距/球铰中心距"
+    },
+    {
+      "id": "U-PR-20",
+      "topic": "critical parameter PR-20 UNKNOWN",
+      "reason": "转向节硬点几何（上下球铰中心/轴承孔轴线/拉杆安装点）"
+    },
+    {
+      "id": "U-PR-21",
+      "topic": "critical parameter PR-21 UNKNOWN",
+      "reason": "减振器行程/伸展长度/压缩长度/安装点距"
+    },
+    {
+      "id": "U-PR-23",
+      "topic": "critical parameter PR-23 UNKNOWN",
+      "reason": "制动盘直径/厚度/帽高/摩擦环内径"
+    },
+    {
+      "id": "U-PR-24",
+      "topic": "critical parameter PR-24 UNKNOWN",
+      "reason": "卡钳活塞径/桥跨距/安装孔距"
+    },
+    {
+      "id": "U-PR-26",
+      "topic": "critical parameter PR-26 UNKNOWN",
+      "reason": "内外拉杆长度/螺纹/球铰锥度"
+    },
+    {
+      "id": "U-PR-27",
+      "topic": "critical parameter PR-27 UNKNOWN",
+      "reason": "半轴外端 CV 关节包络/ plunging 行程/花键规格"
+    },
+    {
+      "id": "U-PR-28",
+      "topic": "critical parameter PR-28 UNKNOWN",
+      "reason": "紧固件性能等级/拧紧扭矩/预紧力"
+    },
+    {
+      "id": "U-PR-29",
+      "topic": "critical parameter PR-29 UNKNOWN",
+      "reason": "轮罩/翼子板干涉包络"
+    },
+    {
+      "id": "U-MI-SYS-30-HUB-001-hub_wheel_mating_face",
+      "topic": "R-03 mount missing center bore/fit/tolerance",
+      "reason": "R-03 mount_frames does not carry pilot/CB/fit/tolerance"
+    },
+    {
+      "id": "U-MI-SYS-30-HUB-001-hub_bearing_seat",
+      "topic": "R-03 mount missing center bore/fit/tolerance",
+      "reason": "R-03 mount_frames does not carry pilot/CB/fit/tolerance"
+    },
+    {
+      "id": "U-MI-SYS-40-ROTOR-001-rotor_hat_mating_face",
+      "topic": "R-03 mount missing center bore/fit/tolerance",
+      "reason": "R-03 mount_frames does not carry pilot/CB/fit/tolerance"
+    },
+    {
+      "id": "U-R04-PROVENANCE",
+      "topic": "R-04/R-09 hardpoints are FICTIONAL_FIXTURE",
+      "reason": "Must not enter production CAD/BOM"
+    },
+    {
+      "id": "U-JOINT-CONSTRAINT",
+      "topic": "Joint vs Constraint boundary with Grok is OPEN",
+      "reason": "DISTANCE/POINT_ON_LINE/PRESCRIBED_POSITION are constraints; do not auto-create Joint"
+    },
+    {
+      "id": "U-R03-ALIAS",
+      "topic": "R-03 SYS-* -> RP-01 PART/ASSY aliases are proposed, not confirmed",
+      "reason": "Gemini confirmed PART-* canonical but not exact ID pairs"
+    }
+  ],
+  "comparison": {
+    "r06": {
+      "sourceBom": 60,
+      "adaptedBom": 60,
+      "sourceParams": 30,
+      "adaptedParams": 30,
+      "sourceInterfaces": 12,
+      "adaptedInterfaces": 12,
+      "preserved": [
+        "necessity",
+        "assemblyBoundary",
+        "qtyPerCorner",
+        "params",
+        "grade",
+        "blockedDownstream",
+        "conflictRisk",
+        "applicability",
+        "qtyWhenIncluded",
+        "deferReason"
+      ],
+      "lost": [],
+      "open": 29
+    },
+    "r03": {
+      "sourceParts": 4,
+      "adaptedAssets": 4,
+      "sourceInstances": 5,
+      "adaptedInstances": 5,
+      "sourceMountFrames": 3,
+      "adaptedMountFrames": 3,
+      "preserved": [
+        "revision->contentFingerprint",
+        "modeling_fidelity",
+        "mass_properties_assumption as DEMO",
+        "assets",
+        "instances.transform_mm"
+      ],
+      "lost": [
+        "solverSource (R-04, intentionally not copied)",
+        "R-03 mount_frames CB/fit/tolerance (missing at source)"
+      ],
+      "open": 3
+    },
+    "r04": {
+      "sourceHardpoints": 13,
+      "adaptedFrames": 13,
+      "sourceConstraints": 6,
+      "adaptedConstraints": 7,
+      "sourceJoints": 0,
+      "adaptedJoints": 0,
+      "preserved": [
+        "frame",
+        "hardpoints",
+        "constraintModel",
+        "tests",
+        "provenance"
+      ],
+      "lost": [],
+      "open": 7
+    },
+    "r02Compatibility": {
+      "partDefinitionFields": "present",
+      "partInstanceFields": "present",
+      "frameFields": "present",
+      "mountInterfaceFields": "partial",
+      "assetManifestFields": "present",
+      "bomLineFields": "present",
+      "jointFields": "empty/OPEN",
+      "verificationFields": "present"
+    }
+  },
+  "rejections": [
+    {
+      "caseId": "CASE-01",
+      "description": "Happy path: R-06 BOM + R-03 assets + R-04/R-09 constraints, strict conversion",
+      "expectedCode": null,
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "converted with OPEN fields"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-01",
+      "description": "Naive converter uses R-03 SYS-* as canonical partId (double primary key)",
+      "expectedCode": "ERR_INPUT_DOUBLE_PRIMARY_KEY",
+      "actual": {
+        "ok": false,
+        "code": "ERR_INPUT_DOUBLE_PRIMARY_KEY",
+        "message": "naive converter used SYS-* as canonical partId instead of RP-01 PART-*"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-02",
+      "description": "Two R-03 instances share instanceId",
+      "expectedCode": "ERR_ASSEMBLY_DUPLICATE_INSTANCE",
+      "actual": {
+        "ok": false,
+        "code": "ERR_ASSEMBLY_DUPLICATE_INSTANCE",
+        "message": "duplicate R-03 instanceId SYS-30-STUD-M14#inst_0"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-03",
+      "description": "R-03 mm transform fed as meters (unitScale=1)",
+      "expectedCode": "ERR_INPUT_UNIT_MISMATCH",
+      "actual": {
+        "ok": false,
+        "code": "ERR_INPUT_UNIT_MISMATCH",
+        "message": "R-03 sourceUnits=mm requires unitScale 0.001, got 1"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-04",
+      "description": "Reflection matrix det=-1 without mirror flag",
+      "expectedCode": "ERR_TRANSFORM_CHIRALITY",
+      "actual": {
+        "ok": false,
+        "code": "ERR_TRANSFORM_CHIRALITY",
+        "message": "reflection matrix det=-1 without mirror.handednessFlip"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-05",
+      "description": "RP-01/vehicle total qty=20 copied into per-corner stud BOM",
+      "expectedCode": "ERR_ASSEMBLY_QTY_MISMATCH",
+      "actual": {
+        "ok": false,
+        "code": "ERR_ASSEMBLY_QTY_MISMATCH",
+        "message": "BOM-30-009 qtyPerCorner=20; expected 5 (20 is vehicle total)"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-06",
+      "description": "Stale R-03 content fingerprint",
+      "expectedCode": "ERR_CACHE_FINGERPRINT_INVALID",
+      "actual": {
+        "ok": false,
+        "code": "ERR_CACHE_FINGERPRINT_INVALID",
+        "message": "R-03 SYS-30-HUB-001 revision deadbeefdeadbeef != manifest fingerprint 4656a3d39589d4dc"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-07",
+      "description": "Adapter claims assembly while R-06 interface is blockedDownstream=false",
+      "expectedCode": "ERR_ASSEMBLY_INTERFACE_BLOCKED",
+      "actual": {
+        "ok": false,
+        "code": "ERR_ASSEMBLY_INTERFACE_BLOCKED",
+        "message": "adapter claimed assembly while one or more R-06 interfaces are blockedDownstream=true"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-08",
+      "description": "R-04 DISTANCE/POINT_ON_LINE/PRESCRIBED_POSITION mapped to FIXED Joint",
+      "expectedCode": "ERR_ASSEMBLY_CONSTRAINT_MISCLASSIFIED",
+      "actual": {
+        "ok": false,
+        "code": "ERR_ASSEMBLY_CONSTRAINT_MISCLASSIFIED",
+        "message": "R-04 DISTANCE/POINT_ON_LINE/PRESCRIBED_POSITION mapped to FIXED Joint without Grok agreement"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-09",
+      "description": "R-04 FICTIONAL_FIXTURE labelled SOURCED",
+      "expectedCode": "ERR_INPUT_UNTRUSTED_PROVENANCE",
+      "actual": {
+        "ok": false,
+        "code": "ERR_INPUT_UNTRUSTED_PROVENANCE",
+        "message": "R-04 FICTIONAL_FIXTURE was labelled SOURCED"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-10",
+      "description": "R-06 BOM item lacks rp01Ref/canonical partId",
+      "expectedCode": "ERR_INPUT_MISSING_CANONICAL_ID",
+      "actual": {
+        "ok": false,
+        "code": "ERR_INPUT_MISSING_CANONICAL_ID",
+        "message": "R-06 BOM BOM-30-006 has no rp01Ref"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-11",
+      "description": "Asset transform scale 1.1 (non-uniform/non-rigid)",
+      "expectedCode": "ERR_TRANSFORM_SCALE_INVALID",
+      "actual": {
+        "ok": false,
+        "code": "ERR_TRANSFORM_SCALE_INVALID",
+        "message": "asset transform scale 1.1 != 1 (unit conversion separate)"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-12",
+      "description": "R-06 BOM carries an unmapped field legacyGrade",
+      "expectedCode": "ERR_INPUT_UNMAPPED_FIELD",
+      "actual": {
+        "ok": false,
+        "code": "ERR_INPUT_UNMAPPED_FIELD",
+        "message": "R-06 BOM BOM-30-006 field legacyGrade has no declared mapping"
+      },
+      "pass": true
+    },
+    {
+      "caseId": "NEG-13",
+      "description": "UNKNOWN parameter carries a numeric value",
+      "expectedCode": "ERR_INPUT_UNKNOWN_HAS_VALUE",
+      "actual": {
+        "ok": false,
+        "code": "ERR_INPUT_UNKNOWN_HAS_VALUE",
+        "message": "UNKNOWN parameter PR-06 carries value 1"
+      },
+      "pass": true
+    }
+  ],
+  "errorCodeMap": {
+    "ERR_INPUT_DOUBLE_PRIMARY_KEY": "new; map to R-08 ERR_INPUT_SCHEMA_INVALID for now",
+    "ERR_ASSEMBLY_DUPLICATE_INSTANCE": "new; candidate for R-08 assembly taxonomy",
+    "ERR_INPUT_UNIT_MISMATCH": "new; related to R-08 ERR_TRANSFORM_SCALE_INVALID",
+    "ERR_TRANSFORM_CHIRALITY": "R-08 GATE_04 CHK_CHIRALITY_PRESERVATION",
+    "ERR_ASSEMBLY_QTY_MISMATCH": "new; related to R-08 assembly taxonomy",
+    "ERR_CACHE_FINGERPRINT_INVALID": "R-08 GATE_06 CHK_DETERMINISTIC_HASH",
+    "ERR_ASSEMBLY_INTERFACE_BLOCKED": "new; related to R-06 interfaces[].blockedDownstream",
+    "ERR_ASSEMBLY_CONSTRAINT_MISCLASSIFIED": "new; pending Grok/GPT-6 Joint vs Constraint decision",
+    "ERR_INPUT_UNTRUSTED_PROVENANCE": "R-08 GATE_01 CHK_PROVENANCE_TAG",
+    "ERR_INPUT_MISSING_CANONICAL_ID": "new; related to RP-01 canonical identity",
+    "ERR_TRANSFORM_SCALE_INVALID": "R-08 GATE_04 CHK_SCALE_UNIFORMITY",
+    "ERR_INPUT_UNMAPPED_FIELD": "new; related to R-08 ERR_INPUT_SCHEMA_INVALID",
+    "ERR_INPUT_UNKNOWN_HAS_VALUE": "R-06 errorTypeEnum UNKNOWN_PARAM_HAS_VALUE"
+  },
+  "validation": {
+    "cases": 14,
+    "passed": 14,
+    "failed": 0,
+    "happyPathOk": true
+  }
+}

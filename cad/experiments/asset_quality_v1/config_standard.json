@@ -1,0 +1,100 @@
+{
+  "assembly_id": "SYS-30-WHEEL-END-ASSY",
+  "assembly_name": "wheel_end_corner_assembly",
+  "pipeline_version": "2.0.0-quality-gate",
+  "units": {
+    "cad_internal": "mm",
+    "gltf_export": "meter",
+    "scale_factor": 0.001
+  },
+  "coordinate_frames": {
+    "cad_engine": "Z_UP_RIGHT_HANDED",
+    "webgl_gltf": "Y_UP_RIGHT_HANDED",
+    "cad_to_gltf_transform_matrix": [
+      [0.001, 0.0, 0.0, 0.0],
+      [0.0, 0.0, 0.001, 0.0],
+      [0.0, -0.001, 0.0, 0.0],
+      [0.0, 0.0, 0.0, 1.0]
+    ]
+  },
+  "budgets": {
+    "single_part_max_triangles": 15000,
+    "assembly_lod0_max_triangles": 60000,
+    "single_part_max_vertices": 10000,
+    "assembly_lod0_max_vertices": 40000,
+    "assembly_max_filesize_bytes": 1048576
+  },
+  "parts": {
+    "hub": {
+      "part_id": "SYS-30-HUB-001",
+      "name": "Front Wheel Hub Flange",
+      "provenance": "OEM_SPEC",
+      "provenance_notes": "Derived from passenger sedan 5x114.3 hub dimensions; clearance verified.",
+      "family": "rotational_symmetric",
+      "material_class": "aluminum_alloy_A356",
+      "pcd_mm": 114.3,
+      "bolt_count": 5,
+      "bolt_hole_diameter_mm": 15.5,
+      "outer_diameter_mm": 152.0,
+      "flange_thickness_mm": 14.0,
+      "center_bore_mm": 67.1,
+      "pilot_diameter_mm": 84.0,
+      "pilot_height_mm": 18.0,
+      "mount_frames": {
+        "rotor_mount": {"origin_mm": [0.0, 0.0, 14.0], "normal": [0.0, 0.0, 1.0]}
+      }
+    },
+    "rotor": {
+      "part_id": "SYS-40-ROTOR-001",
+      "name": "Front Ventilated Brake Rotor",
+      "provenance": "OEM_SPEC",
+      "provenance_notes": "Standard 300x24mm rotor with 5x114.3 PCD and 67.1mm center bore.",
+      "family": "rotational_symmetric",
+      "material_class": "gray_cast_iron_HT250",
+      "rotor_outer_diameter_mm": 300.0,
+      "rotor_thickness_mm": 24.0,
+      "hat_outer_diameter_mm": 170.0,
+      "hat_height_mm": 35.0,
+      "hat_thickness_mm": 8.0,
+      "center_bore_mm": 67.1,
+      "pcd_mm": 114.3,
+      "bolt_count": 5,
+      "bolt_hole_diameter_mm": 15.5,
+      "mount_frames": {
+        "hub_mount": {"origin_mm": [0.0, 0.0, 0.0], "normal": [0.0, 0.0, -1.0]}
+      }
+    },
+    "bearing": {
+      "part_id": "SYS-30-BRG-DAC4280",
+      "name": "Wheel Hub Double Row Angular Ball Bearing Envelope",
+      "provenance": "DEMO_ESTIMATE",
+      "provenance_notes": "DAC4280 package envelope (ASSUMPTION); internal rolling kinematics not simulated.",
+      "family": "rotational_standard_catalog",
+      "material_class": "bearing_steel_GCr15",
+      "outer_diameter_mm": 80.0,
+      "inner_diameter_mm": 42.0,
+      "width_mm": 42.0,
+      "mount_frames": {
+        "bore_center": {"origin_mm": [0.0, 0.0, 0.0], "normal": [0.0, 0.0, 1.0]}
+      }
+    },
+    "stud": {
+      "part_id": "SYS-30-STUD-M14",
+      "name": "Wheel Stud M14x1.5 Grade 10.9",
+      "provenance": "ISO_STANDARD",
+      "provenance_notes": "Metric thread fastener adhering to ISO 261 / ISO 965 and ISO 273 clearance standards.",
+      "family": "threaded_fastener",
+      "material_class": "high_tensile_steel_grade_10.9",
+      "thread_spec": "M14x1.5-6g",
+      "nominal_diameter_mm": 14.0,
+      "head_diameter_mm": 22.0,
+      "head_thickness_mm": 6.0,
+      "shank_length_mm": 55.0,
+      "instance_count": 5,
+      "pcd_mm": 114.3,
+      "mount_frames": {
+        "seating_plane": {"origin_mm": [0.0, 0.0, 0.0], "normal": [0.0, 0.0, 1.0]}
+      }
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "artifact": "R-06-selftest-result",
+  "tool": "agent-workspace/agents/qwen4/tools/r06_bom_tool.py",
+  "overall": "PASS",
+  "baselineViolations": 0,
+  "caught": 22,
+  "missed": 0,
+  "total": 22,
+  "rulesCovered": [
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "B12",
+    "B13"
+  ],
+  "rulesWithoutNegativeControl": [],
+  "controls": [
+    {
+      "rule": "B05",
+      "mutation": "critical PCD filled with a demo constant",
+      "result": "CAUGHT",
+      "sample": "PR-06 (车轮螺栓孔节圆 PCD) is CRITICAL but carries value=114.3 with grade=DEMO_ASSUMPTION; critical connection dimensions may only be filled from SOURCED/SOURCED_SECONDARY evidence. Blocked downstream: Gemini 不得生成车轮/轮毂螺栓孔；Grok 不得固定轮心横向位置"
+    },
+    {
+      "rule": "B04",
+      "mutation": "UNKNOWN parameter carries a value",
+      "result": "CAUGHT",
+      "sample": "PR-17 (球铰锥度/螺纹/安装高度): grade=UNKNOWN but value=12.0; unknown must stay null"
+    },
+    {
+      "rule": "B04",
+      "mutation": "SOURCED_SECONDARY parameter loses its source",
+      "result": "CAUGHT",
+      "sample": "PR-11: grade=SOURCED_SECONDARY without a resolvable sourceId"
+    },
+    {
+      "rule": "B04",
+      "mutation": "value sourced from a snippet-only source",
+      "result": "CAUGHT",
+      "sample": "PR-11: source N03 is marked usedForClaim=false and cannot support a value"
+    },
+    {
+      "rule": "B04",
+      "mutation": "DEMO_ASSUMPTION without demoNote",
+      "result": "CAUGHT",
+      "sample": "PR-01: DEMO_ASSUMPTION without demoNote"
+    },
+    {
+      "rule": "B07",
+      "mutation": "commercial-vehicle nut source used on a passenger sample",
+      "result": "CAUGHT",
+      "sample": "PR-10 (车轮螺栓/螺母螺纹与座型) uses source N08 with vehicleClass=COMMERCIAL but the sample is PASSENGER; refusing to mix vehicle classes"
+    },
+    {
+      "rule": "B08",
+      "mutation": "geometry-bearing source with unclear license",
+      "result": "CAUGHT",
+      "sample": "source N02 is usedForGeometry=true but license is unclear; cannot base CAD geometry on an unlicensed/unknown-license source"
+    },
+    {
+      "rule": "B09",
+      "mutation": "conflicted internal-geometry param gets filled",
+      "result": "CAUGHT",
+      "sample": "CC-01 requires PR-14 to stay UNKNOWN, but it is grade=DEMO_ASSUMPTION value=18"
+    },
+    {
+      "rule": "B10",
+      "mutation": "interface with unknown deps not marked blocked",
+      "result": "CAUGHT",
+      "sample": "IF-01 (PRESS_FIT_OUTER_RING) depends on unknown params ['PR-15'] but blockedDownstream is not true; downstream would silently build an unverified connection"
+    },
+    {
+      "rule": "B11",
+      "mutation": "hardpoint declared in world absolute coordinates",
+      "result": "CAUGHT",
+      "sample": "PR-20: worldAbsolute=true; hardpoints must be relative to a local datum"
+    },
+    {
+      "rule": "B11",
+      "mutation": "world frame frozen without approval",
+      "result": "CAUGHT",
+      "sample": "framePolicy.worldFrame=X_FORWARD_Y_LEFT_Z_UP; world frame must stay pending RP-07"
+    },
+    {
+      "rule": "B12",
+      "mutation": "deferred item without a reason",
+      "result": "CAUGHT",
+      "sample": "BOM-20-031: necessity=DEFERRED_OUT_OF_SCOPE without deferReason"
+    },
+    {
+      "rule": "B12",
+      "mutation": "mechanism-required item with zero quantity",
+      "result": "CAUGHT",
+      "sample": "BOM-20-016: MECHANISM_REQUIRED but qtyPerCorner=0"
+    },
+    {
+      "rule": "B12",
+      "mutation": "mechanism-required item with no params and no note",
+      "result": "CAUGHT",
+      "sample": "BOM-20-011: MECHANISM_REQUIRED with no parameter requirement and no explanatory note"
+    },
+    {
+      "rule": "B06",
+      "mutation": "inch value without mm conversion",
+      "result": "CAUGHT",
+      "sample": "PR-03: inch value without explicit mm conversion"
+    },
+    {
+      "rule": "B03",
+      "mutation": "dangling BOM parent",
+      "result": "CAUGHT",
+      "sample": "BOM-20-016: unknown parent BOM-NOT-EXIST"
+    },
+    {
+      "rule": "B03",
+      "mutation": "rp01Ref not present in the approved RP-01 tree",
+      "result": "CAUGHT",
+      "sample": "BOM-20-016: rp01Ref PART-99-999 not found in approved RP-01 tree"
+    },
+    {
+      "rule": "B02",
+      "mutation": "duplicate BOM id",
+      "result": "CAUGHT",
+      "sample": "BOM-20-016 declared in both bom and bom"
+    },
+    {
+      "rule": "B13",
+      "mutation": "tire example arithmetic no longer matches",
+      "result": "CAUGHT",
+      "sample": "EX-01 expected outerDiameter_mm=600.0 but arithmetic gives 631.9"
+    },
+    {
+      "rule": "B13",
+      "mutation": "bearing example invents internal geometry",
+      "result": "CAUGHT",
+      "sample": "EX-02 expected internalGeometry must stay null (internal geometry / fit are UNKNOWN)"
+    },
+    {
+      "rule": "B11",
+      "mutation": "parameter without a reference point",
+      "result": "CAUGHT",
+      "sample": "PR-11: no referencePoint declared"
+    },
+    {
+      "rule": "B01",
+      "mutation": "malformed BOM file (in-memory loader patch)",
+      "result": "CAUGHT"
+    }
+  ]
+}

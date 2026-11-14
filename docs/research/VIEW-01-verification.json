@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "VIEW-01-verification/1.1",
+  "generatedAt": "2026-11-14",
+  "commands": [
+    {
+      "id": "verify-bounds",
+      "command": "node viewer/experiments/engineering-viewer/verify-bounds.mjs",
+      "result": "PASS",
+      "maxAbsCoord": 0.076
+    },
+    {
+      "id": "syntax-main",
+      "command": "node --check viewer/experiments/engineering-viewer/main.js",
+      "result": "PASS"
+    },
+    {
+      "id": "http-glb",
+      "command": "GET http://127.0.0.1:5175/cad/.../wheel_hub_assembly.glb",
+      "result": "PASS",
+      "bytes": 212460
+    },
+    {
+      "id": "browser-visible-geometry",
+      "command": "Chrome @ 127.0.0.1:5175 — screenshot + status bar",
+      "result": "PASS",
+      "observed": "包围盒最大边 0.152 m；中央 WebGL 可见轮端实体",
+      "screenshot": "docs/research/VIEW-01-chrome-visible.png"
+    }
+  ],
+  "fixes": [
+    {
+      "issue": "双重 0.001 缩放导致模型不可见",
+      "resolution": "移除 main.js assemblyRoot.scale；新增 assertAssemblyBounds"
+    }
+  ]
+}

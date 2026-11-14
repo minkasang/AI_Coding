@@ -1,0 +1,31 @@
+{
+  "artifact": "R-06-validation-result",
+  "tool": "agent-workspace/agents/qwen4/tools/r06_bom_tool.py",
+  "command": ".venv/Scripts/python.exe agent-workspace/agents/qwen4/tools/r06_bom_tool.py validate --out agent-workspace/agents/qwen4/reports/R-06-validation-result.json",
+  "overall": "PASS",
+  "violationCount": 0,
+  "violations": [],
+  "metrics": {
+    "bomItems": 60,
+    "mechanismRequired": 49,
+    "deferredOrOptional": 11,
+    "parameterRequirements": 30,
+    "paramGrades": {
+      "DEMO_ASSUMPTION": 5,
+      "ENGINEERING_INFERENCE": 1,
+      "SOURCED_SECONDARY": 3,
+      "UNKNOWN": 21
+    },
+    "criticalParams": 20,
+    "criticalParamsSourced": 3,
+    "criticalParamsUnknown": 17,
+    "interfaces": 12,
+    "interfacesBlocked": 12,
+    "sources": 22,
+    "sourcesFetchedThisRound": 3,
+    "sourcesUnreachable": 4,
+    "conflictCases": 4,
+    "examples": 2
+  },
+  "note": "PASS 表示 BOM 结构与证据纪律自洽，且关键未知项被如实保留；不代表任何尺寸已工程验证。"
+}

@@ -1,0 +1,119 @@
+{
+  "schema": "carlab.r09.kinematicsRun.v1",
+  "date": "2026-11-14",
+  "command": "node src-experiments/kinematics/run-checks.mjs",
+  "valueBasis": "DEMO_ASSUMPTION",
+  "passCount": 17,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "P01_design_assembles",
+      "pass": true,
+      "code": "KIN-OK",
+      "residual": 3.469446951953614e-17,
+      "camberRad": -0.039974195069001156
+    },
+    {
+      "id": "P02_sweep_keeps_arm_radius",
+      "pass": true,
+      "upperRange": 1.2199685706093533e-12,
+      "points": 7
+    },
+    {
+      "id": "P03_camber_and_toe_change",
+      "pass": true,
+      "camberRange": 0.053550506744730095,
+      "toeRange": 0.027725587914484724
+    },
+    {
+      "id": "P04_macpherson_camber_differs",
+      "pass": true,
+      "sla": -0.0546312784560413,
+      "macpherson": 0.0028311911080176914
+    },
+    {
+      "id": "P05_engineering_millimetres_match",
+      "pass": true,
+      "design": -0.039974195069001156,
+      "converted": -0.039974195069001156
+    },
+    {
+      "id": "P06_missing_basis_is_demo",
+      "pass": true,
+      "valueBasis": "DEMO_ASSUMPTION"
+    },
+    {
+      "id": "P07_five_link_distance_constraints",
+      "pass": true,
+      "ok": true,
+      "code": "KIN-OK",
+      "maxLinkError": 2.220446049250313e-16
+    },
+    {
+      "id": "N01_sourced_without_citation_rejected",
+      "pass": true,
+      "code": "KIN-E-BASIS"
+    },
+    {
+      "id": "N02_scale_rejected",
+      "pass": true,
+      "code": "KIN-E-SCALE"
+    },
+    {
+      "id": "N03_reflection_without_flag_rejected",
+      "pass": true,
+      "code": "KIN-E-MIRROR"
+    },
+    {
+      "id": "N04_right_side_positive_x_rejected",
+      "pass": true,
+      "code": "KIN-E-SIDE"
+    },
+    {
+      "id": "N05_declared_length_conflict",
+      "pass": true,
+      "code": "KIN-E-LENGTH",
+      "detail": {
+        "name": "tieRod",
+        "declared": 0.5,
+        "actual": 0.28089143810376277,
+        "error": 0.21910856189623723
+      }
+    },
+    {
+      "id": "N06_travel_limit",
+      "pass": true,
+      "code": "KIN-E-TRAVEL"
+    },
+    {
+      "id": "N07_wrong_joint_type",
+      "pass": true,
+      "code": "KIN-E-JOINT"
+    },
+    {
+      "id": "N08_short_tierod_does_not_converge",
+      "pass": true,
+      "code": "KIN-E-CONVERGE",
+      "residual": 0.012378234796192988
+    },
+    {
+      "id": "N09_shock_limit_rejected",
+      "pass": true,
+      "shock": 0.38913171047939427,
+      "code": "KIN-E-LIMIT"
+    },
+    {
+      "id": "P08_explicit_right_mirror_assembles",
+      "pass": true,
+      "left": -0.039974195069001156,
+      "right": -0.039974195069001156
+    }
+  ],
+  "highlights": {
+    "designCamberRad": -0.039974195069001156,
+    "slaCamberAt40mm": -0.0546312784560413,
+    "macphersonCamberAt40mm": 0.0028311911080176914,
+    "fiveLinkOk": true
+  }
+}

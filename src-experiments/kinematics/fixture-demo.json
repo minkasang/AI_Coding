@@ -1,0 +1,21 @@
+{
+  "valueBasis": "DEMO_ASSUMPTION",
+  "sources": ["R-04 fictional fixture, not a production vehicle"],
+  "side": "left",
+  "note": "坐标是虚构夹具。真实硬点仍然缺失。",
+  "hardpoints": {
+    "upperAxisA": [0.28, 0.22, 0.13],
+    "upperAxisB": [0.24, 0.2, -0.13],
+    "upperBall": [0.55, 0.18, 0.01],
+    "lowerAxisA": [0.32, -0.04, 0.16],
+    "lowerAxisB": [0.26, -0.07, -0.16],
+    "lowerBall": [0.62, -0.06, 0],
+    "tieInner": [0.26, 0.06, 0.15],
+    "tieOuter": [0.54, 0.05, 0.13],
+    "wheelCenter": [0.72, 0, 0],
+    "spindleAxis": [0.9990887470879062, -0.03996354988351625, 0.014986331206318593],
+    "shockChassis": [0.36, 0.34, 0.02],
+    "diffOutput": [0.12, -0.02, 0],
+    "strutTop": [0.42, 0.56, 0.02]
+  }
+}

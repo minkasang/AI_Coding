@@ -1,0 +1,371 @@
+{
+  "schemaVersion": "R06-BOM-0.1",
+  "artifact": "R-06-minimal-assembly-bom",
+  "owner": "qwen4",
+  "taskId": "R-06",
+  "date": "2026-11-14",
+  "status": "PROPOSED_NOT_APPROVED",
+  "purpose": "首个轮端—双叉臂悬架纵切样板的最小 BOM、连接界面与尺寸证据需求。供 Gemini R-08（资产/CAD）、Grok R-09（运动学）、DeepSeek R-07（字段兼容）直接消费。关键连接尺寸缺证据时保持 null + UNKNOWN，不用演示值悄悄填满。",
+
+  "scope": {
+    "sample": "左前单角（FL）轮端—双叉臂悬架纵切",
+    "corner": "FL",
+    "cornerCount": 1,
+    "suspensionTopology": "DOUBLE_WISHBONE",
+    "hubBearingGeneration": "GEN1",
+    "hubGenerationRationale": "选 Gen1（双列角接触球轴承 + 独立轮毂法兰）而非 Gen3：Gen1 的轴承外形尺寸可由公开目录代号获得（d/D/B），Gen3 的双法兰几何高度车型专属、本轮几乎全 UNKNOWN。Gen3 作为后续变体保留。",
+    "brakeType": "FLOATING_CALIPER_DISC",
+    "drivenWheel": "CONDITIONAL",
+    "drivenWheelNote": "若样板为驱动轮则必须含半轴外端 CV 关节；驱动形式属 R-01 变体决策，本轮标 OPEN，不擅自定案。",
+    "vehicleClass": "PASSENGER",
+    "vehicleClassNote": "乘用车样板。商用车零件（如 Alcoa 33MM 法兰螺母）不得混入，见 conflictCases CC-02。",
+    "rp01Anchors": ["ASSY-20-001", "ASSY-30-001", "ASSY-40-007", "ASSY-20-014"],
+    "notInScope": [
+      "整车 493 件批量清单", "右前/后轮（镜像与后悬架）", "横向稳定杆（需左右两角联动）",
+      "Gen3 轮毂单元 ASSY-30-003", "轮胎分层 PART-30-021..026（外购不可拆总成，分层仅示意）",
+      "转向器本体/齿条/小齿轮/转向柱/方向盘（上游转向，仅保留拉杆端接口参考点）",
+      "减振器内部阀片组 PART-20-024", "混动专用总成", "燃烧/传热/排放", "轮胎有限元", "碰撞与法规认证"
+    ]
+  },
+
+  "unitPolicy": {
+    "linear": "mm",
+    "angle": "deg",
+    "mass": "kg",
+    "force": "N",
+    "torque": "N·m",
+    "rimDiameterException": "轮辋直径按行业惯例以 inch 记录，必须显式给出 mm 换算值（1 in = 25.4 mm）",
+    "simulationSide": "m / kg / s / N",
+    "conversionNote": "本文件属工程/CAD 侧，一律 mm。进入 Three.js/cannon-es 前显式除以 1000，禁止在浏览器侧再乘一次缩放。"
+  },
+
+  "framePolicy": {
+    "worldFrame": "UNFROZEN_PENDING_RP07",
+    "browserCodeFact": "现有演示为 +X=左、+Y=上、+Z=前进（src/parts/chassis.js:285-291,361 实测）",
+    "cadLocalFact": "CAD 轮端以自身局部 Z 轴为轴向，不自动与浏览器世界一致（AUDIT_2026-11-14_BATCH2.md §1）",
+    "rule": "本文件所有硬点一律以『相对基准 + 方向语义』表达，禁止写世界绝对坐标，禁止单方面冻结 Frame",
+    "localFrameSuggestion": {
+      "wheelEnd": "原点=轮毂轴承外圈与转向节配合面的中心；Z=车轮旋转轴（指向车外为正）；X=纵向（前进方向）；Y=垂向。左右件用镜像标志而非负缩放。",
+      "knuckle": "原点=下球铰中心；Z=主销轴线方向（上球铰中心−下球铰中心）；X=纵向；Y=由右手系导出。",
+      "controlArm": "原点=车架侧枢轴中心连线中点；X=沿枢轴连线；Z=指向球铰中心。",
+      "damper": "原点=下安装点；Z=沿活塞杆轴线指向上支座。",
+      "note": "以上为建议，需 RP-07 与 DeepSeek R-07 统一后冻结；本轮不宣布已冻结。"
+    }
+  },
+
+  "gradeEnum": ["SOURCED", "SOURCED_SECONDARY", "ENGINEERING_INFERENCE", "DEMO_ASSUMPTION", "UNKNOWN", "OUT_OF_SCOPE"],
+  "necessityEnum": ["MECHANISM_REQUIRED", "FUNCTION_REQUIRED_DEFERRED", "VISUAL_OPTIONAL", "DEFERRED_OUT_OF_SCOPE"],
+  "errorTypeEnum": [
+    "CRITICAL_PARAM_FILLED_BY_DEMO",
+    "UNKNOWN_PARAM_HAS_VALUE",
+    "SOURCED_PARAM_WITHOUT_SOURCE",
+    "CATALOG_TOPOLOGY_MISMATCH",
+    "INTERFACE_DIMENSION_CONFLICT",
+    "MIXED_VEHICLE_PART",
+    "LICENSE_UNCLEAR",
+    "UNIT_OR_FRAME_INCONSISTENT",
+    "WORLD_FRAME_FROZEN_WITHOUT_APPROVAL",
+    "INTERFACE_BLOCKED_UNDECLARED",
+    "DANGLING_REFERENCE",
+    "DEFERRED_WITHOUT_REASON"
+  ],
+
+  "sources": [
+    {
+      "id": "N01", "title": "NSK — 5 Bearing Designations（官方 HTML）",
+      "url": "https://www.nsk.com/tools-resources/abc-bearings/bearing-designations/",
+      "kind": "external", "publisher": "NSK", "vehicleClass": "UNIVERSAL",
+      "accessedAt": "2026-11-14", "retrieval": "FETCHED_THIS_ROUND", "grade": "EVIDENCE",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION", "usedForClaim": true, "usedForGeometry": false,
+      "verbatim": [
+        "indicates its type, boundary dimensions, dimensional and running accuracies, internal clearance, and other specifications",
+        "dimensions are specified with one or two digits indicating width/height and diameter"
+      ],
+      "supports": "轴承代号编码了类型与外形尺寸这一原则（官方制造商陈述）。",
+      "doesNotSupport": "页面未提及 DAC 系列或汽车轮毂轴承，未给任何数值表；不能据此断定 DAC42800042 的具体 d/D/B，也不能推定内部几何、配合公差或预紧。"
+    },
+    {
+      "id": "N02", "title": "123bearing — DAC42800042 产品页（分销商）",
+      "url": "https://www.123bearing.com/bearing-housing/deep-groove-bearing/single-row/dac42800042",
+      "kind": "external", "publisher": "123bearing（分销商，非制造商）", "vehicleClass": "UNIVERSAL",
+      "accessedAt": "2026-11-14", "retrieval": "FETCHED_THIS_ROUND", "grade": "EVIDENCE_SECONDARY",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION", "usedForClaim": true, "usedForGeometry": true,
+      "verbatim": ["42x80x42 mm", "Deep groove ball bearing", "SINGLE ROW"],
+      "supports": "该代号对应内径 42 mm、外径 80 mm、宽 42 mm 的外形尺寸（分销商陈述）。",
+      "doesNotSupport": "**类型分类与制造商口径冲突**：本页标为单列深沟球轴承，而 NSK HUB I 目录与另一分销商称双列角接触（见 CC-01）。无密封、保持架、球数、接触角、载荷额定值、公差或配合数据。不得据此建模内部结构。"
+    },
+    {
+      "id": "N03", "title": "Remlagret — DAC42800042 PTI 轮毂轴承（分销商）",
+      "url": "https://www.remlagret.se/en/products/dac42800042-pti-hjullager-42x80x42",
+      "kind": "external", "publisher": "Remlagret（分销商）", "vehicleClass": "UNIVERSAL",
+      "accessedAt": "2026-11-14", "retrieval": "SNIPPET_ONLY_HTTP_429", "grade": "UNKNOWN",
+      "license": "UNKNOWN", "usedForClaim": false, "usedForGeometry": false,
+      "verbatim": [],
+      "supports": "无（本轮抓取返回 429，仅检索摘要可见 d=42/D=80/B=42 与 double-row angular contact）。",
+      "doesNotSupport": "摘要不得作为已核实事实使用；仅用于说明存在类型分类分歧，需后续复核。"
+    },
+    {
+      "id": "N04", "title": "NSK — Wheel Bearings HUB I For Automotive Aftermarket（官方目录 e4803a）",
+      "url": "https://www.nsk.com/content/dam/nsk/common/catalogs/ctrgPdf/automotive/e4803a.pdf",
+      "kind": "external", "publisher": "NSK", "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14", "retrieval": "PDF_BINARY_UNPARSEABLE", "grade": "UNKNOWN",
+      "license": "PUBLIC_MANUFACTURER_CATALOG", "usedForClaim": false, "usedForGeometry": false,
+      "verbatim": [],
+      "supports": "无（PDF 为 FlateDecode 压缩流，网页抓取无法解析；下载到工作区外被权限策略拦截，未绕过）。",
+      "doesNotSupport": "检索摘要显示 HUB I 为双列角接触球轴承(BWD)与双列圆锥滚子、且 NSK 用代号表示外形尺寸/类型/规格代码，但**本轮未取得正文**，不作为已核实事实。这是最有价值的待取来源。"
+    },
+    {
+      "id": "N05", "title": "OZ Racing — The wheels / Measurement and Details（官方）",
+      "url": "https://www.ozracing.com/world-of-oz/technology/the-wheel",
+      "kind": "external", "publisher": "OZ Racing", "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14", "retrieval": "FETCHED_THIS_ROUND", "grade": "EVIDENCE",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION", "usedForClaim": true, "usedForGeometry": false,
+      "verbatim": [
+        "distance between the centre line of the rim wheel and the part of the wheel where the car's hub gets seated",
+        "diameter of the circle that connects the centre of the fixing holes",
+        "diameter of the center hole where the car's hub gets seated",
+        "width of the part of the wheel where the tyre is fitted"
+      ],
+      "supports": "ET/PCD/中心孔/轮辋宽度的**定义与测量参考面**；直径以英寸计、其余以 mm 计。",
+      "doesNotSupport": "**页面只给定义，不给任何具体数值装配参数**（无 PCD/CB/ET 的 mm 值）。不得据此声称任何车轮的具体配合尺寸。"
+    },
+    {
+      "id": "N06", "title": "Bridgestone AU — Learn And Calculate Tyre Sizes（官方）",
+      "url": "https://www.bridgestone.com.au/learn/understanding-tyre-sizes",
+      "kind": "external", "publisher": "Bridgestone", "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14", "retrieval": "HTTP_403", "grade": "UNKNOWN",
+      "license": "UNKNOWN", "usedForClaim": false, "usedForGeometry": false,
+      "verbatim": [],
+      "supports": "无（403）。检索摘要给出 205=宽度 mm、55=扁平比、R16=子午线+16 英寸轮辋。",
+      "doesNotSupport": "摘要不作为已核实事实；轮胎标记约定本轮标 ENGINEERING_INFERENCE，具体规格标 DEMO_ASSUMPTION。"
+    },
+    {
+      "id": "N07", "title": "BCcampus — Tire Sizes and Calculations（公开工程教材）",
+      "url": "https://pressbooks.bccampus.ca/tradeskillsforsuccessnumeracy/chapter/tire-sizes-and-calculations/",
+      "kind": "external", "publisher": "BCcampus", "vehicleClass": "UNIVERSAL",
+      "accessedAt": "2026-11-14", "retrieval": "HTTP_403", "grade": "UNKNOWN",
+      "license": "UNKNOWN", "usedForClaim": false, "usedForGeometry": false,
+      "verbatim": [],
+      "supports": "无（403）。检索摘要含算例 205 mm × 0.55 = 112.75 mm。",
+      "doesNotSupport": "摘要不作为已核实事实；本文件的轮胎算例由代码实测公式 M02 独立支持。"
+    },
+    {
+      "id": "N08", "title": "Alcoa — Lug nuts / Maintaining Alcoa wheel nuts（RP-01 S17 复用）",
+      "url": "https://www.alcoawheels.com/north-america/en/lug-nuts/",
+      "kind": "external", "publisher": "Alcoa", "vehicleClass": "COMMERCIAL",
+      "accessedAt": "2026-11-14", "retrieval": "REUSED_FROM_RP01_NOT_REFETCHED", "grade": "EVIDENCE",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION", "usedForClaim": true, "usedForGeometry": false,
+      "supports": "存在两个不同螺母家族：1.5 英寸球面座螺母与 33MM 两片式法兰螺母；法兰螺母用于 hub-piloted 车轮，帽螺母用于 stud-piloted 车轮；『改装螺母不是车轮定位件』。",
+      "doesNotSupport": "**这是商用车车轮体系**，不得用于本乘用车样板的螺栓/螺母规格或座型；见 CC-02 混配风险。"
+    },
+    {"id": "R05", "title": "SKF — Wheel hub bearings and kits, passenger vehicles（RP-01 S05 复用）", "url": "https://www.skfvertevo.com/nam/en/product-assortment/passenger-vehicles/hub-bearings-kits", "kind": "external", "publisher": "SKF", "vehicleClass": "PASSENGER", "accessedAt": "2026-11-14", "retrieval": "REUSED_FROM_RP01_NOT_REFETCHED", "grade": "EVIDENCE", "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION", "usedForClaim": true, "usedForGeometry": false, "supports": "HBU1=双列角接触球轴承+配对滚道+多唇密封；HBU2 法兰与外圈集成；HBU3 双法兰且内侧球列仍有独立内圈；ABS 脉冲环可选配。", "doesNotSupport": "无任何具体尺寸、公差、配合或预紧数值；不能据此建模内部滚道。"},
+    {"id": "R06", "title": "NTN Americas — Wheel hubs（RP-01 S06 复用）", "url": "https://ntnamericas.com/products/wheel-hubs/", "kind": "external", "publisher": "NTN", "vehicleClass": "PASSENGER", "accessedAt": "2026-11-14", "retrieval": "REUSED_FROM_RP01_NOT_REFETCHED", "grade": "EVIDENCE", "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION", "usedForClaim": true, "usedForGeometry": false, "supports": "GEN1 两列滚动体；GEN2 带卡箍/法兰/安装孔的套圈；GEN3 集成法兰分别连接底盘与制动盘。", "doesNotSupport": "无尺寸数值，无配合公差。"},
+    {"id": "R07", "title": "Brembo — 摩擦片拆装说明 doc 280496（RP-01 S07 复用）", "url": "https://www.bremboparts.com/africa/en/support/car/car-fitting/instructions-for-disassembly-and-installation-of-brake-pads-for-car-and-commercial-vehicles-280496", "kind": "external", "publisher": "Brembo", "vehicleClass": "UNIVERSAL", "accessedAt": "2026-11-14", "retrieval": "REUSED_FROM_RP01_NOT_REFETCHED", "grade": "EVIDENCE", "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION", "usedForClaim": true, "usedForGeometry": false, "supports": "固定式卡钳 type A 与浮动式 type B 明确区分；固定硬件名为 retaining clips/fixing pins/springs/screws；存在 dust cap cover 与 wear indicator connector；shims 可单独更换。", "doesNotSupport": "无盘径/盘厚/帽高/活塞径/摩擦片轮廓数值；不得据此定任何制动尺寸。"},
+    {"id": "R10", "title": "Bosch — Wheel-speed sensor（RP-01 S10 复用）", "url": "https://www.bosch-mobility.com/en/solutions/sensors/wheel-speed-sensor/", "kind": "external", "publisher": "Bosch", "vehicleClass": "PASSENGER", "accessedAt": "2026-11-14", "retrieval": "REUSED_FROM_RP01_NOT_REFETCHED", "grade": "EVIDENCE", "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION", "usedForClaim": true, "usedForGeometry": false, "supports": "霍尔技术集成单芯片；读取多极磁环或钢质齿圈编码器；消费方为 ABS/ESP。", "doesNotSupport": "无气隙、安装孔位或编码环尺寸数值。"},
+    {"id": "R15", "title": "Michelin — How are tires made（RP-01 S15 复用）", "url": "https://www.michelinman.com/auto/auto-tips-and-advice/tires-101/how-are-tires-made", "kind": "external", "publisher": "Michelin", "vehicleClass": "PASSENGER", "accessedAt": "2026-11-14", "retrieval": "REUSED_FROM_RP01_NOT_REFETCHED", "grade": "EVIDENCE", "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION", "usedForClaim": true, "usedForGeometry": false, "supports": "轮胎分层命名顺序：内衬层/帘布层/下胎圈区/胎圈/胎侧/冠部帘层/帽层/胎面。", "doesNotSupport": "无各层厚度、帘线角度或材料参数；分层不得当作可建模实体。"},
+    {"id": "R03", "title": "KYB Australia FAQ（RP-01 S03 复用）", "url": "https://kyb.com.au/faqs/", "kind": "external", "publisher": "KYB", "vehicleClass": "PASSENGER", "accessedAt": "2026-11-14", "retrieval": "REUSED_FROM_RP01_NOT_REFETCHED", "grade": "EVIDENCE", "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION", "usedForClaim": true, "usedForGeometry": false, "supports": "防尘罩与缓冲块是可独立更换件，建议与减振器同时更换。", "doesNotSupport": "无行程、安装长度、弹簧刚度或阻尼力数值。"},
+    {"id": "R19", "title": "ISO 4000-1:2024 乘用车轮胎与轮辋 第1部分（SIS 记录，RP-01 S19 复用）", "url": "https://www.sis.se/produkter/gummi-och-plastindustri/dack/dack-for-vagfordon/iso-4000-12024/", "kind": "external", "publisher": "ISO / SIS", "vehicleClass": "PASSENGER", "accessedAt": "2026-11-14", "retrieval": "REUSED_FROM_RP01_CATALOG_RECORD_ONLY", "grade": "EVIDENCE_TITLE_ONLY", "license": "STANDARD_FULL_TEXT_NOT_PURCHASED", "usedForClaim": true, "usedForGeometry": false, "supports": "标准号与标题存在、第13版 2024-03-15 批准、状态 Valid；范围是米制系列乘用车轮胎的标记/尺寸/负荷等级。", "doesNotSupport": "无条款原文，不得引用任何具体尺寸表、公差或负荷指数数值。"},
+    {"id": "R22", "title": "ISO 15:2017 滚动轴承 径向轴承 外形尺寸总方案（SIS 记录，RP-01 S22 复用）", "url": "https://www.sis.se/en/produkter/mechanical-systems-and-components-for-general-use/bearings/rolling-bearings/iso-152017/", "kind": "external", "publisher": "ISO / SIS", "vehicleClass": "UNIVERSAL", "accessedAt": "2026-11-14", "retrieval": "REUSED_FROM_RP01_CATALOG_RECORD_ONLY", "grade": "EVIDENCE_TITLE_ONLY", "license": "STANDARD_FULL_TEXT_NOT_PURCHASED", "usedForClaim": true, "usedForGeometry": false, "supports": "2017-07-20 批准、Valid；范围为直径系列 7/8/9/0/1/2/3/4 径向轴承优选外形尺寸。", "doesNotSupport": "**不覆盖轮毂单元法兰**；无条款原文，不得据此填任何配合公差。"},
+    {"id": "M01", "title": "本地实测：演示轮胎规格表", "path": "src/specs.js:59-98", "kind": "local-measurement", "vehicleClass": "PASSENGER", "accessedAt": "2026-11-14", "retrieval": "READ_THIS_ROUND", "grade": "EVIDENCE", "license": "PROJECT_OWN_CODE", "usedForClaim": true, "usedForGeometry": false, "locator": "src/specs.js:59-98", "supports": "touring 规格 spec='205/55 R16'、width=205、aspect=55、rimInch=16；rimStyle 含 widthInch=6.5、contour='J'、etMm=42、bolts=5、pcdMm=112.0、centerBoreMm=66.6；品牌 'AURA' 型号 'QUIET CRUISE' 为**虚构产品名**。", "doesNotSupport": "这些是演示常量，不是任何 OEM 或轮胎厂商的公开规格；不得当作 SOURCED 尺寸使用。"},
+    {"id": "M02", "title": "本地实测：轮胎几何推导公式", "path": "src/specs.js:219-226", "kind": "local-measurement", "vehicleClass": "UNIVERSAL", "accessedAt": "2026-11-14", "retrieval": "READ_THIS_ROUND", "grade": "EVIDENCE", "license": "PROJECT_OWN_CODE", "usedForClaim": true, "usedForGeometry": true, "locator": "src/specs.js:222-224", "supports": "sidewallHeight = sectionWidth × aspect/100；rimRadius = rimInch × 0.0254 / 2；outerRadius = rimRadius + sidewallHeight。即代码已实现标准标记算术。", "doesNotSupport": "公式只给名义外半径，不含载荷下沉、生长、公差或实际滚动半径；不得当作真实滚动半径。"},
+    {"id": "M03", "title": "本地实测：车轮安装尺寸兜底常量", "path": "src/specs.js:228-232", "kind": "local-measurement", "vehicleClass": "PASSENGER", "accessedAt": "2026-11-14", "retrieval": "READ_THIS_ROUND", "grade": "EVIDENCE", "license": "PROJECT_OWN_CODE", "usedForClaim": true, "usedForGeometry": false, "locator": "src/specs.js:228-232", "supports": "rimWidth 缺省 = (width/25.4)×0.82；etMm 缺省 35；pcdMm 缺省 114.3；centerBoreMm 缺省 67.1。**这些是代码兜底常量，不是来源数据**。", "doesNotSupport": "不得把 114.3/67.1/35 当作任何车型的公开配合尺寸；0.82 的轮辋宽度比例是演示假设而非标准。"},
+    {"id": "M04", "title": "本地实测：悬架硬点与摆臂拉伸行为", "path": "src/parts/chassis.js:294-296,61-75,433-440", "kind": "local-measurement", "vehicleClass": "PASSENGER", "accessedAt": "2026-11-14", "retrieval": "READ_THIS_ROUND", "grade": "EVIDENCE", "license": "PROJECT_OWN_CODE", "usedForClaim": true, "usedForGeometry": false, "locator": "src/parts/chassis.js:294-296", "supports": "upperPivot(±0.29,0.11,z)、lowerPivot(±0.27,−0.09,z)、shockTop(±0.40,0.26,z) 为写死常量；摆臂长度每帧 aimSpan 重算后 scale.z 拉伸。", "doesNotSupport": "这些是演示硬点，不是任何真实车辆的硬点；不得作为 Grok 运动学的真实输入。"},
+    {"id": "M05", "title": "本地实测：RP-04 演示参数（已复审 APPROVED）", "path": "cad/experiments/planning_feasibility/params.json", "kind": "local-measurement", "vehicleClass": "PASSENGER", "accessedAt": "2026-11-14", "retrieval": "READ_THIS_ROUND", "grade": "EVIDENCE", "license": "PROJECT_OWN_CODE", "usedForClaim": true, "usedForGeometry": false, "locator": "cad/experiments/planning_feasibility/params.json", "supports": "该文件含 hub OD152/thk14/CB67.1/pilot84/PCD114.3/5 螺栓、轴承代号 DAC42800042、螺柱 M14x1.5；RP-04 复审已把 ISO 273 M14 修正为 fine15.0/medium15.5/coarse16.5。", "doesNotSupport": "复审明确零件几何仍为**演示性假设**，未验证真实配合公差/预紧/轴承构造；其 PCD114.3/CB67.1 与 M03 的代码兜底常量一致，**不是目录来源**。"},
+    {"id": "M06", "title": "本地实测：RP-01 几何缺口清单", "path": "docs/planning/evidence/RP-01-geometry-needs.json", "kind": "project-internal", "vehicleClass": "UNIVERSAL", "accessedAt": "2026-11-14", "retrieval": "READ_THIS_ROUND", "grade": "EVIDENCE", "license": "PROJECT_OWN_ARTIFACT", "usedForClaim": true, "usedForGeometry": false, "locator": "docs/planning/evidence/RP-01-geometry-needs.json", "supports": "493 零件中 SOURCED=0；SYS-30 有 31 项、SYS-20 有 88 项缺几何依据。", "doesNotSupport": "不代表这些零件不存在或分类错误，只代表尺寸无来源。"}
+  ],
+
+  "parameterRequirements": [
+    {"id": "PR-01", "name": "轮胎断面宽", "unit": "mm", "appliesTo": ["BOM-30-005"], "critical": false, "grade": "DEMO_ASSUMPTION", "value": 205, "sourceId": "M01", "referencePoint": "轮胎最大断面宽度处（不含胎侧字标凸起）", "evidenceNeeded": "轮胎厂商产品页或 ISO 4000-1 尺寸表", "minimumVerification": "选定标记后即可由算术推导包络，无需 OEM 数据", "demoNote": "取自演示规格 205/55 R16；品牌型号为虚构，不得声称 OEM", "blockingDownstream": null},
+    {"id": "PR-02", "name": "扁平比", "unit": "%", "appliesTo": ["BOM-30-005"], "critical": false, "grade": "DEMO_ASSUMPTION", "value": 55, "sourceId": "M01", "referencePoint": "胎侧高度/断面宽", "evidenceNeeded": "同 PR-01", "minimumVerification": "标记的一部分", "demoNote": "演示规格", "blockingDownstream": null},
+    {"id": "PR-03", "name": "轮辋直径", "unit": "in", "unitConversion_mm": 406.4, "appliesTo": ["BOM-30-019", "BOM-30-005"], "critical": false, "grade": "DEMO_ASSUMPTION", "value": 16, "sourceId": "M01", "referencePoint": "轮辋胎圈座直径", "evidenceNeeded": "轮辋厂商规格或 ISO 4000-2 轮廓表", "minimumVerification": "标记的一部分；1 in = 25.4 mm", "demoNote": "演示规格", "blockingDownstream": null},
+    {"id": "PR-04", "name": "轮胎名义外径", "unit": "mm", "appliesTo": ["BOM-30-005"], "critical": false, "grade": "ENGINEERING_INFERENCE", "value": 631.9, "sourceId": "M02", "referencePoint": "通过车轮旋转轴的直径", "evidenceNeeded": "由 PR-01/02/03 算术推导", "minimumVerification": "406.4 + 2×(205×0.55) = 631.9 mm；与 src/specs.js:222-224 公式一致", "demoNote": "输入为演示假设，算术为工程推断；**不是实测滚动半径**，不含载荷下沉与公差", "blockingDownstream": null},
+    {"id": "PR-05", "name": "轮辋宽度与法兰轮廓", "unit": "in", "unitConversion_mm": 165.1, "appliesTo": ["BOM-30-019"], "critical": false, "grade": "DEMO_ASSUMPTION", "value": 6.5, "sourceId": "M01", "referencePoint": "轮辋两法兰内侧间距", "evidenceNeeded": "轮辋厂商规格；轮廓代号需 ISO 4000-2 条款", "minimumVerification": "6.5J 为演示选择；J 轮廓的标准条款本轮 UNKNOWN", "demoNote": "代码缺省算法 (width/25.4)×0.82 是演示假设，不是标准（M03）", "blockingDownstream": null},
+    {"id": "PR-06", "name": "车轮螺栓孔节圆 PCD", "unit": "mm", "appliesTo": ["BOM-30-019", "BOM-30-006"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": "N05", "referencePoint": "各固定孔中心所在圆的直径（N05 定义）", "evidenceNeeded": "车轮/轮毂厂商尺寸图或车型装配规格，需带图号/版本", "minimumVerification": "**必须与轮毂法兰 PCD 一致**，否则车轮无法安装；缺此值不得建模车轮-轮毂连接", "demoNote": null, "blockingDownstream": "Gemini 不得生成车轮/轮毂螺栓孔；Grok 不得固定轮心横向位置", "conflictNote": "演示代码兜底 114.3（M03）与 touring 规格 112.0（M01）不一致，且均非来源数据；RP-04 params.json 的 114.3 与兜底常量同源（M05）"},
+    {"id": "PR-07", "name": "中心孔直径 CB", "unit": "mm", "appliesTo": ["BOM-30-019", "BOM-30-006"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": "N05", "referencePoint": "轮毂定心中心孔直径（N05 定义）", "evidenceNeeded": "车轮厂商尺寸图 + 轮毂法兰导向直径", "minimumVerification": "必须与轮毂导向凸台直径匹配（定心方式：hub-piloted vs stud-piloted 需先定）", "demoNote": null, "blockingDownstream": "Gemini 不得生成中心孔与导向凸台配合", "conflictNote": "兜底 67.1（M03）与 touring 66.6（M01）不一致，均非来源数据"},
+    {"id": "PR-08", "name": "轮辋偏距 ET", "unit": "mm", "appliesTo": ["BOM-30-019"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": "N05", "referencePoint": "轮辋中心线到轮毂安装面的距离（N05 定义）", "evidenceNeeded": "车轮厂商尺寸图", "minimumVerification": "决定轮心横向位置与包络，必须与悬架/翼子板包络联立检查", "demoNote": null, "blockingDownstream": "Gemini 不得定位车轮安装面；Grok 不得计算主销偏距/ scrub radius"},
+    {"id": "PR-09", "name": "车轮螺栓数量", "unit": "count", "appliesTo": ["BOM-30-029"], "critical": false, "grade": "DEMO_ASSUMPTION", "value": 5, "sourceId": "M01", "referencePoint": "均布于 PCD 圆", "evidenceNeeded": "车型装配规格", "minimumVerification": "演示选择 5；与 PCD 一起才有意义", "demoNote": "不得单独当作真实车型配置", "blockingDownstream": null},
+    {"id": "PR-10", "name": "车轮螺栓/螺母螺纹与座型", "unit": "thread+seat", "appliesTo": ["BOM-30-029", "BOM-30-009"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "螺栓轴线与座面接触形式", "evidenceNeeded": "乘用车车轮紧固件规范（螺纹规格 + 座型：球面/锥面/平面法兰）", "minimumVerification": "座型必须与轮辋座面一致，否则夹紧失效；**不得用商用车螺母家族替代**", "demoNote": null, "blockingDownstream": "Gemini 不得生成螺栓/螺母与座面", "conflictNote": "唯一可引用的紧固件来源 N08 属商用车（CC-02），本轮不适用；RP-04 的 M14x1.5 为演示假设"},
+    {"id": "PR-11", "name": "轮毂轴承内径 d", "unit": "mm", "appliesTo": ["BOM-30-002"], "critical": true, "grade": "SOURCED_SECONDARY", "value": 42, "sourceId": "N02", "referencePoint": "轴承内圈孔直径", "evidenceNeeded": "制造商目录尺寸表（优先）；当前为分销商陈述", "minimumVerification": "需与轴颈/转向节配合设计联立；仅有名义值不足以定配合", "demoNote": null, "blockingDownstream": null, "conflictNote": "类型分类存在分歧，见 CC-01；外形尺寸两分销商一致但官方正文未取得（N04）"},
+    {"id": "PR-12", "name": "轮毂轴承外径 D", "unit": "mm", "appliesTo": ["BOM-30-002", "BOM-20-016"], "critical": true, "grade": "SOURCED_SECONDARY", "value": 80, "sourceId": "N02", "referencePoint": "轴承外圈外圆柱直径", "evidenceNeeded": "制造商目录尺寸表", "minimumVerification": "决定转向节轴承孔名义直径；配合公差仍 UNKNOWN（PR-15）", "demoNote": null, "blockingDownstream": null},
+    {"id": "PR-13", "name": "轮毂轴承宽度 B", "unit": "mm", "appliesTo": ["BOM-30-002"], "critical": true, "grade": "SOURCED_SECONDARY", "value": 42, "sourceId": "N02", "referencePoint": "轴承总宽（内圈宽度口径需确认）", "evidenceNeeded": "制造商目录尺寸表，需区分内圈宽/外圈宽/总宽", "minimumVerification": "决定转向节孔深与卡簧槽位置；分销商口径可能混淆 B 的定义", "demoNote": null, "blockingDownstream": null, "conflictNote": "N03 摘要区分 width inner ring / width outer，本轮未取得正文，B 的口径标 OPEN"},
+    {"id": "PR-14", "name": "轴承内部几何（球数/接触角/保持架/滚道）", "unit": "mixed", "appliesTo": ["BOM-30-002"], "critical": false, "grade": "UNKNOWN", "value": null, "sourceId": "R05", "referencePoint": "轴承内部", "evidenceNeeded": "制造商内部结构图或授权 CAD", "minimumVerification": "首轮**不建模内部**，按外购不可拆总成的外形包络处理", "demoNote": null, "blockingDownstream": "Gemini 不得凭想象画滚道/球/保持架"},
+    {"id": "PR-15", "name": "轴承配合公差（转向节孔/轴颈）", "unit": "tolerance", "appliesTo": ["BOM-30-002", "BOM-20-016"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": "R22", "referencePoint": "配合圆柱面", "evidenceNeeded": "ISO 286/ISO 492 等级条款或制造商配合推荐（需正式全文）", "minimumVerification": "**缺此值不得声称压装配合正确**；ISO 15 不覆盖轮毂法兰（R22）", "demoNote": null, "blockingDownstream": "Gemini 不得生成过盈/间隙配合；不得声称装配已验证"},
+    {"id": "PR-16", "name": "轮毂法兰几何（PCD/导向凸台/法兰外径/厚度）", "unit": "mm", "appliesTo": ["BOM-30-006"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "轮毂安装面", "evidenceNeeded": "轮毂厂商尺寸图或车型装配图", "minimumVerification": "必须与 PR-06/07/08 一致；这是车轮能否装上的关键连接", "demoNote": null, "blockingDownstream": "Gemini 不得生成轮毂法兰；RP-04 的 OD152/thk14/pilot84 均为演示假设（M05）"},
+    {"id": "PR-17", "name": "球铰锥度/螺纹/安装高度", "unit": "mixed", "appliesTo": ["BOM-20-003", "BOM-20-010"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "球铰锥柄轴线与球心", "evidenceNeeded": "球铰厂商目录尺寸图（锥度如 1:8 需条款/图号支持）", "minimumVerification": "锥度与转向节锥孔必须一致，否则无法紧固；球心位置是运动学硬点", "demoNote": null, "blockingDownstream": "Gemini 不得生成锥柄；Grok 不得固定球心硬点"},
+    {"id": "PR-18", "name": "上摆臂枢轴中心距与衬套尺寸", "unit": "mm", "appliesTo": ["BOM-20-001", "BOM-20-002"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "两衬套中心连线", "evidenceNeeded": "摆臂厂商尺寸图或车型硬点表", "minimumVerification": "决定上摆臂运动平面；缺此值运动学不可解", "demoNote": null, "blockingDownstream": "Grok 不得求解上摆臂约束；Gemini 不得定臂长"},
+    {"id": "PR-19", "name": "下摆臂枢轴中心距/球铰中心距", "unit": "mm", "appliesTo": ["BOM-20-008", "BOM-20-009"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "衬套中心连线中点 → 下球铰中心", "evidenceNeeded": "摆臂厂商尺寸图或车型硬点表", "minimumVerification": "与 PR-18/PR-20 联立决定主销轴线与轮心轨迹", "demoNote": null, "blockingDownstream": "Grok 不得求解下摆臂约束；R-01 已证明现有代码用 scale 拉伸达标（M04）"},
+    {"id": "PR-20", "name": "转向节硬点几何（上下球铰中心/轴承孔轴线/拉杆安装点）", "unit": "mm", "appliesTo": ["BOM-20-016"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "以下球铰中心为原点的局部系", "evidenceNeeded": "转向节厂商尺寸图或车型硬点表", "minimumVerification": "这是整个纵切样板的几何锚；缺此值所有下游硬点都是虚构", "demoNote": null, "blockingDownstream": "Gemini 不得生成转向节；Grok 只能用明确标注虚构的硬点做隔离原型"},
+    {"id": "PR-21", "name": "减振器行程/伸展长度/压缩长度/安装点距", "unit": "mm", "appliesTo": ["BOM-20-022", "BOM-20-023"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": "R03", "referencePoint": "下安装点中心 → 上支座中心", "evidenceNeeded": "减振器厂商目录（如 KYB  part number 对应行程与安装长度）", "minimumVerification": "行程必须覆盖悬架跳动包络，否则干涉或悬空", "demoNote": null, "blockingDownstream": "Grok 不得设定行程限位；Gemini 不得定筒身/杆长"},
+    {"id": "PR-22", "name": "弹簧刚度/自由长/线径/圈数", "unit": "mixed", "appliesTo": ["BOM-20-019"], "critical": false, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "弹簧轴线", "evidenceNeeded": "弹簧厂商目录或车型悬架规格", "minimumVerification": "首轮可用明确演示假设做视觉，但不得声称动力学真实", "demoNote": null, "blockingDownstream": "Grok 不得声称操稳/侧倾真实"},
+    {"id": "PR-23", "name": "制动盘直径/厚度/帽高/摩擦环内径", "unit": "mm", "appliesTo": ["BOM-40-046"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": "R07", "referencePoint": "盘旋转轴与轮毂安装面", "evidenceNeeded": "制动盘厂商目录尺寸图（含帽高与安装孔）", "minimumVerification": "盘径必须与卡钳桥跨距匹配；帽高决定卡钳轴向位置", "demoNote": null, "blockingDownstream": "Gemini 不得生成制动盘与卡钳相对位置"},
+    {"id": "PR-24", "name": "卡钳活塞径/桥跨距/安装孔距", "unit": "mm", "appliesTo": ["BOM-40-034", "BOM-40-035", "BOM-40-048"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": "R07", "referencePoint": "卡钳安装面与活塞轴线", "evidenceNeeded": "卡钳厂商目录尺寸图", "minimumVerification": "浮动卡钳需导向销位置与桥跨距；缺此值无法装配", "demoNote": null, "blockingDownstream": "Gemini 不得生成卡钳体/支架"},
+    {"id": "PR-25", "name": "摩擦片轮廓/厚度/背板尺寸", "unit": "mm", "appliesTo": ["BOM-40-042"], "critical": false, "grade": "UNKNOWN", "value": null, "sourceId": "R07", "referencePoint": "摩擦片背板平面", "evidenceNeeded": "摩擦片厂商目录（含轮廓图号）", "minimumVerification": "首轮可按盘径演示假设，但不得声称制动性能", "demoNote": null, "blockingDownstream": null},
+    {"id": "PR-26", "name": "内外拉杆长度/螺纹/球铰锥度", "unit": "mm", "appliesTo": ["BOM-20-074", "BOM-20-075"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "齿条侧端点 → 转向臂端点", "evidenceNeeded": "转向器/拉杆厂商目录尺寸图", "minimumVerification": "决定前束与转向几何；R-01 已证明现有代码拉杆端写死并被动拉伸", "demoNote": null, "blockingDownstream": "Grok 不得求解转向约束；Gemini 不得定拉杆长"},
+    {"id": "PR-27", "name": "半轴外端 CV 关节包络/ plunging 行程/花键规格", "unit": "mm", "appliesTo": ["BOM-60-021"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "CV 关节中心与花键轴线", "evidenceNeeded": "CV 关节厂商目录尺寸图", "minimumVerification": "仅驱动轮需要；必须覆盖悬架跳动时的角度与长度变化", "demoNote": null, "blockingDownstream": "Gemini 不得生成半轴；驱动形式未定前本项 applicability=CONDITIONAL"},
+    {"id": "PR-28", "name": "紧固件性能等级/拧紧扭矩/预紧力", "unit": "class+N·m", "appliesTo": ["BOM-20-006", "BOM-20-013", "BOM-20-017", "BOM-40-041", "BOM-40-049"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "螺栓轴线与夹紧面", "evidenceNeeded": "ISO 898-1 性能等级条款 + 车型拧紧规范（需正式全文）", "minimumVerification": "**缺此值不得声称连接强度可靠**；不得用自写公式冒充标准（RP-04 返工教训）", "demoNote": null, "blockingDownstream": "Gemini 可按演示假设画螺栓外形，但不得标注等级/扭矩为已验证"},
+    {"id": "PR-29", "name": "轮罩/翼子板干涉包络", "unit": "mm", "appliesTo": ["BOM-30-005", "BOM-20-016"], "critical": true, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "轮心局部系下的包络体", "evidenceNeeded": "车身轮罩曲面或车型包络规范", "minimumVerification": "必须覆盖跳动+转向全工况；现有代码无此检查（R-01 已指出）", "demoNote": null, "blockingDownstream": "Gemini/Grok 不得声称无干涉"},
+    {"id": "PR-30", "name": "摆臂衬套内外径/宽度/刚度", "unit": "mixed", "appliesTo": ["BOM-20-002", "BOM-20-009"], "critical": false, "grade": "UNKNOWN", "value": null, "sourceId": null, "referencePoint": "衬套轴线", "evidenceNeeded": "衬套厂商目录尺寸图", "minimumVerification": "首轮外形可演示假设；刚度不得声称真实", "demoNote": null, "blockingDownstream": null}
+  ],
+
+  "bom": [
+    {"id": "BOM-20-016", "rp01Ref": "PART-20-016", "name": "转向节本体（双叉臂前）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "ASSY-SAMPLE", "assemblyBoundary": "STRUCTURAL_ANCHOR", "params": ["PR-12", "PR-15", "PR-17", "PR-20", "PR-29"], "note": "整个纵切样板的几何锚；所有硬点相对它定义"},
+    {"id": "BOM-20-001", "rp01Ref": "PART-20-001", "name": "上摆臂本体", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-002A", "params": ["PR-18"], "note": "左右件用镜像标志，不用负缩放"},
+    {"id": "BOM-20-002", "rp01Ref": "PART-20-002", "name": "上摆臂内衬套（前/后）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 2, "parent": "BOM-20-002A", "params": ["PR-18", "PR-30"]},
+    {"id": "BOM-20-003", "rp01Ref": "PART-20-003", "name": "上球铰总成", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-002A", "params": ["PR-17"], "note": "外购件，内部不建模"},
+    {"id": "BOM-20-004", "rp01Ref": "PART-20-004", "name": "上球铰防尘罩", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-003", "params": [], "note": "密封必需但尺寸可后补；R03 证明可独立更换"},
+    {"id": "BOM-20-005", "rp01Ref": "PART-20-005", "name": "上球铰卡簧", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-003", "params": ["PR-28"]},
+    {"id": "BOM-20-006", "rp01Ref": "PART-20-006", "name": "上摆臂枢轴螺栓与螺母", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 2, "parent": "BOM-20-002A", "params": ["PR-28"]},
+    {"id": "BOM-20-008", "rp01Ref": "PART-20-008", "name": "下摆臂本体", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-003A", "params": ["PR-19"]},
+    {"id": "BOM-20-009", "rp01Ref": "PART-20-009", "name": "下摆臂内衬套（前/后）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 2, "parent": "BOM-20-003A", "params": ["PR-19", "PR-30"]},
+    {"id": "BOM-20-010", "rp01Ref": "PART-20-010", "name": "下球铰总成", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-003A", "params": ["PR-17"]},
+    {"id": "BOM-20-011", "rp01Ref": "PART-20-011", "name": "下球铰防尘罩", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-010", "params": [], "note": "密封必需件，外形尺寸可后补；R03 证明防尘罩可独立更换，不影响机构可解性"},
+    {"id": "BOM-20-012", "rp01Ref": "PART-20-012", "name": "下球铰卡簧与槽顶螺母", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-010", "params": ["PR-28"]},
+    {"id": "BOM-20-013", "rp01Ref": "PART-20-013", "name": "下摆臂枢轴螺栓与螺母", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 2, "parent": "BOM-20-003A", "params": ["PR-28"]},
+    {"id": "BOM-20-014", "rp01Ref": "PART-20-014", "name": "减振器下安装座与衬套", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-003A", "params": ["PR-21"]},
+    {"id": "BOM-20-017", "rp01Ref": "PART-20-017", "name": "球铰→转向节紧固螺栓/螺母", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 2, "parent": "BOM-20-016", "params": ["PR-17", "PR-28"]},
+    {"id": "BOM-20-019", "rp01Ref": "PART-20-019", "name": "前螺旋弹簧", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-005A", "params": ["PR-22"]},
+    {"id": "BOM-20-020", "rp01Ref": "PART-20-020", "name": "上弹簧座与隔振垫", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-005A", "params": ["PR-21"]},
+    {"id": "BOM-20-021", "rp01Ref": "PART-20-021", "name": "下弹簧座", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-005A", "params": ["PR-21"]},
+    {"id": "BOM-20-022", "rp01Ref": "PART-20-022", "name": "减振器筒身", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-006A", "params": ["PR-21"]},
+    {"id": "BOM-20-023", "rp01Ref": "PART-20-023", "name": "活塞杆", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-006A", "params": ["PR-21"]},
+    {"id": "BOM-20-025", "rp01Ref": "PART-20-025", "name": "活塞杆油封", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-006A", "params": [], "note": "旋转/往复唇形密封，ISO 6194 适用性需确认，不得硬套"},
+    {"id": "BOM-20-026", "rp01Ref": "PART-20-026", "name": "杆导向座与衬套", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-006A", "params": [], "note": "属外购减振器内部件，首轮按总成包络处理，不单独定尺寸"},
+    {"id": "BOM-20-027", "rp01Ref": "PART-20-027", "name": "减振器防尘罩", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-006A", "params": [], "note": "R03 证明可独立更换"},
+    {"id": "BOM-20-028", "rp01Ref": "PART-20-028", "name": "缓冲块（行程限位）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-006A", "params": ["PR-21"], "note": "决定压缩极限，运动学必需"},
+    {"id": "BOM-20-029", "rp01Ref": "PART-20-029", "name": "减振器上支座（顶胶）与轴承", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-005A", "params": ["PR-21"]},
+    {"id": "BOM-20-030", "rp01Ref": "PART-20-030", "name": "活塞杆锁紧螺母", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-006A", "params": ["PR-28"]},
+    {"id": "BOM-30-002", "rp01Ref": "ASSY-30-002", "name": "轮毂轴承 Gen1（双列角接触球轴承，外购不可拆）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-016", "assemblyBoundary": "PURCHASED_NON_SERVICEABLE", "params": ["PR-11", "PR-12", "PR-13", "PR-14", "PR-15"], "note": "首轮只建外形包络，不建内部滚道/球/保持架"},
+    {"id": "BOM-30-006", "rp01Ref": "PART-30-006", "name": "独立轮毂法兰", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-30-002", "params": ["PR-06", "PR-07", "PR-16"]},
+    {"id": "BOM-30-007", "rp01Ref": "PART-30-007", "name": "轮毂锁紧螺母/铆压边", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-30-002", "params": ["PR-28"]},
+    {"id": "BOM-30-008", "rp01Ref": "PART-30-008", "name": "轴头卡簧", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-30-002", "params": ["PR-13"]},
+    {"id": "BOM-30-009", "rp01Ref": "PART-30-009", "name": "车轮螺柱（压装于轮毂）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 5, "parent": "BOM-30-006", "params": ["PR-06", "PR-09", "PR-10"]},
+    {"id": "BOM-30-019", "rp01Ref": "PART-30-019", "name": "轮辋（轮圈）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-30-004A", "params": ["PR-03", "PR-05", "PR-06", "PR-07", "PR-08"]},
+    {"id": "BOM-30-005", "rp01Ref": "ASSY-30-005", "name": "轮胎总成（外购不可拆）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-30-004A", "assemblyBoundary": "PURCHASED_NON_SERVICEABLE", "params": ["PR-01", "PR-02", "PR-03", "PR-04", "PR-29"], "note": "分层仅示意，不作为可建模实体"},
+    {"id": "BOM-30-029", "rp01Ref": "PART-30-029", "name": "车轮螺栓/螺母（按座型）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 5, "parent": "BOM-30-004A", "params": ["PR-09", "PR-10", "PR-28"]},
+    {"id": "BOM-30-031", "rp01Ref": "PART-30-031", "name": "制动盘定位螺钉", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-40-046", "params": ["PR-28"]},
+    {"id": "BOM-40-046", "rp01Ref": "PART-40-046", "name": "通风制动盘（摩擦环+筋+盘帽）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-30-006", "params": ["PR-23"], "note": "身份归 SYS-40，装配位置在轮端；沿用 RP-01 的 REF 规则不复制实体"},
+    {"id": "BOM-40-034", "rp01Ref": "PART-40-034", "name": "卡钳体（浮动式）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-40-008A", "params": ["PR-24"]},
+    {"id": "BOM-40-035", "rp01Ref": "PART-40-035", "name": "卡钳活塞", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-40-008A", "params": ["PR-24"]},
+    {"id": "BOM-40-036", "rp01Ref": "PART-40-036", "name": "活塞矩形密封圈", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-40-035", "params": [], "note": "RP-01 已标 OPEN：矩形截面挤压密封不是 ISO 6194 唇形密封，不得硬套标准"},
+    {"id": "BOM-40-038", "rp01Ref": "PART-40-038", "name": "卡钳导向销（浮动式）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 2, "parent": "BOM-40-008A", "params": ["PR-24"]},
+    {"id": "BOM-40-041", "rp01Ref": "PART-40-041", "name": "卡钳安装螺栓", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 2, "parent": "BOM-40-008A", "params": ["PR-28"]},
+    {"id": "BOM-40-042", "rp01Ref": "PART-40-042", "name": "摩擦片总成（背板+摩擦材料）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 2, "parent": "BOM-40-008A", "params": ["PR-25"]},
+    {"id": "BOM-40-048", "rp01Ref": "PART-40-048", "name": "卡钳支架", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-016", "params": ["PR-24"]},
+    {"id": "BOM-40-049", "rp01Ref": "PART-40-049", "name": "卡钳支架螺栓", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 2, "parent": "BOM-40-048", "params": ["PR-28"]},
+    {"id": "BOM-20-074", "rp01Ref": "PART-20-074", "name": "内拉杆（轴向接头 axial joint）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-014A", "params": ["PR-26"], "note": "与外拉杆端是两个不同零件，不得合并（RP-01 §7.2 案例 8）"},
+    {"id": "BOM-20-075", "rp01Ref": "PART-20-075", "name": "外拉杆端（tie rod end）", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-014A", "params": ["PR-17", "PR-26"]},
+    {"id": "BOM-20-076", "rp01Ref": "PART-20-076", "name": "拉杆锁紧螺母", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-014A", "params": ["PR-28"]},
+    {"id": "BOM-20-078", "rp01Ref": "PART-20-078", "name": "拉杆端卡簧与槽顶螺母", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-20-075", "params": ["PR-28"]},
+    {"id": "BOM-60-021", "rp01Ref": "PART-60-021", "name": "半轴外端 CV 关节", "necessity": "MECHANISM_REQUIRED", "qtyPerCorner": 1, "parent": "BOM-30-006", "applicability": "CONDITIONAL_DRIVEN_WHEEL", "params": ["PR-27"], "note": "仅驱动轮需要；驱动形式未定，不擅自定案"},
+    {"id": "BOM-20-018", "rp01Ref": "PART-20-018", "name": "轮速传感器安装支架", "necessity": "FUNCTION_REQUIRED_DEFERRED", "qtyPerCorner": 0, "qtyWhenIncluded": 1, "parent": "BOM-20-016", "params": [], "deferReason": "属电子功能必需，不影响本轮机械运动链；气隙与孔位无来源（R10）"},
+    {"id": "BOM-30-016", "rp01Ref": "PART-30-016", "name": "ABS 磁性编码环", "necessity": "FUNCTION_REQUIRED_DEFERRED", "qtyPerCorner": 0, "qtyWhenIncluded": 1, "parent": "BOM-30-002", "params": [], "deferReason": "Gen1 方案下编码环为选配（R05/R10）；首轮不建"},
+    {"id": "BOM-20-007", "rp01Ref": "PART-20-007", "name": "外倾/主销后倾调整垫片", "necessity": "VISUAL_OPTIONAL", "qtyPerCorner": 0, "parent": "BOM-20-002A", "params": [], "deferReason": "首轮用固定硬点，调整件延期；不影响机构可解性"},
+    {"id": "BOM-30-027", "rp01Ref": "PART-30-027", "name": "气门嘴", "necessity": "VISUAL_OPTIONAL", "qtyPerCorner": 0, "parent": "BOM-30-004A", "params": [], "deferReason": "视觉细节，不影响机械装配"},
+    {"id": "BOM-30-028", "rp01Ref": "PART-30-028", "name": "车轮平衡块", "necessity": "VISUAL_OPTIONAL", "qtyPerCorner": 0, "parent": "BOM-30-019", "params": [], "deferReason": "视觉细节"},
+    {"id": "BOM-30-030", "rp01Ref": "PART-30-030", "name": "中心盖", "necessity": "VISUAL_OPTIONAL", "qtyPerCorner": 0, "parent": "BOM-30-019", "params": [], "deferReason": "视觉细节"},
+    {"id": "BOM-30-032", "rp01Ref": "PART-30-032", "name": "轴头防尘盖", "necessity": "VISUAL_OPTIONAL", "qtyPerCorner": 0, "parent": "BOM-30-002", "params": [], "deferReason": "视觉/防护细节，首轮延期"},
+    {"id": "BOM-20-024", "rp01Ref": "PART-20-024", "name": "活塞与阀片组", "necessity": "DEFERRED_OUT_OF_SCOPE", "qtyPerCorner": 0, "parent": "BOM-20-006A", "params": [], "deferReason": "减振器内部阀系属动力学建模，RP-01 已标 DEFERRED；首轮只建外形与行程"},
+    {"id": "BOM-40-043", "rp01Ref": "PART-40-043", "name": "消音片 shims", "necessity": "DEFERRED_OUT_OF_SCOPE", "qtyPerCorner": 0, "parent": "BOM-40-042", "params": [], "deferReason": "NVH 细节，不影响机构装配"},
+    {"id": "BOM-40-044", "rp01Ref": "PART-40-044", "name": "防响夹/固定销/弹簧", "necessity": "DEFERRED_OUT_OF_SCOPE", "qtyPerCorner": 0, "parent": "BOM-40-008A", "params": [], "deferReason": "摩擦片固定硬件，R07 证明存在但尺寸无来源；首轮延期"},
+    {"id": "BOM-20-031", "rp01Ref": "PART-20-031", "name": "横向稳定杆本体", "necessity": "DEFERRED_OUT_OF_SCOPE", "qtyPerCorner": 0, "parent": "ASSY-SAMPLE", "params": [], "deferReason": "稳定杆联动左右两角，单角样板无法闭合其约束；需两角样板再纳入"}
+  ],
+
+  "assemblyGroups": [
+    {"id": "ASSY-SAMPLE", "name": "左前轮端—双叉臂纵切样板（根）", "rp01Ref": "ASSY-30-001 + ASSY-20-001"},
+    {"id": "BOM-20-002A", "name": "上摆臂总成", "rp01Ref": "ASSY-20-002"},
+    {"id": "BOM-20-003A", "name": "下摆臂总成", "rp01Ref": "ASSY-20-003"},
+    {"id": "BOM-20-005A", "name": "前弹簧与减振器", "rp01Ref": "ASSY-20-005"},
+    {"id": "BOM-20-006A", "name": "减振器总成", "rp01Ref": "ASSY-20-006"},
+    {"id": "BOM-30-004A", "name": "车轮总成", "rp01Ref": "ASSY-30-004"},
+    {"id": "BOM-40-008A", "name": "卡钳总成", "rp01Ref": "ASSY-40-008"},
+    {"id": "BOM-20-014A", "name": "转向拉杆组（仅轮端侧）", "rp01Ref": "ASSY-20-014"}
+  ],
+
+  "interfaces": [
+    {"id": "IF-01", "between": ["BOM-30-002", "BOM-20-016"], "type": "PRESS_FIT_OUTER_RING", "requiredParams": ["PR-12", "PR-15"], "grade": "UNKNOWN", "blockedDownstream": true, "conflictRisk": "外径有名义值但配合公差无来源，不得声称压装正确"},
+    {"id": "IF-02", "between": ["BOM-30-006", "BOM-30-019"], "type": "BOLTED_FLANGE_PILOTED", "requiredParams": ["PR-06", "PR-07", "PR-16"], "grade": "UNKNOWN", "blockedDownstream": true, "conflictRisk": "PCD/CB 必须双向一致；演示代码两处常量互相矛盾（M01 vs M03）"},
+    {"id": "IF-03", "between": ["BOM-30-009", "BOM-30-029"], "type": "THREADED_STUD_NUT_SEAT", "requiredParams": ["PR-10", "PR-28"], "grade": "UNKNOWN", "blockedDownstream": true, "conflictRisk": "座型必须匹配；唯一可引用来源属商用车（CC-02）"},
+    {"id": "IF-04", "between": ["BOM-20-003", "BOM-20-016"], "type": "TAPERED_BALL_JOINT_STUD", "requiredParams": ["PR-17", "PR-28"], "grade": "UNKNOWN", "blockedDownstream": true, "conflictRisk": "锥度不一致则无法紧固；球心是运动学硬点"},
+    {"id": "IF-05", "between": ["BOM-20-010", "BOM-20-016"], "type": "TAPERED_BALL_JOINT_STUD", "requiredParams": ["PR-17", "PR-28"], "grade": "UNKNOWN", "blockedDownstream": true},
+    {"id": "IF-06", "between": ["BOM-20-002", "BOM-20-016"], "type": "BUSHING_PIVOT_BOLTED", "requiredParams": ["PR-18", "PR-30", "PR-28"], "grade": "UNKNOWN", "blockedDownstream": true, "conflictRisk": "现有代码枢轴写死并拉伸摆臂（M04），不得沿用"},
+    {"id": "IF-07", "between": ["BOM-20-009", "BOM-20-016"], "type": "BUSHING_PIVOT_BOLTED", "requiredParams": ["PR-19", "PR-30", "PR-28"], "grade": "UNKNOWN", "blockedDownstream": true},
+    {"id": "IF-08", "between": ["BOM-20-014", "BOM-20-022"], "type": "BOLTED_EYE_BUSHING", "requiredParams": ["PR-21"], "grade": "UNKNOWN", "blockedDownstream": true},
+    {"id": "IF-09", "between": ["BOM-40-046", "BOM-30-006"], "type": "BOLTED_ROTOR_TO_HUB", "requiredParams": ["PR-16", "PR-23"], "grade": "UNKNOWN", "blockedDownstream": true, "conflictRisk": "盘帽安装孔必须与轮毂法兰一致"},
+    {"id": "IF-10", "between": ["BOM-40-048", "BOM-20-016"], "type": "BOLTED_CALIPER_BRACKET", "requiredParams": ["PR-24", "PR-28"], "grade": "UNKNOWN", "blockedDownstream": true},
+    {"id": "IF-11", "between": ["BOM-20-075", "BOM-20-016"], "type": "TAPERED_TIE_ROD_END", "requiredParams": ["PR-17", "PR-26"], "grade": "UNKNOWN", "blockedDownstream": true},
+    {"id": "IF-12", "between": ["BOM-60-021", "BOM-30-006"], "type": "SPLINED_CV_STUB", "requiredParams": ["PR-27"], "grade": "UNKNOWN", "blockedDownstream": true, "applicability": "CONDITIONAL_DRIVEN_WHEEL"}
+  ],
+
+  "conflictCases": [
+    {
+      "id": "CC-01", "kind": "CATALOG_TOPOLOGY_MISMATCH",
+      "mustRemainUnknown": ["PR-14", "PR-15"],
+      "title": "同一轴承代号的类型分类互相矛盾",
+      "detail": "123bearing（N02，本轮已抓取）把 DAC42800042 归为『单列深沟球轴承』；NSK HUB I 官方目录标题与检索摘要（N04，正文不可解析）称 HUB I 为双列角接触球轴承(BWD)/双列圆锥滚子；另一分销商摘要（N03，429）称双列角接触。外形尺寸 42×80×42 各方一致，但**列数与接触类型不一致**。",
+      "whyItMatters": "单列深沟球与双列角接触的滚道、球数、预紧与承载方向完全不同。若按分销商标签建模内部结构，会得到一个看着像轮毂轴承但力学错误的零件。",
+      "resolution": "外形尺寸可用（SOURCED_SECONDARY），内部几何一律 UNKNOWN（PR-14），首轮按外购不可拆总成只建包络。必须取得 NSK/NTN 官方目录正文才能定类型。",
+      "errorToEmit": "CATALOG_TOPOLOGY_MISMATCH: 代号 DAC42800042 的类型在来源 N02 与 N04 之间不一致（single-row deep groove vs double-row angular contact）；已拒绝据此生成内部几何，需制造商正文裁决。"
+    },
+    {
+      "id": "CC-02", "kind": "MIXED_VEHICLE_PART",
+      "mustRemainUnknown": ["PR-10"],
+      "title": "商用车车轮螺母家族被误用于乘用车样板",
+      "detail": "唯一可引用的车轮紧固件来源 N08（Alcoa）描述的是 1.5 英寸球面座螺母与 33MM 两片式法兰螺母，属商用车 hub-piloted/stud-piloted 体系。本样板 vehicleClass=PASSENGER。",
+      "whyItMatters": "33MM 法兰螺母与乘用车 M12/M14 螺栓体系不兼容；混用会得到装不上的车轮连接，且看起来『有来源』。",
+      "resolution": "PR-10 保持 UNKNOWN，不得用 N08 填值；需乘用车车轮紧固件规范。",
+      "errorToEmit": "MIXED_VEHICLE_PART: 样板 vehicleClass=PASSENGER，但来源 N08 的零件 vehicleClass=COMMERCIAL；已拒绝用于 PR-10。"
+    },
+    {
+      "id": "CC-03", "kind": "INTERFACE_DIMENSION_CONFLICT",
+      "mustRemainUnknown": ["PR-06", "PR-07", "PR-08"],
+      "title": "演示代码内部 PCD/中心孔常量自相矛盾",
+      "detail": "src/specs.js:231-232 的兜底常量为 PCD 114.3 / CB 67.1；同一文件 touring 规格 rimStyle 为 PCD 112.0 / CB 66.6 / ET 42（M01/M03）。RP-04 的 params.json 用了 114.3/67.1（M05），与兜底常量同源而非目录来源。",
+      "whyItMatters": "同一项目内两套互不一致的『看起来像标准』的数值，下游若随便取一个就会把矛盾固化进 CAD。",
+      "resolution": "PR-06/07/08 全部 UNKNOWN；明确记录两套常量都不是来源数据，禁止任选其一当作事实。",
+      "errorToEmit": "INTERFACE_DIMENSION_CONFLICT: PCD 在 M01(112.0) 与 M03(114.3) 之间不一致，且两者 grade 均为演示常量；已拒绝填值，需车轮/轮毂厂商尺寸图。"
+    },
+    {
+      "id": "CC-04", "kind": "CRITICAL_PARAM_FILLED_BY_DEMO",
+      "title": "虚构品牌轮胎规格被当作真实 OEM 数据",
+      "detail": "演示轮胎品牌/型号为 'AURA QUIET CRUISE'、'VULCAN APEX SPORT'（M01），是虚构产品；标记 205/55 R16 本身是行业通用尺寸记法。",
+      "whyItMatters": "标记可用来算包络，但把它当成某真实轮胎的规格会制造虚假可信度。",
+      "resolution": "PR-01/02/03/05/09 标 DEMO_ASSUMPTION 并注明虚构品牌；PR-04 的外径算术标 ENGINEERING_INFERENCE，且明确不是实测滚动半径。",
+      "errorToEmit": "CRITICAL_PARAM_FILLED_BY_DEMO: 若把 PR-06/PR-07 等 critical 参数用演示常量填值，必须拒绝；非 critical 的演示值需带 demoNote。"
+    }
+  ],
+
+  "examples": [
+    {
+      "id": "EX-01", "name": "轮胎名义包络（可复算，供 Gemini 建外形 / Grok 设轮心）",
+      "inputs": {"sectionWidth_mm": 205, "aspect_pct": 55, "rimDiameter_in": 16},
+      "arithmetic": "sidewall = 205 × 0.55 = 112.75 mm；rimRadius = 16 × 25.4 / 2 = 203.2 mm；outerRadius = 203.2 + 112.75 = 315.95 mm；OD = 631.9 mm",
+      "expected": {"sidewall_mm": 112.75, "rimRadius_mm": 203.2, "outerRadius_mm": 315.95, "outerDiameter_mm": 631.9},
+      "grade": "ENGINEERING_INFERENCE", "inputGrade": "DEMO_ASSUMPTION", "sourceId": "M02",
+      "limits": "名义几何，不含载荷下沉、高速生长、公差与实际滚动半径；不得用于动力学验收"
+    },
+    {
+      "id": "EX-02", "name": "轴承外形包络 + 明确未知项（供 Gemini 建包络，禁止建内部）",
+      "inputs": {"designation": "DAC42800042", "d_mm": 42, "D_mm": 80, "B_mm": 42},
+      "expected": {"bore_mm": 42, "outerDiameter_mm": 80, "width_mm": 42, "internalGeometry": null, "fitTolerance": null},
+      "grade": "SOURCED_SECONDARY", "sourceId": "N02",
+      "limits": "类型分类存在 CC-01 冲突；内部几何与配合公差 UNKNOWN；B 的口径（内圈宽/总宽）待官方正文确认",
+      "mustNotInfer": ["球数", "接触角", "保持架形状", "滚道曲率", "预紧力", "压装过盈量"]
+    }
+  ],
+
+  "downstreamGuidance": {
+    "gemini-3-8-flash (R-08)": "可以立即建模的只有：轮胎名义包络（EX-01）、轴承外形包络（EX-02）、以及明确标 DEMO_ASSUMPTION 的演示外形。**12 个连接界面全部 blockedDownstream=true**，不得生成配合面/螺栓孔/锥柄/卡钳相对位置并声称装配正确。",
+    "grok (R-09)": "PR-17/18/19/20/21/26 全 UNKNOWN，真实硬点不可得。可继续用**明确标注虚构**的硬点做隔离约束求解原型（R-04 已批准的做法），但不得声称本样板运动学已验证；禁止沿用 src/ 的写死枢轴与 scale 拉伸（M04）。",
+    "deepseek (R-07)": "本文件提供 BOM 字段与装配身份需求建议：necessity / assemblyBoundary / params[].grade / interfaces[].blockedDownstream / applicability。请把这些映射到 PartDefinition/PartInstance/Joint 草案，**不要由本文件冻结全局 Schema**。",
+    "gpt-6 (RP-07)": "需裁决：①世界 Frame 与局部 Frame 变换；②PCD/CB/ET 的权威来源策略（是否投入取得厂商尺寸图）；③是否接受『首轮只建包络、内部与配合全 UNKNOWN』作为样板验收口径。"
+  },
+
+  "openIssues": [
+    {"id": "O01", "issue": "NSK HUB I 官方目录正文未取得（PDF 不可解析，下载到工作区外被权限策略拦截）", "impact": "轴承类型分类冲突 CC-01 无法裁决", "next": "请总控决定是否允许在工作区内保存一份目录 PDF，或由人工提供正文摘录"},
+    {"id": "O02", "issue": "12 个连接界面全部缺关键尺寸", "impact": "首轮不能声称机械装配正确", "next": "需厂商尺寸图或车型硬点表；否则样板只能做包络与明确虚构硬点的运动学原型"},
+    {"id": "O03", "issue": "世界 Frame 未冻结", "impact": "局部 Frame 建议无法转成生产变换", "next": "RP-07 裁决"},
+    {"id": "O04", "issue": "驱动形式未定（是否驱动轮）", "impact": "BOM-60-021 与 IF-12 的适用性待定", "next": "R-01 变体决策 / 总控"},
+    {"id": "O05", "issue": "轮胎标记约定的官方来源本轮 403", "impact": "约定标 ENGINEERING_INFERENCE 而非 SOURCED", "next": "后续复核 Bridgestone/Michelin 或 ISO 4000-1 正文"},
+    {"id": "O06", "issue": "所有标准仅核实标题/范围，无条款原文", "impact": "公差/等级/扭矩一律 UNKNOWN", "next": "总控裁决资料可达性策略（延续 RP-01 GAP-014）"}
+  ]
+}

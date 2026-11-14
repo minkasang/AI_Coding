@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARLAB Asset Quality Gates Specification",
+  "version": "1.0.0",
+  "author": "gemini-3-8-flash",
+  "task": "R-08",
+  "description": "Six-dimensional quality gates, error taxonomy, provenance requirements, and tolerance thresholds for automated CAD/GLB asset generation.",
+  "provenanceTiers": {
+    "ISO_STANDARD": {
+      "level": "L1",
+      "description": "Derived directly from international mechanical standards (e.g. ISO 273 clearance, ISO 261 metric threads, ISO 724).",
+      "certificationRequired": true,
+      "usableForProductionClearance": true
+    },
+    "OEM_SPEC": {
+      "level": "L2",
+      "description": "Retrieved from verified OEM engineering data sheets, service manuals, or CMM inspection.",
+      "certificationRequired": true,
+      "usableForProductionClearance": true
+    },
+    "REVERSE_ENGINEERED": {
+      "level": "L3",
+      "description": "Derived from optical 3D scan / photogrammetry / point clouds with tolerance uncertainty bounds.",
+      "certificationRequired": false,
+      "usableForProductionClearance": false
+    },
+    "DEMO_ESTIMATE": {
+      "level": "L4",
+      "description": "Parametric approximation created for visual simulation, prototyping or unit tests.",
+      "certificationRequired": false,
+      "usableForProductionClearance": false,
+      "mandatoryDisclaimer": "DEMO ONLY: Not for mechanical clearance certification"
+    }
+  },
+  "gates": [
+    {
+      "gateId": "GATE_01_INPUT_PROVENANCE",
+      "name": "Input Specification & Provenance Gate",
+      "stage": "PRE_BUILD",
+      "checks": [
+        {
+          "checkId": "CHK_INPUT_SCHEMA",
+          "description": "Input JSON must adhere to PartTask schema with all mandatory fields present.",
+          "requiredFields": ["partId", "name", "provenance", "geometryType", "parameters", "mountFrames"],
+          "errorCode": "ERR_INPUT_SCHEMA_INVALID"
+        },
+        {
+          "checkId": "CHK_PROVENANCE_TAG",
+          "description": "Provenance must be one of the recognized tiers; DEMO_ESTIMATE must not claim production clearance.",
+          "allowedTiers": ["ISO_STANDARD", "OEM_SPEC", "REVERSE_ENGINEERED", "DEMO_ESTIMATE"],
+          "errorCode": "ERR_INPUT_UNTRUSTED_PROVENANCE"
+        },
+        {
+          "checkId": "CHK_PARAMETER_BOUNDS",
+          "description": "Physical parameters must be positive and within reasonable engineering envelopes.",
+          "rules": {
+            "outer_diameter_min_mm": 10.0,
+            "outer_diameter_max_mm": 1200.0,
+            "thickness_min_mm": 1.0,
+            "bolt_count_min": 3,
+            "bolt_count_max": 12
+          },
+          "errorCode": "ERR_INPUT_OUT_OF_BOUNDS"
+        },
+        {
+          "checkId": "CHK_POKA_YOKE_FIT",
+          "description": "Relational constraints must be satisfied (e.g. PCD > hub bore, hole > stud diameter).",
+          "errorCode": "ERR_INPUT_POKA_YOKE_FAILED"
+        }
+      ]
+    },
+    {
+      "gateId": "GATE_02_CAD_TOPOLOGY",
+      "name": "CAD Geometry & Topology Gate",
+      "stage": "CAD_BUILD",
+      "engine": "build123d / OpenCASCADE",
+      "checks": [
+        {
+          "checkId": "CHK_SOLID_VALIDITY",
+          "description": "The evaluated B-Rep solid must report valid geometry (is_valid == true).",
+          "errorCode": "ERR_GEOM_DEGENERATE"
+        },
+        {
+          "checkId": "CHK_WATERTIGHT_SHELL",
+          "description": "Solid must be a closed, watertight manifold shell with no open boundary edges (is_closed == true).",
+          "errorCode": "ERR_GEOM_NON_MANIFOLD"
+        },
+        {
+          "checkId": "CHK_NON_ZERO_VOLUME",
+          "description": "Solid volume must be strictly positive (> 1.0e-3 mm³).",
+          "minVolumeMm3": 0.001,
+          "errorCode": "ERR_GEOM_ZERO_VOLUME"
+        },
+        {
+          "checkId": "CHK_BBOX_SANITY",
+          "description": "Bounding box coordinates must be finite numbers and satisfy min < max on all axes.",
+          "errorCode": "ERR_GEOM_BBOX_INVALID"
+        }
+      ]
+    },
+    {
+      "gateId": "GATE_03_ASSEMBLY_CLEARANCE",
+      "name": "Assembly Clearance & Interference Gate",
+      "stage": "ASSEMBLY_CHECK",
+      "checks": [
+        {
+          "checkId": "CHK_ISO273_CLEARANCE",
+          "description": "Fastener clearance holes must adhere strictly to ISO 273 (Fine, Medium, or Coarse).",
+          "standardsReference": "ISO 273:1979 Fasteners -- Clearance holes for bolts and screws",
+          "errorCode": "ERR_ASSEMBLY_CLEARANCE_VIOLATION"
+        },
+        {
+          "checkId": "CHK_VOLUMETRIC_INTERFERENCE",
+          "description": "Mating non-fastener solids must have zero physical penetration volume.",
+          "maxInterferenceVolumeMm3": 0.001,
+          "errorCode": "ERR_ASSEMBLY_INTERFERENCE"
+        },
+        {
+          "checkId": "CHK_FRAME_ALIGNMENT",
+          "description": "Mounting frame positions and axes between connected components must coincide within tolerance.",
+          "positionToleranceMm": 0.05,
+          "angularToleranceDeg": 0.1,
+          "errorCode": "ERR_ASSEMBLY_FRAME_MISMATCH"
+        }
+      ]
+    },
+    {
+      "gateId": "GATE_04_TRANSFORM_PARITY",
+      "name": "Coordinate & Rigid Transform Parity Gate",
+      "stage": "TRANSFORM_EXPORT",
+      "rules": {
+        "sourceCoordinateSystem": "CAD (Z-up, right-handed, mm)",
+        "targetCoordinateSystem": "WebGL/glTF (Y-up, right-handed, m)",
+        "expectedMatrix": [
+          [0.001, 0.0, 0.0, 0.0],
+          [0.0, 0.0, 0.001, 0.0],
+          [0.0, -0.001, 0.0, 0.0],
+          [0.0, 0.0, 0.0, 1.0]
+        ]
+      },
+      "checks": [
+        {
+          "checkId": "CHK_SCALE_UNIFORMITY",
+          "description": "Scale along all axes must be exactly 0.001 (mm to m conversion).",
+          "expectedScale": 0.001,
+          "tolerance": 1e-7,
+          "errorCode": "ERR_TRANSFORM_SCALE_INVALID"
+        },
+        {
+          "checkId": "CHK_ROTATION_ORTHOGONAL",
+          "description": "Rotation matrix must be strictly orthogonal (R^T * R = I).",
+          "orthogonalityTolerance": 1e-6,
+          "errorCode": "ERR_TRANSFORM_NON_ORTHOGONAL"
+        },
+        {
+          "checkId": "CHK_CHIRALITY_PRESERVATION",
+          "description": "Determinant of normalized 3x3 transform must be +1.0 (no mirrored left-handed reflection).",
+          "expectedDet": 1.0,
+          "detTolerance": 1e-6,
+          "errorCode": "ERR_TRANSFORM_CHIRALITY"
+        }
+      ]
+    },
+    {
+      "gateId": "GATE_05_WEBGL_BUDGET",
+      "name": "WebGL Performance & Metadata Budget Gate",
+      "stage": "GLB_INSPECTION",
+      "budgets": {
+        "singlePartMaxTriangles": 15000,
+        "assemblyLOD0MaxTriangles": 60000,
+        "singlePartMaxVertices": 10000,
+        "assemblyLOD0MaxVertices": 40000,
+        "assemblyMaxFileSizeKb": 1024,
+        "mandatoryExtrasFields": ["partId", "instanceId", "provenance", "revision", "cadBoundingBoxMm"]
+      },
+      "checks": [
+        {
+          "checkId": "CHK_POLY_COUNT_BUDGET",
+          "description": "Total triangle count must not exceed budget threshold.",
+          "errorCode": "ERR_BUDGET_TRIANGLES_EXCEEDED"
+        },
+        {
+          "checkId": "CHK_FILE_SIZE_BUDGET",
+          "description": "Exported binary GLB file size must not exceed the ceiling limit.",
+          "errorCode": "ERR_BUDGET_FILESIZE_EXCEEDED"
+        },
+        {
+          "checkId": "CHK_METADATA_EXTRAS",
+          "description": "All GLB visual nodes must contain extras matching provenance and identification records.",
+          "errorCode": "ERR_METADATA_MISSING"
+        },
+        {
+          "checkId": "CHK_MESH_INSTANCING",
+          "description": "Identical parts (e.g. wheel studs) must share underlying glTF mesh data blocks.",
+          "errorCode": "ERR_INSTANCING_VIOLATION"
+        }
+      ]
+    },
+    {
+      "gateId": "GATE_06_ATOMIC_CACHE",
+      "name": "Deterministic Cache & Transaction Gate",
+      "stage": "BUILD_TRANSACTION",
+      "checks": [
+        {
+          "checkId": "CHK_DETERMINISTIC_HASH",
+          "description": "Cache key must be derived from canonical parameter serialization + pipeline engine version.",
+          "hashAlgorithm": "SHA-256",
+          "errorCode": "ERR_CACHE_FINGERPRINT_INVALID"
+        },
+        {
+          "checkId": "CHK_CACHE_INTEGRITY",
+          "description": "Cached binary assets must match SHA-256 checksum recorded in metadata manifest.",
+          "errorCode": "ERR_CACHE_CHECKSUM_MISMATCH"
+        },
+        {
+          "checkId": "CHK_ATOMIC_ROLLBACK",
+          "description": "Any failure across Gates 1-5 must cleanly delete staging outputs without contaminating production cache.",
+          "errorCode": "ERR_TRANSACTION_ABORTED"
+        }
+      ]
+    }
+  ]
+}
