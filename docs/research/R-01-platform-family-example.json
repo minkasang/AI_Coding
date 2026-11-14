@@ -1,0 +1,702 @@
+{
+  "schemaVersion": "R01-PF-0.1",
+  "artifact": "R-01-platform-family-example",
+  "owner": "qwen4",
+  "taskId": "R-01",
+  "date": "2026-11-14",
+  "status": "PROPOSED_NOT_APPROVED",
+  "purpose": "给总控一份可直接起草 PlatformFamily / VehicleVariant Schema 的最小样例：同一家族的短轴与长轴两个合法变体，加一个明确非法变体。所有数值均为演示假设或本地代码实测，不是任何 OEM 的公开或私有参数。",
+  "unitPolicy": {
+    "linear": "mm",
+    "mass": "kg",
+    "angle": "deg",
+    "simulationSide": "m / kg / s / N",
+    "conversionNote": "本文件属 CAD/工程侧，一律 mm。进入 Three.js 与 cannon-es 前必须显式除以 1000；禁止在浏览器侧再乘一次缩放。",
+    "coordinateNote": "本文件不声明世界坐标轴。硬点以『相对基准 + 方向语义』表达，世界 Frame 待 RP-07 统一裁决（审核 §3.1 列为 P0 冲突）。现有代码实测为 +X=左、+Y=上、+Z=前进，见 localMeasurements M17。"
+  },
+  "valueBasisEnum": ["DEMO_ASSUMPTION", "LOCAL_MEASUREMENT", "SOURCED", "OPEN"],
+  "failureTypeEnum": [
+    "RANGE_VIOLATION",
+    "FIXED_HARDPOINT_OVERRIDE",
+    "INTERFACE_INCOMPATIBLE",
+    "MODULE_SELECTION_INVALID",
+    "MODULE_LENGTH_INSUFFICIENT",
+    "DERIVED_DIMENSION_MISMATCH",
+    "KINEMATIC_UNRESOLVABLE",
+    "ENVELOPE_INTERFERENCE",
+    "MASS_PROPERTIES_MISSING",
+    "ARCHITECTURE_CROSSING",
+    "GLOBAL_SCALE_FORBIDDEN",
+    "UNSUPPORTED_OEM_CLAIM",
+    "REGULATORY_CLAIM_UNVERIFIED",
+    "VERDICT_SELF_INCONSISTENT"
+  ],
+  "designDecisionEnum": ["OUR_DESIGN", "OEM_PRACTICE_EVIDENCE", "ENGINEERING_INFERENCE", "OPEN_NEEDS_DECISION"],
+
+  "architectures": [
+    {
+      "id": "ARCH-BOF",
+      "name": "非承载式（独立车架承载）",
+      "nameEn": "Body-on-frame",
+      "loadPath": "路面 → 轮端 → 悬架 → 车架纵梁/横梁 → 车身悬置点 → 车身",
+      "bodyStructuralRole": "NON_STRUCTURAL",
+      "evidence": "EVIDENCE",
+      "sources": ["S4"],
+      "evidenceLimit": "S4 只证明存在独立 frame structure 且为刚度重新设计；未出现 ladder frame / body-on-frame 字样，分类名为本项目术语。",
+      "rp01Ref": "RP-01 CFG-BOF-ICE / SYS-10 SUB-10-01"
+    },
+    {
+      "id": "ARCH-UNI",
+      "name": "承载式（车身骨架承载）",
+      "nameEn": "Unibody",
+      "loadPath": "路面 → 轮端 → 悬架 → 副车架/门槛梁/地板骨架 → 车身上部",
+      "bodyStructuralRole": "STRUCTURAL",
+      "evidence": "INFERENCE",
+      "sources": ["S3"],
+      "evidenceLimit": "S3 证明同一平台可派生不同车身类型且共用不可见区域标准件；承载路径表述为本项目工程推导，未取得 OEM 结构原文。",
+      "rp01Ref": "RP-01 CFG-UNI-ICE / CFG-UNI-BEV / SYS-10 SUB-10-02"
+    }
+  ],
+
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Volkswagen Group Annual Report 2018 — Modular toolkit strategy (MQB)",
+      "url": "https://annualreport2018.volkswagenag.com/group-management-report/report-on-risks-and-opportunities/risks-and-opportunities/modular-toolkit-strategy.html",
+      "kind": "external",
+      "publisher": "Volkswagen Group",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "EVIDENCE",
+      "usedForClaim": true,
+      "verbatim": [
+        "The [Modular Transverse Toolkit (MQB)]... has created an extremely flexible vehicle architecture that permits dimensions determined by the concept – such as the wheelbase, track width, wheel size and seat position – to be harmonized throughout the Group and utilized flexibly.",
+        "Other dimensions, for example the distance between the pedals and the middle of the front wheels, are always the same"
+      ],
+      "supports": "轴距/轮距/车轮尺寸/座椅位置属概念尺寸可灵活运用；踏板到前轮中心距离属『始终相同』的另一类尺寸。即平台同时存在可变尺寸与固定基准。",
+      "doesNotSupport": "未给出任何具体毫米数值、范围上下限、模块清单或接口规格；不能据此声称我们的演示范围是大众参数。原句用 harmonized/utilized flexibly，未逐字说明每个车型如何取值。"
+    },
+    {
+      "id": "S2",
+      "title": "Toyota Global Newsroom — BEVs for global deployment (e-TNGA)",
+      "url": "https://global.toyota/en/newsroom/corporate/28474382.html",
+      "kind": "external",
+      "publisher": "Toyota Motor Corporation",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "EVIDENCE",
+      "usedForClaim": true,
+      "verbatim": [
+        "the position of the front and rear electric motors... are fixed",
+        "wheelbase, number of batteries installed, overhangs"
+      ],
+      "supports": "官方明确区分固定项（前后电机位置）与可变项（轴距、电池数量、前后悬）。",
+      "doesNotSupport": "未给出数值范围、电池宽度具体值或模块接口；本轮抓取文本未逐字出现『电池宽度固定』与『前中后三段模块』的完整原句，故该两点在本轮标 OPEN，不作为已核实事实使用。"
+    },
+    {
+      "id": "S3",
+      "title": "Toyota UK — Toyota announces new TNGA small car platform (GA-B)",
+      "url": "https://media.toyota.co.uk/toyota-announces-new-tnga-small-car-platform/",
+      "kind": "external",
+      "publisher": "Toyota UK",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "EVIDENCE",
+      "usedForClaim": true,
+      "verbatim": [
+        "wheelbase lengths, heights and track widths",
+        "body types",
+        "standardised components in out-of-sight areas"
+      ],
+      "supports": "同一小型车平台允许不同轴距、车高、轮距与车身类型，并共用不可见区域的标准件。",
+      "doesNotSupport": "未给出范围数值，未说明哪些硬点固定，未涉及非承载式车架。"
+    },
+    {
+      "id": "S4",
+      "title": "Toyota Global — Land Cruiser / GA-F structure",
+      "url": "https://global.toyota/en/newsroom/toyota/35323595.html",
+      "kind": "external",
+      "publisher": "Toyota Motor Corporation",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "EVIDENCE",
+      "usedForClaim": true,
+      "verbatim": [
+        "frame structure",
+        "the frame itself was redesigned to reduce weight and increase rigidity"
+      ],
+      "supports": "该车型保留独立车架结构，且车架本身为减重与提高刚度重新设计——说明车架是承载主体而非外观件。",
+      "doesNotSupport": "本轮抓取文本未出现 ladder frame / body-on-frame 字样，未列出同平台车型清单，未给出车架断面或悬置点规格。"
+    },
+    {
+      "id": "S5",
+      "title": "Toyota USA — Trucks Family (body-on-frame / TNGA-F)",
+      "url": "https://www.toyota.com/vehicles/trucks",
+      "kind": "external",
+      "publisher": "Toyota USA",
+      "accessedAt": "2026-11-14",
+      "retrieval": "JS_SHELL_NO_CONTENT",
+      "grade": "UNKNOWN",
+      "usedForClaim": false,
+      "verbatim": [],
+      "supports": "无。本轮抓取为 JavaScript 空壳，未取得任何正文。",
+      "doesNotSupport": "不能用于支持 TNGA-F 车型清单或 body-on-frame 表述；既有研究文档中的该条结论本轮未复核。"
+    },
+    {
+      "id": "S6",
+      "title": "Volkswagen Group Annual Report 2025 — R&D risks",
+      "url": "https://annualreport2025.volkswagen-group.com/group-management-report/report-on-risks-and-opportunities/risks-and-opportunities/research-and-development-risks.html",
+      "kind": "external",
+      "publisher": "Volkswagen Group",
+      "accessedAt": "2026-11-14",
+      "retrieval": "TIMEOUT",
+      "grade": "UNKNOWN",
+      "usedForClaim": false,
+      "verbatim": [],
+      "supports": "无。任务书列为资料起点，但本轮请求超时。",
+      "doesNotSupport": "不能声称已核实 2025 年报原文；MQB 结论改由 S1（2018 年报）本轮实际抓取支持。"
+    },
+    {
+      "id": "P1",
+      "title": "本项目既有研究：整车平台化与跨车型衍生（2026-11-12）",
+      "path": "docs/vehicle-platform-architecture-research.md",
+      "kind": "project-internal",
+      "accessedAt": "2026-11-14",
+      "retrieval": "READ_THIS_ROUND",
+      "grade": "EVIDENCE",
+      "usedForClaim": true,
+      "supports": "Architecture → PlatformFamily → VehicleVariant 层级建议、FIXED/PARAMETRIC/SWAPPABLE 三类字段、变型影响传播表、样板 A/B 思路。",
+      "doesNotSupport": "该文档自述为研究归纳，未进入代码实现；其引用的厂商页面本轮部分不可达（见 S5/S6），不能把它的转述当作本轮已核实原话。"
+    },
+    {
+      "id": "P2",
+      "title": "本项目既有研究基线 RESEARCH_BASELINE（2026-11-12）",
+      "path": "docs/research/RESEARCH_BASELINE.md",
+      "kind": "project-internal",
+      "accessedAt": "2026-11-14",
+      "retrieval": "READ_THIS_ROUND",
+      "grade": "EVIDENCE",
+      "usedForClaim": true,
+      "supports": "EVIDENCE/INFERENCE/OPEN 分级要求；OPEN 表中『同平台哪些硬点固定』『变轴距/轮距依赖如何传播』正是本任务要回答的两项。",
+      "doesNotSupport": "不代表本项目已实现跨车型自动派生或已验证动力学。"
+    },
+    {
+      "id": "P3",
+      "title": "RP-04 返工复审记录（GPT-6，2026-11-14 21:17）",
+      "path": "docs/command/reviews/AUDIT_2026-11-14_RP04_RECHECK.md",
+      "kind": "project-internal",
+      "accessedAt": "2026-11-14",
+      "retrieval": "READ_THIS_ROUND",
+      "grade": "EVIDENCE",
+      "usedForClaim": true,
+      "supports": "RP-04 已 APPROVED（研究链路与工程边界）；ISO 273 M14 间隙孔已改为 fine 15.0 / medium 15.5 / coarse 16.5 mm；隔离复测 6/6 PASS。",
+      "doesNotSupport": "明确未通过/未验证：OEM 真实零件尺寸、真实滚动轴承构造、螺柱三维螺纹、压装/预紧、刚体运动副与整车动力学；零件几何仍为演示性假设，生产 Schema 未冻结。故本提案的轮端接口数值仍保持 OPEN。"
+    },
+    {
+      "id": "L1",
+      "title": "Frank et al. 2022, How to manage vehicle platform variants? Procedia CIRP",
+      "url": "https://www.sciencedirect.com/science/article/pii/S2212827122007491",
+      "kind": "external",
+      "accessedAt": "2026-11-14",
+      "retrieval": "PRIOR_LISTED_NOT_REFETCHED",
+      "grade": "UNKNOWN",
+      "usedForClaim": false,
+      "supports": "无（本轮未抓取全文）。仅作为文献线索登记。",
+      "doesNotSupport": "不得引用其具体结论、图表或数值；本报告的变型管理规则属 OUR_DESIGN / ENGINEERING_INFERENCE。"
+    },
+    {
+      "id": "L2",
+      "title": "Tak, Chung & Chun 2000, An Optimal Design Software For Vehicle Suspension Systems, SAE 2000-01-1618",
+      "url": "https://saemobilus.sae.org/papers/optimal-design-software-vehicle-suspension-systems-2000-01-1618",
+      "kind": "external",
+      "accessedAt": "2026-11-14",
+      "retrieval": "PRIOR_LISTED_NOT_REFETCHED",
+      "grade": "UNKNOWN",
+      "usedForClaim": false,
+      "supports": "无（本轮未抓取全文）。",
+      "doesNotSupport": "不得据此声称具体硬点优化方法或数值；本报告『改轮距不能统一放大摆臂』的判断由本地代码实测 M07–M10 与工程推导支持。"
+    }
+  ],
+
+  "localMeasurements": [
+    {"id": "M01", "locator": "src/specs.js:256", "fact": "CAR_CONFIG.wheelbase = 2.46（m）", "value_mm": 2460, "grade": "EVIDENCE"},
+    {"id": "M02", "locator": "src/specs.js:257", "fact": "CAR_CONFIG.halfTrack = 0.84（m），即轮距 1680 mm", "value_mm": 840, "grade": "EVIDENCE"},
+    {"id": "M03", "locator": "src/specs.js:255", "fact": "CAR_CONFIG.mass = 920（kg），全文件无质心/轴荷/惯量字段", "value_kg": 920, "grade": "EVIDENCE"},
+    {"id": "M04", "locator": "src/parts/chassis.js:141-142", "fact": "车架纵梁为 BoxGeometry(0.052, 0.085, 2.86)，位置 x=±0.26, z=0；长度写死，不随轴距重生成", "value_mm": 2860, "grade": "EVIDENCE"},
+    {"id": "M05", "locator": "src/parts/chassis.js:147-150", "fact": "上门槛梁 CylinderGeometry 长 2.15 m，x=±0.31，写死", "value_mm": 2150, "grade": "EVIDENCE"},
+    {"id": "M06", "locator": "src/parts/chassis.js:157-158", "fact": "前后副车架横梁 BoxGeometry 宽 0.60 m，z=±halfWB（跟随轴距）", "value_mm": 600, "grade": "EVIDENCE"},
+    {"id": "M07", "locator": "src/parts/chassis.js:294-296", "fact": "upperPivot(±0.29, 0.11, z)、lowerPivot(±0.27, −0.09, z)、shockTop(±0.40, 0.26, z) 全为写死常量，不随 halfTrack 变化", "value_mm": 270, "grade": "EVIDENCE"},
+    {"id": "M08", "locator": "src/parts/chassis.js:418-423", "fact": "hubX = c.side * halfTrack；转向节位置直接用 hubX，轮距只传到轮毂/转向节", "grade": "EVIDENCE"},
+    {"id": "M09", "locator": "src/parts/chassis.js:433-440", "fact": "_lowerEnd = (hubX − side*0.14, hubY − 0.085, z)；lLen = aimSpan(lowerArm.group, lowerPivot, _lowerEnd) 后 setSpanLength(lLen)", "grade": "EVIDENCE"},
+    {"id": "M10", "locator": "src/parts/chassis.js:61-75", "fact": "setSpanLength 内 legA.scale.z = l1 / legB.scale.z = l2 —— 摆臂靠网格缩放达到目标长度，管半径与 spreadZ 不变", "grade": "EVIDENCE"},
+    {"id": "M11", "locator": "src/parts/drivetrain.js:191", "fact": "shaftLen = wheelbase − 0.14 —— 中央传动轴长度确实跟随轴距（含写死偏移 140 mm）", "value_mm": 140, "grade": "EVIDENCE"},
+    {"id": "M12", "locator": "src/parts/drivetrain.js:98,212", "fact": "halfWB = wheelbase/2；diffZList = [halfWB, −halfWB]，差速器位置跟随轴距", "grade": "EVIDENCE"},
+    {"id": "M13", "locator": "src/physics/vehicleWorld.js:185-195", "fact": "物理轮锚点 chassisConnectionPointLocal = (±halfTrack, chassisConnY, ±halfWB)，与视觉摆臂枢轴 ±0.27/±0.29 不是同一点", "grade": "EVIDENCE"},
+    {"id": "M14", "locator": "src/parts/chassis.js:247,254", "fact": "转向机壳体与齿条 z = halfWB − 0.16，跟随轴距", "value_mm": 160, "grade": "EVIDENCE"},
+    {"id": "M15", "locator": "src/parts/chassis.js:156,165", "fact": "横梁与塔顶斜撑柱 z = ±halfWB，跟随轴距；塔顶 x=±0.34 写死", "grade": "EVIDENCE"},
+    {"id": "M16", "locator": "src/parts/chassis.js:450", "fact": "转向拉杆齿条侧端点 _rackEnd.x = side*0.24 − rackShift，写死，不随轮距变化", "value_mm": 240, "grade": "EVIDENCE"},
+    {"id": "M17", "locator": "src/parts/chassis.js:285-291,361", "fact": "四角顺序 FL/FR/RL/RR，side=+1 为左；注释『左轮(+X)外侧朝 +X』，前进为 +Z", "grade": "EVIDENCE"},
+    {"id": "M18", "locator": "src/specs.js:258-266", "fact": "chassisConnY=0.08、restLength=0.34、maxTravel=0.22、stiffness=32、frictionSlip=3.2、rollInfluence=0.14；静止 hubY = 0.08 − 0.34 = −0.26 m", "grade": "EVIDENCE"},
+    {"id": "M19", "locator": "src/parts/chassis.js:298-299", "fact": "createWishbone(0.11, 0.013) / createWishbone(0.13, 0.016)：首参是 spreadZ（两腿在枢轴处的前后张开量），不是臂长；下臂 spreadZ=130 mm、管半径=16 mm", "grade": "EVIDENCE"}
+  ],
+
+  "platformFamilies": [
+    {
+      "id": "PF-DEMO-BOF-01",
+      "name": "演示非承载式越野平台家族（短轴/长轴）",
+      "nameEn": "Demo body-on-frame off-road platform family",
+      "architectureRef": "ARCH-BOF",
+      "powertrainAxis": ["ICE", "HEV"],
+      "valueBasis": "DEMO_ASSUMPTION",
+      "status": "PROPOSED_NOT_APPROVED",
+      "rp01ConfigRef": "CFG-BOF-ICE",
+      "note": "本家族只为验证规则与传播而构造。范围上限尽量由本地实测常量推导，推导规则本身是本项目设计决策，不是厂商规范。",
+      "demoRestState": {
+        "chassisConnY_mm": 80,
+        "suspensionRestLength_mm": 340,
+        "valueBasis": "LOCAL_MEASUREMENT",
+        "sources": ["M18"],
+        "note": "静止轮毂高度 hubY = chassisConnY − restLength = −260 mm。用于把轮距换算成摆臂跨度；这不是行驶姿态，只是可复算的参考状态。"
+      },
+
+      "fixedHardpoints": [
+        {
+          "id": "FH-01",
+          "name": "踏板参考面到前轮中心的纵向距离",
+          "kind": "RELATIVE_RULE",
+          "value_mm": 900,
+          "valueBasis": "DEMO_ASSUMPTION",
+          "designDecision": "OEM_PRACTICE_EVIDENCE",
+          "sources": ["S1"],
+          "rationale": "S1 原话证明『踏板到前轮中心距离始终相同』这一类固定基准存在；900 mm 是演示值，不是大众数值。",
+          "immutable": true
+        },
+        {
+          "id": "FH-02",
+          "name": "驾驶员 H 点相对前轴中心的纵向/垂向关系",
+          "kind": "RELATIVE_RULE",
+          "value_mm": {"longitudinal": -320, "vertical": 620},
+          "valueBasis": "DEMO_ASSUMPTION",
+          "designDecision": "OUR_DESIGN",
+          "sources": ["S1", "S2"],
+          "rationale": "座椅位置属可变概念尺寸（S1），但驾驶员相对前轮的位置在电动平台被明确固定（S2）。本家族选择固定 H 点相对前轴关系，把座椅排布作为可变模块。",
+          "immutable": true
+        },
+        {
+          "id": "FH-03",
+          "name": "车架纵梁断面与材料（不可参数化拉伸）",
+          "kind": "SECTION_RULE",
+          "value_mm": {"width": 52, "height": 85},
+          "valueBasis": "LOCAL_MEASUREMENT",
+          "sources": ["M04"],
+          "designDecision": "ENGINEERING_INFERENCE",
+          "rationale": "断面尺寸取自现有代码实测。加长必须换更长模块或重新设计断面，不允许把断面一起缩放。",
+          "immutable": true
+        },
+        {
+          "id": "FH-04",
+          "name": "轮端安装接口类型（螺栓法兰 + 中心导向）",
+          "kind": "INTERFACE_TYPE",
+          "value_mm": null,
+          "valueBasis": "OPEN",
+          "sources": ["M08", "P3"],
+          "designDecision": "OPEN_NEEDS_DECISION",
+          "rp01Ref": "ASSY-30-001",
+          "rationale": "接口类型固定，但 PCD/中心孔/螺栓规格的具体数值本轮不填：RP-04 虽已复审通过且 ISO 273 标签已修正为 fine 15.0 / medium 15.5 / coarse 16.5（P3），但其零件几何仍为演示假设、真实配合公差与预紧未验证，生产接口须待 RP-07 冻结。",
+          "immutable": true
+        },
+        {
+          "id": "FH-05",
+          "name": "悬架摆臂车架侧枢轴位置（相对车架纵梁中心线）",
+          "kind": "RELATIVE_RULE",
+          "value_mm": {"upperX": 290, "upperY": 110, "lowerX": 270, "lowerY": -90, "shockTopX": 400, "shockTopY": 260},
+          "valueBasis": "LOCAL_MEASUREMENT",
+          "sources": ["M07"],
+          "designDecision": "OUR_DESIGN",
+          "rationale": "现有代码把这些点写死。本家族把它们声明为固定硬点：改轮距必须换摆臂模块或拒绝，而不是移动枢轴或拉伸杆件。",
+          "immutable": true
+        }
+      ],
+
+      "parametricDimensions": [
+        {
+          "id": "PD-WB",
+          "name": "轴距",
+          "nameEn": "wheelbase",
+          "unit": "mm",
+          "min": 2460,
+          "max": 2660,
+          "valueBasis": "DEMO_ASSUMPTION",
+          "designDecision": "ENGINEERING_INFERENCE",
+          "sources": ["M01", "M04"],
+          "derivation": "上限 = 纵梁实测长度 2860 − 2 × 每端最小悬伸 100。下限取现有实测轴距 2460。",
+          "minOverhangPerEnd_mm": 100,
+          "affects": ["MS-FRAME-RAIL", "MS-PROPSHAFT", "MS-BODY-FLOOR"]
+        },
+        {
+          "id": "PD-FT",
+          "name": "前轮距",
+          "nameEn": "frontTrack",
+          "unit": "mm",
+          "min": 1680,
+          "max": 1800,
+          "valueBasis": "DEMO_ASSUMPTION",
+          "designDecision": "ENGINEERING_INFERENCE",
+          "sources": ["M02", "M07", "M19"],
+          "derivation": "下限取实测轮距 1680。上限由下摆臂模块最大允许跨度 560 mm 反推：halfTrack ≤ 908.6 mm，取整为轮距 1800 mm。",
+          "affects": ["MS-FSUSP", "MS-STEER-LINK", "MS-FENDER"]
+        },
+        {
+          "id": "PD-RT",
+          "name": "后轮距",
+          "nameEn": "rearTrack",
+          "unit": "mm",
+          "min": 1680,
+          "max": 1800,
+          "valueBasis": "DEMO_ASSUMPTION",
+          "designDecision": "ENGINEERING_INFERENCE",
+          "sources": ["M02", "M07"],
+          "derivation": "同前轮距；本家族允许前后轮距不同，但差值受 P09 约束。",
+          "affects": ["MS-RSUSP", "MS-HALFSHAFT", "MS-FENDER"]
+        },
+        {
+          "id": "PD-TW",
+          "name": "轮胎断面宽",
+          "nameEn": "tireSectionWidth",
+          "unit": "mm",
+          "min": 215,
+          "max": 255,
+          "valueBasis": "DEMO_ASSUMPTION",
+          "designDecision": "OUR_DESIGN",
+          "sources": [],
+          "derivation": "演示范围，用于轮罩包络检查；不是任何车型的实际轮胎规格。",
+          "affects": ["MS-FENDER", "MS-WHEEL"]
+        }
+      ],
+
+      "moduleSlots": [
+        {
+          "id": "MS-FRAME-RAIL",
+          "name": "车架纵梁段（前/中/后）",
+          "required": true,
+          "selectionKind": "SWAPPABLE",
+          "interfaceContractRef": "IC-FRAME-SECTION",
+          "rp01Ref": "ASSY-10-001",
+          "options": [
+            {"id": "RAIL-2860", "length_mm": 2860, "valueBasis": "LOCAL_MEASUREMENT", "sources": ["M04"], "compatibleArchitectures": ["ARCH-BOF"], "note": "现有代码中的纵梁长度"},
+            {"id": "RAIL-3100", "length_mm": 3100, "valueBasis": "DEMO_ASSUMPTION", "sources": [], "compatibleArchitectures": ["ARCH-BOF"], "note": "长假设模块：用于说明『轴距超出时应换模块而不是拉伸』"}
+          ]
+        },
+        {
+          "id": "MS-PROPSHAFT",
+          "name": "中央传动轴",
+          "required": true,
+          "selectionKind": "PARAMETRIC_REGENERATE",
+          "interfaceContractRef": "IC-SHAFT-SPLINE",
+          "rp01Ref": "ASSY-60-004",
+          "derivedLength": {"formula": "wheelbase_mm - offset_mm", "offset_mm": 140, "offsetBasis": "LOCAL_MEASUREMENT", "sources": ["M11"]},
+          "options": [
+            {"id": "SHAFT-PARAM", "length_mm": null, "valueBasis": "DEMO_ASSUMPTION", "compatibleArchitectures": ["ARCH-BOF"], "compatiblePowertrains": ["ICE", "HEV"], "note": "长度由轴距派生，必须重生成而非缩放"}
+          ]
+        },
+        {
+          "id": "MS-BODY-FLOOR",
+          "name": "车身地板/中段",
+          "required": true,
+          "selectionKind": "SWAPPABLE",
+          "interfaceContractRef": "IC-BODY-MOUNT",
+          "rp01Ref": "ASSY-10-002",
+          "options": [
+            {"id": "FLOOR-STD", "length_mm": 2150, "valueBasis": "LOCAL_MEASUREMENT", "sources": ["M05"], "compatibleArchitectures": ["ARCH-BOF"], "minWheelbase_mm": 2200, "maxWheelbase_mm": 2660},
+            {"id": "FLOOR-LONG", "length_mm": 2400, "valueBasis": "DEMO_ASSUMPTION", "sources": [], "compatibleArchitectures": ["ARCH-BOF"], "minWheelbase_mm": 2500, "maxWheelbase_mm": 2900}
+          ]
+        },
+        {
+          "id": "MS-FSUSP",
+          "name": "前悬架模块",
+          "required": true,
+          "selectionKind": "SWAPPABLE",
+          "interfaceContractRef": "IC-ARM-PIVOT",
+          "rp01Ref": "ASSY-20-001",
+          "rp01ChoiceGroup": "CG-FSUSP",
+          "options": [
+            {
+              "id": "DWB-STD",
+              "topology": "DOUBLE_WISHBONE",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sources": ["M07", "M19"],
+              "compatibleArchitectures": ["ARCH-BOF", "ARCH-UNI"],
+              "lowerArm": {"maxSpan_mm": 560, "spreadZ_mm": 130, "tubeRadius_mm": 16, "maxSpanBasis": "DEMO_ASSUMPTION", "spreadBasis": "LOCAL_MEASUREMENT"},
+              "knuckleOffset_mm": 140,
+              "lowerEndYOffset_mm": -85,
+              "note": "最大跨度 560 mm 是演示假设的工程上限；超过即判运动学不可解，禁止用 scale 拉伸达标。"
+            },
+            {
+              "id": "MACPHERSON-STD",
+              "topology": "MACPHERSON",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sources": [],
+              "compatibleArchitectures": ["ARCH-UNI"],
+              "lowerArm": {"maxSpan_mm": 420, "spreadZ_mm": 110, "tubeRadius_mm": 14, "maxSpanBasis": "DEMO_ASSUMPTION"},
+              "knuckleOffset_mm": 120,
+              "lowerEndYOffset_mm": -80,
+              "note": "承载式常用选项；在本 BOF 家族中不可选，用于演示接口/架构兼容拒绝。"
+            }
+          ]
+        },
+        {
+          "id": "MS-RSUSP",
+          "name": "后悬架模块",
+          "required": true,
+          "selectionKind": "SWAPPABLE",
+          "interfaceContractRef": "IC-ARM-PIVOT",
+          "rp01Ref": "ASSY-20-011",
+          "rp01ChoiceGroup": "CG-RSUSP",
+          "options": [
+            {"id": "SOLID-AXLE-STD", "topology": "SOLID_AXLE", "valueBasis": "DEMO_ASSUMPTION", "compatibleArchitectures": ["ARCH-BOF"], "trackPolicy": "AXLE_HOUSING_REGENERATE", "note": "整体桥：轮距变化必须重生成桥壳长度，不能只移车轮"},
+            {"id": "MULTILINK-STD", "topology": "MULTI_LINK", "valueBasis": "DEMO_ASSUMPTION", "compatibleArchitectures": ["ARCH-UNI"], "trackPolicy": "ARM_RESELECT"}
+          ]
+        },
+        {
+          "id": "MS-BODY-UPPER",
+          "name": "车身上部（车壳）",
+          "required": true,
+          "selectionKind": "SWAPPABLE",
+          "interfaceContractRef": "IC-BODY-MOUNT",
+          "rp01Ref": "SYS-10",
+          "options": [
+            {"id": "BOF-SUV-SHELL", "bodyType": "SUV", "valueBasis": "DEMO_ASSUMPTION", "compatibleArchitectures": ["ARCH-BOF"], "structuralRole": "NON_STRUCTURAL"},
+            {"id": "BOF-PICKUP-SHELL", "bodyType": "PICKUP", "valueBasis": "DEMO_ASSUMPTION", "compatibleArchitectures": ["ARCH-BOF"], "structuralRole": "NON_STRUCTURAL"},
+            {"id": "UNI-SEDAN-SHELL", "bodyType": "SEDAN", "valueBasis": "DEMO_ASSUMPTION", "compatibleArchitectures": ["ARCH-UNI"], "structuralRole": "STRUCTURAL", "note": "承载式轿车车壳：在本 BOF 家族中选它即触发架构跨界拒绝，这正是『不是换壳』的机器可检表达"}
+          ]
+        },
+        {
+          "id": "MS-POWER",
+          "name": "动力源模块",
+          "required": true,
+          "selectionKind": "SWAPPABLE",
+          "interfaceContractRef": "IC-POWER-MOUNT",
+          "rp01Ref": "ASSY-50-001",
+          "rp01ChoiceGroup": "CG-POWER",
+          "options": [
+            {"id": "ICE-INLINE4", "powertrain": "ICE", "valueBasis": "DEMO_ASSUMPTION", "compatibleArchitectures": ["ARCH-BOF", "ARCH-UNI"]},
+            {"id": "BEV-PE-MODULE", "powertrain": "BEV", "valueBasis": "DEMO_ASSUMPTION", "compatibleArchitectures": ["ARCH-UNI"], "note": "本家族 powertrainAxis 不含 BEV，选它即触发接口不兼容"}
+          ]
+        },
+        {
+          "id": "MS-FENDER",
+          "name": "轮罩/翼子板包络",
+          "required": true,
+          "selectionKind": "PARAMETRIC_REGENERATE",
+          "interfaceContractRef": "IC-BODY-MOUNT",
+          "rp01Ref": "SYS-10",
+          "options": [
+            {"id": "FENDER-DEMO", "maxHalfWidth_mm": 1050, "valueBasis": "DEMO_ASSUMPTION", "sources": [], "compatibleArchitectures": ["ARCH-BOF"], "note": "现有代码没有翼子板包络检查，这是本项目提出的新约束"}
+          ]
+        },
+        {
+          "id": "MS-STEER-LINK",
+          "name": "转向拉杆模块",
+          "required": false,
+          "selectionKind": "SWAPPABLE",
+          "interfaceContractRef": "IC-TIE-ROD",
+          "rp01Ref": "ASSY-20-014",
+          "options": [
+            {"id": "TIE-ROD-STD", "maxSpan_mm": 600, "rackEndX_mm": 240, "rackEndY_mm": -20, "rackEndZOffset_mm": -160, "armEndYOffset_mm": 10, "armEndZOffset_mm": -130, "valueBasis": "DEMO_ASSUMPTION", "rackEndBasis": "LOCAL_MEASUREMENT", "sources": ["M16"], "compatibleArchitectures": ["ARCH-BOF", "ARCH-UNI"], "note": "齿条侧端点与转向臂端点偏移取自代码实测；maxSpan 600 mm 是演示假设上限"}
+          ]
+        }
+      ],
+
+      "interfaceContracts": [
+        {"id": "IC-FRAME-SECTION", "type": "WELDED_SECTION", "fixedRef": "FH-03", "valueBasis": "OPEN", "note": "断面固定；段间连接方式与焊接/螺栓规格本轮不定义"},
+        {"id": "IC-BODY-MOUNT", "type": "BOLTED_MOUNT_WITH_ISOLATOR", "valueBasis": "OPEN", "rp01Ref": "PART-10-003 / PART-10-004 / PART-10-005", "note": "RP-01 已把车身悬置支座/隔振垫/螺栓列为 ASSUMPTION，接口数值待 RP-04/RP-07"},
+        {"id": "IC-ARM-PIVOT", "type": "BUSHING_PIVOT_PLUS_BALL_JOINT", "fixedRef": "FH-05", "valueBasis": "OPEN", "rp01Ref": "PART-20-002 / PART-20-003 / PART-20-010"},
+        {"id": "IC-SHAFT-SPLINE", "type": "SPLINED_SLIP_JOINT", "valueBasis": "OPEN", "rp01Ref": "ASSY-60-004", "note": "必须允许长度变化；花键规格不编造"},
+        {"id": "IC-POWER-MOUNT", "type": "BOLTED_MOUNT", "valueBasis": "OPEN", "rp01Ref": "PART-10-009"},
+        {"id": "IC-TIE-ROD", "type": "THREADED_ADJUSTER_PLUS_BALL_JOINT", "valueBasis": "OPEN", "rp01Ref": "ASSY-20-014"}
+      ],
+
+      "rules": [
+        {"id": "P04", "name": "参数范围", "kind": "RANGE", "failureType": "RANGE_VIOLATION", "severity": "REJECT", "statement": "每个 PARAMETRIC 尺寸必须落在家族声明的 [min,max] 内"},
+        {"id": "P05", "name": "固定硬点不可改", "kind": "IMMUTABILITY", "failureType": "FIXED_HARDPOINT_OVERRIDE", "severity": "REJECT", "statement": "变体不得覆盖 immutable=true 的硬点值"},
+        {"id": "P06", "name": "模块接口兼容", "kind": "COMPATIBILITY", "failureType": "INTERFACE_INCOMPATIBLE", "severity": "REJECT", "statement": "所选模块必须兼容家族架构与变体动力形式"},
+        {"id": "P07", "name": "必选槽恰好一个", "kind": "SELECTION", "failureType": "MODULE_SELECTION_INVALID", "severity": "REJECT", "statement": "每个 required 槽必须且只能选一个存在的选项"},
+        {"id": "P08", "name": "模块长度覆盖", "kind": "DERIVED_LENGTH", "failureType": "MODULE_LENGTH_INSUFFICIENT", "severity": "REJECT", "statement": "纵梁长度 ≥ 轴距 + 2×每端最小悬伸；地板模块长度必须覆盖其声明的轴距区间"},
+        {"id": "P09", "name": "摆臂跨度可解", "kind": "KINEMATIC", "failureType": "KINEMATIC_UNRESOLVABLE", "severity": "REJECT", "statement": "由轮距与固定枢轴算出的摆臂跨度不得超过所选模块 maxSpan；禁止用网格缩放达标"},
+        {"id": "P10", "name": "轮罩包络", "kind": "ENVELOPE", "failureType": "ENVELOPE_INTERFERENCE", "severity": "REJECT", "statement": "轮距/2 + 轮胎断面宽/2 ≤ 翼子板 maxHalfWidth"},
+        {"id": "P11", "name": "质量属性不得空声称", "kind": "MASS", "failureType": "MASS_PROPERTIES_MISSING", "severity": "REJECT", "statement": "未声明质心与轴荷时，massProperties 只能是 UNVERIFIED，且 targetLevel 不得高于 KINEMATIC"},
+        {"id": "P12", "name": "禁止无来源的 OEM 数值", "kind": "PROVENANCE", "failureType": "UNSUPPORTED_OEM_CLAIM", "severity": "REJECT", "statement": "任何标 OEM_PUBLISHED/SOURCED 的数值必须有可解析 sourceId；本轮变体参数一律 DEMO_ASSUMPTION 或 LOCAL_MEASUREMENT"},
+        {"id": "P13", "name": "几何与法规分离", "kind": "VALIDATION_SCOPE", "failureType": "REGULATORY_CLAIM_UNVERIFIED", "severity": "REJECT", "statement": "strengthAndDurability 与 regulatoryCompliance 本轮只能是 UNVERIFIED 或 OUT_OF_SCOPE，不得判 PASS"},
+        {"id": "P14", "name": "禁止整车全局缩放", "kind": "NO_GLOBAL_SCALE", "failureType": "GLOBAL_SCALE_FORBIDDEN", "severity": "REJECT", "statement": "变体不得携带作用于整车网格的 scale 字段"},
+        {"id": "P15", "name": "架构跨界即换壳", "kind": "ARCHITECTURE", "failureType": "ARCHITECTURE_CROSSING", "severity": "REJECT", "statement": "车身上部模块的 compatibleArchitectures 必须包含家族架构；BOF 家族不得选承载式轿车壳"},
+        {"id": "P16", "name": "判定自洽", "kind": "SELF_CONSISTENCY", "failureType": "VERDICT_SELF_INCONSISTENT", "severity": "REJECT", "statement": "变体自称的 geometricCompatibility 必须与规则算出的结果一致"}
+      ],
+
+      "propagation": [
+        {
+          "param": "PD-WB",
+          "change": "轴距增大",
+          "edges": [
+            {"target": "四角 z 坐标", "action": "REGENERATE", "status": "IMPLEMENTED_IN_DEMO", "codeRef": "src/parts/chassis.js:287-290"},
+            {"target": "前后横梁与塔顶 z", "action": "REGENERATE", "status": "IMPLEMENTED_IN_DEMO", "codeRef": "src/parts/chassis.js:156,165"},
+            {"target": "转向机壳体/齿条 z", "action": "REGENERATE", "status": "IMPLEMENTED_IN_DEMO", "codeRef": "src/parts/chassis.js:247,254"},
+            {"target": "中央传动轴长度", "action": "REGENERATE", "status": "IMPLEMENTED_IN_DEMO", "codeRef": "src/parts/drivetrain.js:191"},
+            {"target": "前后差速器 z", "action": "REGENERATE", "status": "IMPLEMENTED_IN_DEMO", "codeRef": "src/parts/drivetrain.js:212"},
+            {"target": "物理轮锚点 z", "action": "REGENERATE", "status": "IMPLEMENTED_IN_DEMO", "codeRef": "src/physics/vehicleWorld.js:185-188"},
+            {"target": "车架纵梁长度", "action": "RESELECT_MODULE", "status": "MISSING_IN_DEMO", "codeRef": "src/parts/chassis.js:141", "failureType": "MODULE_LENGTH_INSUFFICIENT", "threshold": "轴距 > 2860 mm 时轴心超出纵梁端；轴距 > 2660 mm 时违反每端 100 mm 最小悬伸"},
+            {"target": "上门槛梁长度", "action": "RESELECT_MODULE", "status": "MISSING_IN_DEMO", "codeRef": "src/parts/chassis.js:147"},
+            {"target": "地板/座椅布置/线束与管路长度", "action": "REGENERATE", "status": "MISSING_IN_DEMO", "codeRef": null},
+            {"target": "质量/质心/轴荷", "action": "RECOMPUTE", "status": "MISSING_IN_DEMO", "codeRef": "src/specs.js:255", "failureType": "MASS_PROPERTIES_MISSING"},
+            {"target": "操稳目标（转向响应/侧倾）", "action": "RECHECK", "status": "MISSING_IN_DEMO", "codeRef": null, "note": "属动力学验证，本轮不得判通过"}
+          ]
+        },
+        {
+          "param": "PD-FT",
+          "change": "轮距增大",
+          "edges": [
+            {"target": "轮毂/转向节 X", "action": "REGENERATE", "status": "IMPLEMENTED_IN_DEMO", "codeRef": "src/parts/chassis.js:418-423"},
+            {"target": "物理轮锚点 X", "action": "REGENERATE", "status": "IMPLEMENTED_IN_DEMO", "codeRef": "src/physics/vehicleWorld.js:185-188"},
+            {"target": "上下摆臂车架侧枢轴 X", "action": "KEEP_FIXED", "status": "HARDCODED_IN_DEMO", "codeRef": "src/parts/chassis.js:294-296", "note": "本家族声明为固定硬点 FH-05"},
+            {"target": "摆臂长度", "action": "RESELECT_MODULE", "status": "SILENTLY_STRETCHED_IN_DEMO", "codeRef": "src/parts/chassis.js:61-75,433-440", "failureType": "KINEMATIC_UNRESOLVABLE", "quantified": "halfTrack 840→1100 mm 时下臂跨度 499.9→735.6 mm（+47.1%），管半径 16 mm 与 spreadZ 130 mm 不变"},
+            {"target": "减振器上支点 X", "action": "KEEP_FIXED", "status": "HARDCODED_IN_DEMO", "codeRef": "src/parts/chassis.js:296", "note": "shockTop ±400 mm 写死，轮距增大后 coilover 倾角被动改变"},
+            {"target": "转向拉杆齿条侧端点 X", "action": "RESELECT_MODULE", "status": "SILENTLY_STRETCHED_IN_DEMO", "codeRef": "src/parts/chassis.js:450", "failureType": "KINEMATIC_UNRESOLVABLE"},
+            {"target": "整体桥桥壳长度", "action": "REGENERATE", "status": "MISSING_IN_DEMO", "codeRef": null, "note": "后悬架为整体桥时轮距变化必须重生成桥壳"},
+            {"target": "半轴长度与 CV 关节角度", "action": "REGENERATE", "status": "MISSING_IN_DEMO", "codeRef": null, "rp01Ref": "ASSY-60-012 / PART-60-021"},
+            {"target": "轮罩/翼子板包络", "action": "RECHECK", "status": "MISSING_IN_DEMO", "codeRef": null, "failureType": "ENVELOPE_INTERFERENCE"},
+            {"target": "前束/外倾/侧倾中心", "action": "RECHECK", "status": "MISSING_IN_DEMO", "codeRef": null, "note": "属运动学/动力学验证，本轮不得判通过"}
+          ]
+        }
+      ]
+    }
+  ],
+
+  "vehicleVariants": [
+    {
+      "id": "VV-A-SWB-STD",
+      "name": "短轴标准轮距越野版",
+      "familyRef": "PF-DEMO-BOF-01",
+      "powertrain": "ICE",
+      "valueBasis": "DEMO_ASSUMPTION",
+      "params": {"PD-WB": 2460, "PD-FT": 1680, "PD-RT": 1680, "PD-TW": 235},
+      "moduleSelections": {
+        "MS-FRAME-RAIL": "RAIL-2860",
+        "MS-PROPSHAFT": "SHAFT-PARAM",
+        "MS-BODY-FLOOR": "FLOOR-STD",
+        "MS-FSUSP": "DWB-STD",
+        "MS-RSUSP": "SOLID-AXLE-STD",
+        "MS-BODY-UPPER": "BOF-SUV-SHELL",
+        "MS-POWER": "ICE-INLINE4",
+        "MS-FENDER": "FENDER-DEMO",
+        "MS-STEER-LINK": "TIE-ROD-STD"
+      },
+      "claimedValidation": {
+        "geometricCompatibility": "PASS",
+        "kinematicCompatibility": "PASS",
+        "massProperties": "UNVERIFIED",
+        "strengthAndDurability": "UNVERIFIED",
+        "regulatoryCompliance": "UNVERIFIED",
+        "targetLevel": "GEOMETRY"
+      },
+      "expected": {"verdict": "LEGAL", "failures": []},
+      "derivedExpected": {"propshaftLength_mm": 2320, "lowerArmSpan_mm": 499.925, "tieRodSpan_mm": 515.17, "wheelOuterHalfWidth_mm": 957.5, "railRequired_mm": 2660}
+    },
+    {
+      "id": "VV-B-LWB-WIDE",
+      "name": "长轴宽轮距越野版（同家族派生）",
+      "familyRef": "PF-DEMO-BOF-01",
+      "powertrain": "ICE",
+      "valueBasis": "DEMO_ASSUMPTION",
+      "params": {"PD-WB": 2660, "PD-FT": 1800, "PD-RT": 1800, "PD-TW": 255},
+      "moduleSelections": {
+        "MS-FRAME-RAIL": "RAIL-2860",
+        "MS-PROPSHAFT": "SHAFT-PARAM",
+        "MS-BODY-FLOOR": "FLOOR-LONG",
+        "MS-FSUSP": "DWB-STD",
+        "MS-RSUSP": "SOLID-AXLE-STD",
+        "MS-BODY-UPPER": "BOF-PICKUP-SHELL",
+        "MS-POWER": "ICE-INLINE4",
+        "MS-FENDER": "FENDER-DEMO",
+        "MS-STEER-LINK": "TIE-ROD-STD"
+      },
+      "claimedValidation": {
+        "geometricCompatibility": "PASS",
+        "kinematicCompatibility": "PASS",
+        "massProperties": "UNVERIFIED",
+        "strengthAndDurability": "UNVERIFIED",
+        "regulatoryCompliance": "UNVERIFIED",
+        "targetLevel": "GEOMETRY"
+      },
+      "expected": {"verdict": "LEGAL", "failures": []},
+      "derivedExpected": {"propshaftLength_mm": 2520, "lowerArmSpan_mm": 552.381, "tieRodSpan_mm": 569.386, "wheelOuterHalfWidth_mm": 1027.5, "railRequired_mm": 2860},
+      "note": "轴距正好落在上限 2660（纵梁 2860 − 2×100），轮距正好落在上限 1800。用于证明边界值可通过，且传动轴与地板模块必须重生成/重选。"
+    },
+    {
+      "id": "VV-C-ILLEGAL",
+      "name": "非法变体：超长轴 + 超宽轮距 + 承载式轿车壳",
+      "familyRef": "PF-DEMO-BOF-01",
+      "powertrain": "ICE",
+      "valueBasis": "DEMO_ASSUMPTION",
+      "params": {"PD-WB": 2900, "PD-FT": 2200, "PD-RT": 2200, "PD-TW": 255},
+      "moduleSelections": {
+        "MS-FRAME-RAIL": "RAIL-2860",
+        "MS-PROPSHAFT": "SHAFT-PARAM",
+        "MS-BODY-FLOOR": "FLOOR-STD",
+        "MS-FSUSP": "DWB-STD",
+        "MS-RSUSP": "SOLID-AXLE-STD",
+        "MS-BODY-UPPER": "UNI-SEDAN-SHELL",
+        "MS-POWER": "ICE-INLINE4",
+        "MS-FENDER": "FENDER-DEMO",
+        "MS-STEER-LINK": "TIE-ROD-STD"
+      },
+      "claimedValidation": {
+        "geometricCompatibility": "PASS",
+        "kinematicCompatibility": "PASS",
+        "massProperties": "COMPUTED",
+        "strengthAndDurability": "UNVERIFIED",
+        "regulatoryCompliance": "UNVERIFIED",
+        "targetLevel": "DYNAMIC"
+      },
+      "expected": {
+        "verdict": "ILLEGAL",
+        "failures": [
+          "RANGE_VIOLATION",
+          "MODULE_LENGTH_INSUFFICIENT",
+          "KINEMATIC_UNRESOLVABLE",
+          "ENVELOPE_INTERFERENCE",
+          "ARCHITECTURE_CROSSING",
+          "MASS_PROPERTIES_MISSING",
+          "VERDICT_SELF_INCONSISTENT"
+        ]
+      },
+      "conflictExplanation": [
+        "轴距 2900 > 家族上限 2660，且 > 纵梁实测长度 2860：轴心会落在纵梁端之外 20 mm。要么换 RAIL-3100 模块并重新验证悬伸与断面，要么拒绝；不允许把纵梁拉长。",
+        "地板模块 FLOOR-STD 声明适用轴距 2200–2660，2900 超出其覆盖区间。",
+        "轮距 2200（halfTrack 1100）配合固定枢轴 FH-05 算出下摆臂跨度 735.6 mm，超过 DWB-STD 的 560 mm 上限 175.6 mm。现有代码会用 scale.z 静默拉伸达标，本规则要求拒绝。",
+        "车轮外缘半宽 1100 + 127.5 = 1227.5 mm，超过翼子板包络 1050 mm 共 177.5 mm。",
+        "UNI-SEDAN-SHELL 只兼容 ARCH-UNI，本家族是 ARCH-BOF：承载式轿车壳把车身当承载主体，而本家族车身是非承载件，载荷路径与碰撞传力不同，属架构跨界而非换壳。",
+        "自称 massProperties=COMPUTED 且 targetLevel=DYNAMIC，但全家族无质心/轴荷/惯量字段（M03），质量属性无法成立。",
+        "自称 geometricCompatibility=PASS 与上述几何失败矛盾。"
+      ]
+    }
+  ],
+
+  "designDecisions": [
+    {"id": "D01", "decision": "采用 Architecture → PlatformFamily → VehicleVariant → ModuleSlot 四层，变体只改参数与模块选择", "classification": "OUR_DESIGN", "basis": ["P1", "P2", "S1", "S2", "S3"]},
+    {"id": "D02", "decision": "固定硬点以『相对基准 + 方向语义』表达，不写世界绝对坐标", "classification": "OUR_DESIGN", "basis": ["S1", "S2"], "note": "世界 Frame 属 RP-07 待裁决的 P0 冲突，本文件不 unilateral 定案"},
+    {"id": "D03", "decision": "摆臂/拉杆长度超限必须拒绝或换模块，禁止 scale 拉伸", "classification": "ENGINEERING_INFERENCE", "basis": ["M07", "M09", "M10", "M19"]},
+    {"id": "D04", "decision": "轴距上限由纵梁实测长度与最小悬伸推导", "classification": "ENGINEERING_INFERENCE", "basis": ["M04"], "note": "100 mm 最小悬伸是演示假设，不是法规或厂商要求"},
+    {"id": "D05", "decision": "几何兼容与强度/法规满足分开编码，后者本轮一律 UNVERIFIED", "classification": "OUR_DESIGN", "basis": ["P2", "S4"]},
+    {"id": "D06", "decision": "BOF 家族选承载式轿车壳判 ARCHITECTURE_CROSSING", "classification": "ENGINEERING_INFERENCE", "basis": ["S4", "P1"], "note": "S4 只证明车架是承载主体；『不能换壳』的完整论证属工程推导，未取得碰撞法规原文"},
+    {"id": "D07", "decision": "两轴架构（bodyStructure × powertrain）沿用已批准的 RP-01 模型，不另造身份", "classification": "OUR_DESIGN", "basis": ["P1"], "note": "RP-01 已 APPROVED（研究成果层面）"}
+  ],
+
+  "openIssues": [
+    {"id": "O01", "issue": "世界坐标与局部 Frame 未冻结", "owner": "RP-07 / GPT-6", "blocking": "本文件的硬点无法直接转成生产变换矩阵", "ref": "AUDIT_2026-11-14.md §3.1"},
+    {"id": "O02", "issue": "轮端接口具体数值（PCD/中心孔/螺栓）仍未冻结", "owner": "RP-07 / GPT-6", "blocking": "FH-04 与 IC-* 的数值字段保持 OPEN", "ref": "AUDIT_2026-11-14_RP04_RECHECK.md：RP-04 已 APPROVED 且 ISO 273 标签已修正为 fine 15.0 / medium 15.5 / coarse 16.5，但明确未验证真实配合公差/预紧/轴承构造，几何仍为演示假设，生产 Schema 未冻结"},
+    {"id": "O03", "issue": "fidelity / evidence / verification 三字段命名未统一", "owner": "RP-07 / GPT-6", "blocking": "本文件用 valueBasis + claimedValidation 两套词，需与 RP-02/RP-03/RP-06 对齐", "ref": "AUDIT_2026-11-14.md §3.2"},
+    {"id": "O04", "issue": "partId / familyId / instanceId 语义未冻结", "owner": "RP-07 / DeepSeek", "blocking": "ModuleSlot 选项与 RP-01 零件身份的映射暂用 rp01Ref 字符串", "ref": "AUDIT_2026-11-14.md §3.3"},
+    {"id": "O05", "issue": "首发基型与 AWD/4WD 范围未决", "owner": "GPT-6", "blocking": "本家族只是演示候选，不是首发定案", "ref": "AUDIT_2026-11-14.md §3.4"},
+    {"id": "O06", "issue": "e-TNGA『电池宽度固定』与『前中后三段模块』本轮未取得逐字原句", "owner": "qwen4", "blocking": "不作为已核实事实使用，标 OPEN", "ref": "S2.doesNotSupport"},
+    {"id": "O07", "issue": "R-01 归属矛盾：任务卡 owner=qwen4，旧任务书第 3 行曾写『建议给 Gemini Flash』", "owner": "GPT-6", "status": "RESOLVED", "resolvedAt": "2026-11-14", "resolution": "任务书已于 21:06 更新为『负责模型以任务卡为准（当前为 Qwen4）』，AGENTS.md §6 亦明确指派 Qwen4 续做 R-01；矛盾消除，保留记录以便追溯。", "ref": "docs/tasks/R-01-platform-family.md:3"}
+  ]
+}

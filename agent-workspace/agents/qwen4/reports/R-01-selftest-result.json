@@ -1,0 +1,158 @@
+{
+  "artifact": "R-01-selftest-result",
+  "tool": "agent-workspace/agents/qwen4/tools/r01_platform_tool.py",
+  "overall": "PASS",
+  "baselineStructuralViolations": 0,
+  "baselineExpectedRejections": 13,
+  "baselineFixtureMismatches": 0,
+  "caught": 21,
+  "missed": 0,
+  "total": 21,
+  "rulesCovered": [
+    "FIXTURE",
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12",
+    "P13",
+    "P14",
+    "P15",
+    "P16"
+  ],
+  "rulesWithoutNegativeControl": [],
+  "controls": [
+    {
+      "rule": "P02",
+      "mutation": "duplicate variant id",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD declared in both vehicleVariants and vehicleVariants"
+    },
+    {
+      "rule": "P03",
+      "mutation": "variant points at nonexistent family",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: unknown familyRef PF-NOT-EXIST"
+    },
+    {
+      "rule": "P03",
+      "mutation": "selection cites nonexistent module option",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: unknown option RAIL-9999 in MS-FRAME-RAIL"
+    },
+    {
+      "rule": "P04",
+      "mutation": "wheelbase outside declared range",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: PD-WB=2700 outside [2460,2660] (轴距)"
+    },
+    {
+      "rule": "P05",
+      "mutation": "variant overrides an immutable hardpoint",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: attempts to override immutable hardpoint FH-05 (悬架摆臂车架侧枢轴位置（相对车架纵梁中心线）) with {'lowerX': 400}"
+    },
+    {
+      "rule": "P06",
+      "mutation": "BEV module selected in an ICE variant",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: BEV-PE-MODULE is a BEV module but variant is ICE"
+    },
+    {
+      "rule": "P07",
+      "mutation": "required suspension slot left unselected",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: required slot MS-FSUSP has no selection"
+    },
+    {
+      "rule": "P08",
+      "mutation": "frame rail shorter than wheelbase + overhangs",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: rail RAIL-2860 length 2500 < required 2660 (wheelbase 2460 + 2x min overhang)"
+    },
+    {
+      "rule": "P08",
+      "mutation": "floor module does not cover the wheelbase",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: floor FLOOR-STD covers wheelbase [2200,2400] but variant is 2460"
+    },
+    {
+      "rule": "P09",
+      "mutation": "lower arm span exceeds module maxSpan",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: lower arm span 499.9 mm exceeds DWB-STD maxSpan 400 mm by 99.9 mm; must reselect module or reject, NOT scale the mesh"
+    },
+    {
+      "rule": "P09",
+      "mutation": "tie rod span exceeds module maxSpan",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: tie rod span 515.2 mm exceeds TIE-ROD-STD maxSpan 400 mm"
+    },
+    {
+      "rule": "P10",
+      "mutation": "wheel outer edge beyond fender envelope",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: wheel outer half-width 957.5 mm exceeds fender envelope 900 mm by 57.5 mm"
+    },
+    {
+      "rule": "P11",
+      "mutation": "claims computed mass properties without CG",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: claims massProperties=COMPUTED but no cgPosition_mm/axleLoads_N declared"
+    },
+    {
+      "rule": "P11",
+      "mutation": "claims DYNAMIC level without mass properties",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: targetLevel=DYNAMIC requires mass properties that are not declared"
+    },
+    {
+      "rule": "P12",
+      "mutation": "variant claims SOURCED basis with no source",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: variant valueBasis=SOURCED; this round only ['DEMO_ASSUMPTION', 'LOCAL_MEASUREMENT'] are allowed (no OEM parameter claims)"
+    },
+    {
+      "rule": "P13",
+      "mutation": "claims regulatory compliance PASS",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: regulatoryCompliance=PASS — strength/regulatory cannot pass without verified evidence"
+    },
+    {
+      "rule": "P14",
+      "mutation": "variant carries a global mesh scale",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: carries 'scale'=1.2; variants must regenerate modules, not scale the vehicle mesh"
+    },
+    {
+      "rule": "P15",
+      "mutation": "unibody sedan shell in a body-on-frame family",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: UNI-SEDAN-SHELL in MS-BODY-UPPER allows ['ARCH-UNI'] but family architecture is ARCH-BOF — a unibody shell is a structural member, not a cosmetic swap"
+    },
+    {
+      "rule": "P16",
+      "mutation": "claimed geometric verdict contradicts rules",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: claims geometricCompatibility=FAIL but rules computed PASS"
+    },
+    {
+      "rule": "FIXTURE",
+      "mutation": "expected verdict no longer matches computed",
+      "result": "CAUGHT",
+      "sample": "VV-A-SWB-STD: expected verdict ILLEGAL but got LEGAL"
+    },
+    {
+      "rule": "P01",
+      "mutation": "malformed example file (in-memory loader patch)",
+      "result": "CAUGHT"
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "artifact": "R-01-validation-result",
+  "tool": "agent-workspace/agents/qwen4/tools/r01_platform_tool.py",
+  "command": ".venv/Scripts/python.exe agent-workspace/agents/qwen4/tools/r01_platform_tool.py validate --out agent-workspace/agents/qwen4/reports/R-01-validation-result.json",
+  "overall": "PASS",
+  "successCriterion": "结构规则(P01/P02/P03/P12) 0 违规，且每个变体的实际判定/失败类型/派生尺寸与 expected 夹具完全一致。非法变体被拒绝是期望输出，不计为失败。",
+  "structuralViolationCount": 0,
+  "structuralViolations": [],
+  "expectedRejectionCount": 13,
+  "fixtureMismatches": [],
+  "metrics": {
+    "variants": {
+      "VV-A-SWB-STD": "LEGAL",
+      "VV-B-LWB-WIDE": "LEGAL",
+      "VV-C-ILLEGAL": "ILLEGAL"
+    },
+    "variantCount": 3,
+    "familyCount": 1,
+    "sourceCount": 11,
+    "measurementCount": 19,
+    "ruleCount": 16
+  },
+  "variants": {
+    "VV-A-SWB-STD": {
+      "verdict": "LEGAL",
+      "failures": [],
+      "failureTypes": [],
+      "derived": {
+        "hubY_mm": -260,
+        "propshaftLength_mm": 2320,
+        "lowerArmSpan_mm": 499.925,
+        "lowerArmEnd_mm": [
+          700.0,
+          -345
+        ],
+        "tieRodSpan_mm": 515.17,
+        "wheelOuterHalfWidth_mm": 957.5,
+        "railRequired_mm": 2660,
+        "railAvailable_mm": 2860
+      }
+    },
+    "VV-B-LWB-WIDE": {
+      "verdict": "LEGAL",
+      "failures": [],
+      "failureTypes": [],
+      "derived": {
+        "hubY_mm": -260,
+        "propshaftLength_mm": 2520,
+        "lowerArmSpan_mm": 552.381,
+        "lowerArmEnd_mm": [
+          760.0,
+          -345
+        ],
+        "tieRodSpan_mm": 569.386,
+        "wheelOuterHalfWidth_mm": 1027.5,
+        "railRequired_mm": 2860,
+        "railAvailable_mm": 2860
+      }
+    },
+    "VV-C-ILLEGAL": {
+      "verdict": "ILLEGAL",
+      "failures": [
+        {
+          "rule": "P04",
+          "type": "RANGE_VIOLATION",
+          "message": "VV-C-ILLEGAL: PD-WB=2900 outside [2460,2660] (轴距)"
+        },
+        {
+          "rule": "P04",
+          "type": "RANGE_VIOLATION",
+          "message": "VV-C-ILLEGAL: PD-FT=2200 outside [1680,1800] (前轮距)"
+        },
+        {
+          "rule": "P04",
+          "type": "RANGE_VIOLATION",
+          "message": "VV-C-ILLEGAL: PD-RT=2200 outside [1680,1800] (后轮距)"
+        },
+        {
+          "rule": "P08",
+          "type": "MODULE_LENGTH_INSUFFICIENT",
+          "message": "VV-C-ILLEGAL: rail RAIL-2860 length 2860 < required 3100 (wheelbase 2900 + 2x min overhang)"
+        },
+        {
+          "rule": "P08",
+          "type": "MODULE_LENGTH_INSUFFICIENT",
+          "message": "VV-C-ILLEGAL: floor FLOOR-STD covers wheelbase [2200,2660] but variant is 2900"
+        },
+        {
+          "rule": "P09",
+          "type": "KINEMATIC_UNRESOLVABLE",
+          "message": "VV-C-ILLEGAL: lower arm span 735.6 mm exceeds DWB-STD maxSpan 560 mm by 175.6 mm; must reselect module or reject, NOT scale the mesh"
+        },
+        {
+          "rule": "P09",
+          "type": "KINEMATIC_UNRESOLVABLE",
+          "message": "VV-C-ILLEGAL: tie rod span 756.4 mm exceeds TIE-ROD-STD maxSpan 600 mm"
+        },
+        {
+          "rule": "P10",
+          "type": "ENVELOPE_INTERFERENCE",
+          "message": "VV-C-ILLEGAL: wheel outer half-width 1227.5 mm exceeds fender envelope 1050 mm by 177.5 mm"
+        },
+        {
+          "rule": "P11",
+          "type": "MASS_PROPERTIES_MISSING",
+          "message": "VV-C-ILLEGAL: claims massProperties=COMPUTED but no cgPosition_mm/axleLoads_N declared"
+        },
+        {
+          "rule": "P11",
+          "type": "MASS_PROPERTIES_MISSING",
+          "message": "VV-C-ILLEGAL: targetLevel=DYNAMIC requires mass properties that are not declared"
+        },
+        {
+          "rule": "P15",
+          "type": "ARCHITECTURE_CROSSING",
+          "message": "VV-C-ILLEGAL: UNI-SEDAN-SHELL in MS-BODY-UPPER allows ['ARCH-UNI'] but family architecture is ARCH-BOF — a unibody shell is a structural member, not a cosmetic swap"
+        },
+        {
+          "rule": "P16",
+          "type": "VERDICT_SELF_INCONSISTENT",
+          "message": "VV-C-ILLEGAL: claims geometricCompatibility=PASS but rules computed FAIL"
+        },
+        {
+          "rule": "P16",
+          "type": "VERDICT_SELF_INCONSISTENT",
+          "message": "VV-C-ILLEGAL: claims kinematicCompatibility=PASS but rules computed FAIL"
+        }
+      ],
+      "failureTypes": [
+        "ARCHITECTURE_CROSSING",
+        "ENVELOPE_INTERFERENCE",
+        "KINEMATIC_UNRESOLVABLE",
+        "MASS_PROPERTIES_MISSING",
+        "MODULE_LENGTH_INSUFFICIENT",
+        "RANGE_VIOLATION",
+        "VERDICT_SELF_INCONSISTENT"
+      ],
+      "derived": {
+        "hubY_mm": -260,
+        "propshaftLength_mm": 2760,
+        "lowerArmSpan_mm": 735.612,
+        "lowerArmEnd_mm": [
+          960.0,
+          -345
+        ],
+        "tieRodSpan_mm": 756.439,
+        "wheelOuterHalfWidth_mm": 1227.5,
+        "railRequired_mm": 3100,
+        "railAvailable_mm": 2860
+      }
+    }
+  }
+}
