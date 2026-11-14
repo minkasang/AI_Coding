@@ -1,0 +1,555 @@
+{
+  "document": "docs/research/R-02-example-assembly.json",
+  "base": {
+    "ok": true,
+    "errors": [],
+    "warningCodes": [
+      "DC-W002",
+      "DC-W001",
+      "DC-W003",
+      "DC-W005"
+    ],
+    "summary": {
+      "nodes": 11,
+      "instances": 15,
+      "joints": 10,
+      "mounts": 8
+    }
+  },
+  "totals": {
+    "cases": 20,
+    "passed": 20,
+    "failed": 0,
+    "invalidExamples": 3,
+    "invalidPassed": 3,
+    "invalidFailed": 0
+  },
+  "results": [
+    {
+      "caseId": "TC-01",
+      "title": "基础示例应无结构错误；OPEN/ASSUMPTION 只产生警告",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": true,
+        "codesInclude": [],
+        "warningsInclude": [
+          "DC-W001"
+        ]
+      },
+      "actual": {
+        "ok": true,
+        "errorCodes": [],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-02",
+      "title": "空 partId 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E001"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E001",
+          "DC-E009",
+          "DC-E003"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-03",
+      "title": "重复 instanceId 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E004"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E004",
+          "DC-E020",
+          "DC-E003"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-04",
+      "title": "无法解析的 part revision 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E003"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E003"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-05",
+      "title": "制动盘 PCD 与轮毂不一致应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E030"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E030"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-06",
+      "title": "制动盘孔数 4 与轮毂 5 不一致应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E031"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E031"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-07",
+      "title": "制动盘中心孔 66.6 与轮毂 67.1 不一致应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E032"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E032"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-08",
+      "title": "实例 Frame 误用 mm 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E022"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E022"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-09",
+      "title": "Joint 轴 [2,0,0] 未归一化应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E023"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E023",
+          "DC-E042"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-10",
+      "title": "Joint 限位 min>max 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E041"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E041"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-11",
+      "title": "隐式镜像（旋转行列式 -1 且无 mirror 规则）应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E024"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E024"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-12",
+      "title": "familyRef 指向非 family 节点应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E006"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E006"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-13",
+      "title": "BOM qty=4 但 5 个实例应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E008"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E008"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-14",
+      "title": "Asset STEP hash 不匹配应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E051"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E051"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-15",
+      "title": "Asset 缺少 sourceUnits 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E050"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E001",
+          "DC-E050"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-16",
+      "title": "SOURCED 数值无来源应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E061"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E061"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-17",
+      "title": "OPEN 数值必须为 null 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E062"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E062"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-18",
+      "title": "车型变体缺少 PD-WB 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E071"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E071"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-19",
+      "title": "车型变体使用 globalScale 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E073"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E073"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-20",
+      "title": "verification PASS 但没有 testRefs 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E064"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "DC-E064"
+        ],
+        "warningCodes": [
+          "DC-W002",
+          "DC-W001",
+          "DC-W003",
+          "DC-W005"
+        ]
+      }
+    }
+  ],
+  "invalidResults": [
+    {
+      "exampleId": "INVALID-PCD",
+      "description": "制动盘 PCD 112.0 与轮毂 114.3 不匹配",
+      "pass": true,
+      "expectedCodes": [
+        "DC-E030"
+      ],
+      "actualCodes": [
+        "DC-E030"
+      ],
+      "missing": []
+    },
+    {
+      "exampleId": "INVALID-DUP-INSTANCE",
+      "description": "两个零件实例使用同一 instanceId",
+      "pass": true,
+      "expectedCodes": [
+        "DC-E004"
+      ],
+      "actualCodes": [
+        "DC-E004",
+        "DC-E020",
+        "DC-E003"
+      ],
+      "missing": []
+    },
+    {
+      "exampleId": "INVALID-JOINT-AXIS",
+      "description": "转动副轴 [2,0,0] 未归一化",
+      "pass": true,
+      "expectedCodes": [
+        "DC-E023"
+      ],
+      "actualCodes": [
+        "DC-E023",
+        "DC-E042"
+      ],
+      "missing": []
+    }
+  ]
+}

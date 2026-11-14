@@ -47,14 +47,48 @@ const stepText = task => {
   if (task.status === 'blocked') return '遇到阻塞：' + task.lastNote;
   return task.currentStep;
 };
-const firstRelevant = items => {
-  const parents = items.filter(t=>!t.parentId);
-  return parents.find(t=>t.status==='in_progress') ||
-    parents.find(t=>t.status==='needs_work') ||
-    parents.find(t=>t.status==='ready') ||
-    parents.find(t=>t.status==='submitted') ||
-    parents.find(t=>t.status==='blocked') ||
-    parents.find(t=>t.status==='backlog') || null;
+const NEXT_STATUS_ORDER = ['in_progress','needs_work','ready','submitted','blocked','backlog'];
+const ACTIVE_STATUSES = new Set(['in_progress','needs_work','ready','submitted','blocked']);
+const priorityRank = p => {
+  const m = String(p ?? 'P2').match(/P(\d+)/i);
+  return m ? Number(m[1]) : 9;
+};
+const mainTasksFor = agentId => snapshot?.tasks.filter(t => t.owner === agentId && !t.parentId) ?? [];
+const sortMainQueue = (a, b) => {
+  const ai = NEXT_STATUS_ORDER.indexOf(a.status);
+  const bi = NEXT_STATUS_ORDER.indexOf(b.status);
+  return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi) ||
+    priorityRank(a.priority) - priorityRank(b.priority) || taskOrder(a, b);
+};
+const pickNextMainTask = agentId => {
+  const main = mainTasksFor(agentId);
+  for (const state of NEXT_STATUS_ORDER) {
+    const hit = main.filter(t => t.status === state).sort(sortMainQueue);
+    if (hit.length) return hit[0];
+  }
+  return null;
+};
+const nextActionCopy = task => {
+  if (!task) {
+    return { title: '待总控安排', note: '已验收成果在历史区；等待总控继续派工', canStart: false, waiting: false, code: '' };
+  }
+  const waiting = task.status === 'backlog';
+  const notes = {
+    needs_work: '有审核返工要求，执行模型应直接读取 reviewReport',
+    in_progress: task.lastNote || '已领取，进度以任务文件为准',
+    ready: '可以启动主任务，模型自行拆解子任务',
+    submitted: '等待 GPT-6 审核文件与证据',
+    blocked: task.lastNote ? `卡点：${task.lastNote}` : '存在前置阻塞，查看任务详情',
+    backlog: task.lastNote || '等待前置研究或总控解锁',
+  };
+  return {
+    title: `${waiting ? '尚未解锁：' : ''}${task.title}`,
+    note: notes[task.status] || '',
+    canStart: ['ready', 'needs_work'].includes(task.status),
+    waiting,
+    code: humanCode(task),
+    status: task.status,
+  };
 };
 
 function statCard(label, value, note, symbol) {
@@ -64,16 +98,21 @@ function statCard(label, value, note, symbol) {
 
 function renderAgentCard(agent) {
   const tasks = agentTasks(agent.id);
+  const main = mainTasksFor(agent.id);
+  const focus = pickNextMainTask(agent.id);
+  const action = nextActionCopy(focus);
+  const activeCount = main.filter(t => ACTIVE_STATUSES.has(t.status)).length;
+  const archiveCount = main.filter(t => t.status === 'approved').length;
   const meter = progress(tasks);
-  const focus = firstRelevant(tasks);
   return `<button type="button" class="agent-card" data-agent="${escapeHTML(agent.id)}" style="--agent-color:${agent.accent}">
     <div class="agent-top"><div class="agent-avatar">${escapeHTML(shortName(agent.name))}</div>
     <div><div class="agent-name">${escapeHTML(agent.name)}</div><div class="agent-role">${escapeHTML(agent.role)}</div></div>
-    <span class="agent-chevron">↗</span></div>
+    <div class="agent-card-badges">${focus ? badge(focus.status) : '<span class="badge badge-ready">待派发</span>'}<span class="agent-chevron">↗</span></div></div>
     <p class="agent-mission">${escapeHTML(agent.mission)}</p>
-    <div class="agent-lastline">${escapeHTML(focus ? stepText(focus) : '尚未安排任务')}</div>
-    <div class="agent-footer"><div class="agent-taskcount"><b>${tasks.length}</b> 项任务 · ${meter.total?meter.done+'/'+meter.total+' 步完成':'待自主规划'}</div>
-    <div class="agent-bar" aria-label="${meter.value===null?'待自主规划':'步骤完成率 '+meter.value+'%'}"><span style="width:${meter.value??0}%"></span></div></div>
+    <div class="agent-lastline">${focus ? `<strong>${escapeHTML(action.code)}</strong> · ${escapeHTML(action.title)}` : escapeHTML(action.title)}</div>
+    <div class="agent-lastline subtle">${escapeHTML(action.note)}</div>
+    <div class="agent-footer"><div class="agent-taskcount">${activeCount ? `<b>${activeCount}</b> 项活跃工作` : '暂无活跃主任务'}${archiveCount ? ` · ${archiveCount} 项已验收` : ''}</div>
+    <div class="agent-bar" aria-label="${meter.value===null?'待自主规划':'已建步骤 '+meter.value+'%'}"><span style="width:${meter.value??0}%"></span></div></div>
   </button>`;
 }
 
@@ -112,6 +151,19 @@ function topHeading(kicker,title,subtitle) {
     <h1 class="page-title">${escapeHTML(title)}</h1><p class="page-subtitle">${escapeHTML(subtitle)}</p></div>`;
 }
 
+function renderSharedBoard(){
+  const messages=(snapshot?.messages||[]);
+  const open=messages.filter(m=>m.status==='open');
+  const items=messages.slice(0,6).map(m=>{
+    const from=getAgent(m.from)?.name||m.from;
+    const to=m.to==='all'?'全体':(getAgent(m.to)?.name||m.to);
+    return `<div class="shared-message"><div class="shared-message-meta"><span>${escapeHTML(from)} → ${escapeHTML(to)}</span><span>${escapeHTML(m.status==='open'?'待处理':'已归档')} · ${escapeHTML(m.taskId||m.kind)}</span></div><strong>${escapeHTML(m.subject)}</strong><p>${escapeHTML(m.body.replace(/^#+\s*/gm,'').slice(0,160))}</p></div>`;
+  }).join('');
+  return `<section class="shared-board"><div class="shared-board-top"><div><h2>统一启动与公共交流</h2><p>你只负责打开各主 AI 对话，模型会自行领取任务、拆子任务、交付与交流。</p></div><button type="button" class="action-button subtle" data-copy-universal>复制通用启动语</button></div>
+    <div class="shared-starter"><strong>同一句话：继续 CARLAB</strong><span>在已打开本项目的主 AI 会话发送即可；无需记编号或转发子任务。</span></div>
+    <div class="shared-label">模型公共消息 · ${open.length} 条待处理</div>${items||'<p class="shared-empty">当前没有公共留言；模型需要沟通时会直接写入共享目录。</p>'}
+    <p class="shared-foot">数据来源：agent-workspace/shared/messages/。任务进度仍只由各模型任务卡提供。</p></section>`;
+}
 function renderOverview() {
   const s = snapshot.summary;
   const pending = (s.statuses.ready || 0) + (s.statuses.backlog || 0);
@@ -127,13 +179,14 @@ function renderOverview() {
     </div>
     <div class="hero-meter" style="--pct:${s.planningCoverage}"><strong>${s.mainTasks-s.unplannedRoots}<small>/${s.mainTasks}</small></strong><label>已建立执行计划</label></div>
   </section>
+  ${renderSharedBoard()}
+  ${renderNextQueue()}
   <div class="stats-grid">
     ${statCard('协作模型',s.agents,'配置了专属任务区','◇')}
     ${statCard('待自主规划',s.unplannedRoots,'由执行模型自己拆解工作','↗')}
     ${statCard('进行中',active,'由任务文件申报','◌')}
     ${statCard('待审核 / 已验收',`${submitted} / ${approved}`,'有证据才算完成','✓')}
   </div>
-  ${renderNextQueue()}
   <div class="section-head"><div><h2>AI 研发团队</h2><p>点开成员，查看专属任务和具体步骤</p></div>
     <button type="button" class="text-link" data-nav="agents">全部成员 ↗</button></div>
   <div class="agent-grid">${snapshot.agents.map(renderAgentCard).join('')}</div>
@@ -152,22 +205,35 @@ function renderAgentDetail() {
   const agent = getAgent(currentAgent);
   if (!agent) { view = 'agents'; return renderAgents(); }
   const tasks = agentTasks(agent.id);
+  const main = mainTasksFor(agent.id);
   const m = progress(tasks);
-  const focus = firstRelevant(tasks);
+  const focus = pickNextMainTask(agent.id);
+  const action = nextActionCopy(focus);
+  const queue = main.filter(t => ACTIVE_STATUSES.has(t.status) || t.status === 'backlog').sort(sortMainQueue);
+  const archive = main.filter(t => t.status === 'approved').sort(taskOrder);
+  const subtasks = tasks.filter(t => t.parentId);
   return `<button class="back-button" type="button" data-nav="agents">← 返回全部模型</button>
   <div class="agent-profile" style="--agent-color:${agent.accent}">
     <div class="agent-avatar">${escapeHTML(shortName(agent.name))}</div>
     <div class="agent-profile-content"><div class="eyebrow">MODEL WORKSPACE</div>
       <h1 class="page-title">${escapeHTML(agent.name)}</h1>
       <p>${escapeHTML(agent.role)} · ${escapeHTML(agent.mission)}</p></div>
-    <div class="agent-profile-stats"><strong>${m.value===null?'待规划':m.value+'%'}</strong>${m.value===null?'由模型领取后自行拆解':'已建立的步骤完成率'}</div>
+    <div class="agent-profile-stats"><strong>${queue.length || '—'}</strong>${queue.length ? '项主任务在队列中' : '等待总控派工'}</div>
   </div>
-  <div class="agent-current"><label>当前优先事项</label>
-    <p>${escapeHTML(stepText(focus))}</p>
-    ${focus && !focus.parentId && ['ready','needs_work'].includes(focus.status) ? `<div class="agent-current-action"><button class="action-button primary" type="button" data-copy-prompt="${escapeHTML(focus.id)}">启动主任务：复制提示词</button></div>`:''}
-  </div>
-  <div class="section-head"><div><h2>专属任务板</h2><p>共 ${tasks.length} 项任务 · ${m.total?m.done+'/'+m.total+' 个已定义步骤完成':'执行步骤待模型自主制定'}</p></div></div>
-  ${taskTable(tasks)}
+  <div class="agent-next-banner">${focus ? `<div class="agent-next-top"><span>下一步主任务</span>${badge(focus.status)}</div>
+    <h2><span class="task-code">${escapeHTML(action.code)}</span> ${escapeHTML(action.title)}</h2>
+    <p>${escapeHTML(action.note)}</p>
+    <div class="agent-next-actions">
+      <button type="button" class="action-button subtle" data-task="${escapeHTML(focus.id)}">查看任务详情</button>
+
+    </div>` : `<div class="agent-next-top"><span>下一步</span><span class="badge badge-ready">待派发</span></div>
+    <h2>${escapeHTML(action.title)}</h2><p>${escapeHTML(action.note)}</p>`}</div>
+  <div class="section-head"><div><h2>当前队列</h2><p>进行中、待领取、待审核等主任务；不含子任务单独派工。</p></div></div>
+  ${queue.length ? taskTable(queue) : '<div class="empty-state">没有活跃主任务。已验收内容在下方的历史区。</div>'}
+  ${subtasks.length ? `<div class="section-head"><div><h2>子任务（由主 AI 自行管理）</h2><p>${subtasks.length} 项 · 不需要用户逐张复制提示词</p></div></div>${taskTable(subtasks)}` : ''}
+  ${archive.length ? `<details class="task-archive"><summary>已验收历史（${archive.length}）</summary>
+    <p class="archive-hint">这些任务已完成审核，不会当作「下一步」展示。</p>${taskTable(archive)}</details>` : ''}
+  <div class="section-head"><div><h2>步骤进度（含子任务）</h2><p>${m.total ? m.done+' / '+m.total+' 个已定义步骤' : '执行步骤待模型自主制定'}</p></div></div>
   <div class="section-head"><div><h2>如何工作</h2><p>打开项目时，读取 AGENTS.md → 个人 PROFILE.md → 专属任务卡，并在完成步骤后更新 Markdown。</p></div></div>`;
 }
 
@@ -450,7 +516,7 @@ function renderDispatchCard(t) {
     <div class="dispatch-card-head"><div><h3>${escapeHTML(t.title)}</h3><p>${escapeHTML(t.summary)}</p></div></div>
     <div class="dispatch-card-note">${escapeHTML(t.status==='ready'?'等待你首次启动对应的主 AI；之后由它管理子任务并写入项目成果。':t.status==='needs_work'?'总控已退回：请执行模型直接读取任务卡中的 reviewReport 审核报告进行返工。':t.lastNote)}</div>
     <div class="dispatch-card-actions">
-      ${['ready','needs_work'].includes(t.status)?`<button type="button" class="action-button primary" data-copy-prompt="${escapeHTML(t.id)}">首次启动：复制主任务</button>`:''}
+      ${['ready','needs_work'].includes(t.status)?'<span class="insight-label">打开主 AI 对话后发送“继续 CARLAB”即可</span>':''}
       <button type="button" class="action-button subtle" data-task="${escapeHTML(t.id)}">查看进度与成果</button>
       ${!received && t.status==='submitted'?`<button type="button" class="action-button subtle" data-open-report="${escapeHTML(t.id)}">备用：手动补充回报</button>`:''}
     </div>
@@ -482,6 +548,7 @@ function renderDispatch() {
       <p><strong style="color:#e5e8f5">派发 → AI 执行 → 收取回报 → GPT-6 审核</strong><br/>
       对拥有本地文件权限的 AI，主任务开始后由它内部调度子任务并保存成果；你只需定期叫 GPT-6 直接检查文件。只有纯网页聊天模型才需要手动中转。</p></div>
       <div class="dispatch-number">${needsAction}<small>待派发 / 返工</small></div></div>
+    ${renderSharedBoard()}
     ${renderNextQueue()}
     <div class="dispatch-layout">
       <section class="dispatch-panel"><div class="dispatch-panel-title"><h2>主任务入口</h2><small>${candidates.length} 张可协作任务卡</small></div>
@@ -497,7 +564,7 @@ function renderCollabPanel(t) {
   return `<div class="collab-box"><h3>任务派发与结果交流</h3>
     <p>能够读写项目的模型自行交付文件，你不需要在这里粘贴；叫 GPT-6 检查任务即可。手动复制和粘贴只作为无文件权限时的备用方式。</p>
     <div class="collab-actions">
-      ${!t.parentId?`<button type="button" class="action-button primary" data-copy-prompt="${escapeHTML(t.id)}">复制主任务提示词</button>`:'<span class="insight-label">子任务由主 AI 内部管理，不需要单独派发</span>'}
+      ${!t.parentId?'<span class="insight-label">所有主 AI 统一说“继续 CARLAB”即可认领任务</span>':'<span class="insight-label">子任务由主 AI 内部管理，不需要单独派发</span>'}
       <button type="button" class="action-button subtle" data-copy-feedback="${escapeHTML(t.id)}">复制回报要求</button>
       ${t.status!=='approved'?`<button type="button" class="action-button subtle" data-open-report="${escapeHTML(t.id)}">${has?'更新回报':'粘贴 AI 回报'}</button>`:''}
       ${has?`<button type="button" class="action-button subtle" data-copy-review="${escapeHTML(t.id)}">复制回报给 GPT-6</button>`:''}
@@ -575,28 +642,26 @@ document.addEventListener('click', ev=>{
 /* 续派工作区：由真实父任务队列计算，绝不把已验收的历史任务冒充下一轮。 */
 function renderNextQueue() {
   if (!snapshot) return '';
-  const order=['in_progress','needs_work','ready','submitted','blocked','backlog'];
   const cards=snapshot.agents.map(agent=>{
-    const main=snapshot.tasks.filter(t=>t.owner===agent.id && !t.parentId);
-    const focus=order.map(state=>main.find(t=>t.status===state)).find(Boolean);
-    const waiting=focus?.status==='backlog';
-    const title=focus ? (waiting?'尚未解锁：':'')+focus.title : '暂无新的任务';
-    const note=focus ? (focus.status==='needs_work'?'有审核返工要求，执行模型应直接读取 reviewReport':
-      focus.status==='in_progress'?'已领取，执行进度以文件为准':
-      focus.status==='ready'?'可以启动主任务，模型自行拆解子任务':
-      focus.status==='submitted'?'等待 GPT-6 审核文件':
-      focus.status==='blocked'?'存在前置阻塞，查看任务详情':
-      '等待前置研究或总控解锁') : '已验收成果保留在历史任务中，等待总控继续安排';
+    const focus=pickNextMainTask(agent.id);
+    const action=nextActionCopy(focus);
+    const label=focus ? action.title : action.title;
     return `<button class="next-agent-card" type="button"
-      ${focus?`data-task="${escapeHTML(focus.id)}"`:'disabled'}
-      aria-label="${escapeHTML(agent.name+'，'+title)}">
+      ${focus ? `data-task="${escapeHTML(focus.id)}"` : `data-agent="${escapeHTML(agent.id)}"`}
+      aria-label="${escapeHTML(agent.name+'，'+label)}">
       <div class="next-agent-head"><strong>${escapeHTML(agent.name)}</strong>
-        ${focus?badge(focus.status):'<span class="badge">待派发</span>'}</div>
-      <div class="next-agent-title">${focus?`<span>${escapeHTML(humanCode(focus))}</span> · `:''}${escapeHTML(title)}</div>
-      <div class="next-agent-note">${escapeHTML(note)}</div>
+        ${focus ? badge(focus.status) : '<span class="badge badge-ready">待派发</span>'}</div>
+      <div class="next-agent-title">${action.code ? `<span>${escapeHTML(action.code)}</span> · ` : ''}${escapeHTML(action.title)}</div>
+      <div class="next-agent-note">${escapeHTML(action.note)}</div>
     </button>`;
   }).join('');
   return `<div class="section-head next-head"><div><h2>各模型下一步</h2>
     <p>只展示每人的下一项主任务；点开查看要求与交付。已验收历史不等于当前工作。</p></div></div>
     <div class="next-agent-grid">${cards}</div>`;
 }
+
+// 同一句启动语供全部主 AI 使用，不再逐任务派发。
+document.addEventListener('click',ev=>{
+  if(!ev.target.closest('[data-copy-universal]'))return;
+  copyToClipboard('在 F:\\project\\cyq\\AI_Coding\\car 继续 CARLAB，先读 AGENTS.md，然后自主领取任务、执行、在共享消息区交流并保存成果。','通用启动语已复制（每个主 AI 都一样）');
+});

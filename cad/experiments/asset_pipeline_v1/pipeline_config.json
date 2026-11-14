@@ -1,0 +1,71 @@
+{
+  "assembly_id": "SYS-30-WHEEL-END-ASSY",
+  "assembly_name": "wheel_end_corner_assembly",
+  "pipeline_version": "1.0.0",
+  "units": {
+    "cad_internal": "mm",
+    "gltf_export": "meter",
+    "scale_factor": 0.001
+  },
+  "coordinate_frames": {
+    "cad_engine": "Z_UP_RIGHT_HANDED",
+    "webgl_gltf": "Y_UP_RIGHT_HANDED",
+    "cad_to_gltf_transform_matrix": [
+      [1.0, 0.0, 0.0, 0.0],
+      [0.0, 0.0, 1.0, 0.0],
+      [0.0, -1.0, 0.0, 0.0],
+      [0.0, 0.0, 0.0, 1.0]
+    ]
+  },
+  "parts": {
+    "hub": {
+      "part_id": "SYS-30-HUB-001",
+      "family": "rotational_symmetric",
+      "material_class": "aluminum_alloy_A356",
+      "pcd_mm": 114.3,
+      "bolt_count": 5,
+      "bolt_hole_diameter_mm": 15.5,
+      "outer_diameter_mm": 152.0,
+      "flange_thickness_mm": 14.0,
+      "center_bore_mm": 67.1,
+      "pilot_diameter_mm": 84.0,
+      "pilot_height_mm": 18.0
+    },
+    "rotor": {
+      "part_id": "SYS-40-ROTOR-001",
+      "family": "rotational_symmetric",
+      "material_class": "gray_cast_iron_HT250",
+      "rotor_outer_diameter_mm": 300.0,
+      "rotor_thickness_mm": 24.0,
+      "hat_outer_diameter_mm": 170.0,
+      "hat_height_mm": 35.0,
+      "hat_thickness_mm": 8.0,
+      "center_bore_mm": 67.1,
+      "pcd_mm": 114.3,
+      "bolt_count": 5,
+      "bolt_hole_diameter_mm": 15.5
+    },
+    "bearing": {
+      "part_id": "SYS-30-BRG-DAC4280",
+      "family": "rotational_standard_catalog",
+      "material_class": "bearing_steel_GCr15",
+      "modeling_fidelity": "GEOMETRIC_ENVELOPE_ONLY",
+      "disclaimer": "Simplified packaging envelope (ASSUMPTION); internal rolling kinematics not simulated.",
+      "outer_diameter_mm": 80.0,
+      "inner_diameter_mm": 42.0,
+      "width_mm": 42.0
+    },
+    "stud": {
+      "part_id": "SYS-30-STUD-M14",
+      "family": "threaded_fastener",
+      "material_class": "high_tensile_steel_grade_10.9",
+      "thread_spec": "M14x1.5-6g",
+      "nominal_diameter_mm": 14.0,
+      "head_diameter_mm": 22.0,
+      "head_thickness_mm": 6.0,
+      "shank_length_mm": 55.0,
+      "instance_count": 5,
+      "pcd_mm": 114.3
+    }
+  }
+}

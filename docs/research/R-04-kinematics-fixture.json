@@ -1,0 +1,914 @@
+{
+  "schema": "carlab.r04.kinematicsFixture.v1",
+  "task": "R-04",
+  "date": "2026-11-14",
+  "provenance": "FICTIONAL_FIXTURE",
+  "notAProductionVehicle": true,
+  "frame": {
+    "x": "left, outboard on the left wheel",
+    "y": "up",
+    "z": "forward",
+    "units": {
+      "length": "m",
+      "angle": "rad"
+    }
+  },
+  "command": "node F:\\tmp\\r04-kinematics.mjs",
+  "hardpoints": {
+    "upperAxisA": [
+      0.28,
+      0.22,
+      0.13
+    ],
+    "upperAxisB": [
+      0.24,
+      0.2,
+      -0.13
+    ],
+    "upperBall": [
+      0.55,
+      0.18,
+      0.01
+    ],
+    "lowerAxisA": [
+      0.32,
+      -0.04,
+      0.16
+    ],
+    "lowerAxisB": [
+      0.26,
+      -0.07,
+      -0.16
+    ],
+    "lowerBall": [
+      0.62,
+      -0.06,
+      0
+    ],
+    "tieInner": [
+      0.26,
+      0.06,
+      0.15
+    ],
+    "tieOuter": [
+      0.54,
+      0.05,
+      0.13
+    ],
+    "wheelCenter": [
+      0.72,
+      0,
+      0
+    ],
+    "spindleAxis": [
+      1,
+      -0.04,
+      0.015
+    ],
+    "shockChassis": [
+      0.36,
+      0.34,
+      0.02
+    ],
+    "diffOutput": [
+      0.12,
+      -0.02,
+      0
+    ],
+    "strutTop": [
+      0.42,
+      0.56,
+      0.02
+    ]
+  },
+  "derived": {
+    "upperArmRadial_m": 0.28712807026766335,
+    "upperArmAlong_m": 0.08035839261936373,
+    "lowerArmRadial_m": 0.32451964933784994,
+    "lowerArmAlong_m": 0.10337793378491811,
+    "kingpinLength_m": 0.2501999200639361,
+    "tieRodLength_m": 0.28089143810376277,
+    "tieToLower_m": 0.18814887722226778,
+    "tieToUpper_m": 0.1772004514666935,
+    "spindleAxisUnit": [
+      0.9990887470879062,
+      -0.03996354988351625,
+      0.014986331206318593
+    ],
+    "wheelCenterLocalOnUpright": [
+      0.029576348378164984,
+      -0.04012675848084819,
+      0.10542809336430725
+    ]
+  },
+  "constraintModel": {
+    "sla": "upper ball on arm circle, lower ball on arm circle, three upright distances, tie-rod length, prescribed wheel-center height",
+    "macpherson": "upper ball replaced by the strut line through strutTop; other constraints unchanged",
+    "shock": "length is an output. It is not a constant-length link.",
+    "drivenCoordinate": "wheelCenter.y"
+  },
+  "sweepTravel_m": [
+    -0.06,
+    -0.05,
+    -0.04,
+    -0.03,
+    -0.02,
+    -0.01,
+    0,
+    0.01,
+    0.02,
+    0.03,
+    0.04,
+    0.05,
+    0.06
+  ],
+  "slaSweep": [
+    {
+      "travel_m": -0.06,
+      "ok": true,
+      "residual_m": 2.7755575615628914e-16,
+      "iterations": 4,
+      "wheelCenter_m": [
+        0.7107895495955427,
+        -0.06000000000000008,
+        0.006402413868648576
+      ],
+      "spindleAxis": [
+        0.9999472468550477,
+        -0.007053155404400047,
+        0.00746702791288017
+      ],
+      "camber_rad": -0.007053213884597548,
+      "toe_rad": -0.00746728304708363,
+      "kingpinInclination_rad": -0.3163803419305721,
+      "shockLength_m": 0.469684668673162,
+      "halfshaftLength_m": 0.5921767327535334,
+      "upperRadial_m": 0.28712807026766346,
+      "lowerRadial_m": 0.32451964933784994,
+      "tieLength_m": 0.280891438103763,
+      "uprightKingpin_m": 0.25019992006393615
+    },
+    {
+      "travel_m": -0.05,
+      "ok": true,
+      "residual_m": 1.4516166046973922e-14,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7133219703021032,
+        -0.050000000000003195,
+        0.005002465272111224
+      ],
+      "spindleAxis": [
+        0.9998752000130762,
+        -0.013896707345252338,
+        0.007514381130311342
+      ],
+      "camber_rad": -0.013897154669282465,
+      "toe_rad": -0.007515177558366724,
+      "kingpinInclination_rad": -0.30953484695277395,
+      "shockLength_m": 0.4631792558204568,
+      "halfshaftLength_m": 0.5941009889757538,
+      "upperRadial_m": 0.2871280702676715,
+      "lowerRadial_m": 0.32451964933785044,
+      "tieLength_m": 0.2808914381037767,
+      "uprightKingpin_m": 0.25019992006394315
+    },
+    {
+      "travel_m": -0.04,
+      "ok": true,
+      "residual_m": 5.495603971894525e-15,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7154311619248417,
+        -0.040000000000000986,
+        0.0037529423259216274
+      ],
+      "spindleAxis": [
+        0.99976522833974,
+        -0.020078477102489112,
+        0.00814511878563979
+      ],
+      "camber_rad": -0.020079826437714526,
+      "toe_rad": -0.008146851234237251,
+      "kingpinInclination_rad": -0.3033780610837471,
+      "shockLength_m": 0.4566574096690502,
+      "halfshaftLength_m": 0.5957787787151106,
+      "upperRadial_m": 0.28712807026766657,
+      "lowerRadial_m": 0.3245196493378501,
+      "tieLength_m": 0.2808914381037681,
+      "uprightKingpin_m": 0.2501999200639389
+    },
+    {
+      "travel_m": -0.03,
+      "ok": true,
+      "residual_m": 2.3314683517128287e-15,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.717138650759967,
+        -0.030000000000000387,
+        0.002637927740054823
+      ],
+      "spindleAxis": [
+        0.999626695993003,
+        -0.025702897705744864,
+        0.009264432397113134
+      ],
+      "camber_rad": -0.025705728603310243,
+      "toe_rad": -0.009267626800491683,
+      "kingpinInclination_rad": -0.29780103283572124,
+      "shockLength_m": 0.4501110561312429,
+      "halfshaftLength_m": 0.5972282033646733,
+      "upperRadial_m": 0.28712807026766474,
+      "lowerRadial_m": 0.32451964933785,
+      "tieLength_m": 0.2808914381037651,
+      "uprightKingpin_m": 0.25019992006393726
+    },
+    {
+      "travel_m": -0.02,
+      "ok": true,
+      "residual_m": 9.43689570931383e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7184611359019373,
+        -0.020000000000000226,
+        0.001645935080201359
+      ],
+      "spindleAxis": [
+        0.9994655740466185,
+        -0.03085113873845908,
+        0.010806180370681017
+      ],
+      "camber_rad": -0.03085603481752846,
+      "toe_rad": -0.010811537291098842,
+      "kingpinInclination_rad": -0.29271978519847597,
+      "shockLength_m": 0.4435332700432614,
+      "halfshaftLength_m": 0.598463399287981,
+      "upperRadial_m": 0.28712807026766407,
+      "lowerRadial_m": 0.32451964933785,
+      "tieLength_m": 0.2808914381037637,
+      "uprightKingpin_m": 0.2501999200639367
+    },
+    {
+      "travel_m": -0.01,
+      "ok": true,
+      "residual_m": 5.551115123125783e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7194115893087626,
+        -0.010000000000000099,
+        0.0007686279374508511
+      ],
+      "spindleAxis": [
+        0.9992855593908809,
+        -0.035587466499626186,
+        0.012724111795810098
+      ],
+      "camber_rad": -0.0355949825137706,
+      "toe_rad": -0.012732520819664687,
+      "kingpinInclination_rad": -0.28806835006133363,
+      "shockLength_m": 0.43691793621376523,
+      "halfshaftLength_m": 0.5994954913813473,
+      "upperRadial_m": 0.2871280702676637,
+      "lowerRadial_m": 0.32451964933784994,
+      "tieLength_m": 0.2808914381037633,
+      "uprightKingpin_m": 0.2501999200639364
+    },
+    {
+      "travel_m": 0,
+      "ok": true,
+      "residual_m": 2.220446049250313e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7200000000000001,
+        0,
+        -1.9890427335248072e-16
+      ],
+      "spindleAxis": [
+        0.9990887470879062,
+        -0.0399635498835163,
+        0.014986331206316874
+      ],
+      "camber_rad": -0.03997419506900121,
+      "toe_rad": -0.014998875151848876,
+      "kingpinInclination_rad": -0.2837941092083275,
+      "shockLength_m": 0.430259514711761,
+      "halfshaftLength_m": 0.6003332407921455,
+      "upperRadial_m": 0.2871280702676634,
+      "lowerRadial_m": 0.32451964933785005,
+      "tieLength_m": 0.280891438103763,
+      "uprightKingpin_m": 0.25019992006393615
+    },
+    {
+      "travel_m": 0.01,
+      "ok": true,
+      "residual_m": 1.1102230246251565e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7202338888943165,
+        0.009999999999999981,
+        -0.0006641644860608007
+      ],
+      "spindleAxis": [
+        0.9988760413089667,
+        -0.044021461761582115,
+        0.017571710312344238
+      ],
+      "camber_rad": -0.044035692293268286,
+      "toe_rad": -0.01758966812721149,
+      "kingpinInclination_rad": -0.2798545820998546,
+      "shockLength_m": 0.42355287266588587,
+      "halfshaftLength_m": 0.6009834960226937,
+      "upperRadial_m": 0.28712807026766335,
+      "lowerRadial_m": 0.32451964933784994,
+      "tieLength_m": 0.2808914381037629,
+      "uprightKingpin_m": 0.25019992006393615
+    },
+    {
+      "travel_m": 0.02,
+      "ok": true,
+      "residual_m": 1.1102230246251565e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7201186691977044,
+        0.020000000000000046,
+        -0.0012266519923975103
+      ],
+      "spindleAxis": [
+        0.9986474051527372,
+        -0.04779582334183903,
+        0.0204675219013103
+      ],
+      "camber_rad": -0.04781403986219753,
+      "toe_rad": -0.02049237467537985,
+      "kingpinInclination_rad": -0.2762151550227153,
+      "shockLength_m": 0.4167931598688481,
+      "halfshaftLength_m": 0.6014515124220191,
+      "upperRadial_m": 0.2871280702676634,
+      "lowerRadial_m": 0.32451964933784994,
+      "tieLength_m": 0.2808914381037629,
+      "uprightKingpin_m": 0.25019992006393604
+    },
+    {
+      "travel_m": 0.03,
+      "ok": true,
+      "residual_m": 5.551115123125783e-17,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7196578982937283,
+        0.029999999999999975,
+        -0.0016890628057279848
+      ],
+      "spindleAxis": [
+        0.9984020055493799,
+        -0.05131536875850229,
+        0.023667873672025715
+      ],
+      "camber_rad": -0.05133791666579512,
+      "toe_rad": -0.023701316249667512,
+      "kingpinInclination_rad": -0.27284744264757493,
+      "shockLength_m": 0.40997571400793514,
+      "halfshaftLength_m": 0.6017411801756741,
+      "upperRadial_m": 0.28712807026766335,
+      "lowerRadial_m": 0.32451964933784994,
+      "tieLength_m": 0.2808914381037628,
+      "uprightKingpin_m": 0.2501999200639361
+    },
+    {
+      "travel_m": 0.04,
+      "ok": true,
+      "residual_m": 5.551115123125783e-17,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7188534500262068,
+        0.04,
+        -0.0020519723508748756
+      ],
+      "spindleAxis": [
+        0.9981382852358857,
+        -0.05460410730532095,
+        0.02717268871044564
+      ],
+      "camber_rad": -0.05463127845603981,
+      "toe_rad": -0.027216648662570415,
+      "kingpinInclination_rad": -0.2697280868147145,
+      "shockLength_m": 0.40309598638474164,
+      "halfshaftLength_m": 0.6018551862357084,
+      "upperRadial_m": 0.2871280702676634,
+      "lowerRadial_m": 0.3245196493378499,
+      "tieLength_m": 0.2808914381037628,
+      "uprightKingpin_m": 0.2501999200639361
+    },
+    {
+      "travel_m": 0.05,
+      "ok": true,
+      "residual_m": 1.1102230246251565e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7177056257358098,
+        0.04999999999999999,
+        -0.0023150331797547313
+      ],
+      "spindleAxis": [
+        0.9978539796918052,
+        -0.05768220007367017,
+        0.030987078079220416
+      ],
+      "camber_rad": -0.0577142351122982,
+      "toe_rad": -0.03104374371684977,
+      "kingpinInclination_rad": -0.2668378658342134,
+      "shockLength_m": 0.3961494820793976,
+      "halfshaftLength_m": 0.6017951266127529,
+      "upperRadial_m": 0.28712807026766335,
+      "lowerRadial_m": 0.32451964933785005,
+      "tieLength_m": 0.2808914381037628,
+      "uprightKingpin_m": 0.25019992006393615
+    },
+    {
+      "travel_m": 0.06,
+      "ok": true,
+      "residual_m": 5.551115123125783e-17,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7162132155863172,
+        0.060000000000000005,
+        -0.002477031436919465
+      ],
+      "spindleAxis": [
+        0.997546088111889,
+        -0.06056662977320655,
+        0.03512101152561773
+      ],
+      "camber_rad": -0.06060372062933079,
+      "toe_rad": -0.035192870961614046,
+      "kingpinInclination_rad": -0.26416103022642823,
+      "shockLength_m": 0.3891317104763343,
+      "halfshaftLength_m": 0.6015615796612312,
+      "upperRadial_m": 0.2871280702676634,
+      "lowerRadial_m": 0.32451964933784994,
+      "tieLength_m": 0.28089143810376277,
+      "uprightKingpin_m": 0.25019992006393604
+    }
+  ],
+  "macphersonSweep": [
+    {
+      "travel_m": -0.06,
+      "ok": true,
+      "residual_m": 1.1102230246251565e-16,
+      "iterations": 4,
+      "wheelCenter_m": [
+        0.71969115009105,
+        -0.06000000000000005,
+        0.01338978912691586
+      ],
+      "spindleAxis": [
+        0.9874967638719676,
+        -0.12568731442515124,
+        0.09514641525031196
+      ],
+      "camber_rad": -0.12602060928227046,
+      "toe_rad": -0.09605460612261449,
+      "kingpinInclination_rad": -0.1990340555428169,
+      "shockLength_m": 0.4623065180233099,
+      "halfshaftLength_m": 0.6011728220323915,
+      "upperRadial_m": 0.31124227781418257,
+      "lowerRadial_m": 0.3245196493378498,
+      "tieLength_m": 0.2808914381037628,
+      "uprightKingpin_m": 0.25019992006393615
+    },
+    {
+      "travel_m": -0.05,
+      "ok": true,
+      "residual_m": 7.771561172376096e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7202973405006442,
+        -0.0500000000000003,
+        0.010932453345046837
+      ],
+      "spindleAxis": [
+        0.9906884488201119,
+        -0.1098529582849248,
+        0.08042838386074548
+      ],
+      "camber_rad": -0.11007511172540285,
+      "toe_rad": -0.08100667880189774,
+      "kingpinInclination_rad": -0.2150091427005915,
+      "shockLength_m": 0.4571857879134357,
+      "halfshaftLength_m": 0.601145918682218,
+      "upperRadial_m": 0.30691597294054196,
+      "lowerRadial_m": 0.32451964933785,
+      "tieLength_m": 0.2808914381037633,
+      "uprightKingpin_m": 0.2501999200639361
+    },
+    {
+      "travel_m": -0.04,
+      "ok": true,
+      "residual_m": 6.938893903907228e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7206785521010908,
+        -0.04000000000000023,
+        0.008562007970786151
+      ],
+      "spindleAxis": [
+        0.9933103116628451,
+        -0.0945951813970827,
+        0.06622972444993676
+      ],
+      "camber_rad": -0.09473682937979677,
+      "toe_rad": -0.06657722138194885,
+      "kingpinInclination_rad": -0.2302526807440057,
+      "shockLength_m": 0.4519813908013659,
+      "halfshaftLength_m": 0.6010724007428344,
+      "upperRadial_m": 0.30270590537269976,
+      "lowerRadial_m": 0.32451964933784994,
+      "tieLength_m": 0.2808914381037633,
+      "uprightKingpin_m": 0.25019992006393615
+    },
+    {
+      "travel_m": -0.03,
+      "ok": true,
+      "residual_m": 6.938893903907228e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7208374520566138,
+        -0.03000000000000022,
+        0.006280582351750661
+      ],
+      "spindleAxis": [
+        0.9954122827420093,
+        -0.0799454711394189,
+        0.052565283321206836
+      ],
+      "camber_rad": -0.08003087595872761,
+      "toe_rad": -0.052758544361777945,
+      "kingpinInclination_rad": -0.24476125481535838,
+      "shockLength_m": 0.4466900973135837,
+      "halfshaftLength_m": 0.6009534836479116,
+      "upperRadial_m": 0.29861605474051156,
+      "lowerRadial_m": 0.32451964933785005,
+      "tieLength_m": 0.2808914381037632,
+      "uprightKingpin_m": 0.2501999200639361
+    },
+    {
+      "travel_m": -0.02,
+      "ok": true,
+      "residual_m": 6.661338147750939e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7207762443434433,
+        -0.02000000000000024,
+        0.004090862766625211
+      ],
+      "spindleAxis": [
+        0.9970435772121121,
+        -0.06593547928082205,
+        0.039453994881168346
+      ],
+      "camber_rad": -0.06598334860135871,
+      "toe_rad": -0.039550348578970156,
+      "kingpinInclination_rad": -0.2585281734580373,
+      "shockLength_m": 0.44130848665950706,
+      "halfshaftLength_m": 0.6007901721279968,
+      "upperRadial_m": 0.29465174428373125,
+      "lowerRadial_m": 0.32451964933785005,
+      "tieLength_m": 0.2808914381037633,
+      "uprightKingpin_m": 0.2501999200639361
+    },
+    {
+      "travel_m": -0.01,
+      "ok": true,
+      "residual_m": 6.938893903907228e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7204966711843256,
+        -0.010000000000000266,
+        0.0019960784860688324
+      ],
+      "spindleAxis": [
+        0.9982529283180337,
+        -0.052597264493281684,
+        0.026918745741477616
+      ],
+      "camber_rad": -0.05262154621267841,
+      "toe_rad": -0.026959323735636573,
+      "kingpinInclination_rad": -0.27154351128395365,
+      "shockLength_m": 0.43583292086720643,
+      "halfshaftLength_m": 0.6005832468798797,
+      "upperRadial_m": 0.2908196918649873,
+      "lowerRadial_m": 0.32451964933784994,
+      "tieLength_m": 0.2808914381037632,
+      "uprightKingpin_m": 0.25019992006393604
+    },
+    {
+      "travel_m": 0,
+      "ok": true,
+      "residual_m": 7.771561172376096e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.72,
+        -3.122502256758253e-16,
+        -7.033439884847924e-16
+      ],
+      "spindleAxis": [
+        0.9990887470879064,
+        -0.03996354988351599,
+        0.014986331206312396
+      ],
+      "camber_rad": -0.03997419506900089,
+      "toe_rad": -0.014998875151844391,
+      "kingpinInclination_rad": -0.28379410920832765,
+      "shockLength_m": 0.43025951471176116,
+      "halfshaftLength_m": 0.6003332407921453,
+      "upperRadial_m": 0.28712807026766346,
+      "lowerRadial_m": 0.32451964933785005,
+      "tieLength_m": 0.28089143810376327,
+      "uprightKingpin_m": 0.2501999200639361
+    },
+    {
+      "travel_m": 0.01,
+      "ok": true,
+      "residual_m": 8.049116928532385e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.719286995337216,
+        0.009999999999999704,
+        -0.0018930500151968202
+      ],
+      "spindleAxis": [
+        0.9995992142509984,
+        -0.0280680094070826,
+        0.0036875081980362297
+      ],
+      "camber_rad": -0.028071696105386023,
+      "toe_rad": -0.0036889699574575298,
+      "kingpinInclination_rad": -0.2952635317771673,
+      "shockLength_m": 0.42458410000094177,
+      "halfshaftLength_m": 0.6000404039884883,
+      "upperRadial_m": 0.2835865747636824,
+      "lowerRadial_m": 0.32451964933785,
+      "tieLength_m": 0.2808914381037633,
+      "uprightKingpin_m": 0.25019992006393615
+    },
+    {
+      "travel_m": 0.02,
+      "ok": true,
+      "residual_m": 8.604228440844963e-16,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7183578745315305,
+        0.019999999999999622,
+        -0.00367817159801102
+      ],
+      "spindleAxis": [
+        0.999832307743696,
+        -0.01694559805558904,
+        -0.006942845126703477
+      ],
+      "camber_rad": -0.0169464091577851,
+      "toe_rad": 0.006943897974878397,
+      "kingpinInclination_rad": -0.3059319785535037,
+      "shockLength_m": 0.41880218265256436,
+      "halfshaftLength_m": 0.5997046564436492,
+      "upperRadial_m": 0.28020649589767455,
+      "lowerRadial_m": 0.3245196493378501,
+      "tieLength_m": 0.28089143810376344,
+      "uprightKingpin_m": 0.25019992006393615
+    },
+    {
+      "travel_m": 0.03,
+      "ok": true,
+      "residual_m": 1.0547118733938987e-15,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7172122450843468,
+        0.029999999999999645,
+        -0.005349845940829355
+      ],
+      "spindleAxis": [
+        0.9998357669207587,
+        -0.0066329426066018575,
+        -0.016865445691005433
+      ],
+      "camber_rad": -0.006632991244641947,
+      "toe_rad": 0.016866616407570558,
+      "kingpinInclination_rad": -0.31577614369314033,
+      "shockLength_m": 0.41290889067539593,
+      "halfshaftLength_m": 0.5993255263463058,
+      "upperRadial_m": 0.27700079536244687,
+      "lowerRadial_m": 0.3245196493378501,
+      "tieLength_m": 0.2808914381037636,
+      "uprightKingpin_m": 0.25019992006393615
+    },
+    {
+      "travel_m": 0.04,
+      "ok": true,
+      "residual_m": 1.3322676295501878e-15,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.715849020798125,
+        0.03999999999999958,
+        -0.006901873881959646
+      ],
+      "spindleAxis": [
+        0.9996569922463526,
+        0.0028311873255477127,
+        -0.02603617159459945
+      ],
+      "camber_rad": 0.0028311911078491027,
+      "toe_rad": 0.026039218452694086,
+      "kingpinInclination_rad": -0.3247690144905155,
+      "shockLength_m": 0.4068989107225574,
+      "halfshaftLength_m": 0.5989020716687886,
+      "upperRadial_m": 0.27398418278929054,
+      "lowerRadial_m": 0.3245196493378501,
+      "tieLength_m": 0.28089143810376377,
+      "uprightKingpin_m": 0.2501999200639361
+    },
+    {
+      "travel_m": 0.05,
+      "ok": true,
+      "residual_m": 1.609823385706477e-15,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7142663125179434,
+        0.04999999999999945,
+        -0.008327289472535497
+      ],
+      "spindleAxis": [
+        0.9993428764489045,
+        0.01140530388241462,
+        -0.03440544047355835
+      ],
+      "camber_rad": 0.011405551165696626,
+      "toe_rad": 0.034414471199193684,
+      "kingpinInclination_rad": -0.3328795955093543,
+      "shockLength_m": 0.40076641027895643,
+      "halfshaftLength_m": 0.5984327814747729,
+      "upperRadial_m": 0.27117319131611317,
+      "lowerRadial_m": 0.32451964933785016,
+      "tieLength_m": 0.2808914381037641,
+      "uprightKingpin_m": 0.2501999200639361
+    },
+    {
+      "travel_m": 0.06,
+      "ok": true,
+      "residual_m": 1.970645868709653e-15,
+      "iterations": 3,
+      "wheelCenter_m": [
+        0.7124612877260982,
+        0.059999999999999346,
+        -0.009618241626198077
+      ],
+      "spindleAxis": [
+        0.9989395594159611,
+        0.019044490937838443,
+        -0.041917347229564514
+      ],
+      "camber_rad": 0.019045642341871276,
+      "toe_rad": 0.04193724250414245,
+      "kingpinInclination_rad": -0.3400725395201239,
+      "shockLength_m": 0.3945049417053197,
+      "halfshaftLength_m": 0.5979154522388983,
+      "upperRadial_m": 0.2685862500238517,
+      "lowerRadial_m": 0.3245196493378503,
+      "tieLength_m": 0.2808914381037645,
+      "uprightKingpin_m": 0.25019992006393615
+    }
+  ],
+  "passCount": 21,
+  "failCount": 0,
+  "failed": [],
+  "tests": [
+    {
+      "id": "T01_design_residual",
+      "pass": true,
+      "residual_m": 4.163336342344337e-17,
+      "expect": "设计位置满足全部刚性约束"
+    },
+    {
+      "id": "T02_sweep_converges",
+      "pass": true,
+      "solved": 13,
+      "requested": 13,
+      "failed": null
+    },
+    {
+      "id": "T03_upper_arm_radius_constant",
+      "pass": true,
+      "range_m": 8.1601392309949e-15
+    },
+    {
+      "id": "T04_lower_arm_radius_constant",
+      "pass": true,
+      "range_m": 5.551115123125783e-16
+    },
+    {
+      "id": "T05_tierod_length_constant",
+      "pass": true,
+      "range_m": 1.3933298959045715e-14
+    },
+    {
+      "id": "T06_upright_kingpin_constant",
+      "pass": true,
+      "range_m": 7.105427357601002e-15
+    },
+    {
+      "id": "T07_wheel_height_follows_input",
+      "pass": true,
+      "maxError_m": 3.191891195797325e-15
+    },
+    {
+      "id": "T08_camber_changes_with_travel",
+      "pass": true,
+      "range_rad": 0.05355050674473324,
+      "range_deg": 3.068218027260063
+    },
+    {
+      "id": "T09_toe_changes_with_travel",
+      "pass": true,
+      "range_rad": 0.027725587914530416,
+      "range_deg": 1.5885591720215146
+    },
+    {
+      "id": "T10_sweep_repeatable",
+      "pass": true,
+      "maxWheelCenterDelta_m": 0
+    },
+    {
+      "id": "T11_track_stretch_breaks_upright",
+      "pass": true,
+      "wheelToLowerBallChange_m": 0.026559172735857547,
+      "expect": "只把轮心外移 30 mm 会改变转向节上的固定距离"
+    },
+    {
+      "id": "T12_outboard_balls_miss_arm_circles",
+      "pass": true,
+      "lowerRadialError_m": 0.019658171432999028,
+      "upperRadialError_m": 0.019662884056567687
+    },
+    {
+      "id": "T13_track_change_breaks_tierod",
+      "pass": true,
+      "lengthChange_m": 0.019940741026063746
+    },
+    {
+      "id": "T14_rack_changes_toe_both_ways",
+      "pass": true,
+      "toeAtPlus15mm_rad": 0.10433432505577162,
+      "toeAtMinus15mm_rad": -0.14300640447969873,
+      "toeAtDesign_rad": -0.014998875151850595
+    },
+    {
+      "id": "T15_impossible_tierod_rejected",
+      "pass": true,
+      "cut_m": 0.08,
+      "reason": "linesearch",
+      "residual_m": 0.012378234659345705
+    },
+    {
+      "id": "T16_macpherson_camber_differs",
+      "pass": true,
+      "solved": 13,
+      "camberGapAt40mm_rad": 0.05746246956388891,
+      "camberGapAt40mm_deg": 3.292356986409783
+    },
+    {
+      "id": "T17_halfshaft_length_changes",
+      "pass": true,
+      "range_m": 0.009678453482174998,
+      "expect": "差速器输出点固定时，轮心跳动会改变半轴长度"
+    },
+    {
+      "id": "T18_shock_length_changes_arm_radius_does_not",
+      "pass": true,
+      "shockRange_m": 0.08055295819682767,
+      "lowerArmRadialRange_m": 5.551115123125783e-16
+    },
+    {
+      "id": "T19_current_demo_arms_are_not_rigid",
+      "pass": true,
+      "upperAtRest_m": 0.4964876634922564,
+      "upperAtBump_m": 0.4143669871020132,
+      "upperDelta_mm": 82.12067639024323,
+      "source": "只读复算 src/parts/chassis.js 的枢轴到球头公式"
+    },
+    {
+      "id": "T20_single_ball_move_changes_kingpin",
+      "pass": true,
+      "design_rad": -0.28379410920832765,
+      "afterLowerBallOutboard20mm_rad": -0.35877067027057213,
+      "delta_deg": -4.295840511271513
+    },
+    {
+      "id": "T21_mirror_keeps_camber_uniform_plus_x_shrinks_right_track",
+      "pass": true,
+      "rightDesignResidual_m": 4.163336342344337e-17,
+      "leftCamber_rad": -0.039974195069001156,
+      "rightCamber_rad": -0.039974195069001156,
+      "rightWheelX_m": -0.72,
+      "note": "正确镜像后两侧外倾相同。左右轮同时加世界坐标 +X 时，右轮轮距反而变小。"
+    }
+  ],
+  "solverSource": "/**\r\n * R-04 虚构双叉臂运动学夹具。\r\n * 坐标：+X 向左（左轮外侧），+Y 向上，+Z 向前。单位 m、rad。\r\n * 硬点是虚构夹具，不是量产车数据。不修改 src/。\r\n */\r\nimport { readFileSync, writeFileSync, mkdirSync } from 'node:fs';\r\n\r\nconst OUT = 'F:/project/cyq/AI_Coding/car/docs/research/R-04-kinematics-fixture.json';\r\n\r\nconst hardpoints = {\r\n  upperAxisA: [0.28, 0.22, 0.13],\r\n  upperAxisB: [0.24, 0.20, -0.13],\r\n  upperBall: [0.55, 0.18, 0.01],\r\n  lowerAxisA: [0.32, -0.04, 0.16],\r\n  lowerAxisB: [0.26, -0.07, -0.16],\r\n  lowerBall: [0.62, -0.06, 0.00],\r\n  tieInner: [0.26, 0.06, 0.15],\r\n  tieOuter: [0.54, 0.05, 0.13],\r\n  wheelCenter: [0.72, 0.00, 0.00],\r\n  spindleAxis: [1, -0.04, 0.015],\r\n  shockChassis: [0.36, 0.34, 0.02],\r\n  diffOutput: [0.12, -0.02, 0.00],\r\n  strutTop: [0.42, 0.56, 0.02]\r\n};\r\n\r\nconst add = (a, b) => a.map((v, i) => v + b[i]);\r\nconst sub = (a, b) => a.map((v, i) => v - b[i]);\r\nconst mul = (a, s) => a.map((v) => v * s);\r\nconst dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];\r\nconst cross = (a, b) => [\r\n  a[1] * b[2] - a[2] * b[1],\r\n  a[2] * b[0] - a[0] * b[2],\r\n  a[0] * b[1] - a[1] * b[0]\r\n];\r\nconst norm = (a) => Math.hypot(a[0], a[1], a[2]);\r\nconst normalize = (a) => mul(a, 1 / norm(a));\r\nconst dist = (a, b) => norm(sub(a, b));\r\nconst lerp = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);\r\n\r\nfunction perpendicular(dir) {\r\n  const ref = Math.abs(dir[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];\r\n  return normalize(cross(dir, ref));\r\n}\r\n\r\nfunction axisOf(a, b) {\r\n  return { origin: a, dir: normalize(sub(b, a)) };\r\n}\r\n\r\nfunction circleParts(point, axis) {\r\n  const v = sub(point, axis.origin);\r\n  const along = dot(v, axis.dir);\r\n  const radial = norm(sub(v, mul(axis.dir, along)));\r\n  return { along, radial };\r\n}\r\n\r\nfunction circleResidual(point, axis, built) {\r\n  const now = circleParts(point, axis);\r\n  return [now.radial - built.radial, now.along - built.along];\r\n}\r\n\r\nfunction lineResidual(point, origin, dir) {\r\n  const v = sub(point, origin);\r\n  const along = dot(v, dir);\r\n  const perp = sub(v, mul(dir, along));\r\n  const t1 = perpendicular(dir);\r\n  const t2 = cross(dir, t1);\r\n  return [dot(perp, t1), dot(perp, t2)];\r\n}\r\n\r\nfunction uprightBasis(lowerBall, upperBall, tieOuter) {\r\n  const x = normalize(sub(upperBall, lowerBall));\r\n  const v = sub(tieOuter, lowerBall);\r\n  const y = normalize(sub(v, mul(x, dot(v, x))));\r\n  const z = cross(x, y);\r\n  return { origin: lowerBall, x, y, z };\r\n}\r\n\r\nfunction toWorld(frame, local) {\r\n  return add(frame.origin, add(mul(frame.x, local[0]), add(mul(frame.y, local[1]), mul(frame.z, local[2]))));\r\n}\r\n\r\nfunction toLocal(frame, point) {\r\n  const v = sub(point, frame.origin);\r\n  return [dot(v, frame.x), dot(v, frame.y), dot(v, frame.z)];\r\n}\r\n\r\nfunction wheelCenterOf(lowerBall, upperBall, tieOuter, local) {\r\n  return toWorld(uprightBasis(lowerBall, upperBall, tieOuter), local);\r\n}\r\n\r\nfunction spindleOf(lowerBall, upperBall, tieOuter, localDir) {\r\n  const frame = uprightBasis(lowerBall, upperBall, tieOuter);\r\n  return normalize(add(mul(frame.x, localDir[0]), add(mul(frame.y, localDir[1]), mul(frame.z, localDir[2]))));\r\n}\r\n\r\nfunction rodrigues(point, origin, axisDir, angle) {\r\n  const v = sub(point, origin);\r\n  const c = Math.cos(angle);\r\n  const s = Math.sin(angle);\r\n  const rotated = add(add(mul(v, c), mul(cross(axisDir, v), s)), mul(axisDir, dot(axisDir, v) * (1 - c)));\r\n  return add(origin, rotated);\r\n}\r\n\r\nfunction armAngle(axis, fromPoint, toPoint) {\r\n  const r0 = sub(sub(fromPoint, axis.origin), mul(axis.dir, dot(sub(fromPoint, axis.origin), axis.dir)));\r\n  const r1 = sub(sub(toPoint, axis.origin), mul(axis.dir, dot(sub(toPoint, axis.origin), axis.dir)));\r\n  const s = dot(axis.dir, cross(r0, r1));\r\n  return Math.atan2(s, dot(r0, r1));\r\n}\r\n\r\nfunction camberRad(spindle) {\r\n  // 旋转轴必须指向车轮外侧。外侧端抬高时 spindle.y > 0，外倾为正。\r\n  return Math.atan2(spindle[1], Math.hypot(spindle[0], spindle[2]));\r\n}\r\n\r\nfunction toeRad(spindle) {\r\n  const forward = normalize(cross(spindle, [0, 1, 0]));\r\n  return Math.atan2(forward[0], forward[2]);\r\n}\r\n\r\nfunction kingpinInclinationRad(lowerBall, upperBall) {\r\n  const axis = sub(upperBall, lowerBall);\r\n  const side = Math.sign(lowerBall[0] || upperBall[0]) || 1;\r\n  return Math.atan2(axis[0] * side, axis[1]);\r\n}\r\n\r\nfunction solveLinear(A, b) {\r\n  const n = b.length;\r\n  const M = A.map((row, i) => [...row, b[i]]);\r\n  for (let k = 0; k < n; k++) {\r\n    let pivot = k;\r\n    for (let i = k + 1; i < n; i++) {\r\n      if (Math.abs(M[i][k]) > Math.abs(M[pivot][k])) pivot = i;\r\n    }\r\n    [M[k], M[pivot]] = [M[pivot], M[k]];\r\n    const diag = M[k][k];\r\n    if (Math.abs(diag) < 1e-14) return null;\r\n    for (let j = k; j <= n; j++) M[k][j] /= diag;\r\n    for (let i = 0; i < n; i++) {\r\n      if (i === k) continue;\r\n      const factor = M[i][k];\r\n      for (let j = k; j <= n; j++) M[i][j] -= factor * M[k][j];\r\n    }\r\n  }\r\n  return M.map((row) => row[n]);\r\n}\r\n\r\nfunction newton(q0, residualFn) {\r\n  let q = q0.slice();\r\n  for (let iter = 0; iter < 40; iter++) {\r\n    const r = residualFn(q);\r\n    const nrm = Math.max(...r.map((v) => Math.abs(v)));\r\n    if (nrm < 1e-10) return { ok: true, q, residual: nrm, iter };\r\n    const J = Array.from({ length: r.length }, () => new Array(q.length).fill(0));\r\n    const h = 1e-8;\r\n    for (let j = 0; j < q.length; j++) {\r\n      const qp = q.slice();\r\n      const qm = q.slice();\r\n      qp[j] += h;\r\n      qm[j] -= h;\r\n      const rp = residualFn(qp);\r\n      const rm = residualFn(qm);\r\n      for (let i = 0; i < r.length; i++) J[i][j] = (rp[i] - rm[i]) / (2 * h);\r\n    }\r\n    const dx = solveLinear(J, r.map((v) => -v));\r\n    if (!dx) return { ok: false, q, residual: nrm, iter, reason: 'singular' };\r\n    let step = 1;\r\n    let accepted = false;\r\n    for (let attempt = 0; attempt < 14; attempt++) {\r\n      const trial = q.map((v, i) => v + step * dx[i]);\r\n      const next = Math.max(...residualFn(trial).map((v) => Math.abs(v)));\r\n      if (next < nrm * (1 - 1e-4 * step) || next < 1e-10) {\r\n        q = trial;\r\n        accepted = true;\r\n        break;\r\n      }\r\n      step *= 0.5;\r\n    }\r\n    if (!accepted) return { ok: false, q, residual: nrm, iter, reason: 'linesearch' };\r\n  }\r\n  const end = residualFn(q);\r\n  return { ok: false, q, residual: Math.max(...end.map((v) => Math.abs(v))), iter: 40, reason: 'maxiter' };\r\n}\r\n\r\nfunction buildModel(points) {\r\n  const spindle = normalize(points.spindleAxis);\r\n  const frame = uprightBasis(points.lowerBall, points.upperBall, points.tieOuter);\r\n  const upperAxis = axisOf(points.upperAxisA, points.upperAxisB);\r\n  const lowerAxis = axisOf(points.lowerAxisA, points.lowerAxisB);\r\n  const strutDir = normalize(sub(points.upperBall, points.strutTop));\r\n  const lowerMid = lerp(points.lowerAxisA, points.lowerAxisB, 0.5);\r\n  const shockArmDesign = lerp(lowerMid, points.lowerBall, 0.7);\r\n  return {\r\n    points,\r\n    spindleLocal: toLocal(frame, add(points.lowerBall, spindle)),\r\n    wheelLocal: toLocal(frame, points.wheelCenter),\r\n    upperAxis,\r\n    lowerAxis,\r\n    upperCircle: circleParts(points.upperBall, upperAxis),\r\n    lowerCircle: circleParts(points.lowerBall, lowerAxis),\r\n    kingpin: dist(points.upperBall, points.lowerBall),\r\n    tieToLower: dist(points.tieOuter, points.lowerBall),\r\n    tieToUpper: dist(points.tieOuter, points.upperBall),\r\n    tieRod: dist(points.tieOuter, points.tieInner),\r\n    strutDir,\r\n    shockArmDesign,\r\n    designQ: [...points.lowerBall, ...points.upperBall, ...points.tieOuter],\r\n    designWheelY: points.wheelCenter[1]\r\n  };\r\n}\r\n\r\nfunction residual(q, model, targetY, options = {}) {\r\n  const lowerBall = q.slice(0, 3);\r\n  const upperBall = q.slice(3, 6);\r\n  const tieOuter = q.slice(6, 9);\r\n  const tieInner = options.tieInner || model.points.tieInner;\r\n  const tieLength = options.tieLength ?? model.tieRod;\r\n  const upper = options.topology === 'macpherson'\r\n    ? lineResidual(upperBall, model.points.strutTop, model.strutDir)\r\n    : circleResidual(upperBall, model.upperAxis, model.upperCircle);\r\n  const wheelY = wheelCenterOf(lowerBall, upperBall, tieOuter, model.wheelLocal)[1];\r\n  return [\r\n    ...upper,\r\n    ...circleResidual(lowerBall, model.lowerAxis, model.lowerCircle),\r\n    dist(upperBall, lowerBall) - model.kingpin,\r\n    dist(tieOuter, lowerBall) - model.tieToLower,\r\n    dist(tieOuter, upperBall) - model.tieToUpper,\r\n    dist(tieOuter, tieInner) - tieLength,\r\n    wheelY - targetY\r\n  ];\r\n}\r\n\r\nfunction poseOf(q, model) {\r\n  const lowerBall = q.slice(0, 3);\r\n  const upperBall = q.slice(3, 6);\r\n  const tieOuter = q.slice(6, 9);\r\n  const wheelCenter = wheelCenterOf(lowerBall, upperBall, tieOuter, model.wheelLocal);\r\n  const spindle = spindleOf(lowerBall, upperBall, tieOuter, model.spindleLocal);\r\n  const angle = armAngle(model.lowerAxis, model.points.lowerBall, lowerBall);\r\n  const shockArm = rodrigues(model.shockArmDesign, model.lowerAxis.origin, model.lowerAxis.dir, angle);\r\n  return {\r\n    lowerBall, upperBall, tieOuter, wheelCenter, spindle,\r\n    camberRad: camberRad(spindle),\r\n    toeRad: toeRad(spindle),\r\n    kingpinInclinationRad: kingpinInclinationRad(lowerBall, upperBall),\r\n    shockLength: dist(model.points.shockChassis, shockArm),\r\n    halfshaftLength: dist(model.points.diffOutput, wheelCenter),\r\n    upperRadial: circleParts(upperBall, model.upperAxis).radial,\r\n    lowerRadial: circleParts(lowerBall, model.lowerAxis).radial,\r\n    tieLength: dist(tieOuter, model.points.tieInner),\r\n    uprightKingpin: dist(upperBall, lowerBall)\r\n  };\r\n}\r\n\r\nfunction sweep(model, travels, topology) {\r\n  const samples = [];\r\n  let guess = model.designQ.slice();\r\n  let ok = true;\r\n  for (const travel of travels) {\r\n    const targetY = model.designWheelY + travel;\r\n    const solved = newton(guess, (q) => residual(q, model, targetY, { topology }));\r\n    if (!solved.ok) {\r\n      ok = false;\r\n      samples.push({ travel_m: travel, ok: false, reason: solved.reason, residual_m: solved.residual });\r\n      break;\r\n    }\r\n    guess = solved.q;\r\n    const pose = poseOf(solved.q, model);\r\n    samples.push({\r\n      travel_m: travel,\r\n      ok: true,\r\n      residual_m: solved.residual,\r\n      iterations: solved.iter,\r\n      wheelCenter_m: pose.wheelCenter,\r\n      spindleAxis: pose.spindle,\r\n      camber_rad: pose.camberRad,\r\n      toe_rad: pose.toeRad,\r\n      kingpinInclination_rad: pose.kingpinInclinationRad,\r\n      shockLength_m: pose.shockLength,\r\n      halfshaftLength_m: pose.halfshaftLength,\r\n      upperRadial_m: pose.upperRadial,\r\n      lowerRadial_m: pose.lowerRadial,\r\n      tieLength_m: pose.tieLength,\r\n      uprightKingpin_m: pose.uprightKingpin\r\n    });\r\n  }\r\n  return { ok, samples };\r\n}\r\n\r\nfunction range(values) {\r\n  return Math.max(...values) - Math.min(...values);\r\n}\r\n\r\nconst tests = [];\r\nfunction check(id, pass, detail) {\r\n  tests.push({ id, pass: Boolean(pass), ...detail });\r\n}\r\n\r\nconst model = buildModel(hardpoints);\r\nconst designResidual = Math.max(...residual(model.designQ, model, model.designWheelY).map(Math.abs));\r\ncheck('T01_design_residual', designResidual < 1e-12, {\r\n  residual_m: designResidual,\r\n  expect: '设计位置满足全部刚性约束'\r\n});\r\n\r\nconst travels = [];\r\nfor (let t = -0.06; t <= 0.06001; t += 0.01) travels.push(Number(t.toFixed(4)));\r\nconst sla = sweep(model, travels, 'sla');\r\nconst slaOk = sla.samples.filter((s) => s.ok);\r\ncheck('T02_sweep_converges', sla.ok && slaOk.length === travels.length, {\r\n  solved: slaOk.length,\r\n  requested: travels.length,\r\n  failed: sla.samples.find((s) => !s.ok) || null\r\n});\r\n\r\nconst upperErr = range(slaOk.map((s) => s.upperRadial_m));\r\nconst lowerErr = range(slaOk.map((s) => s.lowerRadial_m));\r\nconst tieErr = range(slaOk.map((s) => s.tieLength_m));\r\nconst kingErr = range(slaOk.map((s) => s.uprightKingpin_m));\r\ncheck('T03_upper_arm_radius_constant', upperErr < 0.0001, { range_m: upperErr });\r\ncheck('T04_lower_arm_radius_constant', lowerErr < 0.0001, { range_m: lowerErr });\r\ncheck('T05_tierod_length_constant', tieErr < 0.0001, { range_m: tieErr });\r\ncheck('T06_upright_kingpin_constant', kingErr < 0.0001, { range_m: kingErr });\r\n\r\nconst wheelYErr = Math.max(...slaOk.map((s) => Math.abs(s.wheelCenter_m[1] - (model.designWheelY + s.travel_m))));\r\ncheck('T07_wheel_height_follows_input', wheelYErr < 0.00001, { maxError_m: wheelYErr });\r\n\r\nconst camberRange = range(slaOk.map((s) => s.camber_rad));\r\nconst toeRange = range(slaOk.map((s) => s.toe_rad));\r\ncheck('T08_camber_changes_with_travel', camberRange > 0.1 * Math.PI / 180, {\r\n  range_rad: camberRange,\r\n  range_deg: camberRange * 180 / Math.PI\r\n});\r\ncheck('T09_toe_changes_with_travel', toeRange > 0.02 * Math.PI / 180, {\r\n  range_rad: toeRange,\r\n  range_deg: toeRange * 180 / Math.PI\r\n});\r\n\r\nconst slaAgain = sweep(model, travels, 'sla');\r\nconst poseErr = Math.max(...slaOk.map((s, i) => dist(s.wheelCenter_m, slaAgain.samples[i].wheelCenter_m)));\r\ncheck('T10_sweep_repeatable', poseErr < 1e-12, { maxWheelCenterDelta_m: poseErr });\r\n\r\nconst movedWheel = dist(add(hardpoints.wheelCenter, [0.03, 0, 0]), hardpoints.lowerBall) - dist(hardpoints.wheelCenter, hardpoints.lowerBall);\r\ncheck('T11_track_stretch_breaks_upright', Math.abs(movedWheel) > 0.0001, {\r\n  wheelToLowerBallChange_m: movedWheel,\r\n  expect: '只把轮心外移 30 mm 会改变转向节上的固定距离'\r\n});\r\n\r\nconst movedLower = circleParts(add(hardpoints.lowerBall, [0.02, 0, 0]), model.lowerAxis);\r\nconst movedUpper = circleParts(add(hardpoints.upperBall, [0.02, 0, 0]), model.upperAxis);\r\ncheck('T12_outboard_balls_miss_arm_circles',\r\n  Math.abs(movedLower.radial - model.lowerCircle.radial) > 0.001\r\n  && Math.abs(movedUpper.radial - model.upperCircle.radial) > 0.001, {\r\n  lowerRadialError_m: movedLower.radial - model.lowerCircle.radial,\r\n  upperRadialError_m: movedUpper.radial - model.upperCircle.radial\r\n});\r\n\r\nconst tieStretch = dist(add(hardpoints.tieOuter, [0.02, 0, 0]), hardpoints.tieInner) - model.tieRod;\r\ncheck('T13_track_change_breaks_tierod', Math.abs(tieStretch) > 0.0001, { lengthChange_m: tieStretch });\r\n\r\nfunction toeAtRack(offset) {\r\n  const tieInner = add(hardpoints.tieInner, [offset, 0, 0]);\r\n  const solved = newton(model.designQ, (q) => residual(q, model, model.designWheelY, { tieInner }));\r\n  if (!solved.ok) return { ok: false, reason: solved.reason };\r\n  return { ok: true, toe: toeRad(spindleOf(solved.q.slice(0, 3), solved.q.slice(3, 6), solved.q.slice(6, 9), model.spindleLocal)) };\r\n}\r\nconst toePos = toeAtRack(0.015);\r\nconst toeNeg = toeAtRack(-0.015);\r\nconst toe0 = toeRad(hardpoints.spindleAxis);\r\ncheck('T14_rack_changes_toe_both_ways',\r\n  toePos.ok && toeNeg.ok && (toePos.toe - toe0) * (toeNeg.toe - toe0) < 0\r\n  && Math.abs(toePos.toe - toeNeg.toe) > 0.05 * Math.PI / 180, {\r\n  toeAtPlus15mm_rad: toePos.toe,\r\n  toeAtMinus15mm_rad: toeNeg.toe,\r\n  toeAtDesign_rad: toe0\r\n});\r\n\r\nlet shortFail = null;\r\nfor (const cut of [0.04, 0.08, 0.12, 0.16]) {\r\n  const solved = newton(model.designQ, (q) => residual(q, model, model.designWheelY, { tieLength: model.tieRod - cut }));\r\n  if (!solved.ok) {\r\n    shortFail = { cut_m: cut, reason: solved.reason, residual_m: solved.residual };\r\n    break;\r\n  }\r\n}\r\ncheck('T15_impossible_tierod_rejected', shortFail !== null, shortFail || { note: 'tested cuts still converged' });\r\n\r\nconst mac = sweep(model, travels, 'macpherson');\r\nconst macOk = mac.samples.filter((s) => s.ok);\r\nlet camberGap = 0;\r\nif (mac.ok) {\r\n  const index = slaOk.findIndex((s) => Math.abs(s.travel_m - 0.04) < 1e-9);\r\n  if (index >= 0) camberGap = Math.abs(slaOk[index].camber_rad - macOk[index].camber_rad);\r\n}\r\ncheck('T16_macpherson_camber_differs', mac.ok && camberGap > 0.05 * Math.PI / 180, {\r\n  solved: macOk.length,\r\n  camberGapAt40mm_rad: camberGap,\r\n  camberGapAt40mm_deg: camberGap * 180 / Math.PI\r\n});\r\n\r\nconst halfRange = range(slaOk.map((s) => s.halfshaftLength_m));\r\ncheck('T17_halfshaft_length_changes', halfRange > 0.0005, {\r\n  range_m: halfRange,\r\n  expect: '差速器输出点固定时，轮心跳动会改变半轴长度'\r\n});\r\n\r\nconst shockRange = range(slaOk.map((s) => s.shockLength_m));\r\ncheck('T18_shock_length_changes_arm_radius_does_not', shockRange > 0.001 && lowerErr < 0.0001, {\r\n  shockRange_m: shockRange,\r\n  lowerArmRadialRange_m: lowerErr\r\n});\r\n\r\nfunction demoArmLengths(suspLen, side = 1) {\r\n  const z = 2.46 / 2;\r\n  const hubX = side * 0.84;\r\n  const hubY = 0.08 - suspLen;\r\n  const upperEnd = [hubX - side * 0.14, hubY + 0.09, z];\r\n  const lowerEnd = [hubX - side * 0.14, hubY - 0.085, z];\r\n  const upperPivot = [side * 0.29, 0.11, z];\r\n  const lowerPivot = [side * 0.27, -0.09, z];\r\n  return { upper: dist(upperPivot, upperEnd), lower: dist(lowerPivot, lowerEnd) };\r\n}\r\nconst demoRest = demoArmLengths(0.34);\r\nconst demoBump = demoArmLengths(0.12);\r\ncheck('T19_current_demo_arms_are_not_rigid', Math.abs(demoRest.upper - demoBump.upper) > 0.01, {\r\n  upperAtRest_m: demoRest.upper,\r\n  upperAtBump_m: demoBump.upper,\r\n  upperDelta_mm: (demoRest.upper - demoBump.upper) * 1000,\r\n  source: '只读复算 src/parts/chassis.js 的枢轴到球头公式'\r\n});\r\n\r\nconst kpiMoved = kingpinInclinationRad(add(hardpoints.lowerBall, [0.02, 0, 0]), hardpoints.upperBall);\r\nconst kpi0 = kingpinInclinationRad(hardpoints.lowerBall, hardpoints.upperBall);\r\ncheck('T20_single_ball_move_changes_kingpin', Math.abs(kpiMoved - kpi0) > 0.2 * Math.PI / 180, {\r\n  design_rad: kpi0,\r\n  afterLowerBallOutboard20mm_rad: kpiMoved,\r\n  delta_deg: (kpiMoved - kpi0) * 180 / Math.PI\r\n});\r\n\r\nfunction mirrorPoint(p) { return [-p[0], p[1], p[2]]; }\r\nconst mirroredPoints = {\r\n  upperAxisA: mirrorPoint(hardpoints.upperAxisA),\r\n  upperAxisB: mirrorPoint(hardpoints.upperAxisB),\r\n  upperBall: mirrorPoint(hardpoints.upperBall),\r\n  lowerAxisA: mirrorPoint(hardpoints.lowerAxisA),\r\n  lowerAxisB: mirrorPoint(hardpoints.lowerAxisB),\r\n  lowerBall: mirrorPoint(hardpoints.lowerBall),\r\n  tieInner: mirrorPoint(hardpoints.tieInner),\r\n  tieOuter: mirrorPoint(hardpoints.tieOuter),\r\n  wheelCenter: mirrorPoint(hardpoints.wheelCenter),\r\n  spindleAxis: mirrorPoint(normalize(hardpoints.spindleAxis)),\r\n  shockChassis: mirrorPoint(hardpoints.shockChassis),\r\n  diffOutput: mirrorPoint(hardpoints.diffOutput),\r\n  strutTop: mirrorPoint(hardpoints.strutTop)\r\n};\r\nconst right = buildModel(mirroredPoints);\r\nconst rightResidual = Math.max(...residual(right.designQ, right, right.designWheelY).map(Math.abs));\r\nconst leftCamber = camberRad(normalize(hardpoints.spindleAxis));\r\nconst rightCamber = camberRad(normalize(mirroredPoints.spindleAxis));\r\nconst rightWheelX = mirroredPoints.wheelCenter[0];\r\nconst rightTrackShrinks = Math.abs(rightWheelX + 0.03) < Math.abs(rightWheelX);\r\nconst leftTrackGrows = Math.abs(hardpoints.wheelCenter[0] + 0.03) > Math.abs(hardpoints.wheelCenter[0]);\r\ncheck('T21_mirror_keeps_camber_uniform_plus_x_shrinks_right_track',\r\n  rightResidual < 1e-9 && Math.abs(leftCamber - rightCamber) < 1e-12 && rightTrackShrinks && leftTrackGrows, {\r\n  rightDesignResidual_m: rightResidual,\r\n  leftCamber_rad: leftCamber,\r\n  rightCamber_rad: rightCamber,\r\n  rightWheelX_m: rightWheelX,\r\n  note: '正确镜像后两侧外倾相同。左右轮同时加世界坐标 +X 时，右轮轮距反而变小。'\r\n});\r\n\r\nconst failed = tests.filter((t) => !t.pass).map((t) => t.id);\r\nconst payload = {\r\n  schema: 'carlab.r04.kinematicsFixture.v1',\r\n  task: 'R-04',\r\n  date: '2026-11-14',\r\n  provenance: 'FICTIONAL_FIXTURE',\r\n  notAProductionVehicle: true,\r\n  frame: {\r\n    x: 'left, outboard on the left wheel',\r\n    y: 'up',\r\n    z: 'forward',\r\n    units: { length: 'm', angle: 'rad' }\r\n  },\r\n  command: 'node F:\\\\tmp\\\\r04-kinematics.mjs',\r\n  hardpoints,\r\n  derived: {\r\n    upperArmRadial_m: model.upperCircle.radial,\r\n    upperArmAlong_m: model.upperCircle.along,\r\n    lowerArmRadial_m: model.lowerCircle.radial,\r\n    lowerArmAlong_m: model.lowerCircle.along,\r\n    kingpinLength_m: model.kingpin,\r\n    tieRodLength_m: model.tieRod,\r\n    tieToLower_m: model.tieToLower,\r\n    tieToUpper_m: model.tieToUpper,\r\n    spindleAxisUnit: normalize(hardpoints.spindleAxis),\r\n    wheelCenterLocalOnUpright: model.wheelLocal\r\n  },\r\n  constraintModel: {\r\n    sla: 'upper ball on arm circle, lower ball on arm circle, three upright distances, tie-rod length, prescribed wheel-center height',\r\n    macpherson: 'upper ball replaced by the strut line through strutTop; other constraints unchanged',\r\n    shock: 'length is an output. It is not a constant-length link.',\r\n    drivenCoordinate: 'wheelCenter.y'\r\n  },\r\n  sweepTravel_m: travels,\r\n  slaSweep: sla.samples,\r\n  macphersonSweep: mac.samples,\r\n  passCount: tests.length - failed.length,\r\n  failCount: failed.length,\r\n  failed,\r\n  tests,\r\n  solverSource: readFileSync(new URL(import.meta.url), 'utf8')\r\n};\r\n\r\nmkdirSync('F:/project/cyq/AI_Coding/car/docs/research', { recursive: true });\r\nwriteFileSync(OUT, JSON.stringify(payload, null, 2));\r\nconst summary = {\r\n  passCount: payload.passCount,\r\n  failCount: payload.failCount,\r\n  failed,\r\n  camberDeg: camberRange * 180 / Math.PI,\r\n  toeDeg: toeRange * 180 / Math.PI,\r\n  halfRange_mm: halfRange * 1000,\r\n  shockRange_mm: shockRange * 1000,\r\n  upperErr_mm: upperErr * 1000,\r\n  camberGap40_deg: camberGap * 180 / Math.PI,\r\n  designResidual,\r\n  shortFail,\r\n  demoUpperDelta_mm: (demoRest.upper - demoBump.upper) * 1000\r\n};\r\nconsole.log(JSON.stringify(summary, null, 2));\r\n"
+}

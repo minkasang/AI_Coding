@@ -1,0 +1,207 @@
+{
+  "$schema": "https://carlab.internal/schemas/asset-manifest.v1.json",
+  "assembly_id": "SYS-30-WHEEL-END-ASSY",
+  "pipeline_version": "1.0.0",
+  "coordinate_conventions": {
+    "cad_source": {
+      "up": "+Z",
+      "forward": "+Y",
+      "units": "mm"
+    },
+    "blender_export": {
+      "up": "+Y",
+      "forward": "-Z",
+      "units": "m",
+      "scale_multiplier": 0.001
+    },
+    "browser_viewer": {
+      "up": "+Y",
+      "forward": "+Z",
+      "units": "m"
+    }
+  },
+  "cache_fingerprint_algorithm": "SHA-256",
+  "parts": [
+    {
+      "part_id": "SYS-30-HUB-001",
+      "family": "rotational_symmetric",
+      "revision": "4656a3d39589d4dc",
+      "assets": {
+        "step": "parts\\SYS-30-HUB-001.step",
+        "stl": "parts\\SYS-30-HUB-001.stl"
+      },
+      "mass_properties_assumption": {
+        "volume_mm3": 227427.26,
+        "material": "A356_T6",
+        "density_kg_m3": 2700,
+        "mass_kg": 0.6141
+      },
+      "mount_frames": [
+        {
+          "frame_id": "hub_wheel_mating_face",
+          "origin_mm": [
+            0,
+            0,
+            14.0
+          ],
+          "axis": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "frame_id": "hub_bearing_seat",
+          "origin_mm": [
+            0,
+            0,
+            0.0
+          ],
+          "axis": [
+            0,
+            0,
+            -1
+          ]
+        }
+      ]
+    },
+    {
+      "part_id": "SYS-40-ROTOR-001",
+      "family": "rotational_symmetric",
+      "revision": "67bc8bd8bacc7bb1",
+      "assets": {
+        "step": "parts\\SYS-40-ROTOR-001.step",
+        "stl": "parts\\SYS-40-ROTOR-001.stl"
+      },
+      "mass_properties_assumption": {
+        "volume_mm3": 1407686.97,
+        "material": "HT250_cast_iron",
+        "density_kg_m3": 7200,
+        "mass_kg": 10.1353
+      },
+      "mount_frames": [
+        {
+          "frame_id": "rotor_hat_mating_face",
+          "origin_mm": [
+            0,
+            0,
+            0.0
+          ],
+          "axis": [
+            0,
+            0,
+            -1
+          ]
+        }
+      ]
+    },
+    {
+      "part_id": "SYS-30-BRG-DAC4280",
+      "family": "rotational_standard_catalog",
+      "revision": "07c76680d71810cf",
+      "modeling_fidelity": "GEOMETRIC_ENVELOPE_ONLY",
+      "assets": {
+        "step": "parts\\SYS-30-BRG-DAC4280.step",
+        "stl": "parts\\SYS-30-BRG-DAC4280.stl"
+      }
+    },
+    {
+      "part_id": "SYS-30-STUD-M14",
+      "family": "threaded_fastener",
+      "revision": "1165d43dd98945ca",
+      "modeling_fidelity": "NOMINAL_CYLINDER_PLUS_METADATA",
+      "assets": {
+        "step": "parts\\SYS-30-STUD-M14.step",
+        "stl": "parts\\SYS-30-STUD-M14.stl"
+      },
+      "instantiation_mode": "SHARED_MESH_TRANSFORM_NODES",
+      "instances": [
+        {
+          "instance_id": "SYS-30-STUD-M14#inst_0",
+          "part_id": "SYS-30-STUD-M14",
+          "transform_mm": {
+            "translation": [
+              57.15,
+              0.0,
+              0.0
+            ],
+            "rotation_deg": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        {
+          "instance_id": "SYS-30-STUD-M14#inst_1",
+          "part_id": "SYS-30-STUD-M14",
+          "transform_mm": {
+            "translation": [
+              17.6603,
+              54.3529,
+              0.0
+            ],
+            "rotation_deg": [
+              0.0,
+              0.0,
+              72.0
+            ]
+          }
+        },
+        {
+          "instance_id": "SYS-30-STUD-M14#inst_2",
+          "part_id": "SYS-30-STUD-M14",
+          "transform_mm": {
+            "translation": [
+              -46.2353,
+              33.5919,
+              0.0
+            ],
+            "rotation_deg": [
+              0.0,
+              0.0,
+              144.0
+            ]
+          }
+        },
+        {
+          "instance_id": "SYS-30-STUD-M14#inst_3",
+          "part_id": "SYS-30-STUD-M14",
+          "transform_mm": {
+            "translation": [
+              -46.2353,
+              -33.5919,
+              0.0
+            ],
+            "rotation_deg": [
+              0.0,
+              0.0,
+              216.0
+            ]
+          }
+        },
+        {
+          "instance_id": "SYS-30-STUD-M14#inst_4",
+          "part_id": "SYS-30-STUD-M14",
+          "transform_mm": {
+            "translation": [
+              17.6603,
+              -54.3529,
+              0.0
+            ],
+            "rotation_deg": [
+              0.0,
+              0.0,
+              288.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "composite_assets": {
+    "assembly_step": "SYS-30-WHEEL-END-ASSY.step",
+    "assembly_glb": "wheel_end_assembly.glb",
+    "glb_file_size_bytes": 259536
+  }
+}

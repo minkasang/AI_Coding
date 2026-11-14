@@ -1,0 +1,73 @@
+{
+  "task_id": "R-03",
+  "display_code": "03.03",
+  "title": "\u53ef\u91cd\u590d\u591a\u96f6\u4ef6 CAD \u8d44\u4ea7\u751f\u4ea7\u89c4\u8303\u4e0e\u6d41\u6c34\u7ebf\u9a8c\u8bc1",
+  "timestamp": "2026-11-14T21:33:01Z",
+  "tests": [
+    {
+      "name": "fresh_cold_build",
+      "status": "PASS",
+      "cache_misses": 4,
+      "cache_hits": 0,
+      "elapsed_seconds": 0.4765,
+      "glb_file_size_bytes": 259536,
+      "glb_node_names": [
+        "Inst_SYS-30-STUD-M14#inst_0",
+        "Inst_SYS-30-STUD-M14#inst_1",
+        "Inst_SYS-30-STUD-M14#inst_2",
+        "Inst_SYS-30-STUD-M14#inst_3",
+        "Inst_SYS-30-STUD-M14#inst_4",
+        "Part_SYS-30-BRG-DAC4280",
+        "Part_SYS-30-HUB-001",
+        "Part_SYS-40-ROTOR-001",
+        "Assembly_WheelEnd"
+      ],
+      "extras_count": 9
+    },
+    {
+      "name": "deterministic_cache_hit_test",
+      "status": "PASS",
+      "cache_hits": 4,
+      "cache_misses": 0,
+      "speedup_ratio": 3.3
+    },
+    {
+      "name": "incremental_variant_rebuild",
+      "status": "PASS",
+      "modified_part": "rotor",
+      "rebuilt_parts": [
+        "rotor"
+      ],
+      "cached_parts": [
+        "hub",
+        "bearing",
+        "stud"
+      ],
+      "new_rotor_volume_mm3": 1407686.97
+    },
+    {
+      "name": "coordinate_and_mountframe_alignment",
+      "status": "PASS",
+      "cad_to_webgl_transform": {
+        "rotation": "RotateX(-90 deg)",
+        "scaling": "0.001 (mm -> m)",
+        "sample_point_cad_mm": [
+          57.15,
+          0.0,
+          14.0
+        ],
+        "sample_point_webgl_m": [
+          0.05715,
+          0.014,
+          -0.0
+        ]
+      },
+      "mountframe_coaxial_pcd_check": {
+        "hub_pcd_mm": 114.3,
+        "rotor_pcd_mm": 114.3,
+        "alignment_deviation_mm": 0.0,
+        "status": "PASS"
+      }
+    }
+  ]
+}

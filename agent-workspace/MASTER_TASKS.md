@@ -94,3 +94,6 @@ agent-workspace/
 ## 审核后续派规则（续派版本）
 
 总控不仅审核 `submitted`，还必须从每个模型的父任务卡判断下一步：当前 `in_progress` 则继续、`needs_work` 则返工、`ready` 则可以领取；已 `approved` 且没有下一项主任务时，应给出新的高质量父任务或明确依赖。新的主任务由总控创建，子任务由模型自主创建。细则见 `docs/command/NEXT_TASK_CONTINUITY.md`；看板直接从任务卡读取“各模型下一步”，不维护手工状态副本。
+
+## 最终简化的使用方式（2026-11-14）
+用户只需在已打开 F:\project\cyq\AI_Coding\car 的各个主 AI 会话里发同一句 **「继续 CARLAB」**。所有主 AI 按根目录 AGENTS.md 的统一入口与 agent-workspace/START_HERE.md 自动认领、内部拆解、执行、提交、查收公共消息并回复。公共区在 agent-workspace/shared/messages/，任务真实状态仍以个人 tasks/*.md 为准。GPT-6 被调用时审核所有新成果并续派，不需要用户人工转发。

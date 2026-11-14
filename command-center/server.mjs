@@ -52,6 +52,32 @@ async function discoverArtifacts(taskId) {
   return found;
 }
 
+// 公共跨模型留言：只读文件，不修改任务、消息或其他代理的报告。
+const SHARED_MSG_DIR = path.join(ROOT,'agent-workspace','shared','messages');
+async function readSharedMessages(errors) {
+  let entries=[];
+  try { entries=await fs.readdir(SHARED_MSG_DIR,{withFileTypes:true}); }
+  catch(e) { if(e.code!=='ENOENT')errors.push('公共消息读取失败：'+e.message); return []; }
+  const messages=[];
+  for (const entry of entries) {
+    if(!entry.isFile() || !entry.name.endsWith('.md') || entry.name==='README.md')continue;
+    try {
+      const file=path.join(SHARED_MSG_DIR,entry.name);
+      const stat=await fs.stat(file);
+      if(stat.size>100000)continue;
+      const {meta,body}=parseMarkdown(await fs.readFile(file,'utf8'));
+      if(!meta.id||!meta.from||!meta.to||!meta.subject)throw Error('缺少 id/from/to/subject');
+      messages.push({id:meta.id,from:meta.from,to:meta.to,kind:meta.kind||'notice',
+        taskId:meta.taskId||'',subject:meta.subject,status:meta.status||'open',
+        replyTo:meta.replyTo||'',createdAt:meta.createdAt||stat.mtime.toISOString(),
+        updatedAt:stat.mtime.toISOString(),body:body.slice(0,1800),
+        source:path.relative(ROOT,file).replaceAll('\\','/')});
+    }catch(e){errors.push('公共留言 '+entry.name+': '+e.message);}
+  }
+  messages.sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt));
+  return messages.slice(0,100);
+}
+
 function parseMarkdown(raw) {
   const normalized = raw.replace(/\r\n/g, '\n');
   const match = normalized.match(/^---\n([\s\S]*?)\n---\n?/);
@@ -220,16 +246,18 @@ async function readSnapshot() {
   const planningCoverage=rootTasks.length?Math.round((rootTasks.length-unplannedRoots)*100/rootTasks.length):0;
   const handoffs = tasks.filter(t=>t.hasHandoff).length;
   const reviewQueue = tasks.filter(t=>!t.parentId && t.status==='submitted').length;
+  const messages = await readSharedMessages(errors);
+  const openMessages = messages.filter(m=>m.status==='open').length;
   const statuses = {};
   for (const task of tasks) statuses[task.status] = (statuses[task.status] ?? 0) + 1;
   return {
     project: 'CARLAB', sourceOfTruth: 'agent-workspace/agents/*/tasks/*.md',
     mode: 'file-synced', generatedAt: new Date().toISOString(),
-    agents, tasks, errors,
+    agents, tasks, messages, errors,
     summary: { agents: agents.length, tasks: tasks.length, mainTasks: rootTasks.length,
       subtasks: tasks.length - rootTasks.length, unplannedRoots, planningCoverage,
       totalSteps, completedSteps, progress: totalSteps ? Math.round(completedSteps * 100 / totalSteps) : 0,
-      handoffs, reviewQueue, statuses },
+      handoffs, reviewQueue, openMessages, statuses },
   };
 }
 

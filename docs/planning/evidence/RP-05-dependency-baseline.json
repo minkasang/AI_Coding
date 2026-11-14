@@ -1,31 +1,94 @@
 {
-  "schemaVersion": "carlab.rp05.dependencyBaseline/1.1",
+  "schemaVersion": "carlab.rp05.dependencyBaseline/1.3",
   "task": "RP-05",
   "owner": "hy4",
-  "revisionNote": "v1.0 基于 16:17 快照，当时仅 RP-06 一份报告归档；16:21—16:28 第一波并行补齐 RP-02/03/04 报告，16:25—16:26 补 RP-01 三份证据。本 v1.1 以 16:36:56 稳定快照重做全部依赖判断，v1.0 的『4/5 报告缺失』结论已作废，不保留在最终判定中。",
+  "revisionNote": "v1.2 为总控 AUDIT_2026-11-14.md §4 的返工版，作废 v1.1 的 16:36:56 最终快照。v1.1 曾断言 RP-01 正文与 3 份分文件缺失；实测 Qwen4 于 16:47—17:08 全部补齐，Gemini 于 21:00—21:07 完成 RP-04 v2 返工，GPT-6 于 20:59 建立 Git 基线 8d45c1e。本版以 21:10:40 快照重跑 G-PL1 文件级门禁，residualBlocking 已清空，所有『文件不存在』判断已删除。 【v1.3 / 21:35:23 增量复核】v1.2 写入后 21:11—21:35 仍持续并行写入，其中 RP-04 于 21:17 被总控独立复审 APPROVED、R-01/R-02 研究提案于 21:24—21:32 交付、MASTER_PLAN.md 新增 §20 增至 341 行、R-03 资产流水线已产出 STEP/STL/GLB。为避免重复 v1.1『快照过期』的错误，纳入这些输入后再次复核并提交 v1.3。本版以 21:35:23 为最终取证截止点；此后的新交付不在本版范围，按 AUDIT:94 由 RP-07 复审。",
+  "reviewResponse": {
+    "reviewReport": "docs/command/reviews/AUDIT_2026-11-14.md",
+    "reviewDecision": "needs_work",
+    "reviewedAt": "2026-11-14",
+    "reworkReason": "审计快照已过期：基线定格 16:36:56，当时只见 4/5 第一波报告；Qwen4 约 17:08—17:10 完整交付正式报告与分树",
+    "requirements": [
+      "重新以当前完整 RP-01/02/03/04/06 报告和证据核对审计，不使用 16:36 的 4/5 快照结论作为最终缺口数量",
+      "逐项更新 16 条 GAP 判定、13+ 风险、3 个端到端场景与证据位置，消除已补齐的『报告不存在』判断",
+      "区分仍真实存在的坐标/真实性/零件身份冲突",
+      "审查 RP-04 的 ISO 273 错误与 RP-06 Raycaster 路径，核对资源/许可/版本保护",
+      "写明新快照、输入版本和复核方法，重新提交 submitted"
+    ],
+    "reworkMethod": "① 以 find -newermt 18:42:44 盘点审核后全部变更文件；② 逐份读取 5 份第一波报告当前版本与 24 份 evidence 的顶层结构；③ 复跑本机环境实测（git/行数/JSON 解析/路径/目录/GLB/磁盘）；④ 对照 AUDIT §2 实测与 §3 五项 P0 冲突逐项复核；⑤ 对每条 GAP 判定与风险重写证据，标注 v1.1→v1.2 变更类型；⑥ 自产 3 份 JSON 一致性校验。全部只读输入，未修改任何共享文档或他人产物。"
+  },
   "snapshots": [
     {
       "at": "2026-11-14T16:17:42+08:00",
-      "reportsPresent": ["RP-06"],
+      "reportsPresent": [
+        "RP-06"
+      ],
       "evidenceFileCount": 7,
-      "note": "审计启动时的状态"
-    },
-    {
-      "at": "2026-11-14T16:32:18+08:00",
-      "reportsPresent": ["RP-02", "RP-03", "RP-04", "RP-06"],
-      "evidenceFileCount": 12,
-      "note": "15 分钟内新增 3 份报告与 RP-01 证据"
+      "note": "审计启动状态；v1.0 已作废"
     },
     {
       "at": "2026-11-14T16:36:56+08:00",
-      "reportsPresent": ["RP-02", "RP-03", "RP-04", "RP-06"],
+      "reportsPresent": [
+        "RP-02",
+        "RP-03",
+        "RP-04",
+        "RP-06"
+      ],
       "evidenceFileCount": 16,
-      "note": "最终审计快照；RP-01 新增 tree-chassis.json（273 节点）"
+      "note": "v1.1 最终快照；当时 RP-01 正文与 3 份分文件确实不存在，但此状态已被后续交付取代"
+    },
+    {
+      "at": "2026-11-14T17:08:06+08:00",
+      "reportsPresent": [
+        "RP-01",
+        "RP-02",
+        "RP-03",
+        "RP-04",
+        "RP-06"
+      ],
+      "evidenceFileCount": 22,
+      "note": "Qwen4 交付 RP-01 正式报告（1319 行）与 tree-powertrain / tree-body-systems / function-tree / geometry-needs / validation-result / selftest-result；5/5 报告齐备"
+    },
+    {
+      "at": "2026-11-14T18:42:44+08:00",
+      "reportsPresent": [
+        "RP-01",
+        "RP-02",
+        "RP-03",
+        "RP-04",
+        "RP-06"
+      ],
+      "evidenceFileCount": 22,
+      "note": "GPT-6 写入 AUDIT_2026-11-14.md：4 项 approved、RP-04/RP-05 needs_work；任务卡批量同步审核结论"
+    },
+    {
+      "at": "2026-11-14T21:10:40+08:00",
+      "reportsPresent": [
+        "RP-01",
+        "RP-02",
+        "RP-03",
+        "RP-04",
+        "RP-06"
+      ],
+      "evidenceFileCount": 24,
+      "note": "v1.2 最终快照：RP-04 v2 返工（21:06）与 RP-04-feasibility.json v2（21:04）落地；Git 基线 8d45c1e 与 .gitignore（20:59）落地；新增 R-01/VIEW-01/UX-01/NEXT_TASK_CONTINUITY 等下一轮任务文件"
+    },
+    {
+      "at": "2026-11-14T21:35:23+08:00",
+      "reportsPresent": [
+        "RP-01",
+        "RP-02",
+        "RP-03",
+        "RP-04",
+        "RP-06"
+      ],
+      "evidenceFileCount": 25,
+      "note": "v1.3 增量复核截止点：RP-04 复审 APPROVED（21:17）、R-01 平台家族提案（21:24）、R-02 数据契约提案（21:31）、R-03 资产流水线产出（21:33）、MASTER_PLAN §20（21:11）；并行写入仍在继续，此后交付交 RP-07 复审"
     }
   ],
-  "finalSnapshotAt": "2026-11-14T16:36:56+08:00",
-  "snapshotNote": "输入在审计期间持续写入，这本身是发现之一（见 INPUT-DRIFT）。本文件的文件存在性结论只对 16:36:56 有效；后续归档需复核。",
-  "method": "文件系统盘点 + 任务卡 frontmatter 核对 + 16 份 evidence JSON 可解析性实测 + 引用路径存在性实测 + 4 份报告交叉比对 + 本机依赖版本/磁盘/服务/GLB 魔数实测。全部只读，未修改他人文件。",
+  "finalSnapshotAt": "2026-11-14T21:35:23+08:00",
+  "snapshotNote": "输入在本轮返工期间仍在写入（RP-04 返工与下一轮任务卡同批出现）。本文件的文件存在性结论仅对 21:10:40 有效；但与 v1.1 不同，现已存在 Git 初始提交 8d45c1e，可对漂移做 diff 比对。RP-07 汇总前仍应重跑一次文件级门禁。 v1.3 追加：21:11—21:35 的写入证明并行漂移是常态而非偶发；本版为 RP-05 最终取证截止点，不宣称覆盖此后的新交付。",
+  "method": "文件系统盘点（ls/find -newermt）+ 5 份报告当前版本逐份读取 + 24 份 evidence JSON 解析与顶层结构核对 + 任务卡 frontmatter 审核状态核对 + 引用路径存在性实测 + AUDIT §2 实测结论复核 + 本机 Git/依赖版本/磁盘/GLB 魔数实测。全部只读输入。",
   "gateRequirement": {
     "source": "docs/tasks/RP-05-independent-gap-audit.md:8",
     "quote": "第二波，等待 RP-01、RP-02、RP-03、RP-04、RP-06 的研究报告出现后执行",
@@ -36,135 +99,292 @@
       "taskId": "RP-01",
       "owner": "qwen4",
       "expectedReport": "docs/planning/reports/RP-01-vehicle-product-tree.md",
-      "reportPresent": false,
-      "status": "in_progress",
-      "evidenceFiles": ["RP-01-sources.json (82 条来源)", "RP-01-tree-core.json (100 节点)", "RP-01-tree-chassis.json (273 节点)"],
-      "evidenceSummary": "已覆盖 SYS-00/10/130 核心与 SYS-20/30/40 底盘下钻；3 个候选配置全部 PROPOSED_NOT_APPROVED；axisSeparationNote 纠正了总任务书的『三种架构』分类错误",
-      "missing": "报告正文；scopeNote 引用的 RP-01-tree-powertrain.json / RP-01-tree-body-systems.json / RP-01-function-tree.json 三份文件实测 MISSING"
+      "reportPresent": true,
+      "reportVersion": "正式版 / 2026-11-14 17:08",
+      "reportLines": 1319,
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-11-14",
+      "status": "approved",
+      "evidenceFiles": [
+        "RP-01-tree-core.json (100 节点)",
+        "RP-01-tree-chassis.json (273 节点)",
+        "RP-01-tree-powertrain.json (255 节点，含 SYS-60 分动箱/AWD)",
+        "RP-01-tree-body-systems.json (150 节点，含 SYS-80 热管理)",
+        "RP-01-function-tree.json (77 节点)",
+        "RP-01-sources.json (82 条来源，80 条可用于论断)",
+        "RP-01-coverage-audit.json (36 项)",
+        "RP-01-validation-map.json (15 系统→验证类别)",
+        "RP-01-geometry-needs.json (493 零件，SOURCED=0)",
+        "RP-01-validation-result.json (PASS / 0 违规)",
+        "RP-01-selftest-result.json (32/32 CAUGHT，24/24 规则覆盖)"
+      ],
+      "evidenceSummary": "780 节点 / 13 实体系统 / 493 零件 / 35 条跨系统引用；功能树反查补入 8 处遗漏；§8 覆盖度审计 36 项 = COVERED 2 / MENTIONED 19 / MISSING 11 / UNKNOWN 4；§8.3 实测定案现有代码坐标 +X=左 / +Y=上 / +Z=前进（右手系，跨文件一致）；总控复跑 validate 0 违规、selftest 32/32",
+      "residualLimits": "0/493 零件有已核实几何依据；曲轴组与正时驱动整块 ASSUMPTION；官方标准站点大面积 403；§14 自列 10 项未完成",
+      "previousStaleClaim": "v1.1 称『报告正文未归档』『3 份被引用分文件 MISSING』——21:10:40 实测全部存在，本版删除该判断"
     },
     {
       "taskId": "RP-02",
       "owner": "deepseek",
       "expectedReport": "docs/planning/reports/RP-02-interface-graph.md",
       "reportPresent": true,
-      "status": "submitted",
       "reportLines": 1551,
-      "evidenceFiles": ["RP-02-interface-graph.example.json (42 nodes/86 edges)", "RP-02-test-cases.json (24 用例)", "RP-02-validation-results.json (24 passed / 0 failed)"],
-      "evidenceSummary": "六类接口、四场景因果链、五类配置传播、7 个自述新缺口、6 项需总控裁定"
+      "reviewStatus": "approved",
+      "status": "approved",
+      "evidenceFiles": [
+        "RP-02-interface-graph.example.json (42 nodes/86 edges)",
+        "RP-02-test-cases.json (24 用例)",
+        "RP-02-validation-results.json (24 passed / 0 failed)"
+      ],
+      "evidenceSummary": "六类接口、四场景因果链、五类配置传播；总控复跑 24/24 PASS。图仍为 ICE FWD，coordinateConvention.status 仍 OPEN",
+      "residualLimits": "坐标/Frame/partId 仍属提案，未批准用于生产 Schema（总控 §1/§3.1/§3.3）"
     },
     {
       "taskId": "RP-03",
       "owner": "grok",
       "expectedReport": "docs/planning/reports/RP-03-fidelity-and-simulation.md",
       "reportPresent": true,
-      "status": "submitted",
       "reportLines": 250,
-      "evidenceFiles": ["RP-03-cannon-probe.json (16/16 PASS)", "RP-03-fidelity-matrix.json"],
-      "evidenceSummary": "FID-V/G/K/D1/D2 五级精度、现有代码反例、各总成目标矩阵、Chrono 能力对照；§10 主动列出与总计划及数据协议的冲突"
+      "reviewStatus": "approved",
+      "status": "approved",
+      "evidenceFiles": [
+        "RP-03-cannon-probe.json (16/16 PASS)",
+        "RP-03-fidelity-matrix.json"
+      ],
+      "evidenceSummary": "FID-V/G/K/D1/D2 五级精度、现有代码反例、各总成目标矩阵；总控隔离副本复跑 16/16 PASS，复现上叉臂变长 82.12 mm 与 frictionSlip 无效",
+      "residualLimits": "探针脚本仍在 F:\\tmp，总控 §2 建议移入版本管理；并不批准现有悬架/轮胎动力学为工程真实"
     },
     {
       "taskId": "RP-04",
       "owner": "gemini-3-8-flash",
       "expectedReport": "docs/planning/reports/RP-04-cad-production.md",
       "reportPresent": true,
-      "status": "submitted",
-      "reportLines": 333,
-      "evidenceFiles": ["RP-04-feasibility.json (4 项 PASS)"],
-      "prototypeArtifacts": "cad/experiments/planning_feasibility/out/ 实测存在 11 个文件，GLB 211592 bytes 且魔数 glTF 已复核",
-      "evidenceSummary": "8 大零件族、三级 LOD、Poka-Yoke 断言、PartBuildTask 契约、6 类失败反例"
+      "reportVersion": "v2 返工版 / 2026-11-14 21:06（v1 的 ISO 273 错误已修正）",
+      "reportLines": 363,
+      "reviewStatus": "approved（docs/command/reviews/AUDIT_2026-11-14_RP04_RECHECK.md，21:17 独立隔离复测 6/6 PASS）",
+      "status": "approved",
+      "evidenceFiles": [
+        "RP-04-feasibility.json (version=v2_rework_audit_alignment，6 项 PASS)"
+      ],
+      "evidenceSummary": "v2 修正 ISO 273：M14 fine 15.0 / medium 15.5 / coarse 16.5，改用 ISO_273_TABLE 查表并剔除 stud_d + 0.8 自造公式；params.json 标 DEMONSTRATION_PROTOTYPE 与显式 ASSUMPTION；metadata 增加 fidelity_disclaimers 与 clearance_fit_check；GLB 4 节点注入 node.extras；6 项测试含 medium/fine 正例与 3 项 Poka-Yoke 反例；21:17 总控独立复测 6/6 PASS 并判 APPROVED，同时明确『非正式购买的标准全文认证』『零件几何尺寸仍为演示性假设』，未通过范围含 OEM 尺寸、真实轴承构造、压装/预紧、刚体运动副及整车动力学",
+      "residualLimits": "报告全文仍无标准出处 URL/版本/检索日期；§9:343 仍要求输出质量(kg)与惯性矩张量但 metadata 仍无 mass/inertia/collision/glbPath/sha256；:166 Step 7 仍把未实测的 ≥60 FPS / DrawCall ≤150 标 EVIDENCE；:269 partId 示例仍为 SYS-30-HUB-001；RP-01 §10 的轮毂孔性质与 pilot Ø84 / center_bore Ø67.1 疑问未澄清；复审记录未回应 RP-01 §10 的轮毂孔性质与 pilot/center_bore 装配界面质疑",
+      "previousStaleClaim": "v1.1 依据 v1 报告称『ISO 273 通孔配合』为已覆盖依据；v2 已纠正该错误，本版改为引用 v2 查表与 6 项测试"
     },
     {
       "taskId": "RP-06",
       "owner": "composer-2-5",
       "expectedReport": "docs/planning/reports/RP-06-engineering-viewer.md",
       "reportPresent": true,
-      "status": "submitted",
       "reportLines": 281,
-      "evidenceFiles": ["RP-06-feature-matrix.json", "RP-06-ui-ia-snapshot.json", "RP-06-user-journey.json", "RP-06-verification-plan.json"],
-      "evidenceSummary": "双模式、八步旅程、真实性徽章、性能指标；verification-plan.json status=PLAN_ONLY，零实测"
+      "reviewStatus": "approved",
+      "status": "approved",
+      "evidenceFiles": [
+        "RP-06-feature-matrix.json",
+        "RP-06-ui-ia-snapshot.json",
+        "RP-06-user-journey.json",
+        "RP-06-verification-plan.json"
+      ],
+      "evidenceSummary": "双模式、八步旅程、真实性徽章、性能指标；verification-plan.json status 仍 PLAN_ONLY，零实测",
+      "residualLimits": "feature-matrix.json:27 的 examples/jsm/core/Raycaster.js 路径仍不存在（21:10:40 复测），总控 §4 要求实现前更正；性能阈值须标 PLAN_ONLY"
     }
   ],
-  "gateStatus": "G-PL1_SUBSTANTIALLY_MET_WITH_ONE_REPORT_MISSING",
-  "gateDetail": "4/5 报告已归档并标 submitted；RP-01 正文未归档但已有 3 份结构化证据（373 节点 + 82 条来源）。审计不再因输入缺失而受阻，可对新报告做实质交叉审查。RP-07 仍需等 RP-01 正文与三份被引用分文件。",
-  "residualBlocking": [
-    "docs/planning/reports/RP-01-vehicle-product-tree.md（正文）",
-    "docs/planning/evidence/RP-01-tree-powertrain.json（被 scopeNote 引用但不存在）",
-    "docs/planning/evidence/RP-01-tree-body-systems.json（被 scopeNote 引用但不存在）",
-    "docs/planning/evidence/RP-01-function-tree.json（被 nonPhysicalViews 引用但不存在）"
+  "gateStatus": "G-PL1_SATISFIED_WITH_DESIGN_DECISIONS_OPEN",
+  "gateDetail": "文件级门禁已满足：5/5 第一波报告存在（1319/1551/250/363/281 行）、24 份 evidence JSON 全部可解析、RP-01 全部 11 份分证据落盘、4 项研究任务 approved + RP-04 返工重交 submitted。v1.1 的 4 项残留阻断已全部消除。但 G-PL2 的跨模型设计裁决未关闭：总控 §3 列 5 项 P0 冲突（坐标与 Frame、真实性三字段、零件/实例身份、首发平台配置、平台化与物理门禁）仍无 ADR 冻结；审批为『研究层面批准』，不批准任何真实车型/零件尺寸。 v1.3 补充：RP-04 已由 21:17 复审记录判 approved，五项第一波研究全部获批；但 R-01 与 R-02 新交付均为 SUBMITTED / PROPOSAL（未冻结、待审），R-03 资产流水线已在 Schema 冻结前产出几何，G-PL2 的设计裁决门禁仍未关闭。",
+  "residualBlocking": [],
+  "resolvedFromV11": [
+    "docs/planning/reports/RP-01-vehicle-product-tree.md —— 17:08 归档，1319 行",
+    "docs/planning/evidence/RP-01-tree-powertrain.json —— 16:47 归档，255 节点",
+    "docs/planning/evidence/RP-01-tree-body-systems.json —— 16:50 归档，150 节点",
+    "docs/planning/evidence/RP-01-function-tree.json —— 16:51 归档，77 节点",
+    "RP-01 任务卡由 in_progress → approved；RP-02/03/06 由 submitted → approved"
   ],
   "environmentFacts": {
-    "gitRepository": false,
-    "gitCommandResult": "fatal: not a git repository (or any of the parent directories): .git",
-    "masterPlanMeasuredLines": 334,
+    "gitRepository": true,
+    "gitInitialCommit": "8d45c1e chore: initialize CARLAB local baseline and shared agent workspace",
+    "gitTrackedFiles": 148,
+    "gitUncommittedEntries": 53,
+    "gitIgnorePresent": true,
+    "gitIgnoreCreatedAt": "2026-11-14 20:59:57",
+    "a00TaskStatus": "in_progress（初始提交已建，四种演示模式截图/回归仍待验证）",
+    "masterPlanMeasuredLines": 341,
     "gapRegisterClaimedLines": 308,
+    "evidenceFileCount": 25,
+    "evidenceParseErrors": 0,
+    "reportCount": 6,
     "threeDeclared": "^0.170.0",
     "threeInstalled": "0.170.0",
     "cannonEsInstalled": "0.20.0",
-    "driveC": {"availGB": 12, "usePercent": 93},
-    "driveF": {"availGB": 242, "usePercent": 94},
-    "http5173": {"code": 200, "sizeDownload": 12878},
-    "http5174": {"code": 200, "sizeDownload": 5375},
-    "plannedDirsMissing": ["assets", "assets/manifests", "assets/public", "assets/source", "tests", "docs/schema", "src/viewer", ".git"],
+    "driveC": {
+      "availGB": 12,
+      "usePercent": 93
+    },
+    "driveF": {
+      "availGB": 244,
+      "usePercent": 94
+    },
+    "raycasterWrongPath": "node_modules/three/examples/jsm/core/Raycaster.js → MISSING",
+    "raycasterRealPath": "node_modules/three/src/core/Raycaster.js → EXISTS",
+    "plannedDirsMissing": [
+      "assets",
+      "assets/manifests",
+      "tests",
+      "docs/schema",
+      "src/viewer"
+    ],
+    "licenseOrProvenanceFiles": "MISSING（LICENSE / LICENSE.md / ASSET_PROVENANCE.md / docs/ASSET_PROVENANCE.md 均不存在）",
     "helloFlangeAssetsPresent": true,
-    "planningFeasibilityGlb": {"path": "cad/experiments/planning_feasibility/out/wheel_hub_assembly.glb", "bytes": 211592, "magic": "glTF", "verified": true}
+    "planningFeasibilityGlb": {
+      "path": "cad/experiments/planning_feasibility/out/wheel_hub_assembly.glb",
+      "bytes": 212460,
+      "magic": "glTF",
+      "verified": true,
+      "note": "v2 返工重新导出，v1.1 记录的 211592 bytes 已过期"
+    },
+    "masterPlanNewSection": "§20 第一轮研究验收后的工作接续（21:11 新增，其中仍写『HY4 RP-05 仍需按审核意见返工』，属 21:11 时点表述）",
+    "evidenceNote": "含 21:33 新增的 R-03-pipeline-evidence.json；全部可解析",
+    "gitUncommittedNote": "21:35 复测；因多模型持续写入，数量较 21:10 的 25 条继续增长"
   },
   "verificationCommands": [
-    "git status --short -> fatal: not a git repository",
-    "wc -l MASTER_PLAN.md -> 334",
-    "node -e JSON.parse(...) -> PARSE_OK for all 16 evidence JSON files",
-    "for p in node_modules/three/examples/jsm/core/Raycaster.js ... -> MISSING",
-    "curl -s -o /dev/null -w '%{http_code} %{size_download}' http://localhost:5173/ -> 200 12878",
-    "od -An -tx1 -N12 <wheel_hub_assembly.glb> -> 676c 5446 (glTF)",
-    "df -h -> C: 12G avail / 93%, F: 242G avail / 94%"
+    "git -C car status --short -> 25 entries（21 modified + 4 untracked）",
+    "git -C car log --oneline -5 -> 8d45c1e（唯一初始提交）",
+    "git -C car ls-files | wc -l -> 148",
+    "wc -l MASTER_PLAN.md -> 334（GAP_REGISTER.md:4 仍称 308）",
+    "wc -l docs/planning/reports/RP-0*.md -> 1319 / 1551 / 250 / 363 / 248 / 281",
+    "python json.load × 24 份 evidence -> PARSE_OK，0 errors",
+    "find . -newermt '2026-11-14 18:42:44' -> 审核后变更清单（含 RP-04 v2、.gitignore、新增任务卡）",
+    "ls node_modules/three/examples/jsm/core/Raycaster.js -> MISSING；src/core/Raycaster.js -> EXISTS",
+    "ls LICENSE* ASSET_PROVENANCE* -> 全部 MISSING",
+    "stat + od -An -tx1 -N4 wheel_hub_assembly.glb -> 212460 bytes / 67 6c 54 46 (glTF)",
+    "df -h -> C: 12G avail / 93%，F: 244G avail / 94%"
   ],
   "verifiedFindings": [
     {
       "id": "INPUT-DRIFT",
-      "severity": "HIGH",
-      "fact": "审计期间（16:17→16:36，19 分钟）第一波输入从 1 份报告/7 份证据增长到 4 份报告/16 份证据，RP-03 任务卡从 ready 变 in_progress 再变 submitted。任何静态快照审计都可能立即过期。",
-      "evidence": "三次带时间戳的目录盘点 + RP-03 任务卡状态变化",
-      "consequence": "RP-05 必须声明快照边界并要求 RP-07 在汇总前重跑一次门禁检查；不能把本版结论视为永久有效。"
+      "severity": "MEDIUM（v1.1 为 HIGH，因 Git 基线建立而降级）",
+      "fact": "输入在审计与返工期间持续写入：16:17→21:10 报告 1→5 份、evidence 7→24 份；18:42 审核后又新增 RP-04 v2 返工、.gitignore、NEXT_TASK_CONTINUITY 与 5 张新任务卡。现已可用 git diff 比对漂移，但 25 个变更未提交，恢复点仍只有 8d45c1e",
+      "evidence": "五次带时间戳盘点 + git log/status/diff --stat（21 files changed, 402 insertions / 147 deletions）",
+      "consequence": "RP-05 v1.2 仍是快照级结论；RP-07 汇总前必须重跑门禁并复审 RP-04 v2 的审核结论"
     },
     {
       "id": "BASE-01",
-      "severity": "HIGH",
-      "fact": "Git 基线未建立，但 5 个模型已并行写入同一 evidence 目录且输入持续变化，无回滚/无 diff/无并发控制",
-      "evidence": "git status fatal + MASTER_PLAN.md:290 自述基线未建立 + PLAN_READINESS_REVIEW.md:45 关口 G0 + 三次快照文件增量"
+      "severity": "PARTIALLY_MITIGATED（v1.1 为 HIGH『无 Git 基线』）",
+      "fact": "A-00 已建立 .git 与唯一初始提交 8d45c1e（148 文件），.gitignore 排除 node_modules/.venv/.cache/密钥；但 A-00 仍 in_progress（回归截图未验证），且当前 25 个变更全部未提交，返工成果尚未形成新恢复点",
+      "evidence": "git log --oneline -5 / git status --short | wc -l / git ls-files | wc -l / A-00.md lastNote / .gitignore 内容"
     },
     {
       "id": "BASE-02",
-      "severity": "MEDIUM",
-      "fact": "RP-06-feature-matrix.json 中 threeOfficial='examples/jsm/core/Raycaster.js' 在 three 0.170.0 中不存在；真实位置 src/core/Raycaster.js，且 examples/jsm/core/ 目录不存在",
-      "evidence": "路径存在性实测 + JSON 第 27 行"
+      "severity": "MEDIUM / 仍未修复",
+      "fact": "RP-06-feature-matrix.json:27 的 threeOfficial='examples/jsm/core/Raycaster.js' 在 three 0.170.0 中仍不存在；真实位置 src/core/Raycaster.js。总控 §1/§2/§4 三处确认并要求实现前更正",
+      "evidence": "21:10:40 路径存在性复测 + AUDIT_2026-11-14.md:15/:55/:85"
     },
     {
       "id": "BASE-03",
-      "severity": "MEDIUM",
-      "fact": "RP-06-verification-plan.json 记录 HTTP 200 / body ~11633，本次复现 200 / 12878，字节数不可精确复现；npm start 的 EADDRINUSE 记为 PASS_WITH_NOTE，实为服务已在运行",
-      "evidence": "curl 实测 + JSON executedInRP06"
+      "severity": "MEDIUM / 仍未修复",
+      "fact": "RP-06-verification-plan.json 记录 body ~11633，复现实测 12878 不可精确复现；EADDRINUSE 记 PASS_WITH_NOTE；status 仍 PLAN_ONLY，4 项 futureViewerGates 未运行",
+      "evidence": "JSON status 字段 + AUDIT §1『性能阈值只是计划』"
     },
     {
       "id": "BASE-04",
-      "severity": "MEDIUM",
-      "fact": "GAP_REGISTER.md:4 自述针对『308 行 MASTER_PLAN.md』，实测 334 行；§14—§19 后增内容未纳入缺口核对",
-      "evidence": "wc -l + GAP_REGISTER.md:4"
+      "severity": "MEDIUM / 仍未修复",
+      "fact": "GAP_REGISTER.md:4 仍写『当前 308 行 MASTER_PLAN.md』，21:35 实测 341 行（21:11 新增 §20 后由 334 增至 341），且文件仍为 INITIAL、16 条候选未随两轮审核更新",
+      "evidence": "wc -l + GAP_REGISTER.md 头部 + git diff（MASTER_PLAN.md 有 8 行改动但行数未变）"
     },
     {
       "id": "BASE-05",
-      "severity": "LOW",
-      "fact": "RP-01-tree-core.json scopeNote 引用 3 份分文件，实测全部 MISSING（tree-powertrain / tree-body-systems / function-tree）",
-      "evidence": "文件存在性实测"
+      "severity": "RESOLVED / 本版删除",
+      "fact": "v1.1 的『RP-01 scopeNote 引用 3 份分文件 MISSING』已由 Qwen4 于 16:47—16:51 补齐；21:10:40 复测 tree-powertrain / tree-body-systems / function-tree 全部存在且可解析",
+      "evidence": "find + python json.load；按总控 §4 要求不得再把该判断写入 RP-07"
     },
     {
       "id": "BASE-06",
-      "severity": "LOW",
-      "fact": "RP-03 探针命令 node F:\\tmp\\rp03-probe.mjs 的脚本本体在项目外临时目录；报告 §7 说明全文内嵌于 JSON 的 probeSource 字段可还原，属于已缓解但非项目内可复现",
-      "evidence": "RP-03-cannon-probe.json command + RP-03 报告:150"
+      "severity": "LOW / 仍未修复",
+      "fact": "RP-03 探针脚本本体在 F:\\tmp\\rp03-probe.mjs 项目外临时目录；总控 §2 亦建议正式移入版本管理",
+      "evidence": "RP-03-cannon-probe.json command + AUDIT:42"
+    },
+    {
+      "id": "BASE-07",
+      "severity": "MEDIUM / 部分缓解",
+      "fact": "RP-04 v2 把 ISO 273 数值改对（15.0/15.5/16.5 查表、剔除自造公式），但报告全文无任何 URL/版本/检索日期，params.json 与 metadata 也未记录标准出处；总控 §2 明确『二级资料不能替代购买正式标准全文；返工时不得假设拿到了 ISO 原文全部条款』，§4 要求纠正 ISO PASS 自证循环。数值正确 ≠ 证据链完整；但 21:17 RP-04 复审记录已明示『设计以公开工程对照表和项目内离散查表为基础，非正式购买的标准全文认证』，出处限制被总控显式接受并记录在案，本项由『出处完全缺失』降为『报告正文仍无出处、仅复审记录有声明』",
+      "evidence": "grep -E 'https?://|iso.org|检索日期' RP-04-cad-production.md 返回空；AUDIT:50/:71"
+    },
+    {
+      "id": "BASE-08",
+      "severity": "HIGH / v1.2 新增",
+      "fact": "RP-04 v2 未处理 RP-01 §10 的装配界面质疑：params.json 仍把轮毂法兰孔当 ISO 273 螺栓通孔，且 pilot_diameter_mm=84.0 与 center_bore_mm=67.1 并存未澄清是否同一接口（可能是几何干涉）；总控 §4 要求『补齐装配界面/轴承简化说明』，v2 只补了轴承简化（fidelity_disclaimers）",
+      "evidence": "params.json 当前内容 + RP-01 报告 §10 表 1—3 + AUDIT:14/:72"
+    },
+    {
+      "id": "BASE-09",
+      "severity": "HIGH / v1.2 新增",
+      "fact": "RP-01-geometry-needs.json 显示 493 零件中 SOURCED=0（261 NEEDS_MEASUREMENT / 216 DEMO_ASSUMPTION / 10 DEFERRED / 6 N/A）；总控 §1 明确不批准任何真实车型/零件尺寸。但 R-01（in_progress）、R-02/R-04（ready）、VIEW-01（backlog）等实现型任务已启动，存在把『产品树清单』误当『尺寸依据』的虚假真实度风险",
+      "evidence": "RP-01-geometry-needs.json countsByGeomBasis + RP-01 报告 §0/§14.1 + AUDIT:11"
+    },
+    {
+      "id": "BASE-10",
+      "severity": "PARTIALLY_RESOLVED / RP-04 已复审，新问题同构",
+      "fact": "审核结论与任务状态不同步：AUDIT_2026-11-14.md 写于 18:42，判定 RP-04 needs_work；RP-04 于 21:06 完成 v2 返工且任务卡 status=submitted，但 reviewDecision 字段仍为 needs_work 且未复审。RP-07 若直接按 AUDIT 汇总会沿用过期审核结论；RP-04 已于 21:17 复审 APPROVED、任务卡 reviewDecision=approved；但 R-01（21:24）与 R-02（21:31）新交付均仍 submitted 待审，主 AUDIT 表未增『返工后状态』列，MASTER_PLAN §20 仍停留在 21:11 的旧表述，审核时点漂移成为常态",
+      "evidence": "RP-04.md frontmatter + 报告 mtime 21:06 + AUDIT:16 + AUDIT:94 关于新成果须复审的说明"
+    },
+    {
+      "id": "BASE-11",
+      "severity": "HIGH / v1.3 新增",
+      "fact": "R-02 数据契约提案（21:31，submitted）已给出 AUDIT §3.1/§3.3 所需的坐标变换矩阵与身份契约：FR-VEHICLE(+X左/+Y上/+Z前) 与 FR-ENGINEERING(x前/y左/z上) 的显式旋转矩阵及 p_E=[z_R,x_R,y_R] / p_R=[y_E,z_E,x_E] 正反公式；PartFamily→PartDefinition→PartVariant→PartRevision→PartInstance、Joint、MountInterface、Frame、AssetManifest；镜像要求 mirror.handednessFlip=true 且禁止 scale.x=-1。但状态为 PROPOSAL，坐标选择明确『待 RP-07 冻结』，校验 0 错误 / 20/20 用例 / 3/3 反例。",
+      "evidence": "docs/research/R-02-data-contract-report.md + R-02-example-assembly.json coordinatePolicy/idPolicy/entities + R-02.md status=submitted",
+      "consequence": "GAP-003 与 GAP-013 从『无方案』进入『有方案但未冻结』阶段；此前的『无人给出变换矩阵』表述已过期，但不得据此宣称接口已冻结"
+    },
+    {
+      "id": "BASE-12",
+      "severity": "HIGH / v1.3 新增",
+      "fact": "R-03 资产流水线（Gemini，in_progress）在 21:33 已产出 SYS-30-HUB-001 / SYS-30-BRG-DAC4280 / SYS-30-STUD-M14 / SYS-40-ROTOR-001 的 STEP+STL 与 wheel_end_assembly.glb，而 R-02 数据 Schema 仍是 PROPOSAL 未冻结。RP-04 复审记录第 38 行明确要求『在 DeepSeek R-02 的数据 Schema 草案冻结前，避免将演示接口宣称为全项目最终协议』。",
+      "evidence": "cad/experiments/asset_pipeline_v1/out/（21:33）+ docs/planning/evidence/R-03-pipeline-evidence.json + AUDIT_2026-11-14_RP04_RECHECK.md:38",
+      "consequence": "实现先于契约冻结，若 R-02 后续改名/改字段，这批产物需重做；NEW-12 的『493 件无依据几何』风险已从计划变为在产"
+    },
+    {
+      "id": "BASE-13",
+      "severity": "MEDIUM / v1.3 新增",
+      "fact": "R-01 平台家族研究（21:24，submitted）实测发现现有代码改轮距时摆臂靠 scale.z 静默拉伸（轮距 1680→2200 mm 时下臂跨度 499.9→735.6 mm，+47.1%），且现有演示代码根本没有任何变型拒绝机制；16 条规则 + 校验器实跑 2 合法变体放行、1 非法变体被 7 类冲突拒绝、21/21 反例全中，但成果为 PROPOSAL、R01-PF-0.1 标 PROPOSED_NOT_APPROVED。",
+      "evidence": "docs/research/R-01-platform-family-report.md §0/§2 + R-01.md status=submitted + R-02 报告对齐说明",
+      "consequence": "为『把参数拉伸当变型设计』提供第二份独立实证；同时说明首发基型相关研究已有提案但仍未冻结"
     }
   ],
   "confidence": {
-    "verified": "文件存在性、行数、版本号、16 份 JSON 可解析性、HTTP 状态、磁盘容量、GLB 魔数与字节数均为本机实测",
-    "derived": "门禁状态为任务书原文与实测文件清单的推导；跨模型冲突为多份报告原文逐条比对",
-    "unknown": "RP-01 正文结论、三份被引用分文件内容；本审计不推测其内容"
+    "verified": "文件存在性、行数、版本号、24 份 JSON 可解析性、Git 提交与工作区状态、GLB 魔数与字节数、路径存在性、磁盘容量均为 21:10:40 本机实测",
+    "derived": "门禁状态为任务书原文与实测文件清单的推导；跨模型冲突为 5 份报告 + AUDIT 原文逐条比对；风险优先级为影响×可能性的工程判断",
+    "unknown": "RP-04 v2 返工后总控是否复审通过；A-00 回归截图结果；493 零件的真实尺寸来源；首发基型最终选择；ISO 273 正式标准全文条款（官方站点 403）；R-01/R-02/R-03 三项新交付的总控审核结论；R-02 Schema 何时冻结；21:35:23 之后新增文件的内容",
+    "explicitlyNotClaimed": "未发现摘要中提到的 agent-workspace/agents/deepseek/reports/RP-02-frame-alignment.json —— 21:10:40 用 Glob **/*frame* 全库检索返回 No files found，deepseek/reports/ 仅有 RP-02-validator.mjs 与 RP-02.md。本审计不据此文件下任何结论，也不假定它曾存在或被删除。"
+  },
+  "incrementalRecheck": {
+    "from": "v1.2 / 2026-11-14T21:10:40+08:00",
+    "to": "v1.3 / 2026-11-14T21:35:23+08:00",
+    "reason": "v1.2 落盘后 21:11—21:35 出现影响结论的并行写入，提交已知过期报告会重犯 v1.1 的错误",
+    "newInputs": [
+      "docs/command/reviews/AUDIT_2026-11-14_RP04_RECHECK.md（21:17，RP-04 APPROVED，隔离复测 6/6 PASS）",
+      "MASTER_PLAN.md §20（21:11，334→341 行）",
+      "docs/research/R-01-platform-family-report.md + example.json（21:23—21:24，submitted / PROPOSAL）",
+      "docs/research/R-02-data-contract-report.md + R-02-example-assembly.json（21:29—21:32，submitted / PROPOSAL）",
+      "docs/research/R-03-cad-asset-pipeline-report.md + cad/experiments/asset_pipeline_v1/out/（21:33，in_progress，已产出几何）",
+      "docs/command/reviews/AUDIT_2026-11-14_R01_QWEN.md（21:34）与 docs/tasks/R-06-first-assembly-geometry-evidence.md（21:34）"
+    ],
+    "impactedJudgements": [
+      "GAP-001",
+      "GAP-003",
+      "GAP-004",
+      "GAP-008",
+      "GAP-010",
+      "GAP-013",
+      "GAP-014",
+      "GAP-016"
+    ],
+    "impactedRisks": [
+      "R-01",
+      "R-02",
+      "R-06",
+      "R-09",
+      "R-13",
+      "R-14",
+      "R-15"
+    ],
+    "stillDrifting": true,
+    "cutoffPolicy": "21:35:23 之后的新交付不在本版取证范围；按 AUDIT:94『后续如遇新成果文件，须在审核后变更结论』，由 RP-07 汇总前复审",
+    "handoff": "RP-07 启动前须重跑门禁并核对 R-01/R-02/R-03 的审核与冻结状态"
   }
 }

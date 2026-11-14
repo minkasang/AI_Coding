@@ -1,0 +1,6182 @@
+{
+  "schemaVersion": "carlab.data-contract/0.1.0-proposal",
+  "artifact": "R-02-example-assembly",
+  "status": "PROPOSAL",
+  "date": "2026-11-14",
+  "scope": "BOM→轮毂法兰→5 个车轮螺柱→制动盘的最小装配样例；使用 RP-01 真实 PART/ASSY/FAM/REF 身份；非生产数据。",
+  "unitPolicy": {
+    "cad": "mm",
+    "simulation": "m/kg/s/N",
+    "angle": "rad in runtime; deg in CAD metadata",
+    "rule": "每个数值必须带 unit；CAD→runtime 显式 0.001；禁止 mesh.scale 做配置。"
+  },
+  "coordinatePolicy": {
+    "runtimeWorld": "FR-VEHICLE: +X 左、+Y 上、+Z 前；右手系；来自 src/physics/vehicleWorld.js:180-188。",
+    "engineering": "FR-ENGINEERING: x 前、y 左、z 上；p_E=[z_R,x_R,y_R]；p_R=[y_E,z_E,x_E]。",
+    "local": "零件局部 Frame 由 CAD 作者定义；轮端局部 z 为车轮轴；实例 Frame 显式给出 sourceFrameId、unitScale、rotation。",
+    "mirror": "镜像必须使用 mirror.handednessFlip=true 和 mirrorOfFrameId；禁止 rotation 行列式 -1 或 scale.x=-1 作为隐式镜像。",
+    "status": "PROPOSAL; 世界坐标选择待 RP-07 冻结。"
+  },
+  "idPolicy": {
+    "rule": "沿用 RP-01: VEH/SYS/SUB/ASSY/PART/FAM/DAT/REF；一个实体零件一个规范节点；其他系统用 REF，不复制实体。",
+    "instanceRule": "partId@revision 是定义；instanceId 是放置；同一 partRef 可有多个 instanceId，每个实例有自己的 Frame。",
+    "bomQtyRule": "BOM qty 是每个父总成实例的数量；vehicleTotalQty 另记；instanceIds 存在时 qty 必须等于实例数。"
+  },
+  "entities": {
+    "frames": [
+      {
+        "frameId": "FR-VEHICLE",
+        "frameKind": "WORLD",
+        "parentFrameId": null,
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "LOCAL_MEASUREMENT",
+        "sources": [
+          "S30",
+          "S31"
+        ],
+        "unknowns": [],
+        "note": "运行时世界坐标：+X 左、+Y 上、+Z 前；来自 src/physics/vehicleWorld.js:180-188 与 src/parts/chassis.js:285-291。"
+      },
+      {
+        "frameId": "FR-ENGINEERING",
+        "frameKind": "ENGINEERING",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "ENGINEERING_DERIVATION",
+        "sources": [
+          "S32",
+          "S33"
+        ],
+        "unknowns": [],
+        "note": "工程坐标：x 前、y 左、z 上；由 FR-VEHICLE 经 [xE,yE,zE]=[zR,xR,yR] 得到。"
+      },
+      {
+        "frameId": "FR-WHEEL-END-FL",
+        "frameKind": "ASSEMBLY",
+        "parentFrameId": "FR-VEHICLE",
+        "units": "m",
+        "origin": [
+          0.84,
+          0.32,
+          1.23
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S34"
+        ],
+        "unknowns": [],
+        "note": "FL 轮端总成坐标；半轮距 840 mm、半轴距 1230 mm 来自 R-01 VV-A-SWB-STD 的 PD-FT/PD-WB，轮心高度 320 mm 为演示假设。"
+      },
+      {
+        "frameId": "FR-HUB-BRG-FL",
+        "frameKind": "ASSEMBLY",
+        "parentFrameId": "FR-WHEEL-END-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "note": "轮毂轴承 Gen1 子总成坐标。"
+      },
+      {
+        "frameId": "FR-HUB-LOCAL",
+        "frameKind": "PART_LOCAL",
+        "parentFrameId": null,
+        "units": "mm",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S35"
+        ],
+        "unknowns": [],
+        "instanceId": "PART-30-006",
+        "note": "轮毂法兰零件局部坐标；局部 z 为车轮轴线，单位 mm。"
+      },
+      {
+        "frameId": "FR-HUB-INST-FL",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-HUB-BRG-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "sourceFrameId": "FR-HUB-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-HUB-FL",
+        "note": "零件局部 z(轴) → 运行时 x(左)；局部 x→运行时 y(上)，局部 y→运行时 z(前)。"
+      },
+      {
+        "frameId": "FR-STUD-LOCAL",
+        "frameKind": "PART_LOCAL",
+        "parentFrameId": null,
+        "units": "mm",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-STUD-GEOMETRY"
+        ],
+        "instanceId": "PART-30-009",
+        "note": "车轮螺柱零件局部坐标；z 为螺柱轴，单位 mm。"
+      },
+      {
+        "frameId": "FR-STUD-FL-1",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-HUB-BRG-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0.05715,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S35"
+        ],
+        "unknowns": [],
+        "sourceFrameId": "FR-STUD-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-STUD-FL-1",
+        "patternIndex": 0,
+        "note": "PCD 114.3 mm，第 1 个 72° 等分位置；局部坐标 [57.15cos0°, 57.15sin0°, 0] mm。"
+      },
+      {
+        "frameId": "FR-STUD-FL-2",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-HUB-BRG-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0.01766,
+          0.054353
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S35"
+        ],
+        "unknowns": [],
+        "sourceFrameId": "FR-STUD-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-STUD-FL-2",
+        "patternIndex": 1,
+        "note": "PCD 114.3 mm，第 2 个 72° 等分位置；局部坐标 [57.15cos72°, 57.15sin72°, 0] mm。"
+      },
+      {
+        "frameId": "FR-STUD-FL-3",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-HUB-BRG-FL",
+        "units": "m",
+        "origin": [
+          0,
+          -0.046235,
+          0.033592
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S35"
+        ],
+        "unknowns": [],
+        "sourceFrameId": "FR-STUD-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-STUD-FL-3",
+        "patternIndex": 2,
+        "note": "PCD 114.3 mm，第 3 个 72° 等分位置；局部坐标 [57.15cos144°, 57.15sin144°, 0] mm。"
+      },
+      {
+        "frameId": "FR-STUD-FL-4",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-HUB-BRG-FL",
+        "units": "m",
+        "origin": [
+          0,
+          -0.046235,
+          -0.033592
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S35"
+        ],
+        "unknowns": [],
+        "sourceFrameId": "FR-STUD-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-STUD-FL-4",
+        "patternIndex": 3,
+        "note": "PCD 114.3 mm，第 4 个 72° 等分位置；局部坐标 [57.15cos216°, 57.15sin216°, 0] mm。"
+      },
+      {
+        "frameId": "FR-STUD-FL-5",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-HUB-BRG-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0.01766,
+          -0.054353
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S35"
+        ],
+        "unknowns": [],
+        "sourceFrameId": "FR-STUD-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-STUD-FL-5",
+        "patternIndex": 4,
+        "note": "PCD 114.3 mm，第 5 个 72° 等分位置；局部坐标 [57.15cos288°, 57.15sin288°, 0] mm。"
+      },
+      {
+        "frameId": "FR-DISC-ASM-FL",
+        "frameKind": "ASSEMBLY",
+        "parentFrameId": "FR-WHEEL-END-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "note": "制动盘总成坐标（引用 SYS-40 的 ASSY-40-009）。"
+      },
+      {
+        "frameId": "FR-DISC-LOCAL",
+        "frameKind": "PART_LOCAL",
+        "parentFrameId": null,
+        "units": "mm",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-DISC-GEOMETRY"
+        ],
+        "instanceId": "PART-40-046",
+        "note": "制动盘零件局部坐标；z 为盘轴，单位 mm。"
+      },
+      {
+        "frameId": "FR-DISC-INST-FL",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-DISC-ASM-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "sourceFrameId": "FR-DISC-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-DISC-FL"
+      },
+      {
+        "frameId": "FR-CALIPER-ASM-FL",
+        "frameKind": "ASSEMBLY",
+        "parentFrameId": "FR-WHEEL-END-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0.13,
+          -0.18
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "note": "卡钳总成位置为演示假设；真实支架/转向节接口需 CAD 硬点。"
+      },
+      {
+        "frameId": "FR-CALIPER-LOCAL",
+        "frameKind": "PART_LOCAL",
+        "parentFrameId": null,
+        "units": "mm",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-CALIPER-GEOMETRY"
+        ],
+        "instanceId": "PART-40-034",
+        "note": "卡钳体局部坐标；单位 mm。"
+      },
+      {
+        "frameId": "FR-CALIPER-INST-FL",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-CALIPER-ASM-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "sourceFrameId": "FR-CALIPER-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-CALIPER-FL"
+      },
+      {
+        "frameId": "FR-CALIPER-BRACKET-LOCAL",
+        "frameKind": "PART_LOCAL",
+        "parentFrameId": null,
+        "units": "mm",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-CALIPER-BRACKET"
+        ],
+        "instanceId": "PART-40-048",
+        "note": "卡钳支架局部坐标；单位 mm。"
+      },
+      {
+        "frameId": "FR-CALIPER-BRACKET-INST-FL",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-CALIPER-ASM-FL",
+        "units": "m",
+        "origin": [
+          0,
+          -0.03,
+          0.02
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "sourceFrameId": "FR-CALIPER-BRACKET-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-CALIPER-BRACKET-FL"
+      },
+      {
+        "frameId": "FR-KNUCKLE-LOCAL",
+        "frameKind": "PART_LOCAL",
+        "parentFrameId": null,
+        "units": "mm",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-KNUCKLE-GEOMETRY"
+        ],
+        "instanceId": "PART-20-016",
+        "note": "转向节局部坐标；单位 mm。"
+      },
+      {
+        "frameId": "FR-KNUCKLE-INST-FL",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-WHEEL-END-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "sourceFrameId": "FR-KNUCKLE-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-KNUCKLE-FL"
+      },
+      {
+        "frameId": "FR-KNUCKLE-CALIPER-MOUNT-FL",
+        "frameKind": "MOUNT",
+        "parentFrameId": "FR-KNUCKLE-INST-FL",
+        "units": "m",
+        "origin": [
+          0.1,
+          -0.16,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "note": "转向节上的卡钳支架安装面（演示位置，在 knuckle 实例局部坐标中换算到世界 [0,0.10,-0.16]）。"
+      },
+      {
+        "frameId": "FR-DISC-SCREW-LOCAL",
+        "frameKind": "PART_LOCAL",
+        "parentFrameId": null,
+        "units": "mm",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "instanceId": "PART-30-031",
+        "note": "制动盘定位螺钉局部坐标；单位 mm。"
+      },
+      {
+        "frameId": "FR-DISC-SCREW-INST-FL",
+        "frameKind": "INSTANCE",
+        "parentFrameId": "FR-WHEEL-END-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0.05715,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "sourceFrameId": "FR-DISC-SCREW-LOCAL",
+        "unitScale": 0.001,
+        "instanceId": "INST-DISC-SCREW-FL",
+        "note": "制动盘定位螺钉位置（演示）。"
+      },
+      {
+        "frameId": "FR-HUB-AXIS-FL",
+        "frameKind": "JOINT",
+        "parentFrameId": "FR-WHEEL-END-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "note": "轮毂轴线 = 运行时 x（左）。"
+      },
+      {
+        "frameId": "FR-KNUCKLE-AXIS-FL",
+        "frameKind": "JOINT",
+        "parentFrameId": "FR-WHEEL-END-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "note": "转向节轴承座轴线。"
+      },
+      {
+        "frameId": "FR-DISC-AXIS-FL",
+        "frameKind": "JOINT",
+        "parentFrameId": "FR-WHEEL-END-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "note": "制动盘轴线。"
+      },
+      {
+        "frameId": "FR-CALIPER-BRACKET-AXIS-FL",
+        "frameKind": "JOINT",
+        "parentFrameId": "FR-CALIPER-ASM-FL",
+        "units": "m",
+        "origin": [
+          0,
+          -0.03,
+          0.02
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "note": "卡钳支架固定面。"
+      },
+      {
+        "frameId": "FR-CALIPER-GUIDE-A-FL",
+        "frameKind": "JOINT",
+        "parentFrameId": "FR-CALIPER-ASM-FL",
+        "units": "m",
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "note": "浮动卡钳导向销 A。"
+      },
+      {
+        "frameId": "FR-CALIPER-GUIDE-B-FL",
+        "frameKind": "JOINT",
+        "parentFrameId": "FR-CALIPER-ASM-FL",
+        "units": "m",
+        "origin": [
+          0,
+          -0.03,
+          0.02
+        ],
+        "rotation": {
+          "type": "matrix",
+          "value": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "handedness": "right",
+        "mirror": null,
+        "tolerance": {
+          "positionM": 0.0005,
+          "angleDeg": 0.05
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [],
+        "unknowns": [],
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "note": "浮动卡钳导向销 B。"
+      }
+    ],
+    "sources": [
+      {
+        "id": "S30",
+        "title": "src/physics/vehicleWorld.js:180-188 wheel anchors",
+        "kind": "project-code",
+        "grade": "LOCAL_MEASUREMENT",
+        "supports": "运行时 +X 左、+Y 上、+Z 前；FL(+X,+Z)、FR(-X,+Z)。"
+      },
+      {
+        "id": "S31",
+        "title": "src/parts/chassis.js:285-291 corner definitions",
+        "kind": "project-code",
+        "grade": "LOCAL_MEASUREMENT",
+        "supports": "FL side=1、FR side=-1、前轴 z=+halfWB。"
+      },
+      {
+        "id": "S32",
+        "title": "ISO 8855:2011 vehicle dynamics vocabulary",
+        "url": "https://www.iso.org/standard/51180.html",
+        "kind": "standard",
+        "grade": "EVIDENCE",
+        "supports": "车辆动力学坐标/术语需要显式定义；本文件只作术语参考。"
+      },
+      {
+        "id": "S33",
+        "title": "SAE J670 Vehicle Dynamics Terminology",
+        "url": "https://saemobilus.sae.org/standards/j670_202206-vehicle-dynamics-terminology",
+        "kind": "standard",
+        "grade": "EVIDENCE",
+        "supports": "轴系/车身/悬架/转向术语。"
+      },
+      {
+        "id": "S34",
+        "title": "docs/research/R-01-platform-family-example.json VV-A-SWB-STD",
+        "kind": "project-research",
+        "grade": "DEMO_ASSUMPTION",
+        "supports": "PD-WB=2460 mm、PD-FT=1680 mm、PD-RT=1680 mm、PD-TW=235 mm；PROPOSED_NOT_APPROVED。"
+      },
+      {
+        "id": "S35",
+        "title": "cad/experiments/hello_flange/params.json + metadata",
+        "kind": "project-code",
+        "grade": "DEMO_ASSUMPTION",
+        "supports": "148 mm 外径、16 mm 厚、PCD 114.3 mm、中心孔 67.1 mm、5 孔、孔径 14.5 mm；仅为演示法兰，不是 PART-30-006 的真实几何。"
+      },
+      {
+        "id": "S36",
+        "title": "RP-01 product tree RP01-PBS-0.1",
+        "path": "docs/planning/evidence/RP-01-tree-chassis.json",
+        "kind": "project-research",
+        "grade": "EVIDENCE",
+        "supports": "ASSY-30-001/002、PART-30-006/009、REF-30-001/002/003、ASSY-40-008/009、PART-40-046 等真实身份与父子关系。"
+      },
+      {
+        "id": "S37",
+        "title": "RP-02 interface graph and report",
+        "path": "docs/planning/evidence/RP-02-interface-graph.example.json",
+        "kind": "project-research",
+        "grade": "EVIDENCE",
+        "supports": "端口/Frame/evidence/validation 字段与工程连接/渲染接触分界。"
+      },
+      {
+        "id": "S38",
+        "title": "RP-03 fidelity matrix FID-V..FID-D2",
+        "path": "docs/planning/evidence/RP-03-fidelity-matrix.json",
+        "kind": "project-research",
+        "grade": "EVIDENCE",
+        "supports": "fidelityClaim 分级与 failIf 断言。"
+      },
+      {
+        "id": "S39",
+        "title": "build123d 0.13.0 Direct API Reference",
+        "url": "https://build123d.readthedocs.io/en/v0.13.0/direct_api_reference.html",
+        "kind": "official-doc",
+        "grade": "EVIDENCE",
+        "supports": "STEP/STL 导出与装配 API 参考；本文件不把 build123d joint 当作浏览器物理 API。"
+      },
+      {
+        "id": "S40",
+        "title": "Three.js loading 3D models (glTF/GLB)",
+        "url": "https://threejs.org/manual/pages/loading-3d-models.html",
+        "kind": "official-doc",
+        "grade": "EVIDENCE",
+        "supports": "GLB 是运行时资产，不承担 STEP B-rep/装配基准。"
+      },
+      {
+        "id": "S41",
+        "title": "ISO 273 fastener clearance holes (title/series via ISO page)",
+        "url": "https://www.iso.org/standard/4183.html",
+        "kind": "standard",
+        "grade": "EVIDENCE",
+        "supports": "螺栓通孔三系列的存在；具体 M14 数值需正式标准全文，本文件不把它当已验证数值。"
+      },
+      {
+        "id": "S42",
+        "title": "glTF 2.0 specification",
+        "url": "https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html",
+        "kind": "standard",
+        "grade": "EVIDENCE",
+        "supports": "glTF/GLB 的节点/网格/材质表示；不包含工程 B-rep 或装配公差。"
+      }
+    ],
+    "partFamilies": [
+      {
+        "familyId": "FAM-130-007",
+        "name": "车轮螺栓/螺母（按座型分类）",
+        "partClass": "fastener",
+        "rp01Id": "FAM-130-007",
+        "parameterSchema": [
+          {
+            "name": "thread",
+            "unit": null,
+            "type": "string|null"
+          },
+          {
+            "name": "seatType",
+            "unit": null,
+            "type": "string|null"
+          }
+        ],
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S36"
+        ],
+        "valueBasis": "EVIDENCE",
+        "unknowns": [
+          "U-STUD-THREAD"
+        ]
+      },
+      {
+        "familyId": "FAM-130-001",
+        "name": "六角头/法兰面螺栓",
+        "partClass": "fastener",
+        "rp01Id": "FAM-130-001",
+        "parameterSchema": [
+          {
+            "name": "thread",
+            "unit": null,
+            "type": "string|null"
+          }
+        ],
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S36"
+        ],
+        "valueBasis": "EVIDENCE",
+        "unknowns": []
+      },
+      {
+        "familyId": "FAM-130-002",
+        "name": "内六角圆柱头螺钉",
+        "partClass": "fastener",
+        "rp01Id": "FAM-130-002",
+        "parameterSchema": [
+          {
+            "name": "thread",
+            "unit": null,
+            "type": "string|null"
+          }
+        ],
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S36"
+        ],
+        "valueBasis": "EVIDENCE",
+        "unknowns": []
+      },
+      {
+        "familyId": "FAM-130-036",
+        "name": "卡钳体家族",
+        "partClass": "housing",
+        "rp01Id": "FAM-130-036",
+        "parameterSchema": [
+          {
+            "name": "pistonCount",
+            "unit": null,
+            "type": "integer|null"
+          }
+        ],
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S36"
+        ],
+        "valueBasis": "EVIDENCE",
+        "unknowns": [
+          "U-CALIPER-GEOMETRY"
+        ]
+      },
+      {
+        "familyId": "FAM-130-010",
+        "name": "深沟球轴承",
+        "partClass": "bearing",
+        "rp01Id": "FAM-130-010",
+        "parameterSchema": [
+          {
+            "name": "boreMm",
+            "unit": "mm",
+            "type": "number|null"
+          }
+        ],
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S36"
+        ],
+        "valueBasis": "EVIDENCE",
+        "unknowns": [
+          "U-BEARING-GEOMETRY"
+        ]
+      }
+    ],
+    "partDefinitions": [
+      {
+        "partId": "PART-30-006",
+        "rp01Id": "PART-30-006",
+        "kind": "part",
+        "name": "独立轮毂法兰",
+        "partClass": "rotating",
+        "familyRef": null,
+        "rp01Parent": "ASSY-30-002",
+        "geometryBasis": "NEEDS_MEASUREMENT",
+        "defaultVariantId": "V-PART-30-006-5X1143",
+        "variants": [
+          "V-PART-30-006-5X1143"
+        ],
+        "materialRef": "MAT-HUB-AL",
+        "mounts": [
+          "MI-HUB-DISC-FL",
+          "MI-STUD-FLANGE-FL"
+        ],
+        "joints": [
+          "J-HUB-BRG-FL",
+          "J-DISC-HUB-FL"
+        ],
+        "assets": [
+          "ASSET-FLANGE-DEMO"
+        ],
+        "localFrameId": "FR-HUB-LOCAL",
+        "evidence": "ASSUMPTION",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S35",
+          "S36"
+        ],
+        "unknowns": [
+          "U-HUB-FLANGE-GEOMETRY"
+        ]
+      },
+      {
+        "partId": "PART-30-009",
+        "rp01Id": "PART-30-009",
+        "kind": "part",
+        "name": "车轮螺柱（压装于轮毂）",
+        "partClass": "fastener",
+        "familyRef": "FAM-130-007",
+        "rp01Parent": "ASSY-30-002",
+        "geometryBasis": "NEEDS_MEASUREMENT",
+        "defaultVariantId": "V-PART-30-009-DEMO",
+        "variants": [
+          "V-PART-30-009-DEMO"
+        ],
+        "materialRef": "MAT-STUD-STEEL",
+        "mounts": [
+          "MI-STUD-FLANGE-FL"
+        ],
+        "joints": [],
+        "assets": [
+          "ASSET-STUD-PLACEHOLDER"
+        ],
+        "localFrameId": "FR-STUD-LOCAL",
+        "evidence": "ASSUMPTION",
+        "valueBasis": "OPEN",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-STUD-THREAD",
+          "U-STUD-GEOMETRY"
+        ]
+      },
+      {
+        "partId": "PART-40-046",
+        "rp01Id": "PART-40-046",
+        "kind": "part",
+        "name": "通风制动盘（摩擦环+筋+盘帽）",
+        "partClass": "friction",
+        "familyRef": null,
+        "rp01Parent": "ASSY-40-009",
+        "geometryBasis": "NEEDS_MEASUREMENT",
+        "defaultVariantId": "V-PART-40-046-DEMO",
+        "variants": [
+          "V-PART-40-046-DEMO"
+        ],
+        "materialRef": "MAT-DISC-CI",
+        "mounts": [
+          "MI-HUB-DISC-FL"
+        ],
+        "joints": [
+          "J-DISC-HUB-FL"
+        ],
+        "assets": [
+          "ASSET-DISC-PLACEHOLDER"
+        ],
+        "localFrameId": "FR-DISC-LOCAL",
+        "evidence": "ASSUMPTION",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-DISC-GEOMETRY"
+        ]
+      },
+      {
+        "partId": "PART-40-034",
+        "rp01Id": "PART-40-034",
+        "kind": "part",
+        "name": "卡钳体",
+        "partClass": "housing",
+        "familyRef": "FAM-130-036",
+        "rp01Parent": "ASSY-40-008",
+        "geometryBasis": "NEEDS_MEASUREMENT",
+        "defaultVariantId": "V-PART-40-034-DEMO",
+        "variants": [
+          "V-PART-40-034-DEMO"
+        ],
+        "materialRef": "MAT-CALIPER-AL",
+        "mounts": [],
+        "joints": [
+          "J-CALIPER-GUIDE-FL"
+        ],
+        "assets": [
+          "ASSET-CALIPER-PLACEHOLDER"
+        ],
+        "localFrameId": "FR-CALIPER-LOCAL",
+        "evidence": "ASSUMPTION",
+        "valueBasis": "OPEN",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-CALIPER-GEOMETRY"
+        ]
+      },
+      {
+        "partId": "PART-40-048",
+        "rp01Id": "PART-40-048",
+        "kind": "part",
+        "name": "卡钳支架",
+        "partClass": "structure",
+        "familyRef": null,
+        "rp01Parent": "ASSY-40-007",
+        "geometryBasis": "NEEDS_MEASUREMENT",
+        "defaultVariantId": "V-PART-40-048-DEMO",
+        "variants": [
+          "V-PART-40-048-DEMO"
+        ],
+        "materialRef": "MAT-BRACKET-STEEL",
+        "mounts": [
+          "MI-CALIPER-KNUCKLE-FL"
+        ],
+        "joints": [
+          "J-CALIPER-BRACKET-FL",
+          "J-CALIPER-GUIDE-FL"
+        ],
+        "assets": [],
+        "localFrameId": "FR-CALIPER-BRACKET-LOCAL",
+        "evidence": "ASSUMPTION",
+        "valueBasis": "OPEN",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-CALIPER-BRACKET"
+        ]
+      },
+      {
+        "partId": "PART-20-016",
+        "rp01Id": "PART-20-016",
+        "kind": "part",
+        "name": "转向节本体",
+        "partClass": "structure",
+        "familyRef": null,
+        "rp01Parent": "ASSY-20-004",
+        "geometryBasis": "NEEDS_MEASUREMENT",
+        "defaultVariantId": "V-PART-20-016-DEMO",
+        "variants": [
+          "V-PART-20-016-DEMO"
+        ],
+        "materialRef": "MAT-KNUCKLE-AL",
+        "mounts": [
+          "MI-CALIPER-KNUCKLE-FL"
+        ],
+        "joints": [
+          "J-HUB-BRG-FL",
+          "J-CALIPER-BRACKET-FL"
+        ],
+        "assets": [],
+        "localFrameId": "FR-KNUCKLE-LOCAL",
+        "evidence": "ASSUMPTION",
+        "valueBasis": "OPEN",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-KNUCKLE-GEOMETRY"
+        ]
+      },
+      {
+        "partId": "PART-30-031",
+        "rp01Id": "PART-30-031",
+        "kind": "part",
+        "name": "制动盘定位螺钉",
+        "partClass": "fastener",
+        "familyRef": "FAM-130-002",
+        "rp01Parent": "ASSY-30-001",
+        "geometryBasis": "DEMO_ASSUMPTION",
+        "defaultVariantId": "V-PART-30-031-DEMO",
+        "variants": [
+          "V-PART-30-031-DEMO"
+        ],
+        "materialRef": "MAT-STUD-STEEL",
+        "mounts": [],
+        "joints": [
+          "J-DISC-SCREW-FL"
+        ],
+        "assets": [],
+        "localFrameId": "FR-DISC-SCREW-LOCAL",
+        "evidence": "ASSUMPTION",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-DISC-SCREW"
+        ]
+      }
+    ],
+    "partVariants": [
+      {
+        "variantId": "V-PART-30-006-5X1143",
+        "partId": "PART-30-006",
+        "revision": "r001",
+        "parameters": {
+          "outerDiameterMm": {
+            "value": 148,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "thicknessMm": {
+            "value": 16,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "pcdMm": {
+            "value": 114.3,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "centerBoreMm": {
+            "value": 67.1,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "holeCount": {
+            "value": 5,
+            "unit": "count",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "boltHoleMm": {
+            "value": 14.5,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          }
+        },
+        "applicableVehicleVariants": [
+          "VV-A-SWB-STD"
+        ],
+        "evidence": "ASSUMPTION",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S35"
+        ],
+        "unknowns": [
+          "U-HUB-FLANGE-GEOMETRY"
+        ]
+      },
+      {
+        "variantId": "V-PART-30-009-DEMO",
+        "partId": "PART-30-009",
+        "revision": "r001",
+        "parameters": {
+          "thread": {
+            "value": null,
+            "unit": null,
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "nominalDiameterMm": {
+            "value": null,
+            "unit": "mm",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "seatType": {
+            "value": null,
+            "unit": null,
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "applicableVehicleVariants": [
+          "VV-A-SWB-STD"
+        ],
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-STUD-THREAD",
+          "U-STUD-GEOMETRY"
+        ]
+      },
+      {
+        "variantId": "V-PART-40-046-DEMO",
+        "partId": "PART-40-046",
+        "revision": "r001",
+        "parameters": {
+          "pcdMm": {
+            "value": 114.3,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "centerBoreMm": {
+            "value": 67.1,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "holeCount": {
+            "value": 5,
+            "unit": "count",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "outerDiameterMm": {
+            "value": null,
+            "unit": "mm",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "thicknessMm": {
+            "value": null,
+            "unit": "mm",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "boltHoleMm": {
+            "value": 14.5,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          }
+        },
+        "applicableVehicleVariants": [
+          "VV-A-SWB-STD"
+        ],
+        "evidence": "ASSUMPTION",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S35",
+          "S36"
+        ],
+        "unknowns": [
+          "U-DISC-GEOMETRY"
+        ]
+      },
+      {
+        "variantId": "V-PART-40-034-DEMO",
+        "partId": "PART-40-034",
+        "revision": "r001",
+        "parameters": {
+          "pistonCount": {
+            "value": null,
+            "unit": "count",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "mountingType": {
+            "value": null,
+            "unit": null,
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "applicableVehicleVariants": [
+          "VV-A-SWB-STD"
+        ],
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-CALIPER-GEOMETRY"
+        ]
+      },
+      {
+        "variantId": "V-PART-40-048-DEMO",
+        "partId": "PART-40-048",
+        "revision": "r001",
+        "parameters": {
+          "boltPattern": {
+            "value": null,
+            "unit": null,
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "applicableVehicleVariants": [
+          "VV-A-SWB-STD"
+        ],
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-CALIPER-BRACKET"
+        ]
+      },
+      {
+        "variantId": "V-PART-20-016-DEMO",
+        "partId": "PART-20-016",
+        "revision": "r001",
+        "parameters": {
+          "knuckleType": {
+            "value": "DOUBLE_WISHBONE",
+            "unit": null,
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S36"
+            ]
+          }
+        },
+        "applicableVehicleVariants": [
+          "VV-A-SWB-STD"
+        ],
+        "evidence": "ASSUMPTION",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-KNUCKLE-GEOMETRY"
+        ]
+      },
+      {
+        "variantId": "V-PART-30-031-DEMO",
+        "partId": "PART-30-031",
+        "revision": "r001",
+        "parameters": {
+          "thread": {
+            "value": null,
+            "unit": null,
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "applicableVehicleVariants": [
+          "VV-A-SWB-STD"
+        ],
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-DISC-SCREW"
+        ]
+      }
+    ],
+    "partRevisions": [
+      {
+        "revisionId": "PART-30-006@r001",
+        "partId": "PART-30-006",
+        "variantId": "V-PART-30-006-5X1143",
+        "revision": "r001",
+        "status": "DRAFT",
+        "createdAt": "2026-11-14",
+        "changeNote": "R-02 示例初版；非生产数据。",
+        "assetRef": "ASSET-FLANGE-DEMO",
+        "supersedes": null,
+        "supersededBy": null,
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "valueBasis": "DEMO_ASSUMPTION"
+      },
+      {
+        "revisionId": "PART-30-009@r001",
+        "partId": "PART-30-009",
+        "variantId": "V-PART-30-009-DEMO",
+        "revision": "r001",
+        "status": "DRAFT",
+        "createdAt": "2026-11-14",
+        "changeNote": "R-02 示例初版；非生产数据。",
+        "assetRef": "ASSET-STUD-PLACEHOLDER",
+        "supersedes": null,
+        "supersededBy": null,
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "valueBasis": "OPEN"
+      },
+      {
+        "revisionId": "PART-40-046@r001",
+        "partId": "PART-40-046",
+        "variantId": "V-PART-40-046-DEMO",
+        "revision": "r001",
+        "status": "DRAFT",
+        "createdAt": "2026-11-14",
+        "changeNote": "R-02 示例初版；非生产数据。",
+        "assetRef": "ASSET-DISC-PLACEHOLDER",
+        "supersedes": null,
+        "supersededBy": null,
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "valueBasis": "DEMO_ASSUMPTION"
+      },
+      {
+        "revisionId": "PART-40-034@r001",
+        "partId": "PART-40-034",
+        "variantId": "V-PART-40-034-DEMO",
+        "revision": "r001",
+        "status": "DRAFT",
+        "createdAt": "2026-11-14",
+        "changeNote": "R-02 示例初版；非生产数据。",
+        "assetRef": "ASSET-CALIPER-PLACEHOLDER",
+        "supersedes": null,
+        "supersededBy": null,
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "valueBasis": "OPEN"
+      },
+      {
+        "revisionId": "PART-40-048@r001",
+        "partId": "PART-40-048",
+        "variantId": "V-PART-40-048-DEMO",
+        "revision": "r001",
+        "status": "DRAFT",
+        "createdAt": "2026-11-14",
+        "changeNote": "R-02 示例初版；非生产数据。",
+        "assetRef": null,
+        "supersedes": null,
+        "supersededBy": null,
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "valueBasis": "OPEN"
+      },
+      {
+        "revisionId": "PART-20-016@r001",
+        "partId": "PART-20-016",
+        "variantId": "V-PART-20-016-DEMO",
+        "revision": "r001",
+        "status": "DRAFT",
+        "createdAt": "2026-11-14",
+        "changeNote": "R-02 示例初版；非生产数据。",
+        "assetRef": null,
+        "supersedes": null,
+        "supersededBy": null,
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "valueBasis": "OPEN"
+      },
+      {
+        "revisionId": "PART-30-031@r001",
+        "partId": "PART-30-031",
+        "variantId": "V-PART-30-031-DEMO",
+        "revision": "r001",
+        "status": "DRAFT",
+        "createdAt": "2026-11-14",
+        "changeNote": "R-02 示例初版；非生产数据。",
+        "assetRef": null,
+        "supersedes": null,
+        "supersededBy": null,
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "valueBasis": "DEMO_ASSUMPTION"
+      }
+    ],
+    "partInstances": [
+      {
+        "instanceId": "INST-HUB-FL",
+        "partRef": "PART-30-006@r001",
+        "variantId": "V-PART-30-006-5X1143",
+        "assemblyInstanceId": "ASM-HUB-BRG-FL",
+        "frameId": "FR-HUB-INST-FL",
+        "mountInterfaceIds": [
+          "MI-HUB-DISC-FL",
+          "MI-STUD-FLANGE-FL"
+        ],
+        "jointIds": [
+          "J-HUB-BRG-FL",
+          "J-DISC-HUB-FL"
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "unknowns": [
+          "U-HUB-FLANGE-GEOMETRY"
+        ]
+      },
+      {
+        "instanceId": "INST-STUD-FL-1",
+        "partRef": "PART-30-009@r001",
+        "variantId": "V-PART-30-009-DEMO",
+        "assemblyInstanceId": "ASM-HUB-BRG-FL",
+        "frameId": "FR-STUD-FL-1",
+        "patternIndex": 0,
+        "mountInterfaceIds": [
+          "MI-STUD-FLANGE-FL"
+        ],
+        "jointIds": [
+          "J-STUD-FLANGE-FL-1"
+        ],
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "unknowns": [
+          "U-STUD-THREAD",
+          "U-STUD-GEOMETRY"
+        ]
+      },
+      {
+        "instanceId": "INST-STUD-FL-2",
+        "partRef": "PART-30-009@r001",
+        "variantId": "V-PART-30-009-DEMO",
+        "assemblyInstanceId": "ASM-HUB-BRG-FL",
+        "frameId": "FR-STUD-FL-2",
+        "patternIndex": 1,
+        "mountInterfaceIds": [
+          "MI-STUD-FLANGE-FL"
+        ],
+        "jointIds": [
+          "J-STUD-FLANGE-FL-2"
+        ],
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "unknowns": [
+          "U-STUD-THREAD",
+          "U-STUD-GEOMETRY"
+        ]
+      },
+      {
+        "instanceId": "INST-STUD-FL-3",
+        "partRef": "PART-30-009@r001",
+        "variantId": "V-PART-30-009-DEMO",
+        "assemblyInstanceId": "ASM-HUB-BRG-FL",
+        "frameId": "FR-STUD-FL-3",
+        "patternIndex": 2,
+        "mountInterfaceIds": [
+          "MI-STUD-FLANGE-FL"
+        ],
+        "jointIds": [
+          "J-STUD-FLANGE-FL-3"
+        ],
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "unknowns": [
+          "U-STUD-THREAD",
+          "U-STUD-GEOMETRY"
+        ]
+      },
+      {
+        "instanceId": "INST-STUD-FL-4",
+        "partRef": "PART-30-009@r001",
+        "variantId": "V-PART-30-009-DEMO",
+        "assemblyInstanceId": "ASM-HUB-BRG-FL",
+        "frameId": "FR-STUD-FL-4",
+        "patternIndex": 3,
+        "mountInterfaceIds": [
+          "MI-STUD-FLANGE-FL"
+        ],
+        "jointIds": [
+          "J-STUD-FLANGE-FL-4"
+        ],
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "unknowns": [
+          "U-STUD-THREAD",
+          "U-STUD-GEOMETRY"
+        ]
+      },
+      {
+        "instanceId": "INST-STUD-FL-5",
+        "partRef": "PART-30-009@r001",
+        "variantId": "V-PART-30-009-DEMO",
+        "assemblyInstanceId": "ASM-HUB-BRG-FL",
+        "frameId": "FR-STUD-FL-5",
+        "patternIndex": 4,
+        "mountInterfaceIds": [
+          "MI-STUD-FLANGE-FL"
+        ],
+        "jointIds": [
+          "J-STUD-FLANGE-FL-5"
+        ],
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "unknowns": [
+          "U-STUD-THREAD",
+          "U-STUD-GEOMETRY"
+        ]
+      },
+      {
+        "instanceId": "INST-DISC-FL",
+        "partRef": "PART-40-046@r001",
+        "variantId": "V-PART-40-046-DEMO",
+        "assemblyInstanceId": "ASM-DISC-FL",
+        "frameId": "FR-DISC-INST-FL",
+        "refId": "REF-30-001",
+        "canonicalSystem": "SYS-40",
+        "mountInterfaceIds": [
+          "MI-HUB-DISC-FL"
+        ],
+        "jointIds": [
+          "J-DISC-HUB-FL",
+          "J-DISC-SCREW-FL"
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "unknowns": [
+          "U-DISC-GEOMETRY"
+        ]
+      },
+      {
+        "instanceId": "INST-CALIPER-FL",
+        "partRef": "PART-40-034@r001",
+        "variantId": "V-PART-40-034-DEMO",
+        "assemblyInstanceId": "ASM-CALIPER-FL",
+        "frameId": "FR-CALIPER-INST-FL",
+        "refId": "REF-30-002",
+        "canonicalSystem": "SYS-40",
+        "mountInterfaceIds": [],
+        "jointIds": [
+          "J-CALIPER-GUIDE-FL"
+        ],
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "unknowns": [
+          "U-CALIPER-GEOMETRY"
+        ]
+      },
+      {
+        "instanceId": "INST-CALIPER-BRACKET-FL",
+        "partRef": "PART-40-048@r001",
+        "variantId": "V-PART-40-048-DEMO",
+        "assemblyInstanceId": "ASM-CALIPER-FL",
+        "frameId": "FR-CALIPER-BRACKET-INST-FL",
+        "mountInterfaceIds": [
+          "MI-CALIPER-KNUCKLE-FL"
+        ],
+        "jointIds": [
+          "J-CALIPER-BRACKET-FL",
+          "J-CALIPER-GUIDE-FL"
+        ],
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "unknowns": [
+          "U-CALIPER-BRACKET"
+        ]
+      },
+      {
+        "instanceId": "INST-KNUCKLE-FL",
+        "partRef": "PART-20-016@r001",
+        "variantId": "V-PART-20-016-DEMO",
+        "assemblyInstanceId": "ASM-WHEEL-END-FL",
+        "frameId": "FR-KNUCKLE-INST-FL",
+        "refId": "REF-30-003",
+        "canonicalSystem": "SYS-20",
+        "mountInterfaceIds": [
+          "MI-CALIPER-KNUCKLE-FL"
+        ],
+        "jointIds": [
+          "J-HUB-BRG-FL",
+          "J-CALIPER-BRACKET-FL"
+        ],
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "unknowns": [
+          "U-KNUCKLE-GEOMETRY"
+        ]
+      },
+      {
+        "instanceId": "INST-DISC-SCREW-FL",
+        "partRef": "PART-30-031@r001",
+        "variantId": "V-PART-30-031-DEMO",
+        "assemblyInstanceId": "ASM-WHEEL-END-FL",
+        "frameId": "FR-DISC-SCREW-INST-FL",
+        "mountInterfaceIds": [],
+        "jointIds": [
+          "J-DISC-SCREW-FL"
+        ],
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "unknowns": [
+          "U-DISC-SCREW"
+        ]
+      }
+    ],
+    "assemblyDefinitions": [
+      {
+        "assemblyId": "ASSY-30-002",
+        "rp01Id": "ASSY-30-002",
+        "kind": "assembly",
+        "name": "轮毂轴承 Gen1（双列角接触球轴承+独立轮毂）",
+        "rp01Parent": "ASSY-30-001",
+        "revision": "r001",
+        "bomLineIds": [
+          "BL-30-002-FLANGE",
+          "BL-30-002-STUD"
+        ],
+        "geometryBasis": "NEEDS_MEASUREMENT",
+        "evidence": "EVIDENCE",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-BEARING-GEOMETRY"
+        ]
+      },
+      {
+        "assemblyId": "ASSY-30-001",
+        "rp01Id": "ASSY-30-001",
+        "kind": "assembly",
+        "name": "轮端总成（双叉臂前轮端深钻样例）",
+        "rp01Parent": "SUB-30-01",
+        "revision": "r001",
+        "bomLineIds": [
+          "BL-30-001-HUB",
+          "BL-30-001-DISC",
+          "BL-30-001-CALIPER",
+          "BL-30-001-KNUCKLE",
+          "BL-30-001-SCREW"
+        ],
+        "geometryBasis": "NEEDS_MEASUREMENT",
+        "evidence": "EVIDENCE",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-HUB-FLANGE-GEOMETRY"
+        ]
+      },
+      {
+        "assemblyId": "ASSY-40-009",
+        "rp01Id": "ASSY-40-009",
+        "kind": "assembly",
+        "name": "制动盘总成",
+        "rp01Parent": "ASSY-40-007",
+        "revision": "r001",
+        "bomLineIds": [
+          "BL-40-009-DISC"
+        ],
+        "geometryBasis": "NEEDS_MEASUREMENT",
+        "evidence": "EVIDENCE",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-DISC-GEOMETRY"
+        ]
+      },
+      {
+        "assemblyId": "ASSY-40-008",
+        "rp01Id": "ASSY-40-008",
+        "kind": "assembly",
+        "name": "卡钳总成",
+        "rp01Parent": "ASSY-40-007",
+        "revision": "r001",
+        "bomLineIds": [
+          "BL-40-008-CALIPER",
+          "BL-40-008-BRACKET"
+        ],
+        "geometryBasis": "NEEDS_MEASUREMENT",
+        "evidence": "EVIDENCE",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "fidelityClaim": "FID-V",
+        "verification": {
+          "status": "UNTESTED",
+          "reviewStatus": "NOT_REVIEWED",
+          "testRefs": []
+        },
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-CALIPER-GEOMETRY"
+        ]
+      }
+    ],
+    "assemblyInstances": [
+      {
+        "assemblyInstanceId": "ASM-WHEEL-END-FL",
+        "assemblyRef": "ASSY-30-001@r001",
+        "parentAssemblyInstanceId": null,
+        "frameId": "FR-WHEEL-END-FL",
+        "vehicleVariantId": "VV-A-SWB-STD",
+        "refId": null,
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "unknowns": [
+          "U-HUB-FLANGE-GEOMETRY"
+        ]
+      },
+      {
+        "assemblyInstanceId": "ASM-HUB-BRG-FL",
+        "assemblyRef": "ASSY-30-002@r001",
+        "parentAssemblyInstanceId": "ASM-WHEEL-END-FL",
+        "frameId": "FR-HUB-BRG-FL",
+        "vehicleVariantId": "VV-A-SWB-STD",
+        "refId": null,
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "unknowns": [
+          "U-BEARING-GEOMETRY"
+        ]
+      },
+      {
+        "assemblyInstanceId": "ASM-DISC-FL",
+        "assemblyRef": "ASSY-40-009@r001",
+        "parentAssemblyInstanceId": "ASM-WHEEL-END-FL",
+        "frameId": "FR-DISC-ASM-FL",
+        "vehicleVariantId": "VV-A-SWB-STD",
+        "refId": "REF-30-001",
+        "canonicalSystem": "SYS-40",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "unknowns": [
+          "U-DISC-GEOMETRY"
+        ]
+      },
+      {
+        "assemblyInstanceId": "ASM-CALIPER-FL",
+        "assemblyRef": "ASSY-40-008@r001",
+        "parentAssemblyInstanceId": "ASM-WHEEL-END-FL",
+        "frameId": "FR-CALIPER-ASM-FL",
+        "vehicleVariantId": "VV-A-SWB-STD",
+        "refId": "REF-30-002",
+        "canonicalSystem": "SYS-40",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "unknowns": [
+          "U-CALIPER-GEOMETRY"
+        ]
+      }
+    ],
+    "bomLines": [
+      {
+        "bomLineId": "BL-30-002-FLANGE",
+        "assemblyDefId": "ASSY-30-002",
+        "partRef": "PART-30-006@r001",
+        "qty": 1,
+        "instanceIds": [
+          "INST-HUB-FL"
+        ],
+        "optionality": "required",
+        "note": "轮毂法兰是轮端旋转件的核心。"
+      },
+      {
+        "bomLineId": "BL-30-002-STUD",
+        "assemblyDefId": "ASSY-30-002",
+        "partRef": "PART-30-009@r001",
+        "qty": 5,
+        "instanceIds": [
+          "INST-STUD-FL-1",
+          "INST-STUD-FL-2",
+          "INST-STUD-FL-3",
+          "INST-STUD-FL-4",
+          "INST-STUD-FL-5"
+        ],
+        "optionality": "required",
+        "note": "5 个实例共享同一 partRef，各有独立 Frame。"
+      },
+      {
+        "bomLineId": "BL-30-001-HUB",
+        "assemblyDefId": "ASSY-30-001",
+        "assemblyRef": "ASSY-30-002@r001",
+        "qty": 1,
+        "instanceIds": [
+          "ASM-HUB-BRG-FL"
+        ],
+        "optionality": "required"
+      },
+      {
+        "bomLineId": "BL-30-001-DISC",
+        "assemblyDefId": "ASSY-30-001",
+        "refId": "REF-30-001",
+        "refTarget": "ASSY-40-009@r001",
+        "qty": 1,
+        "instanceIds": [
+          "ASM-DISC-FL"
+        ],
+        "optionality": "required",
+        "canonicalSystem": "SYS-40",
+        "note": "跨系统引用，不复制 SYS-40 实体。"
+      },
+      {
+        "bomLineId": "BL-30-001-CALIPER",
+        "assemblyDefId": "ASSY-30-001",
+        "refId": "REF-30-002",
+        "refTarget": "ASSY-40-008@r001",
+        "qty": 1,
+        "instanceIds": [
+          "ASM-CALIPER-FL"
+        ],
+        "optionality": "required",
+        "canonicalSystem": "SYS-40",
+        "note": "跨系统引用，不复制 SYS-40 实体。"
+      },
+      {
+        "bomLineId": "BL-30-001-KNUCKLE",
+        "assemblyDefId": "ASSY-30-001",
+        "refId": "REF-30-003",
+        "refTarget": "PART-20-016@r001",
+        "qty": 1,
+        "instanceIds": [
+          "INST-KNUCKLE-FL"
+        ],
+        "optionality": "required",
+        "canonicalSystem": "SYS-20",
+        "note": "转向节规范实体属 SYS-20。"
+      },
+      {
+        "bomLineId": "BL-30-001-SCREW",
+        "assemblyDefId": "ASSY-30-001",
+        "partRef": "PART-30-031@r001",
+        "qty": 1,
+        "instanceIds": [
+          "INST-DISC-SCREW-FL"
+        ],
+        "optionality": "required"
+      },
+      {
+        "bomLineId": "BL-40-009-DISC",
+        "assemblyDefId": "ASSY-40-009",
+        "partRef": "PART-40-046@r001",
+        "qty": 1,
+        "instanceIds": [
+          "INST-DISC-FL"
+        ],
+        "optionality": "required"
+      },
+      {
+        "bomLineId": "BL-40-008-CALIPER",
+        "assemblyDefId": "ASSY-40-008",
+        "partRef": "PART-40-034@r001",
+        "qty": 1,
+        "instanceIds": [
+          "INST-CALIPER-FL"
+        ],
+        "optionality": "required"
+      },
+      {
+        "bomLineId": "BL-40-008-BRACKET",
+        "assemblyDefId": "ASSY-40-008",
+        "partRef": "PART-40-048@r001",
+        "qty": 1,
+        "instanceIds": [
+          "INST-CALIPER-BRACKET-FL"
+        ],
+        "optionality": "required"
+      }
+    ],
+    "mountInterfaces": [
+      {
+        "mountId": "MI-HUB-DISC-FL",
+        "type": "HUB_PILOTED_BOLTED",
+        "frameA": "FR-HUB-INST-FL",
+        "frameB": "FR-DISC-INST-FL",
+        "pilot": {
+          "diameterMm": {
+            "value": 67.1,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "fit": {
+            "value": null,
+            "unit": null,
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "face": {
+          "normalRuntime": [
+            1,
+            0,
+            0
+          ],
+          "flatnessMm": {
+            "value": null,
+            "unit": "mm",
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "fastenerPattern": {
+          "count": {
+            "value": 5,
+            "unit": "count",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "pcdMm": {
+            "value": 114.3,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "boltHoleMm": {
+            "value": 14.5,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S35"
+            ]
+          },
+          "thread": {
+            "value": null,
+            "unit": null,
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "torqueNm": {
+            "value": null,
+            "unit": "N*m",
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "tolerance": {
+          "positionMm": 0.05,
+          "angularDeg": 0.1
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "sources": [
+          "S35",
+          "S36"
+        ],
+        "unknowns": [
+          "U-STUD-THREAD",
+          "U-BRAKE-TORQUE"
+        ]
+      },
+      {
+        "mountId": "MI-STUD-FLANGE-FL",
+        "type": "PRESS_FIT_SPLINE",
+        "frameA": "FR-HUB-INST-FL",
+        "frameB": "FR-STUD-FL-1",
+        "pattern": {
+          "count": 5,
+          "pcdMm": 114.3,
+          "frameIds": [
+            "FR-STUD-FL-1",
+            "FR-STUD-FL-2",
+            "FR-STUD-FL-3",
+            "FR-STUD-FL-4",
+            "FR-STUD-FL-5"
+          ],
+          "matingFrameId": "FR-HUB-INST-FL"
+        },
+        "holeDiameterMm": {
+          "value": 14.5,
+          "unit": "mm",
+          "valueBasis": "DEMO_ASSUMPTION",
+          "sources": [
+            "S35"
+          ]
+        },
+        "interferenceMm": {
+          "value": null,
+          "unit": "mm",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "preloadN": {
+          "value": null,
+          "unit": "N",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "tolerance": {
+          "positionMm": 0.05,
+          "angularDeg": 0.2
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      },
+      {
+        "mountId": "MI-CALIPER-KNUCKLE-FL",
+        "type": "BOLTED_CLAMPED",
+        "frameA": "FR-CALIPER-BRACKET-INST-FL",
+        "frameB": "FR-KNUCKLE-CALIPER-MOUNT-FL",
+        "fastenerPattern": {
+          "count": {
+            "value": null,
+            "unit": "count",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "pcdMm": {
+            "value": null,
+            "unit": "mm",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "boltHoleMm": {
+            "value": null,
+            "unit": "mm",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "thread": {
+            "value": null,
+            "unit": null,
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "torqueNm": {
+            "value": null,
+            "unit": "N*m",
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "tolerance": {
+          "positionMm": 0.1,
+          "angularDeg": 0.2
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-CALIPER-BRACKET"
+        ]
+      },
+      {
+        "mountId": "MI-STUD-FLANGE-FL-1",
+        "type": "PRESS_FIT_SPLINE",
+        "frameA": "FR-STUD-FL-1",
+        "frameB": "FR-HUB-INST-FL",
+        "holeDiameterMm": {
+          "value": 14.5,
+          "unit": "mm",
+          "valueBasis": "DEMO_ASSUMPTION",
+          "sources": [
+            "S35"
+          ]
+        },
+        "interferenceMm": {
+          "value": null,
+          "unit": "mm",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "preloadN": {
+          "value": null,
+          "unit": "N",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "tolerance": {
+          "positionMm": 0.05,
+          "angularDeg": 0.2
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      },
+      {
+        "mountId": "MI-STUD-FLANGE-FL-2",
+        "type": "PRESS_FIT_SPLINE",
+        "frameA": "FR-STUD-FL-2",
+        "frameB": "FR-HUB-INST-FL",
+        "holeDiameterMm": {
+          "value": 14.5,
+          "unit": "mm",
+          "valueBasis": "DEMO_ASSUMPTION",
+          "sources": [
+            "S35"
+          ]
+        },
+        "interferenceMm": {
+          "value": null,
+          "unit": "mm",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "preloadN": {
+          "value": null,
+          "unit": "N",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "tolerance": {
+          "positionMm": 0.05,
+          "angularDeg": 0.2
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      },
+      {
+        "mountId": "MI-STUD-FLANGE-FL-3",
+        "type": "PRESS_FIT_SPLINE",
+        "frameA": "FR-STUD-FL-3",
+        "frameB": "FR-HUB-INST-FL",
+        "holeDiameterMm": {
+          "value": 14.5,
+          "unit": "mm",
+          "valueBasis": "DEMO_ASSUMPTION",
+          "sources": [
+            "S35"
+          ]
+        },
+        "interferenceMm": {
+          "value": null,
+          "unit": "mm",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "preloadN": {
+          "value": null,
+          "unit": "N",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "tolerance": {
+          "positionMm": 0.05,
+          "angularDeg": 0.2
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      },
+      {
+        "mountId": "MI-STUD-FLANGE-FL-4",
+        "type": "PRESS_FIT_SPLINE",
+        "frameA": "FR-STUD-FL-4",
+        "frameB": "FR-HUB-INST-FL",
+        "holeDiameterMm": {
+          "value": 14.5,
+          "unit": "mm",
+          "valueBasis": "DEMO_ASSUMPTION",
+          "sources": [
+            "S35"
+          ]
+        },
+        "interferenceMm": {
+          "value": null,
+          "unit": "mm",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "preloadN": {
+          "value": null,
+          "unit": "N",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "tolerance": {
+          "positionMm": 0.05,
+          "angularDeg": 0.2
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      },
+      {
+        "mountId": "MI-STUD-FLANGE-FL-5",
+        "type": "PRESS_FIT_SPLINE",
+        "frameA": "FR-STUD-FL-5",
+        "frameB": "FR-HUB-INST-FL",
+        "holeDiameterMm": {
+          "value": 14.5,
+          "unit": "mm",
+          "valueBasis": "DEMO_ASSUMPTION",
+          "sources": [
+            "S35"
+          ]
+        },
+        "interferenceMm": {
+          "value": null,
+          "unit": "mm",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "preloadN": {
+          "value": null,
+          "unit": "N",
+          "valueBasis": "OPEN",
+          "sources": []
+        },
+        "tolerance": {
+          "positionMm": 0.05,
+          "angularDeg": 0.2
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      }
+    ],
+    "joints": [
+      {
+        "jointId": "J-HUB-BRG-FL",
+        "type": "REVOLUTE",
+        "frameA": "FR-HUB-AXIS-FL",
+        "frameB": "FR-KNUCKLE-AXIS-FL",
+        "axisA": [
+          1,
+          0,
+          0
+        ],
+        "axisB": [
+          1,
+          0,
+          0
+        ],
+        "limits": null,
+        "zeroPose": {
+          "angleRad": 0
+        },
+        "adapterHints": {
+          "build123d": "RevoluteJoint",
+          "cannon": "HingeConstraint"
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "sources": [
+          "S36",
+          "S39"
+        ],
+        "unknowns": [
+          "U-BEARING-PRELOAD"
+        ]
+      },
+      {
+        "jointId": "J-DISC-HUB-FL",
+        "type": "FIXED",
+        "frameA": "FR-DISC-AXIS-FL",
+        "frameB": "FR-HUB-AXIS-FL",
+        "axisA": null,
+        "axisB": null,
+        "limits": null,
+        "zeroPose": {
+          "angleRad": 0,
+          "displacementM": 0
+        },
+        "adapterHints": {
+          "build123d": "FixedJoint",
+          "cannon": "LockConstraint"
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "sources": [
+          "S36",
+          "S39"
+        ],
+        "unknowns": [
+          "U-BRAKE-TORQUE"
+        ]
+      },
+      {
+        "jointId": "J-CALIPER-BRACKET-FL",
+        "type": "FIXED",
+        "frameA": "FR-CALIPER-BRACKET-AXIS-FL",
+        "frameB": "FR-KNUCKLE-AXIS-FL",
+        "axisA": null,
+        "axisB": null,
+        "limits": null,
+        "zeroPose": {
+          "angleRad": 0,
+          "displacementM": 0
+        },
+        "adapterHints": {
+          "build123d": "FixedJoint",
+          "cannon": "LockConstraint"
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36",
+          "S39"
+        ],
+        "unknowns": [
+          "U-CALIPER-BRACKET"
+        ]
+      },
+      {
+        "jointId": "J-CALIPER-GUIDE-FL",
+        "type": "PRISMATIC",
+        "frameA": "FR-CALIPER-GUIDE-A-FL",
+        "frameB": "FR-CALIPER-GUIDE-B-FL",
+        "axisA": [
+          1,
+          0,
+          0
+        ],
+        "axisB": [
+          1,
+          0,
+          0
+        ],
+        "limits": null,
+        "zeroPose": {
+          "displacementM": 0
+        },
+        "adapterHints": {
+          "build123d": "LinearJoint",
+          "cannon": "---"
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36",
+          "S39"
+        ],
+        "unknowns": [
+          "U-CALIPER-GUIDE-TRAVEL"
+        ]
+      },
+      {
+        "jointId": "J-DISC-SCREW-FL",
+        "type": "FIXED",
+        "frameA": "FR-DISC-SCREW-INST-FL",
+        "frameB": "FR-DISC-INST-FL",
+        "axisA": null,
+        "axisB": null,
+        "limits": null,
+        "zeroPose": {
+          "angleRad": 0,
+          "displacementM": 0
+        },
+        "adapterHints": {
+          "build123d": "FixedJoint",
+          "cannon": "LockConstraint"
+        },
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "sources": [
+          "S36",
+          "S39"
+        ],
+        "unknowns": [
+          "U-DISC-SCREW"
+        ]
+      },
+      {
+        "jointId": "J-STUD-FLANGE-FL-1",
+        "type": "FIXED",
+        "frameA": "FR-STUD-FL-1",
+        "frameB": "FR-HUB-INST-FL",
+        "axisA": null,
+        "axisB": null,
+        "limits": null,
+        "zeroPose": {
+          "angleRad": 0,
+          "displacementM": 0
+        },
+        "adapterHints": {
+          "build123d": "FixedJoint",
+          "cannon": "LockConstraint"
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36",
+          "S39"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      },
+      {
+        "jointId": "J-STUD-FLANGE-FL-2",
+        "type": "FIXED",
+        "frameA": "FR-STUD-FL-2",
+        "frameB": "FR-HUB-INST-FL",
+        "axisA": null,
+        "axisB": null,
+        "limits": null,
+        "zeroPose": {
+          "angleRad": 0,
+          "displacementM": 0
+        },
+        "adapterHints": {
+          "build123d": "FixedJoint",
+          "cannon": "LockConstraint"
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36",
+          "S39"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      },
+      {
+        "jointId": "J-STUD-FLANGE-FL-3",
+        "type": "FIXED",
+        "frameA": "FR-STUD-FL-3",
+        "frameB": "FR-HUB-INST-FL",
+        "axisA": null,
+        "axisB": null,
+        "limits": null,
+        "zeroPose": {
+          "angleRad": 0,
+          "displacementM": 0
+        },
+        "adapterHints": {
+          "build123d": "FixedJoint",
+          "cannon": "LockConstraint"
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36",
+          "S39"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      },
+      {
+        "jointId": "J-STUD-FLANGE-FL-4",
+        "type": "FIXED",
+        "frameA": "FR-STUD-FL-4",
+        "frameB": "FR-HUB-INST-FL",
+        "axisA": null,
+        "axisB": null,
+        "limits": null,
+        "zeroPose": {
+          "angleRad": 0,
+          "displacementM": 0
+        },
+        "adapterHints": {
+          "build123d": "FixedJoint",
+          "cannon": "LockConstraint"
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36",
+          "S39"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      },
+      {
+        "jointId": "J-STUD-FLANGE-FL-5",
+        "type": "FIXED",
+        "frameA": "FR-STUD-FL-5",
+        "frameB": "FR-HUB-INST-FL",
+        "axisA": null,
+        "axisB": null,
+        "limits": null,
+        "zeroPose": {
+          "angleRad": 0,
+          "displacementM": 0
+        },
+        "adapterHints": {
+          "build123d": "FixedJoint",
+          "cannon": "LockConstraint"
+        },
+        "valueBasis": "OPEN",
+        "evidence": "OPEN",
+        "sources": [
+          "S36",
+          "S39"
+        ],
+        "unknowns": [
+          "U-STUD-PRESS-FIT"
+        ]
+      }
+    ],
+    "materials": [
+      {
+        "materialId": "MAT-HUB-AL",
+        "name": "铝合金轮毂（演示占位）",
+        "standardRef": null,
+        "properties": {
+          "densityKgM3": {
+            "value": null,
+            "unit": "kg/m^3",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "youngsModulusPa": {
+            "value": null,
+            "unit": "Pa",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "poisson": {
+            "value": null,
+            "unit": "1",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "yieldStrengthPa": {
+            "value": null,
+            "unit": "Pa",
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-HUB-MATERIAL"
+        ]
+      },
+      {
+        "materialId": "MAT-STUD-STEEL",
+        "name": "车轮螺柱钢（演示占位）",
+        "standardRef": null,
+        "properties": {
+          "densityKgM3": {
+            "value": null,
+            "unit": "kg/m^3",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "youngsModulusPa": {
+            "value": null,
+            "unit": "Pa",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "poisson": {
+            "value": null,
+            "unit": "1",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "yieldStrengthPa": {
+            "value": null,
+            "unit": "Pa",
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-STUD-MATERIAL"
+        ]
+      },
+      {
+        "materialId": "MAT-DISC-CI",
+        "name": "铸铁制动盘（演示占位）",
+        "standardRef": null,
+        "properties": {
+          "densityKgM3": {
+            "value": null,
+            "unit": "kg/m^3",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "youngsModulusPa": {
+            "value": null,
+            "unit": "Pa",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "poisson": {
+            "value": null,
+            "unit": "1",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "yieldStrengthPa": {
+            "value": null,
+            "unit": "Pa",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "specificHeatJkgK": {
+            "value": null,
+            "unit": "J/(kg*K)",
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-DISC-MATERIAL"
+        ]
+      },
+      {
+        "materialId": "MAT-CALIPER-AL",
+        "name": "铝合金卡钳体（演示占位）",
+        "standardRef": null,
+        "properties": {
+          "densityKgM3": {
+            "value": null,
+            "unit": "kg/m^3",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "youngsModulusPa": {
+            "value": null,
+            "unit": "Pa",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "poisson": {
+            "value": null,
+            "unit": "1",
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-CALIPER-MATERIAL"
+        ]
+      },
+      {
+        "materialId": "MAT-BRACKET-STEEL",
+        "name": "卡钳支架钢（演示占位）",
+        "standardRef": null,
+        "properties": {
+          "densityKgM3": {
+            "value": null,
+            "unit": "kg/m^3",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "youngsModulusPa": {
+            "value": null,
+            "unit": "Pa",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "poisson": {
+            "value": null,
+            "unit": "1",
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-BRACKET-MATERIAL"
+        ]
+      },
+      {
+        "materialId": "MAT-KNUCKLE-AL",
+        "name": "铝合金转向节（演示占位）",
+        "standardRef": null,
+        "properties": {
+          "densityKgM3": {
+            "value": null,
+            "unit": "kg/m^3",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "youngsModulusPa": {
+            "value": null,
+            "unit": "Pa",
+            "valueBasis": "OPEN",
+            "sources": []
+          },
+          "poisson": {
+            "value": null,
+            "unit": "1",
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        },
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-KNUCKLE-MATERIAL"
+        ]
+      }
+    ],
+    "assets": [
+      {
+        "assetId": "ASSET-FLANGE-DEMO",
+        "partRef": "PART-30-006@r001",
+        "mappingStatus": "DEMO_SUBSTITUTE",
+        "sourceUnits": "mm",
+        "fidelityClaim": "FID-G",
+        "step": {
+          "path": "cad/experiments/hello_flange/out/hello_flange.step",
+          "sha256": "127801b183d2a6fa043655f0a683d119dcc56d89de4545051bc47c68b4a1d316",
+          "bytes": 28713
+        },
+        "stl": {
+          "path": "cad/experiments/hello_flange/out/hello_flange.stl",
+          "sha256": "93d86f2cb2e47cf6b3dce6591852d6e30fa7612cab68215453bd574a57ee255a",
+          "bytes": 177484
+        },
+        "glb": {
+          "path": "cad/experiments/hello_flange/out/hello_flange.glb",
+          "sha256": "5531dc243cb9c6b08b96db6a27edc38f2ed04c69ebccd63bc5b19d0c224bc546",
+          "bytes": 151940
+        },
+        "transform": {
+          "fromAssetFrame": "FR-CAD-MM",
+          "toPartFrame": "FR-HUB-LOCAL",
+          "unitScale": 0.001,
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "generator": {
+          "tool": "build123d",
+          "version": "0.13.0",
+          "script": "cad/experiments/hello_flange/model.py",
+          "params": "cad/experiments/hello_flange/params.json"
+        },
+        "knownLosses": [
+          "STL 不保留装配层级/材料/工程公差",
+          "GLB 不保留 B-rep/精确孔轴配合",
+          "该法兰是演示替代件，不是 PART-30-006 的真实几何"
+        ],
+        "bboxMm": [
+          148,
+          148,
+          16
+        ],
+        "evidence": "ASSUMPTION",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "sources": [
+          "S35",
+          "S39",
+          "S40",
+          "S42"
+        ],
+        "unknowns": [
+          "U-HUB-FLANGE-GEOMETRY"
+        ]
+      },
+      {
+        "assetId": "ASSET-STUD-PLACEHOLDER",
+        "partRef": "PART-30-009@r001",
+        "mappingStatus": "PLACEHOLDER",
+        "sourceUnits": "mm",
+        "fidelityClaim": "FID-V",
+        "step": null,
+        "stl": null,
+        "glb": null,
+        "transform": null,
+        "generator": null,
+        "knownLosses": [
+          "无几何资产；不得据此生成 CAD 或质量属性"
+        ],
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-STUD-GEOMETRY"
+        ]
+      },
+      {
+        "assetId": "ASSET-DISC-PLACEHOLDER",
+        "partRef": "PART-40-046@r001",
+        "mappingStatus": "PLACEHOLDER",
+        "sourceUnits": "mm",
+        "fidelityClaim": "FID-V",
+        "step": null,
+        "stl": null,
+        "glb": null,
+        "transform": null,
+        "generator": null,
+        "knownLosses": [
+          "无几何资产；不得据此生成 CAD 或热质量"
+        ],
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-DISC-GEOMETRY"
+        ]
+      },
+      {
+        "assetId": "ASSET-CALIPER-PLACEHOLDER",
+        "partRef": "PART-40-034@r001",
+        "mappingStatus": "PLACEHOLDER",
+        "sourceUnits": "mm",
+        "fidelityClaim": "FID-V",
+        "step": null,
+        "stl": null,
+        "glb": null,
+        "transform": null,
+        "generator": null,
+        "knownLosses": [
+          "无几何资产；不得据此生成 CAD 或活塞面积"
+        ],
+        "evidence": "OPEN",
+        "valueBasis": "OPEN",
+        "sources": [],
+        "unknowns": [
+          "U-CALIPER-GEOMETRY"
+        ]
+      }
+    ],
+    "vehicleVariants": [
+      {
+        "vehicleVariantId": "VV-A-SWB-STD",
+        "name": "短轴标准轮距越野版（R-01 演示变体）",
+        "platformFamilyRef": "PF-DEMO-BOF-01",
+        "architectureRef": "ARCH-BOF",
+        "powertrainRef": "ICE",
+        "parameters": {
+          "PD-WB": {
+            "value": 2460,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S34"
+            ]
+          },
+          "PD-FT": {
+            "value": 1680,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S34"
+            ]
+          },
+          "PD-RT": {
+            "value": 1680,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S34"
+            ]
+          },
+          "PD-TW": {
+            "value": 235,
+            "unit": "mm",
+            "valueBasis": "DEMO_ASSUMPTION",
+            "sources": [
+              "S34"
+            ]
+          }
+        },
+        "moduleSelections": {
+          "MS-FSUSP": "DWB-STD",
+          "MS-RSUSP": "SOLID-AXLE-STD",
+          "MS-STEER-LINK": "TIE-ROD-STD",
+          "MS-POWER": "ICE-INLINE4"
+        },
+        "fixedHardpointRefs": [
+          "FH-01",
+          "FH-02",
+          "FH-03",
+          "FH-04",
+          "FH-05"
+        ],
+        "derivedDimensions": {
+          "halfWheelbaseMm": {
+            "value": 1230,
+            "unit": "mm",
+            "valueBasis": "DERIVED",
+            "sources": [
+              "S34"
+            ]
+          },
+          "halfTrackMm": {
+            "value": 840,
+            "unit": "mm",
+            "valueBasis": "DERIVED",
+            "sources": [
+              "S34"
+            ]
+          }
+        },
+        "status": "PROPOSED_NOT_APPROVED",
+        "valueBasis": "DEMO_ASSUMPTION",
+        "evidence": "ASSUMPTION",
+        "sources": [
+          "S34"
+        ],
+        "unknowns": [
+          "U-R01-FAMILY-LINK"
+        ],
+        "alignmentNote": "R-01 当前 vehicleVariants 没有显式 platformFamilyRef 字段；本文件按提案补上，不能当作 R-01 已冻结字段。"
+      }
+    ]
+  },
+  "validationCases": [
+    {
+      "caseId": "TC-01",
+      "title": "基础示例应无结构错误；OPEN/ASSUMPTION 只产生警告",
+      "op": "validate",
+      "patch": [],
+      "expect": {
+        "ok": true,
+        "codesInclude": [],
+        "warningsInclude": [
+          "DC-W001"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-02",
+      "title": "空 partId 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "partDefinitions",
+          "id": "PART-30-006",
+          "path": "partId",
+          "value": ""
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E001"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-03",
+      "title": "重复 instanceId 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "partInstances",
+          "id": "INST-STUD-FL-2",
+          "path": "instanceId",
+          "value": "INST-STUD-FL-1"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E004"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-04",
+      "title": "无法解析的 part revision 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "partInstances",
+          "id": "INST-HUB-FL",
+          "path": "partRef",
+          "value": "PART-30-006@r999"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E003"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-05",
+      "title": "制动盘 PCD 与轮毂不一致应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "partVariants",
+          "id": "V-PART-40-046-DEMO",
+          "path": "parameters.pcdMm.value",
+          "value": 112
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E030"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-06",
+      "title": "制动盘孔数 4 与轮毂 5 不一致应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "partVariants",
+          "id": "V-PART-40-046-DEMO",
+          "path": "parameters.holeCount.value",
+          "value": 4
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E031"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-07",
+      "title": "制动盘中心孔 66.6 与轮毂 67.1 不一致应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "partVariants",
+          "id": "V-PART-40-046-DEMO",
+          "path": "parameters.centerBoreMm.value",
+          "value": 66.6
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E032"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-08",
+      "title": "实例 Frame 误用 mm 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "frames",
+          "id": "FR-HUB-INST-FL",
+          "path": "units",
+          "value": "mm"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E022"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-09",
+      "title": "Joint 轴 [2,0,0] 未归一化应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "joints",
+          "id": "J-HUB-BRG-FL",
+          "path": "axisA",
+          "value": [
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E023"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-10",
+      "title": "Joint 限位 min>max 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "joints",
+          "id": "J-CALIPER-GUIDE-FL",
+          "path": "limits",
+          "value": {
+            "min": 0.02,
+            "max": 0.01,
+            "unit": "m"
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E041"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-11",
+      "title": "隐式镜像（旋转行列式 -1 且无 mirror 规则）应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "frames",
+          "id": "FR-STUD-FL-1",
+          "path": "rotation.value",
+          "value": [
+            [
+              -1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E024"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-12",
+      "title": "familyRef 指向非 family 节点应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "partDefinitions",
+          "id": "PART-30-009",
+          "path": "familyRef",
+          "value": "PART-30-001"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E006"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-13",
+      "title": "BOM qty=4 但 5 个实例应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "bomLines",
+          "id": "BL-30-002-STUD",
+          "path": "qty",
+          "value": 4
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E008"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-14",
+      "title": "Asset STEP hash 不匹配应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "assets",
+          "id": "ASSET-FLANGE-DEMO",
+          "path": "step.sha256",
+          "value": "deadbeef"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E051"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-15",
+      "title": "Asset 缺少 sourceUnits 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "assets",
+          "id": "ASSET-FLANGE-DEMO",
+          "path": "sourceUnits",
+          "value": null
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E050"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-16",
+      "title": "SOURCED 数值无来源应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "partVariants",
+          "id": "V-PART-30-006-5X1143",
+          "path": "parameters.pcdMm.valueBasis",
+          "value": "SOURCED"
+        },
+        {
+          "op": "set",
+          "entity": "partVariants",
+          "id": "V-PART-30-006-5X1143",
+          "path": "parameters.pcdMm.sources",
+          "value": []
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E061"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-17",
+      "title": "OPEN 数值必须为 null 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "partVariants",
+          "id": "V-PART-40-046-DEMO",
+          "path": "parameters.outerDiameterMm",
+          "value": {
+            "value": 300,
+            "unit": "mm",
+            "valueBasis": "OPEN",
+            "sources": []
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E062"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-18",
+      "title": "车型变体缺少 PD-WB 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "vehicleVariants",
+          "id": "VV-A-SWB-STD",
+          "path": "parameters",
+          "value": {
+            "PD-FT": {
+              "value": 1680,
+              "unit": "mm",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sources": [
+                "S34"
+              ]
+            }
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E071"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-19",
+      "title": "车型变体使用 globalScale 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "vehicleVariants",
+          "id": "VV-A-SWB-STD",
+          "path": "globalScale",
+          "value": 1.05
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E073"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-20",
+      "title": "verification PASS 但没有 testRefs 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "set",
+          "entity": "partRevisions",
+          "id": "PART-30-006@r001",
+          "path": "verification",
+          "value": {
+            "status": "PASS",
+            "reviewStatus": "NOT_REVIEWED",
+            "testRefs": []
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "DC-E064"
+        ]
+      }
+    }
+  ],
+  "invalidExamples": [
+    {
+      "exampleId": "INVALID-PCD",
+      "description": "制动盘 PCD 112.0 与轮毂 114.3 不匹配",
+      "document": {
+        "schemaVersion": "carlab.data-contract/0.1.0-proposal",
+        "status": "PROPOSAL",
+        "unitPolicy": {
+          "cad": "mm",
+          "simulation": "m"
+        },
+        "coordinatePolicy": {
+          "runtimeWorld": "FR-VEHICLE"
+        },
+        "idPolicy": {
+          "rule": "RP-01"
+        },
+        "entities": {
+          "frames": [
+            {
+              "frameId": "FR-VEHICLE",
+              "frameKind": "WORLD",
+              "parentFrameId": null,
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-HUB-LOCAL",
+              "frameKind": "PART_LOCAL",
+              "parentFrameId": null,
+              "units": "mm",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-DISC-LOCAL",
+              "frameKind": "PART_LOCAL",
+              "parentFrameId": null,
+              "units": "mm",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-ASM",
+              "frameKind": "ASSEMBLY",
+              "parentFrameId": "FR-VEHICLE",
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-HUB-INST",
+              "frameKind": "INSTANCE",
+              "parentFrameId": "FR-ASM",
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    0,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sourceFrameId": "FR-HUB-LOCAL",
+              "unitScale": 0.001,
+              "instanceId": "INST-HUB"
+            },
+            {
+              "frameId": "FR-DISC-INST",
+              "frameKind": "INSTANCE",
+              "parentFrameId": "FR-ASM",
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    0,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sourceFrameId": "FR-DISC-LOCAL",
+              "unitScale": 0.001,
+              "instanceId": "INST-DISC"
+            }
+          ],
+          "partFamilies": [],
+          "partDefinitions": [
+            {
+              "partId": "PART-HUB",
+              "kind": "part",
+              "name": "hub",
+              "partClass": "rotating",
+              "familyRef": null,
+              "geometryBasis": "NEEDS_MEASUREMENT",
+              "defaultVariantId": "V-HUB",
+              "variants": [
+                "V-HUB"
+              ],
+              "materialRef": null,
+              "mounts": [
+                "MI-HUB-DISC"
+              ],
+              "joints": [],
+              "assets": [],
+              "localFrameId": "FR-HUB-LOCAL",
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "sources": [],
+              "unknowns": []
+            },
+            {
+              "partId": "PART-DISC",
+              "kind": "part",
+              "name": "disc",
+              "partClass": "friction",
+              "familyRef": null,
+              "geometryBasis": "NEEDS_MEASUREMENT",
+              "defaultVariantId": "V-DISC",
+              "variants": [
+                "V-DISC"
+              ],
+              "materialRef": null,
+              "mounts": [
+                "MI-HUB-DISC"
+              ],
+              "joints": [],
+              "assets": [],
+              "localFrameId": "FR-DISC-LOCAL",
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "partVariants": [
+            {
+              "variantId": "V-HUB",
+              "partId": "PART-HUB",
+              "revision": "r001",
+              "parameters": {
+                "pcdMm": {
+                  "value": 114.3,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "holeCount": {
+                  "value": 5,
+                  "unit": "count",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "centerBoreMm": {
+                  "value": 67.1,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "boltHoleMm": {
+                  "value": 14.5,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                }
+              },
+              "applicableVehicleVariants": [],
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sources": [],
+              "unknowns": []
+            },
+            {
+              "variantId": "V-DISC",
+              "partId": "PART-DISC",
+              "revision": "r001",
+              "parameters": {
+                "pcdMm": {
+                  "value": 112,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "holeCount": {
+                  "value": 5,
+                  "unit": "count",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "centerBoreMm": {
+                  "value": 67.1,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "boltHoleMm": {
+                  "value": 14.5,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                }
+              },
+              "applicableVehicleVariants": [],
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "partRevisions": [
+            {
+              "revisionId": "PART-HUB@r001",
+              "partId": "PART-HUB",
+              "variantId": "V-HUB",
+              "revision": "r001",
+              "status": "DRAFT",
+              "createdAt": "2026-11-14",
+              "changeNote": "minimal",
+              "assetRef": null,
+              "supersedes": null,
+              "supersededBy": null,
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "revisionId": "PART-DISC@r001",
+              "partId": "PART-DISC",
+              "variantId": "V-DISC",
+              "revision": "r001",
+              "status": "DRAFT",
+              "createdAt": "2026-11-14",
+              "changeNote": "minimal",
+              "assetRef": null,
+              "supersedes": null,
+              "supersededBy": null,
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            }
+          ],
+          "partInstances": [
+            {
+              "instanceId": "INST-HUB",
+              "partRef": "PART-HUB@r001",
+              "variantId": "V-HUB",
+              "assemblyInstanceId": "ASM-1",
+              "frameId": "FR-HUB-INST",
+              "mountInterfaceIds": [
+                "MI-HUB-DISC"
+              ],
+              "jointIds": [],
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "unknowns": []
+            },
+            {
+              "instanceId": "INST-DISC",
+              "partRef": "PART-DISC@r001",
+              "variantId": "V-DISC",
+              "assemblyInstanceId": "ASM-1",
+              "frameId": "FR-DISC-INST",
+              "mountInterfaceIds": [
+                "MI-HUB-DISC"
+              ],
+              "jointIds": [],
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "unknowns": []
+            }
+          ],
+          "assemblyDefinitions": [
+            {
+              "assemblyId": "ASSY-1",
+              "kind": "assembly",
+              "name": "minimal",
+              "revision": "r001",
+              "bomLineIds": [
+                "BL-HUB",
+                "BL-DISC"
+              ],
+              "geometryBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "assemblyInstances": [
+            {
+              "assemblyInstanceId": "ASM-1",
+              "assemblyRef": "ASSY-1@r001",
+              "parentAssemblyInstanceId": null,
+              "frameId": "FR-ASM",
+              "vehicleVariantId": null,
+              "refId": null,
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "unknowns": []
+            }
+          ],
+          "bomLines": [
+            {
+              "bomLineId": "BL-HUB",
+              "assemblyDefId": "ASSY-1",
+              "partRef": "PART-HUB@r001",
+              "qty": 1,
+              "instanceIds": [
+                "INST-HUB"
+              ],
+              "optionality": "required"
+            },
+            {
+              "bomLineId": "BL-DISC",
+              "assemblyDefId": "ASSY-1",
+              "partRef": "PART-DISC@r001",
+              "qty": 1,
+              "instanceIds": [
+                "INST-DISC"
+              ],
+              "optionality": "required"
+            }
+          ],
+          "mountInterfaces": [
+            {
+              "mountId": "MI-HUB-DISC",
+              "type": "HUB_PILOTED_BOLTED",
+              "frameA": "FR-HUB-INST",
+              "frameB": "FR-DISC-INST",
+              "pilot": {
+                "diameterMm": {
+                  "value": 67.1,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                }
+              },
+              "fastenerPattern": {
+                "count": {
+                  "value": 5,
+                  "unit": "count",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "pcdMm": {
+                  "value": 114.3,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "boltHoleMm": {
+                  "value": 14.5,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "torqueNm": {
+                  "value": null,
+                  "unit": "N*m",
+                  "valueBasis": "OPEN",
+                  "sources": []
+                }
+              },
+              "tolerance": {
+                "positionMm": 0.05,
+                "angularDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "joints": [],
+          "materials": [],
+          "assets": [],
+          "vehicleVariants": []
+        }
+      },
+      "expectCodes": [
+        "DC-E030"
+      ]
+    },
+    {
+      "exampleId": "INVALID-DUP-INSTANCE",
+      "description": "两个零件实例使用同一 instanceId",
+      "document": {
+        "schemaVersion": "carlab.data-contract/0.1.0-proposal",
+        "status": "PROPOSAL",
+        "unitPolicy": {
+          "cad": "mm",
+          "simulation": "m"
+        },
+        "coordinatePolicy": {
+          "runtimeWorld": "FR-VEHICLE"
+        },
+        "idPolicy": {
+          "rule": "RP-01"
+        },
+        "entities": {
+          "frames": [
+            {
+              "frameId": "FR-VEHICLE",
+              "frameKind": "WORLD",
+              "parentFrameId": null,
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-HUB-LOCAL",
+              "frameKind": "PART_LOCAL",
+              "parentFrameId": null,
+              "units": "mm",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-DISC-LOCAL",
+              "frameKind": "PART_LOCAL",
+              "parentFrameId": null,
+              "units": "mm",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-ASM",
+              "frameKind": "ASSEMBLY",
+              "parentFrameId": "FR-VEHICLE",
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-HUB-INST",
+              "frameKind": "INSTANCE",
+              "parentFrameId": "FR-ASM",
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    0,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sourceFrameId": "FR-HUB-LOCAL",
+              "unitScale": 0.001,
+              "instanceId": "INST-HUB"
+            },
+            {
+              "frameId": "FR-DISC-INST",
+              "frameKind": "INSTANCE",
+              "parentFrameId": "FR-ASM",
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    0,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sourceFrameId": "FR-DISC-LOCAL",
+              "unitScale": 0.001,
+              "instanceId": "INST-DISC"
+            }
+          ],
+          "partFamilies": [],
+          "partDefinitions": [
+            {
+              "partId": "PART-HUB",
+              "kind": "part",
+              "name": "hub",
+              "partClass": "rotating",
+              "familyRef": null,
+              "geometryBasis": "NEEDS_MEASUREMENT",
+              "defaultVariantId": "V-HUB",
+              "variants": [
+                "V-HUB"
+              ],
+              "materialRef": null,
+              "mounts": [
+                "MI-HUB-DISC"
+              ],
+              "joints": [],
+              "assets": [],
+              "localFrameId": "FR-HUB-LOCAL",
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "sources": [],
+              "unknowns": []
+            },
+            {
+              "partId": "PART-DISC",
+              "kind": "part",
+              "name": "disc",
+              "partClass": "friction",
+              "familyRef": null,
+              "geometryBasis": "NEEDS_MEASUREMENT",
+              "defaultVariantId": "V-DISC",
+              "variants": [
+                "V-DISC"
+              ],
+              "materialRef": null,
+              "mounts": [
+                "MI-HUB-DISC"
+              ],
+              "joints": [],
+              "assets": [],
+              "localFrameId": "FR-DISC-LOCAL",
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "partVariants": [
+            {
+              "variantId": "V-HUB",
+              "partId": "PART-HUB",
+              "revision": "r001",
+              "parameters": {
+                "pcdMm": {
+                  "value": 114.3,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "holeCount": {
+                  "value": 5,
+                  "unit": "count",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "centerBoreMm": {
+                  "value": 67.1,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "boltHoleMm": {
+                  "value": 14.5,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                }
+              },
+              "applicableVehicleVariants": [],
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sources": [],
+              "unknowns": []
+            },
+            {
+              "variantId": "V-DISC",
+              "partId": "PART-DISC",
+              "revision": "r001",
+              "parameters": {
+                "pcdMm": {
+                  "value": 114.3,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "holeCount": {
+                  "value": 5,
+                  "unit": "count",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "centerBoreMm": {
+                  "value": 67.1,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "boltHoleMm": {
+                  "value": 14.5,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                }
+              },
+              "applicableVehicleVariants": [],
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "partRevisions": [
+            {
+              "revisionId": "PART-HUB@r001",
+              "partId": "PART-HUB",
+              "variantId": "V-HUB",
+              "revision": "r001",
+              "status": "DRAFT",
+              "createdAt": "2026-11-14",
+              "changeNote": "minimal",
+              "assetRef": null,
+              "supersedes": null,
+              "supersededBy": null,
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "revisionId": "PART-DISC@r001",
+              "partId": "PART-DISC",
+              "variantId": "V-DISC",
+              "revision": "r001",
+              "status": "DRAFT",
+              "createdAt": "2026-11-14",
+              "changeNote": "minimal",
+              "assetRef": null,
+              "supersedes": null,
+              "supersededBy": null,
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            }
+          ],
+          "partInstances": [
+            {
+              "instanceId": "INST-HUB",
+              "partRef": "PART-HUB@r001",
+              "variantId": "V-HUB",
+              "assemblyInstanceId": "ASM-1",
+              "frameId": "FR-HUB-INST",
+              "mountInterfaceIds": [
+                "MI-HUB-DISC"
+              ],
+              "jointIds": [],
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "unknowns": []
+            },
+            {
+              "instanceId": "INST-HUB",
+              "partRef": "PART-DISC@r001",
+              "variantId": "V-DISC",
+              "assemblyInstanceId": "ASM-1",
+              "frameId": "FR-DISC-INST",
+              "mountInterfaceIds": [
+                "MI-HUB-DISC"
+              ],
+              "jointIds": [],
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "unknowns": []
+            }
+          ],
+          "assemblyDefinitions": [
+            {
+              "assemblyId": "ASSY-1",
+              "kind": "assembly",
+              "name": "minimal",
+              "revision": "r001",
+              "bomLineIds": [
+                "BL-HUB",
+                "BL-DISC"
+              ],
+              "geometryBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "assemblyInstances": [
+            {
+              "assemblyInstanceId": "ASM-1",
+              "assemblyRef": "ASSY-1@r001",
+              "parentAssemblyInstanceId": null,
+              "frameId": "FR-ASM",
+              "vehicleVariantId": null,
+              "refId": null,
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "unknowns": []
+            }
+          ],
+          "bomLines": [
+            {
+              "bomLineId": "BL-HUB",
+              "assemblyDefId": "ASSY-1",
+              "partRef": "PART-HUB@r001",
+              "qty": 1,
+              "instanceIds": [
+                "INST-HUB"
+              ],
+              "optionality": "required"
+            },
+            {
+              "bomLineId": "BL-DISC",
+              "assemblyDefId": "ASSY-1",
+              "partRef": "PART-DISC@r001",
+              "qty": 1,
+              "instanceIds": [
+                "INST-DISC"
+              ],
+              "optionality": "required"
+            }
+          ],
+          "mountInterfaces": [
+            {
+              "mountId": "MI-HUB-DISC",
+              "type": "HUB_PILOTED_BOLTED",
+              "frameA": "FR-HUB-INST",
+              "frameB": "FR-DISC-INST",
+              "pilot": {
+                "diameterMm": {
+                  "value": 67.1,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                }
+              },
+              "fastenerPattern": {
+                "count": {
+                  "value": 5,
+                  "unit": "count",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "pcdMm": {
+                  "value": 114.3,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "boltHoleMm": {
+                  "value": 14.5,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "torqueNm": {
+                  "value": null,
+                  "unit": "N*m",
+                  "valueBasis": "OPEN",
+                  "sources": []
+                }
+              },
+              "tolerance": {
+                "positionMm": 0.05,
+                "angularDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "joints": [],
+          "materials": [],
+          "assets": [],
+          "vehicleVariants": []
+        }
+      },
+      "expectCodes": [
+        "DC-E004"
+      ]
+    },
+    {
+      "exampleId": "INVALID-JOINT-AXIS",
+      "description": "转动副轴 [2,0,0] 未归一化",
+      "document": {
+        "schemaVersion": "carlab.data-contract/0.1.0-proposal",
+        "status": "PROPOSAL",
+        "unitPolicy": {
+          "cad": "mm",
+          "simulation": "m"
+        },
+        "coordinatePolicy": {
+          "runtimeWorld": "FR-VEHICLE"
+        },
+        "idPolicy": {
+          "rule": "RP-01"
+        },
+        "entities": {
+          "frames": [
+            {
+              "frameId": "FR-VEHICLE",
+              "frameKind": "WORLD",
+              "parentFrameId": null,
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-HUB-LOCAL",
+              "frameKind": "PART_LOCAL",
+              "parentFrameId": null,
+              "units": "mm",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-DISC-LOCAL",
+              "frameKind": "PART_LOCAL",
+              "parentFrameId": null,
+              "units": "mm",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-ASM",
+              "frameKind": "ASSEMBLY",
+              "parentFrameId": "FR-VEHICLE",
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "frameId": "FR-HUB-INST",
+              "frameKind": "INSTANCE",
+              "parentFrameId": "FR-ASM",
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    0,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sourceFrameId": "FR-HUB-LOCAL",
+              "unitScale": 0.001,
+              "instanceId": "INST-HUB"
+            },
+            {
+              "frameId": "FR-DISC-INST",
+              "frameKind": "INSTANCE",
+              "parentFrameId": "FR-ASM",
+              "units": "m",
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "rotation": {
+                "type": "matrix",
+                "value": [
+                  [
+                    0,
+                    0,
+                    1
+                  ],
+                  [
+                    1,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1,
+                    0
+                  ]
+                ]
+              },
+              "handedness": "right",
+              "mirror": null,
+              "tolerance": {
+                "positionM": 0.001,
+                "angleDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sourceFrameId": "FR-DISC-LOCAL",
+              "unitScale": 0.001,
+              "instanceId": "INST-DISC"
+            }
+          ],
+          "partFamilies": [],
+          "partDefinitions": [
+            {
+              "partId": "PART-HUB",
+              "kind": "part",
+              "name": "hub",
+              "partClass": "rotating",
+              "familyRef": null,
+              "geometryBasis": "NEEDS_MEASUREMENT",
+              "defaultVariantId": "V-HUB",
+              "variants": [
+                "V-HUB"
+              ],
+              "materialRef": null,
+              "mounts": [
+                "MI-HUB-DISC"
+              ],
+              "joints": [],
+              "assets": [],
+              "localFrameId": "FR-HUB-LOCAL",
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "sources": [],
+              "unknowns": []
+            },
+            {
+              "partId": "PART-DISC",
+              "kind": "part",
+              "name": "disc",
+              "partClass": "friction",
+              "familyRef": null,
+              "geometryBasis": "NEEDS_MEASUREMENT",
+              "defaultVariantId": "V-DISC",
+              "variants": [
+                "V-DISC"
+              ],
+              "materialRef": null,
+              "mounts": [
+                "MI-HUB-DISC"
+              ],
+              "joints": [],
+              "assets": [],
+              "localFrameId": "FR-DISC-LOCAL",
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "partVariants": [
+            {
+              "variantId": "V-HUB",
+              "partId": "PART-HUB",
+              "revision": "r001",
+              "parameters": {
+                "pcdMm": {
+                  "value": 114.3,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "holeCount": {
+                  "value": 5,
+                  "unit": "count",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "centerBoreMm": {
+                  "value": 67.1,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "boltHoleMm": {
+                  "value": 14.5,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                }
+              },
+              "applicableVehicleVariants": [],
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sources": [],
+              "unknowns": []
+            },
+            {
+              "variantId": "V-DISC",
+              "partId": "PART-DISC",
+              "revision": "r001",
+              "parameters": {
+                "pcdMm": {
+                  "value": 114.3,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "holeCount": {
+                  "value": 5,
+                  "unit": "count",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "centerBoreMm": {
+                  "value": 67.1,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "boltHoleMm": {
+                  "value": 14.5,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                }
+              },
+              "applicableVehicleVariants": [],
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "partRevisions": [
+            {
+              "revisionId": "PART-HUB@r001",
+              "partId": "PART-HUB",
+              "variantId": "V-HUB",
+              "revision": "r001",
+              "status": "DRAFT",
+              "createdAt": "2026-11-14",
+              "changeNote": "minimal",
+              "assetRef": null,
+              "supersedes": null,
+              "supersededBy": null,
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            },
+            {
+              "revisionId": "PART-DISC@r001",
+              "partId": "PART-DISC",
+              "variantId": "V-DISC",
+              "revision": "r001",
+              "status": "DRAFT",
+              "createdAt": "2026-11-14",
+              "changeNote": "minimal",
+              "assetRef": null,
+              "supersedes": null,
+              "supersededBy": null,
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "valueBasis": "DEMO_ASSUMPTION"
+            }
+          ],
+          "partInstances": [
+            {
+              "instanceId": "INST-HUB",
+              "partRef": "PART-HUB@r001",
+              "variantId": "V-HUB",
+              "assemblyInstanceId": "ASM-1",
+              "frameId": "FR-HUB-INST",
+              "mountInterfaceIds": [
+                "MI-HUB-DISC"
+              ],
+              "jointIds": [],
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "unknowns": []
+            },
+            {
+              "instanceId": "INST-DISC",
+              "partRef": "PART-DISC@r001",
+              "variantId": "V-DISC",
+              "assemblyInstanceId": "ASM-1",
+              "frameId": "FR-DISC-INST",
+              "mountInterfaceIds": [
+                "MI-HUB-DISC"
+              ],
+              "jointIds": [],
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "unknowns": []
+            }
+          ],
+          "assemblyDefinitions": [
+            {
+              "assemblyId": "ASSY-1",
+              "kind": "assembly",
+              "name": "minimal",
+              "revision": "r001",
+              "bomLineIds": [
+                "BL-HUB",
+                "BL-DISC"
+              ],
+              "geometryBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "valueBasis": "DEMO_ASSUMPTION",
+              "fidelityClaim": "FID-V",
+              "verification": {
+                "status": "UNTESTED",
+                "reviewStatus": "NOT_REVIEWED",
+                "testRefs": []
+              },
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "assemblyInstances": [
+            {
+              "assemblyInstanceId": "ASM-1",
+              "assemblyRef": "ASSY-1@r001",
+              "parentAssemblyInstanceId": null,
+              "frameId": "FR-ASM",
+              "vehicleVariantId": null,
+              "refId": null,
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "unknowns": []
+            }
+          ],
+          "bomLines": [
+            {
+              "bomLineId": "BL-HUB",
+              "assemblyDefId": "ASSY-1",
+              "partRef": "PART-HUB@r001",
+              "qty": 1,
+              "instanceIds": [
+                "INST-HUB"
+              ],
+              "optionality": "required"
+            },
+            {
+              "bomLineId": "BL-DISC",
+              "assemblyDefId": "ASSY-1",
+              "partRef": "PART-DISC@r001",
+              "qty": 1,
+              "instanceIds": [
+                "INST-DISC"
+              ],
+              "optionality": "required"
+            }
+          ],
+          "mountInterfaces": [
+            {
+              "mountId": "MI-HUB-DISC",
+              "type": "HUB_PILOTED_BOLTED",
+              "frameA": "FR-HUB-INST",
+              "frameB": "FR-DISC-INST",
+              "pilot": {
+                "diameterMm": {
+                  "value": 67.1,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                }
+              },
+              "fastenerPattern": {
+                "count": {
+                  "value": 5,
+                  "unit": "count",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "pcdMm": {
+                  "value": 114.3,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "boltHoleMm": {
+                  "value": 14.5,
+                  "unit": "mm",
+                  "valueBasis": "DEMO_ASSUMPTION",
+                  "sources": []
+                },
+                "torqueNm": {
+                  "value": null,
+                  "unit": "N*m",
+                  "valueBasis": "OPEN",
+                  "sources": []
+                }
+              },
+              "tolerance": {
+                "positionMm": 0.05,
+                "angularDeg": 0.1
+              },
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "joints": [
+            {
+              "jointId": "J-1",
+              "type": "REVOLUTE",
+              "frameA": "FR-HUB-INST",
+              "frameB": "FR-DISC-INST",
+              "axisA": [
+                2,
+                0,
+                0
+              ],
+              "axisB": [
+                1,
+                0,
+                0
+              ],
+              "limits": null,
+              "zeroPose": {
+                "angleRad": 0
+              },
+              "adapterHints": {},
+              "valueBasis": "DEMO_ASSUMPTION",
+              "evidence": "ASSUMPTION",
+              "sources": [],
+              "unknowns": []
+            }
+          ],
+          "materials": [],
+          "assets": [],
+          "vehicleVariants": []
+        }
+      },
+      "expectCodes": [
+        "DC-E023"
+      ]
+    }
+  ],
+  "schemaOnlyVsBrep": {
+    "schemaCanCheck": [
+      "ID 唯一与引用存在",
+      "partId@revision 解析",
+      "单位字段与 mm/m 转换声明",
+      "PCD/count/centerBore 声明值一致",
+      "Frame 父链与旋转行列式",
+      "Joint 轴归一化/限位单位",
+      "BOM qty 与 instanceIds 数",
+      "Asset hash/单位/变换",
+      "REF 指向与重复实体",
+      "valueBasis/evidence/verification 组合"
+    ],
+    "requiresBrep": [
+      "孔位/孔距的真实几何位置",
+      "中心孔与轴颈的真实配合/圆度",
+      "制动盘与卡钳的真实间隙/干涉",
+      "螺栓孔与螺柱的真实过盈/接触",
+      "质量/质心/惯量",
+      "材料强度/疲劳/热",
+      "焊接/粘接/密封",
+      "装配顺序与工具空间",
+      "碰撞/EMC/NVH"
+    ],
+    "note": "Schema 只能验证声明一致性和引用完整性；不能把 JSON 通过当成 B-rep 或物理验证通过。"
+  },
+  "r01Alignment": {
+    "source": "docs/research/R-01-platform-family-example.json (R01-PF-0.1, PROPOSED_NOT_APPROVED)",
+    "fieldsUsed": [
+      "VV-A-SWB-STD",
+      "PD-WB",
+      "PD-FT",
+      "PD-RT",
+      "PD-TW",
+      "PF-DEMO-BOF-01",
+      "MS-FSUSP",
+      "MS-RSUSP",
+      "MS-STEER-LINK",
+      "MS-POWER",
+      "FH-01..05"
+    ],
+    "pending": [
+      "platformFamilyRef 在 R-01 vehicleVariants 中尚未显式出现",
+      "R-01 的 valueBasis 枚举与 RP-01 的 geomBasis 尚未合并",
+      "固定/可变硬点的最终冻结未批",
+      "R-01 的 globalScale 禁令需在 R-02 变体/资产层复用"
+    ],
+    "conflicts": [
+      "R-01 用 mm 作为工程侧单位，FID/验证等级用 VISUAL..DYNAMIC；R-02 另加 FID-V..D2 与 evidence/verification 分离，需总控裁定统一词汇。"
+    ]
+  },
+  "unknowns": [
+    {
+      "id": "U-HUB-FLANGE-GEOMETRY",
+      "topic": "轮毂法兰真实几何",
+      "impact": "只能用演示法兰占位，不能声称是 PART-30-006 的真实零件。",
+      "neededEvidence": "PART-30-006 的 STEP/测量/供应商图纸。"
+    },
+    {
+      "id": "U-STUD-THREAD",
+      "topic": "车轮螺柱螺纹/座型/过盈",
+      "impact": "不能验证压装过盈和螺母座匹配。",
+      "neededEvidence": "螺柱规格、座型、压装力/过盈量。"
+    },
+    {
+      "id": "U-BRAKE-TORQUE",
+      "topic": "螺栓/螺母预紧扭矩",
+      "impact": "不能验证夹紧力/防松。",
+      "neededEvidence": "紧固件规格、摩擦系数、预紧规范。"
+    },
+    {
+      "id": "U-DISC-GEOMETRY",
+      "topic": "制动盘外径/厚度/通风结构",
+      "impact": "不能验证热质量/卡钳跨骑间隙。",
+      "neededEvidence": "制动盘图纸/测量/供应商数据。"
+    },
+    {
+      "id": "U-CALIPER-GEOMETRY",
+      "topic": "卡钳活塞/支架/导向",
+      "impact": "不能验证夹紧力、导向行程、与轮辋间隙。",
+      "neededEvidence": "卡钳供应商图纸/测量。"
+    },
+    {
+      "id": "U-BEARING-GEOMETRY",
+      "topic": "轴承内外圈/滚道/预紧",
+      "impact": "不能验证轴承配合与寿命。",
+      "neededEvidence": "轴承目录/供应商数据。"
+    },
+    {
+      "id": "U-MATERIALS",
+      "topic": "材料密度/弹性模量/强度",
+      "impact": "不能计算质量/惯量/强度；示例全部 null。",
+      "neededEvidence": "材料标准/供应商数据/实测。"
+    },
+    {
+      "id": "U-R01-FAMILY-LINK",
+      "topic": "R-01 vehicleVariant→platformFamily 显式引用",
+      "impact": "R-02 只能暂用 PF-DEMO-BOF-01，不能声称已冻结。",
+      "neededEvidence": "R-01 最终 Schema 或 RP-07 裁定。"
+    }
+  ]
+}
