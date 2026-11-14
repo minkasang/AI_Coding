@@ -1,0 +1,141 @@
+{
+  "mappingFile": "docs/research/R-07-schema-mapping.example.json",
+  "ok": true,
+  "totals": {
+    "mappings": 46,
+    "conflicts": 18,
+    "p0": 6,
+    "counterexamples": 18,
+    "decisions": 15,
+    "checks": 25,
+    "failedChecks": 0
+  },
+  "failures": [],
+  "checks": [
+    {
+      "id": "canonical",
+      "pass": true,
+      "detail": "axes/units/identity/truth/joint types/drivers/asset rules"
+    },
+    {
+      "id": "mappings.count",
+      "pass": true,
+      "detail": "count=46 (>=30)"
+    },
+    {
+      "id": "mappings.coverage",
+      "pass": true,
+      "detail": "{\"R-01\":13,\"RP-01\":7,\"R-03\":11,\"R-04\":10,\"RP-02\":5}"
+    },
+    {
+      "id": "conflicts.count",
+      "pass": true,
+      "detail": "count=18 (>=12)"
+    },
+    {
+      "id": "conflicts.p0",
+      "pass": true,
+      "detail": "P0=6"
+    },
+    {
+      "id": "counterexamples.count",
+      "pass": true,
+      "detail": "count=18 (>=10)"
+    },
+    {
+      "id": "ce.CE-01",
+      "pass": true,
+      "detail": "distance=0.1143, expected=0.1143"
+    },
+    {
+      "id": "ce.CE-02",
+      "pass": true,
+      "detail": "actual=-1, expected!=1"
+    },
+    {
+      "id": "ce.CE-03",
+      "pass": true,
+      "detail": "targetPath=PartRevision.contentFingerprint"
+    },
+    {
+      "id": "ce.CE-04",
+      "pass": true,
+      "detail": "targetPath=PartDefinition.partId + externalIds"
+    },
+    {
+      "id": "ce.CE-05",
+      "pass": true,
+      "detail": "actual=4, expected=4"
+    },
+    {
+      "id": "ce.CE-06",
+      "pass": true,
+      "detail": "path=jointTypes, actual=[\"FIXED\",\"REVOLUTE\",\"SPHERICAL\",\"PRISMATIC\",\"UNIVERSAL\",\"CYLINDRICAL\",\"GEAR\",\"CONTACT\",\"SPRING_DAMPER\",\"BELT\",\"DISTANCE\",\"POINT_ON_LINE\"]"
+    },
+    {
+      "id": "ce.CE-07",
+      "pass": true,
+      "detail": "targetPath=SPRING_DAMPER.forceElement=true"
+    },
+    {
+      "id": "ce.CE-08",
+      "pass": true,
+      "detail": "targetPath=verification + fidelityTarget"
+    },
+    {
+      "id": "ce.CE-09",
+      "pass": true,
+      "detail": "transform=envelope/nominal cylinder -> FID-V, not FID-G"
+    },
+    {
+      "id": "ce.CE-10",
+      "pass": true,
+      "detail": "transform=valueBasis=DEMO_ASSUMPTION + provenance=FICTIONAL_FIXTURE; never SOURCED/production"
+    },
+    {
+      "id": "ce.CE-11",
+      "pass": true,
+      "detail": "transform=density/mass -> DEMO_ASSUMPTION, not SOURCED; volume from CAD is DEMO/geometry check only"
+    },
+    {
+      "id": "ce.CE-12",
+      "pass": true,
+      "detail": "conflict=C-07"
+    },
+    {
+      "id": "ce.CE-13",
+      "pass": true,
+      "detail": "transform=targetLevel -> fidelityTarget (GEOMETRY=FID-G); PASS/UNVERIFIED -> verification; never auto fidelityClaim"
+    },
+    {
+      "id": "ce.CE-14",
+      "pass": true,
+      "detail": "transform=content hash -> contentFingerprint; revision stays human rNNN; file sha256 stays 64-hex"
+    },
+    {
+      "id": "ce.CE-15",
+      "pass": true,
+      "detail": "transform=valueBasis=DEMO_ASSUMPTION + provenance=FICTIONAL_FIXTURE; never SOURCED/production"
+    },
+    {
+      "id": "ce.CE-16",
+      "pass": true,
+      "detail": "path=drivers, actual=[\"NONE\",\"PRESCRIBED_POSITION\",\"PRESCRIBED_VELOCITY\",\"FORCE\"]"
+    },
+    {
+      "id": "ce.CE-17",
+      "pass": true,
+      "detail": "targetPath=BOMLine.qty + vehicleTotalQty"
+    },
+    {
+      "id": "ce.CE-18",
+      "pass": true,
+      "detail": "targetPath=Frame + MountInterface"
+    },
+    {
+      "id": "decisions.count",
+      "pass": true,
+      "detail": "count=15 (>=10)"
+    }
+  ]
+}

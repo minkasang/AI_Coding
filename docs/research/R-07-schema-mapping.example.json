@@ -1,0 +1,517 @@
+{
+  "schemaVersion": "carlab.interface-reconciliation/0.1.0-proposal",
+  "status": "PROPOSAL",
+  "date": "2026-11-14",
+  "scope": "Cross-model field reconciliation for R-01/R-02/R-03/R-04/RP-01/RP-02. Not a frozen production schema.",
+  "inputs": {
+    "R-01": {
+      "report": "docs/research/R-01-platform-family-report.md",
+      "example": "docs/research/R-01-platform-family-example.json",
+      "schema": "R01-PF-0.1",
+      "owner": "qwen4"
+    },
+    "R-02": {
+      "report": "docs/research/R-02-data-contract-report.md",
+      "example": "docs/research/R-02-example-assembly.json",
+      "schema": "carlab.data-contract/0.1.0-proposal",
+      "owner": "deepseek"
+    },
+    "R-03": {
+      "report": "docs/research/R-03-cad-asset-pipeline-report.md",
+      "example": "docs/research/R-03-asset-manifest.example.json",
+      "evidence": "docs/planning/evidence/R-03-pipeline-evidence.json",
+      "schema": "asset-manifest.v1",
+      "owner": "gemini-3-8-flash"
+    },
+    "R-04": {
+      "report": "docs/research/R-04-suspension-physics-report.md",
+      "example": "docs/research/R-04-kinematics-fixture.json",
+      "schema": "carlab.r04.kinematicsFixture.v1",
+      "owner": "grok"
+    },
+    "RP-01": {
+      "report": "docs/planning/reports/RP-01-vehicle-product-tree.md",
+      "example": "docs/planning/evidence/RP-01-tree-chassis.json",
+      "schema": "RP01-PBS-0.1"
+    },
+    "RP-02": {
+      "report": "docs/planning/reports/RP-02-interface-graph.md",
+      "example": "docs/planning/evidence/RP-02-interface-graph.example.json",
+      "schema": "carlab.interface-graph/0.1.0-proposal"
+    },
+    "audit": [
+      "docs/command/reviews/AUDIT_2026-11-14.md",
+      "docs/command/reviews/AUDIT_2026-11-14_BATCH2.md"
+    ]
+  },
+  "canonical": {
+    "worldFrame": {
+      "frameId": "FR-VEHICLE",
+      "axes": { "x": "left", "y": "up", "z": "forward" },
+      "units": "m",
+      "handedness": "right",
+      "evidence": [
+        "src/physics/vehicleWorld.js:180-188",
+        "src/parts/chassis.js:285-291",
+        "R-04 frame x=left/y=up/z=forward"
+      ]
+    },
+    "engineeringFrame": {
+      "frameId": "FR-ENGINEERING",
+      "axes": { "x": "forward", "y": "left", "z": "up" },
+      "units": "m",
+      "transform": "p_E=[zR,xR,yR]",
+      "matrix": [[0, 0, 1], [1, 0, 0], [0, 1, 0]]
+    },
+    "identity": {
+      "partId": "RP-01 PART-* (canonical)",
+      "partFamilyId": "RP-01 FAM-*",
+      "instanceId": "R-02 INST-* / ASM-* (globally unique)",
+      "assemblyId": "RP-01 ASSY-*",
+      "refId": "RP-01 REF-* / BOM refId",
+      "revision": "human immutable revision rNNN",
+      "contentFingerprint": "R-03 16-hex content hash",
+      "externalIds": ["R-03 SYS-* pipeline IDs", "R-03 #inst_N"]
+    },
+    "truth": {
+      "valueBasis": ["EVIDENCE", "LOCAL_MEASUREMENT", "SOURCED", "DERIVED", "ENGINEERING_DERIVATION", "DEMO_ASSUMPTION", "OPEN", "DEFERRED", "NOT_APPLICABLE"],
+      "evidence": ["EVIDENCE", "ENGINEERING_DERIVATION", "ASSUMPTION", "OPEN"],
+      "fidelityClaim": ["FID-V", "FID-G", "FID-K", "FID-D1", "FID-D2"],
+      "fidelityTarget": ["FID-V", "FID-G", "FID-K", "FID-D1", "FID-D2"],
+      "verification": ["UNTESTED", "PASS", "FAIL", "BLOCKED"],
+      "reviewStatus": ["NOT_REVIEWED", "PENDING", "APPROVED", "REJECTED"],
+      "claimedValidation": "R-01 compatibility claims; maps to verification/target, never auto-promotes fidelityClaim"
+    },
+    "jointTypes": ["FIXED", "REVOLUTE", "SPHERICAL", "PRISMATIC", "UNIVERSAL", "CYLINDRICAL", "GEAR", "CONTACT", "SPRING_DAMPER", "BELT", "DISTANCE", "POINT_ON_LINE"],
+    "drivers": ["NONE", "PRESCRIBED_POSITION", "PRESCRIBED_VELOCITY", "FORCE"],
+    "mountInterface": {
+      "split": ["Frame(origin/rotation/units)", "MountInterface(pilot/fastenerPattern/face/tolerance)"],
+      "r03Mapping": "frame_id->mountId; origin_mm->Frame.origin; axis->face.normal; mating_specs->fastenerPattern; missing CB->pilot OPEN"
+    },
+    "asset": {
+      "revisionVsFingerprint": "revision=rNNN; contentFingerprint=16-hex; file sha256=64-hex",
+      "modelingFidelity": "R-03 GEOMETRIC_ENVELOPE_ONLY / NOMINAL_CYLINDER_PLUS_METADATA -> FID-V, not FID-G",
+      "massProperties": "R-03 mass_properties_assumption -> DEMO_ASSUMPTION, never SOURCED"
+    }
+  },
+  "mappings": [
+    { "mappingId": "M-01", "from": "R-01", "sourcePath": "platformFamilies[].id", "to": "R-02", "targetPath": "VehicleVariant.platformFamilyRef", "transform": "external platform family reference; R-02 has no PlatformFamily entity yet", "status": "PROPOSED", "note": "Do not copy platform family into PBS." },
+    { "mappingId": "M-02", "from": "R-01", "sourcePath": "vehicleVariants[].familyRef", "to": "R-02", "targetPath": "VehicleVariant.platformFamilyRef", "transform": "rename/alias familyRef -> platformFamilyRef", "status": "NEEDS_DECISION", "note": "R-01 familyRef means platform family, not RP-01 part family." },
+    { "mappingId": "M-03", "from": "R-01", "sourcePath": "vehicleVariants[].params.PD-WB/PD-FT/PD-RT/PD-TW", "to": "R-02", "targetPath": "VehicleVariant.parameters", "transform": "preserve mm; valueBasis DEMO_ASSUMPTION; keep derivation", "status": "PROPOSED" },
+    { "mappingId": "M-04", "from": "R-01", "sourcePath": "platformFamilies[].fixedHardpoints[]", "to": "R-02", "targetPath": "Frame + MountInterface", "transform": "value_mm -> Frame.origin (PART_LOCAL mm); immutable -> Frame.immutable; kind/rationale stay metadata", "status": "PROPOSED" },
+    { "mappingId": "M-05", "from": "R-01", "sourcePath": "platformFamilies[].parametricDimensions[]", "to": "R-02", "targetPath": "VehicleVariant.parameterRules", "transform": "min/max/derivation/affects -> parameter rules + variantDependencies", "status": "PROPOSED" },
+    { "mappingId": "M-06", "from": "R-01", "sourcePath": "platformFamilies[].moduleSlots[].options[]", "to": "R-02", "targetPath": "AssemblyDefinition/PartVariant.compatibility", "transform": "compatibleArchitectures/Powertrains and selectionKind -> compatibility rules", "status": "PROPOSED" },
+    { "mappingId": "M-07", "from": "R-01", "sourcePath": "vehicleVariants[].claimedValidation", "to": "R-02", "targetPath": "verification + fidelityTarget", "transform": "targetLevel -> fidelityTarget (GEOMETRY=FID-G); PASS/UNVERIFIED -> verification; never auto fidelityClaim", "status": "NEEDS_DECISION", "note": "PASS/UNVERIFIED is a claim, not independent approval." },
+    { "mappingId": "M-08", "from": "R-01", "sourcePath": "valueBasis", "to": "R-02", "targetPath": "valueBasis", "transform": "LOCAL_MEASUREMENT/DEMO_ASSUMPTION/SOURCED/OPEN -> same; add DERIVED/ENGINEERING_DERIVATION", "status": "PROPOSED" },
+    { "mappingId": "M-09", "from": "R-01", "sourcePath": "vehicleVariants[].expected/derivedExpected", "to": "R-02", "targetPath": "derivedDimensions + verification.testRefs", "transform": "solver outputs are derived values + test refs, not parameters", "status": "PROPOSED" },
+    { "mappingId": "M-10", "from": "R-01", "sourcePath": "vehicleVariants[].powertrain", "to": "R-02", "targetPath": "VehicleVariant.powertrainRef", "transform": "ICE/BEV/HEV unchanged", "status": "PROPOSED" },
+    { "mappingId": "M-11", "from": "R-01", "sourcePath": "platformFamilies[].interfaceContracts[]", "to": "R-02", "targetPath": "MountInterface/Joint contract IDs", "transform": "IC-* -> interface contract ref; values stay OPEN until source", "status": "PROPOSED" },
+    { "mappingId": "M-12", "from": "R-01", "sourcePath": "platformFamilies[].propagation / affects", "to": "R-02", "targetPath": "variantDependencies", "transform": "affects -> dependency edges; recompute closure", "status": "PROPOSED" },
+    { "mappingId": "M-13", "from": "R-01", "sourcePath": "globalScale ban (P14/globalMeshScale)", "to": "R-02", "targetPath": "DC-E073/DC-E026", "transform": "forbid global scale in variant/frame/asset", "status": "PROPOSED" },
+    { "mappingId": "M-14", "from": "RP-01", "sourcePath": "nodes[].id PART-*", "to": "R-02", "targetPath": "PartDefinition.partId", "transform": "canonical part identity; no rename", "status": "PROPOSED" },
+    { "mappingId": "M-15", "from": "RP-01", "sourcePath": "nodes[].id ASSY-*", "to": "R-02", "targetPath": "AssemblyDefinition.assemblyId", "transform": "canonical assembly identity", "status": "PROPOSED" },
+    { "mappingId": "M-16", "from": "RP-01", "sourcePath": "nodes[].id FAM-*", "to": "R-02", "targetPath": "PartFamily.familyId", "transform": "canonical part family; SYS-130 only", "status": "PROPOSED" },
+    { "mappingId": "M-17", "from": "RP-01", "sourcePath": "nodes[].id REF-*", "to": "R-02", "targetPath": "BOMLine.refId / cross-system reference", "transform": "REF points to canonical entity; no duplicate geometry", "status": "PROPOSED" },
+    { "mappingId": "M-18", "from": "RP-01", "sourcePath": "nodes[].qty", "to": "R-02", "targetPath": "BOMLine.qty + vehicleTotalQty", "transform": "RP-01 qty is often vehicle/4-corner total; R-02 qty is per parent assembly; add vehicleTotalQty", "status": "NEEDS_DECISION", "note": "PART-30-009 qty=20 global vs 5 per corner; naive copy gives 4x overcount." },
+    { "mappingId": "M-19", "from": "RP-01", "sourcePath": "nodes[].geomBasis/partClass", "to": "R-02", "targetPath": "geometryBasis/partClass", "transform": "NEEDS_MEASUREMENT/DEMO_ASSUMPTION/SOURCED/DEFERRED unchanged", "status": "PROPOSED" },
+    { "mappingId": "M-20", "from": "RP-01", "sourcePath": "nodes[].targetLevel", "to": "R-02", "targetPath": "fidelityTarget", "transform": "VISUAL/GEOMETRY/KINEMATIC/DYNAMIC -> FID-V/G/K/D1; not fidelityClaim", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-21", "from": "R-03", "sourcePath": "parts[].part_id (SYS-30-HUB-001 etc.)", "to": "R-02", "targetPath": "PartDefinition.partId + externalIds", "transform": "RP-01 PART-* remains canonical; R-03 SYS-* becomes externalId (e.g., SYS-30-HUB-001 -> PART-30-006)", "status": "NEEDS_DECISION", "note": "Do not let two part IDs compete." },
+    { "mappingId": "M-22", "from": "R-03", "sourcePath": "parts[].revision (16-hex content hash)", "to": "R-02", "targetPath": "PartRevision.contentFingerprint", "transform": "content hash -> contentFingerprint; revision stays human rNNN; file sha256 stays 64-hex", "status": "NEEDS_DECISION", "note": "R-02 refs use partId@r001; a 16-hex hash cannot replace that." },
+    { "mappingId": "M-23", "from": "R-03", "sourcePath": "parts[].assets.step/stl + composite_assets.glb", "to": "R-02", "targetPath": "AssetManifest.step/stl/glb", "transform": "add sha256/bytes; sourceUnits mm; transform unitScale 0.001", "status": "PROPOSED" },
+    { "mappingId": "M-24", "from": "R-03", "sourcePath": "parts[].instances[].instance_id/transform_mm", "to": "R-02", "targetPath": "PartInstance.instanceId + Frame", "transform": "SYS-*#inst_N -> INST-*; transform_mm -> Frame origin (m) + rotation", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-25", "from": "R-03", "sourcePath": "parts[].mount_frames[]", "to": "R-02", "targetPath": "Frame + MountInterface", "transform": "split: frame_id/origin/axis -> Frame; mating_specs PCD/N/dh -> fastenerPattern; missing pilot/CB/fit -> OPEN", "status": "NEEDS_DECISION", "note": "R-03 MountFrame conflates frame and mount interface." },
+    { "mappingId": "M-26", "from": "R-03", "sourcePath": "parts[].mass_properties_assumption", "to": "R-02", "targetPath": "Material/massProperties", "transform": "density/mass -> DEMO_ASSUMPTION, not SOURCED; volume from CAD is DEMO/geometry check only", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-27", "from": "R-03", "sourcePath": "parts[].modeling_fidelity (GEOMETRIC_ENVELOPE_ONLY / NOMINAL_CYLINDER_PLUS_METADATA)", "to": "R-02", "targetPath": "fidelityClaim", "transform": "envelope/nominal cylinder -> FID-V, not FID-G", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-28", "from": "R-03", "sourcePath": "coordinate_conventions.cad_source / browser_viewer", "to": "R-02", "targetPath": "Frame transform", "transform": "use actual runtime +X left/+Y up/+Z forward; corrected matrix x_R=-0.001*x_CAD, y_R=+0.001*z_CAD, z_R=+0.001*y_CAD", "status": "NEEDS_DECISION", "note": "R-03 claimed X=+0.001x, Z=-0.001y; sign mismatch." },
+    { "mappingId": "M-29", "from": "R-03", "sourcePath": "assembly_id (SYS-30-WHEEL-END-ASSY)", "to": "R-02", "targetPath": "AssemblyDefinition.assemblyId + externalIds", "transform": "map to RP-01 ASSY-30-001; keep external pipeline ID", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-30", "from": "R-03", "sourcePath": "cache_manifest fingerprint", "to": "R-02", "targetPath": "AssetManifest.contentFingerprint/cacheMetadata", "transform": "build cache fingerprint is not an engineering revision", "status": "PROPOSED" },
+    { "mappingId": "M-31", "from": "R-03", "sourcePath": "GLB node.extras coverage", "to": "R-02", "targetPath": "AssetManifest.render metadata", "transform": "extras coverage is render metadata, not B-rep or fit evidence", "status": "PROPOSED" },
+    { "mappingId": "M-32", "from": "R-04", "sourcePath": "frame (x=left,y=up,z=forward,m/rad)", "to": "R-02", "targetPath": "FR-VEHICLE", "transform": "exact match with runtime; no axis swap", "status": "PROPOSED" },
+    { "mappingId": "M-33", "from": "R-04", "sourcePath": "hardpoints.*", "to": "R-02", "targetPath": "Frame (PART_LOCAL/INSTANCE)", "transform": "m vectors -> Frame.origin; valueBasis DEMO_ASSUMPTION + provenance FICTIONAL_FIXTURE", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-34", "from": "R-04", "sourcePath": "constraintModel.sla upper/lower arm circles", "to": "R-02", "targetPath": "Joint REVOLUTE + DISTANCE", "transform": "arm pivot revolute + rigid distance from pivot axis; add DISTANCE type", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-35", "from": "R-04", "sourcePath": "upright three distances + tie-rod length", "to": "R-02", "targetPath": "Joint DISTANCE", "transform": "rigid point distances; add DISTANCE type", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-36", "from": "R-04", "sourcePath": "drivenCoordinate=wheelCenter.y", "to": "R-02", "targetPath": "Joint.driver.type=PRESCRIBED_POSITION", "transform": "add driver type; axis y, unit m, value from sweep", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-37", "from": "R-04", "sourcePath": "shock length is output, not constant link", "to": "R-02", "targetPath": "SPRING_DAMPER.forceElement=true", "transform": "mark force element, not kinematic length constraint", "status": "NEEDS_DECISION", "note": "Otherwise vertical DOF is locked." },
+    { "mappingId": "M-38", "from": "R-04", "sourcePath": "macpherson strut line", "to": "R-02", "targetPath": "Joint POINT_ON_LINE/PRISMATIC", "transform": "upper point slides on strut line; add POINT_ON_LINE type", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-39", "from": "R-04", "sourcePath": "tests T11-T21", "to": "R-02", "targetPath": "verification.testRefs + fidelityClaim=FID-K", "transform": "fixture kinematics verified; not production vehicle", "status": "PROPOSED" },
+    { "mappingId": "M-40", "from": "R-04", "sourcePath": "provenance=FICTIONAL_FIXTURE / notAProductionVehicle", "to": "R-02", "targetPath": "valueBasis=DEMO_ASSUMPTION + provenance", "transform": "valueBasis=DEMO_ASSUMPTION + provenance=FICTIONAL_FIXTURE; never SOURCED/production", "status": "PROPOSED" },
+    { "mappingId": "M-41", "from": "R-04", "sourcePath": "derived radii/lengths", "to": "R-02", "targetPath": "derivedDimensions + verification", "transform": "derived values, not measured part parameters", "status": "PROPOSED" },
+    { "mappingId": "M-42", "from": "RP-02", "sourcePath": "Frame", "to": "R-02", "targetPath": "Frame", "transform": "same origin/rotation/units/tolerance contract", "status": "PROPOSED" },
+    { "mappingId": "M-43", "from": "RP-02", "sourcePath": "evidence.level + validation.requiredLevel", "to": "R-02", "targetPath": "evidence.level + evidence.requiredLevel", "transform": "rename validation.requiredLevel; verification is separate", "status": "NEEDS_DECISION" },
+    { "mappingId": "M-44", "from": "RP-02", "sourcePath": "render.visualOnly", "to": "R-02", "targetPath": "AssetManifest.mappingStatus/fidelityClaim", "transform": "render-only cannot be engineering B-rep", "status": "PROPOSED" },
+    { "mappingId": "M-45", "from": "RP-02", "sourcePath": "interface edge (mechanical)", "to": "R-02", "targetPath": "Joint + MountInterface", "transform": "one edge may map to a kinematic Joint and a MountInterface; do not duplicate", "status": "PROPOSED" },
+    { "mappingId": "M-46", "from": "RP-02", "sourcePath": "fidelity/evidence/verification separation", "to": "R-02", "targetPath": "canonical.truth", "transform": "keep three fields separate; no auto-promotion", "status": "NEEDS_DECISION" }
+  ],
+  "conflicts": [
+    {
+      "conflictId": "C-01",
+      "severity": "P0",
+      "topic": "R-03 CAD→WebGL 坐标变换与现有运行时轴符号冲突",
+      "sources": ["R-03 §3.1", "src/physics/vehicleWorld.js:180-188", "src/parts/chassis.js:285-291", "R-04 frame"],
+      "observed": "R-03 声明 CAD +X 右、+Y 前、+Z 上，并映射 X=+0.001x、Y=+0.001z、Z=-0.001y；现有运行时是 +X 左、+Y 上、+Z 前。",
+      "whyItMatters": "左右轮端、卡钳、制动盘、转向节会被装到错误一侧；车头方向会反。R-03 样例点 57.15 mm 在两种映射下相差 114.3 mm。",
+      "options": ["A. 以现有运行时为世界，修正 R-03 变换", "B. 以 R-03 的 CAD 轴为源，重写浏览器坐标层", "C. 保留两套并强制每个资产带显式轴声明"],
+      "recommendation": "选 A：世界用 +X 左/+Y 上/+Z 前；R-03 修正为 x_R=-0.001*x_CAD、y_R=+0.001*z_CAD、z_R=+0.001*y_CAD，并补正反测试。",
+      "owner": "gpt-6 + gemini-3-8-flash",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-02",
+      "severity": "P0",
+      "topic": "R-03 part_id 与 RP-01 PART-* 的规范身份冲突",
+      "sources": ["R-03 §2.1", "RP-01 idPolicy", "R-02 §2.2"],
+      "observed": "R-03 用 SYS-30-HUB-001/SYS-40-ROTOR-001；RP-01 用 PART-30-006/PART-40-046；R-02 用 RP-01 的 PART-*。",
+      "whyItMatters": "同一个物理零件出现两个主键，装配、BOM、变更传播会分裂。",
+      "options": ["A. RP-01 PART-* 为唯一主键，R-03 SYS-* 作 externalId", "B. R-03 SYS-* 升为主键", "C. 建双向别名表"],
+      "recommendation": "选 A；C 作为迁移兼容，但禁止长期双主键。",
+      "owner": "gpt-6",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-03",
+      "severity": "P0",
+      "topic": "revision 的语义冲突：人可读版本 vs 内容哈希",
+      "sources": ["R-02 §2.3", "R-03 §2.1"],
+      "observed": "R-02 revision=r001（人可读、不可变）；R-03 revision=4656a3d39589d4dc（16-hex 内容哈希）。",
+      "whyItMatters": "partId@r001 引用无法解析到 16-hex；BOM/实例版本会断。",
+      "options": ["A. revision=rNNN，contentFingerprint=16-hex，file sha256=64-hex", "B. 用哈希当 revision", "C. 两套字段并存但强制映射"],
+      "recommendation": "选 A；R-03 的 revision 映射到 contentFingerprint，不能直接替换 revision。",
+      "owner": "gpt-6",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-04",
+      "severity": "P0",
+      "topic": "qty 语义：RP-01 整车/四角总数 vs R-02 每个父总成实例数量",
+      "sources": ["RP-01 PART-30-009 qty=20", "R-02 BOM qty=5"],
+      "observed": "RP-01 轮端螺柱 qty=20（四角），R-02 单角 BOM qty=5；直接复制会把数量放大 4 倍。",
+      "whyItMatters": "BOM、采购、质量、实例生成全部错。",
+      "options": ["A. BOM qty 按每个父总成实例；vehicleTotalQty 另记", "B. 全部用整车总数", "C. 每个实例只记 instanceId，不记 qty"],
+      "recommendation": "选 A；RP-01 qty 保留为 vehicleTotalQty 或四角总数说明，实例层用 5。",
+      "owner": "gpt-6",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-05",
+      "severity": "P0",
+      "topic": "R-04 约束模型缺少 R-02 Joint 类型：DISTANCE/POINT_ON_LINE/PRESCRIBED_POSITION/forceElement",
+      "sources": ["R-04 §1/§7", "R-02 §5"],
+      "observed": "R-04 需要定长距离约束、上点沿滑柱线、轮心高度作为输入、减振器长度作为输出；R-02 只有 FIXED/REVOLUTE/SPHERICAL/PRISMATIC/UNIVERSAL/CYLINDRICAL/GEAR/CONTACT/SPRING_DAMPER/BELT。",
+      "whyItMatters": "缺 DISTANCE 会丢杆长；缺 POINT_ON_LINE 会把麦弗逊做成双叉臂；把减振器当刚性杆会锁死垂向自由度。",
+      "options": ["A. 扩展 R-02 Joint 类型与 driver", "B. 另建 R-04 专用约束 Schema", "C. 把 R-04 约束转成多体求解器文件"],
+      "recommendation": "选 A：加 DISTANCE、POINT_ON_LINE、driver.type=PRESCRIBED_POSITION，并给 SPRING_DAMPER 加 forceElement=true。",
+      "owner": "gpt-6 + grok",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-06",
+      "severity": "P0",
+      "topic": "真实性/来源/验证三类字段混淆",
+      "sources": ["AUDIT_2026-11-14 §3.2", "R-01 claimedValidation", "R-03 modeling_fidelity", "R-04 tests", "R-02 fidelityClaim/evidence/verification"],
+      "observed": "R-01 用 claimedValidation，R-03 用 modeling_fidelity，R-04 用 tests，R-02 用 fidelityClaim/evidence/verification；字段名和语义不同。",
+      "whyItMatters": "把 PASS 当 fidelity、把 envelope 当 FID-G、把 fixture 当 production，会系统性过度声明。",
+      "options": ["A. 固定三字段：fidelityClaim/fidelityTarget、evidence、verification", "B. 各模型保留自有字段，只在报告层映射", "C. 只保留一个综合等级"],
+      "recommendation": "选 A；claimedValidation/modeling_fidelity/tests 只能映射到 verification 或 evidence，不能直接写 fidelityClaim。",
+      "owner": "gpt-6",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-07",
+      "severity": "P1",
+      "topic": "familyRef 同名异义：RP-01 零件家族 vs R-01 平台家族",
+      "sources": ["RP-01 familyRef -> FAM-*", "R-01 vehicleVariants[].familyRef -> PF-*", "R-02 platformFamilyRef"],
+      "observed": "两个 familyRef 都叫 familyRef，但一个指 SYS-130 零件家族，一个指平台家族。",
+      "whyItMatters": "按名字直接合并会把 PF-DEMO-BOF-01 当 FAM-130-* 或反之。",
+      "options": ["A. 改名：partFamilyRef vs platformFamilyRef", "B. 保留 familyRef，按实体类型区分", "C. 加命名空间前缀"],
+      "recommendation": "选 A；R-02 的 platformFamilyRef 保留，RP-01 的 familyRef 改称 partFamilyRef 或明确上下文。",
+      "owner": "gpt-6 + qwen4",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-08",
+      "severity": "P1",
+      "topic": "R-03 MountFrame 把 Frame 和 MountInterface 混成一个对象",
+      "sources": ["R-03 §3.3", "R-02 §4.5"],
+      "observed": "R-03 MountFrame 同时含 frame_id/origin_mm/axis/mating_specs；R-02 分为 Frame(origin/rotation/units) 和 MountInterface(pilot/fastenerPattern/face/tolerance)。",
+      "whyItMatters": "PCD/孔数/中心孔/公差没有独立字段，无法做 R-02 的 PCD/CB/fit 检查。",
+      "options": ["A. R-03 输出拆成 Frame + MountInterface", "B. R-02 合并成 MountFrame", "C. 保留两套并加适配器"],
+      "recommendation": "选 A；R-03 的 mating_specs 映射到 fastenerPattern，缺 CB/fit 的字段标 OPEN。",
+      "owner": "gpt-6 + gemini-3-8-flash",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-09",
+      "severity": "P1",
+      "topic": "valueBasis 枚举在 RP-01/R-01/R-02 三套并存",
+      "sources": ["RP-01 geomBasis", "R-01 valueBasis", "R-02 valueBasis"],
+      "observed": "RP-01 用 SOURCED/NEEDS_MEASUREMENT/DEMO_ASSUMPTION/DEFERRED/NOT_APPLICABLE；R-01 用 DEMO_ASSUMPTION/LOCAL_MEASUREMENT/SOURCED/OPEN；R-02 另加 DERIVED/ENGINEERING_DERIVATION/EVIDENCE。",
+      "whyItMatters": "同一数值在不同模型里来源等级不同，无法统一门禁。",
+      "options": ["A. 合并为 R-02 并集 + 映射表", "B. 保留各模型枚举，只在报告层映射", "C. 只保留四个基础等级"],
+      "recommendation": "选 A；先冻结并集和别名，不把不同等级自动等同。",
+      "owner": "gpt-6",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-10",
+      "severity": "P1",
+      "topic": "R-03 modeling_fidelity 不能直接当 FID-G",
+      "sources": ["R-03 asset manifest modeling_fidelity", "RP-03 FID"],
+      "observed": "GEOMETRIC_ENVELOPE_ONLY / NOMINAL_CYLINDER_PLUS_METADATA 是包络/名义圆柱，不是精确 B-rep。",
+      "whyItMatters": "把包络当 FID-G 会声称孔位/配合已几何验证。",
+      "options": ["A. 映射到 FID-V", "B. 映射到 FID-G 但标 partial", "C. 新建 envelope 等级"],
+      "recommendation": "选 A；只有精确 STEP/B-rep 并通过几何检查才可到 FID-G。",
+      "owner": "gpt-6 + gemini-3-8-flash",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-11",
+      "severity": "P1",
+      "topic": "R-03 mass_properties_assumption 的来源等级",
+      "sources": ["R-03 asset manifest", "R-02 materials all null"],
+      "observed": "R-03 给 A356 密度 2700、HT250 密度 7200 和 mass_kg；R-02 材料属性全部 null+OPEN。",
+      "whyItMatters": "这些是典型值/假设，不是实测；直接当 SOURCED 会污染质量属性。",
+      "options": ["A. 标 DEMO_ASSUMPTION", "B. 标 SOURCED（需要材料标准）", "C. 保持 null"],
+      "recommendation": "选 A；只有材料标准/实测/供应商数据才可升级。",
+      "owner": "gpt-6 + gemini-3-8-flash",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-12",
+      "severity": "P1",
+      "topic": "R-04 FICTIONAL_FIXTURE 不能进入生产硬点",
+      "sources": ["R-04 provenance", "R-02 Frame valueBasis"],
+      "observed": "R-04 hardpoints 明确 FICTIONAL_FIXTURE、notAProductionVehicle=true。",
+      "whyItMatters": "把这些坐标当真实硬点会误导 CAD/采购/运动学。",
+      "options": ["A. valueBasis=DEMO_ASSUMPTION + provenance=FICTIONAL_FIXTURE", "B. 直接 SOURCED", "C. 丢弃夹具"],
+      "recommendation": "选 A；保留夹具用于回归，但禁止生产引用。",
+      "owner": "gpt-6 + grok",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-13",
+      "severity": "P1",
+      "topic": "R-03 instanceId 格式与 R-02 不同",
+      "sources": ["R-03 ${partId}#inst_N", "R-02 INST-*"],
+      "observed": "R-03 用 SYS-30-STUD-M14#inst_0；R-02 用 INST-STUD-FL-1。",
+      "whyItMatters": "实例选择、隐藏、替换、BOM 关联会找不到同一对象。",
+      "options": ["A. R-03 输出时映射到 R-02 instanceId", "B. R-02 改用 #inst_N", "C. 双字段并存"],
+      "recommendation": "选 A；R-03 的 #inst_N 作为 externalId，R-02 instanceId 为规范。",
+      "owner": "gpt-6 + gemini-3-8-flash",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-14",
+      "severity": "P1",
+      "topic": "R-01 claimedValidation.targetLevel 与 fidelityClaim 混淆",
+      "sources": ["R-01 vehicleVariants[].claimedValidation", "R-02 fidelityClaim/fidelityTarget"],
+      "observed": "R-01 targetLevel=GEOMETRY、geometricCompatibility=PASS；这不是 fidelityClaim。",
+      "whyItMatters": "把 targetLevel 当 fidelityClaim 会把目标当已达成。",
+      "options": ["A. targetLevel->fidelityTarget；PASS->verification", "B. targetLevel->fidelityClaim", "C. 丢弃 claimedValidation"],
+      "recommendation": "选 A；fidelityClaim 只能由实际模型能力+验证支撑。",
+      "owner": "gpt-6 + qwen4",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-15",
+      "severity": "P2",
+      "topic": "R-03 assembly_id 与 RP-01 ASSY-* 的映射",
+      "sources": ["R-03 assembly_id", "RP-01 ASSY-30-001"],
+      "observed": "R-03 用 SYS-30-WHEEL-END-ASSY；RP-01 用 ASSY-30-001。",
+      "whyItMatters": "总成身份不统一，BOM 和实例树会分叉。",
+      "options": ["A. 映射到 RP-01 ASSY-* + externalId", "B. 用 R-03 ID", "C. 双主键"],
+      "recommendation": "选 A。",
+      "owner": "gpt-6",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-16",
+      "severity": "P2",
+      "topic": "R-01 derivedExpected 与 R-02 derivedDimensions 的映射",
+      "sources": ["R-01 derivedExpected", "R-02 derivedDimensions"],
+      "observed": "R-01 有 propshaftLength_mm/lowerArmSpan_mm/tieRodSpan_mm；R-02 只有派生尺寸占位。",
+      "whyItMatters": "派生值若当参数会污染设计输入。",
+      "options": ["A. 映射到 derivedDimensions + verification", "B. 当 parameters", "C. 丢弃"],
+      "recommendation": "选 A。",
+      "owner": "gpt-6",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-17",
+      "severity": "P2",
+      "topic": "RP-02 validation.requiredLevel 与 R-02 evidence/verification 的命名冲突",
+      "sources": ["RP-02 validation", "R-02 truth fields"],
+      "observed": "RP-02 的 validation.requiredLevel 实际是 evidence 等级；R-02 把它拆成 evidence.requiredLevel 与 verification。",
+      "whyItMatters": "下游会把证据等级当验证状态。",
+      "options": ["A. 重命名为 evidence.requiredLevel，另加 verification", "B. 保留旧名并加别名", "C. 不迁移"],
+      "recommendation": "选 A；保留兼容别名到 RP-02 0.1.0。",
+      "owner": "gpt-6 + deepseek",
+      "status": "OPEN"
+    },
+    {
+      "conflictId": "C-18",
+      "severity": "P2",
+      "topic": "RP-01 REF 与 R-03 instances 的跨系统引用",
+      "sources": ["RP-01 REF-30-001/002/003", "R-03 instances"],
+      "observed": "RP-01 用 REF 指针；R-03 用 instances 数组；两者都可能引用 SYS-40 制动件。",
+      "whyItMatters": "容易复制实体或重复计数。",
+      "options": ["A. REF 为唯一跨系统指针，R-03 instances 只作物理放置", "B. 全部用 instances", "C. 两套并存"],
+      "recommendation": "选 A。",
+      "owner": "gpt-6",
+      "status": "OPEN"
+    }
+  ],
+  "counterexamples": [
+    {
+      "counterexampleId": "CE-01",
+      "conflictId": "C-01",
+      "description": "R-03 的 CAD→WebGL 变换把 57.15 mm 样例点映射到 +x，而现有运行时 +X 向左，正确结果应为 -x。",
+      "check": { "type": "vector_diff", "claimed": [0.05715, 0.014, 0.0], "correct": [-0.05715, 0.014, 0.0], "expectedDifference": 0.1143, "tolerance": 1e-9 },
+      "failure": "左右轮端/卡钳/制动盘会相差 114.3 mm（正好是 PCD 半径的两倍），装到错误一侧。"
+    },
+    {
+      "counterexampleId": "CE-02",
+      "conflictId": "C-01",
+      "description": "R-03 把 CAD +Y 前向映射到 WebGL -Z；现有运行时 +Z 是前方。",
+      "check": { "type": "not_equals", "actual": -1, "expected": 1 },
+      "failure": "车头方向反转，转向/制动前后管路和悬架摆臂方向都会错。"
+    },
+    {
+      "counterexampleId": "CE-03",
+      "conflictId": "C-03",
+      "description": "R-03 的 16-hex revision 如果直接当 R-02 revision，partId@r001 引用会解析失败。",
+      "check": { "type": "mapping_target", "mappingId": "M-22", "expectedContains": "contentFingerprint" },
+      "failure": "BOM/实例无法解析版本；必须 revision=rNNN + contentFingerprint=16-hex。"
+    },
+    {
+      "counterexampleId": "CE-04",
+      "conflictId": "C-02",
+      "description": "R-03 的 SYS-30-HUB-001 如果直接当规范 partId，会与 RP-01 PART-30-006 形成双主键。",
+      "check": { "type": "mapping_target", "mappingId": "M-21", "expectedContains": "externalIds" },
+      "failure": "同一实体两套 ID，装配/BOM/变更传播分裂。"
+    },
+    {
+      "counterexampleId": "CE-05",
+      "conflictId": "C-04",
+      "description": "RP-01 的 PART-30-009 qty=20（四角）直接用于单角 BOM 会放大 4 倍。",
+      "check": { "type": "equals", "actual": 4, "expected": 4 },
+      "failure": "单角 BOM 应 qty=5；整车总数另记 vehicleTotalQty=20。"
+    },
+    {
+      "counterexampleId": "CE-06",
+      "conflictId": "C-05",
+      "description": "R-04 的定长杆/滑柱线/预定位需要 R-02 新增 Joint/driver 类型。",
+      "check": { "type": "includes_all", "path": "jointTypes", "expected": ["DISTANCE", "POINT_ON_LINE"] },
+      "failure": "缺 DISTANCE 会丢杆长；缺 POINT_ON_LINE 会把麦弗逊做成双叉臂。"
+    },
+    {
+      "counterexampleId": "CE-07",
+      "conflictId": "C-05",
+      "description": "R-04 的减振器长度是输出，不是刚性杆。",
+      "check": { "type": "mapping_target", "mappingId": "M-37", "expectedContains": "forceElement" },
+      "failure": "把减振器当长度约束会锁死垂向自由度。"
+    },
+    {
+      "counterexampleId": "CE-08",
+      "conflictId": "C-06",
+      "description": "R-01 claimedValidation.targetLevel 应映射到 fidelityTarget，而不是直接当 fidelityClaim。",
+      "check": { "type": "mapping_target", "mappingId": "M-07", "expectedContains": "fidelityTarget" },
+      "failure": "把目标当已达成，会过度声明。"
+    },
+    {
+      "counterexampleId": "CE-09",
+      "conflictId": "C-10",
+      "description": "R-03 GEOMETRIC_ENVELOPE_ONLY 不能直接当 FID-G。",
+      "check": { "type": "mapping_field_contains", "mappingId": "M-27", "field": "transform", "expectedContains": "FID-V" },
+      "failure": "包络模型没有精确孔位/配合，不能声称几何验证。"
+    },
+    {
+      "counterexampleId": "CE-10",
+      "conflictId": "C-12",
+      "description": "R-04 FICTIONAL_FIXTURE 不能当 SOURCED 生产硬点。",
+      "check": { "type": "mapping_field_contains", "mappingId": "M-40", "field": "transform", "expectedContains": "DEMO_ASSUMPTION" },
+      "failure": "虚构夹具进入生产参数会误导 CAD/采购/运动学。"
+    },
+    {
+      "counterexampleId": "CE-11",
+      "conflictId": "C-11",
+      "description": "R-03 mass_properties_assumption 的密度/质量是典型假设，不是实测。",
+      "check": { "type": "mapping_field_contains", "mappingId": "M-26", "field": "transform", "expectedContains": "DEMO_ASSUMPTION" },
+      "failure": "把假设当 SOURCED 会污染质量/惯量。"
+    },
+    {
+      "counterexampleId": "CE-12",
+      "conflictId": "C-07",
+      "description": "RP-01 零件 familyRef 与 R-01 平台 familyRef 同名异义。",
+      "check": { "type": "conflict_exists", "conflictId": "C-07" },
+      "failure": "按名字合并会把 PF-DEMO-BOF-01 当 FAM-130-*。"
+    },
+    {
+      "counterexampleId": "CE-13",
+      "conflictId": "C-14",
+      "description": "R-01 targetLevel=GEOMETRY 应映射到 FID-G 目标，而不是 FID-D2 声明。",
+      "check": { "type": "mapping_field_contains", "mappingId": "M-07", "field": "transform", "expectedContains": "FID-G" },
+      "failure": "把目标当最高声明，会过度声明动力学真实性。"
+    },
+    {
+      "counterexampleId": "CE-14",
+      "conflictId": "C-03",
+      "description": "R-03 的 16-hex revision 与 R-02 r001 不是同一字段。",
+      "check": { "type": "mapping_field_contains", "mappingId": "M-22", "field": "transform", "expectedContains": "contentFingerprint" },
+      "failure": "混用会导致版本引用断裂。"
+    },
+    {
+      "counterexampleId": "CE-15",
+      "conflictId": "C-12",
+      "description": "R-04 provenance=FICTIONAL_FIXTURE 必须保留来源标记。",
+      "check": { "type": "mapping_field_contains", "mappingId": "M-40", "field": "transform", "expectedContains": "FICTIONAL_FIXTURE" },
+      "failure": "丢失来源标记会把夹具当生产数据。"
+    },
+    {
+      "counterexampleId": "CE-16",
+      "conflictId": "C-05",
+      "description": "R-04 的轮心高度是输入，需要 PRESCRIBED_POSITION driver。",
+      "check": { "type": "includes_all", "path": "drivers", "expected": ["PRESCRIBED_POSITION"] },
+      "failure": "没有预定位 driver，求解器不知道哪个坐标是输入。"
+    },
+    {
+      "counterexampleId": "CE-17",
+      "conflictId": "C-04",
+      "description": "R-02 BOM qty 应配有 vehicleTotalQty 以保留 RP-01 总数。",
+      "check": { "type": "mapping_target", "mappingId": "M-18", "expectedContains": "vehicleTotalQty" },
+      "failure": "只保留 qty 会丢失整车总数量。"
+    },
+    {
+      "counterexampleId": "CE-18",
+      "conflictId": "C-08",
+      "description": "R-03 MountFrame 必须拆成 Frame + MountInterface，否则 PCD/CB/公差无法校验。",
+      "check": { "type": "mapping_target", "mappingId": "M-25", "expectedContains": "MountInterface" },
+      "failure": "MountFrame 混在一起会丢失 pilot/fastenerPattern/tolerance 的独立校验。"
+    }
+  ],
+  "decisionRequests": [
+    { "id": "D-01", "question": "统一世界 Frame 是否采用现有运行时 +X 左/+Y 上/+Z 前，并要求 R-03 修正 CAD 变换？", "recommendation": "采用运行时为世界；R-03 修正为 x_R=-0.001*x_CAD、y_R=+0.001*z_CAD、z_R=+0.001*y_CAD。", "owner": "gpt-6 + gemini-3-8-flash", "blocking": "所有轮端/卡钳/制动盘左右方向和前后方向。" },
+    { "id": "D-02", "question": "规范 partId 是否以 RP-01 PART-* 为唯一主键？", "recommendation": "是；R-03 SYS-* 只作 externalId，禁止双主键。", "owner": "gpt-6", "blocking": "装配/BOM/变更传播。" },
+    { "id": "D-03", "question": "revision 与内容哈希如何分离？", "recommendation": "revision=rNNN；contentFingerprint=16-hex；文件 sha256=64-hex。", "owner": "gpt-6", "blocking": "partId@revision 引用与资产缓存。" },
+    { "id": "D-04", "question": "BOM qty 采用每个父总成实例数量，整车总数另记？", "recommendation": "是；qty per parent + vehicleTotalQty。", "owner": "gpt-6", "blocking": "5 个螺柱 vs 20 个螺柱的数量。" },
+    { "id": "D-05", "question": "是否扩展 Joint 类型 DISTANCE、POINT_ON_LINE 和 driver PRESCRIBED_POSITION，并给 SPRING_DAMPER 加 forceElement？", "recommendation": "是；否则 R-04 约束无法无损映射。", "owner": "gpt-6 + grok", "blocking": "悬架运动学与减振器自由度。" },
+    { "id": "D-06", "question": "是否采用 fidelityClaim/fidelityTarget、evidence、verification 三字段分离？", "recommendation": "是；claimedValidation/modeling_fidelity/tests 只映射到 verification 或 evidence。", "owner": "gpt-6", "blocking": "真实性/验收声明。" },
+    { "id": "D-07", "question": "familyRef 是否改名为 partFamilyRef（RP-01）与 platformFamilyRef（R-01/R-02）？", "recommendation": "是；避免同名异义。", "owner": "gpt-6 + qwen4", "blocking": "平台/零件家族引用。" },
+    { "id": "D-08", "question": "R-03 MountFrame 是否拆成 Frame + MountInterface？", "recommendation": "是；mating_specs 映射 fastenerPattern，缺 CB/fit 标 OPEN。", "owner": "gpt-6 + gemini-3-8-flash", "blocking": "PCD/中心孔/公差校验。" },
+    { "id": "D-09", "question": "R-03 GEOMETRIC_ENVELOPE_ONLY / NOMINAL_CYLINDER_PLUS_METADATA 是否只能到 FID-V？", "recommendation": "是；精确 B-rep 通过几何检查才到 FID-G。", "owner": "gpt-6 + gemini-3-8-flash", "blocking": "资产真实性声明。" },
+    { "id": "D-10", "question": "R-03 mass_properties_assumption 是否标 DEMO_ASSUMPTION？", "recommendation": "是；材料标准/实测/供应商数据才可升级。", "owner": "gpt-6 + gemini-3-8-flash", "blocking": "质量/惯量/动力学。" },
+    { "id": "D-11", "question": "R-04 FICTIONAL_FIXTURE 是否保留 provenance 并只用于回归？", "recommendation": "是；valueBasis=DEMO_ASSUMPTION + provenance=FICTIONAL_FIXTURE。", "owner": "gpt-6 + grok", "blocking": "生产硬点与 CAD。" },
+    { "id": "D-12", "question": "R-03 instanceId 是否映射到 R-02 INST-*，原 #inst_N 作 externalId？", "recommendation": "是；R-02 instanceId 为规范。", "owner": "gpt-6 + gemini-3-8-flash", "blocking": "实例选择/隐藏/替换/BOM。" },
+    { "id": "D-13", "question": "R-01 claimedValidation.targetLevel 是否映射到 fidelityTarget？", "recommendation": "是；targetLevel≠fidelityClaim。", "owner": "gpt-6 + qwen4", "blocking": "平台变体的真实性声明。" },
+    { "id": "D-14", "question": "RP-02 validation.requiredLevel 是否重命名为 evidence.requiredLevel，并与 verification 分离？", "recommendation": "是；保留 0.1.0 兼容别名。", "owner": "gpt-6 + deepseek", "blocking": "接口图与装配契约的字段一致性。" },
+    { "id": "D-15", "question": "是否在以上裁决前冻结任何生产 Schema？", "recommendation": "否；R-07 只提交候选映射，冻结需 GPT-6 明确批准。", "owner": "gpt-6", "blocking": "生产 Schema 与批量资产。" }
+  ],
+  "open": [
+    "R-03 CAD 源的真实轴定义需要 Gemini 确认：+X 右还是 +X 左？",
+    "R-03 mount_frames 缺 center bore/fit/tolerance，需补或标 OPEN。",
+    "R-04 真实硬点、衬套刚度、主销后倾目标、半轴允许伸缩量仍未知。",
+    "R-01 固定/可变硬点最终清单与首发基型未冻结。",
+    "R-03 质量属性典型值需要材料标准/实测来源。",
+    "RP-01 493 件零件的真实几何来源仍严重不足。",
+    "统一生产 Schema 只能在 GPT-6 裁决后建立。"
+  ]
+}
