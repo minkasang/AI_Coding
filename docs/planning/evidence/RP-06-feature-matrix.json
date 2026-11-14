@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "RP-06-feature-matrix/1.0",
+  "generatedAt": "2026-11-14",
+  "threeVersionDeclared": "^0.170.0",
+  "evidenceNote": "threeVersionDeclared from package.json; addons paths verified under node_modules/three/examples/jsm/",
+  "features": [
+    {
+      "id": "nav-system-tree",
+      "name": "系统树导航",
+      "tier": "MVP",
+      "support": "CUSTOM",
+      "threeOfficial": null,
+      "dependsOn": ["RP-01 PBS IDs", "asset manifest instanceId"]
+    },
+    {
+      "id": "search-parts",
+      "name": "零件搜索",
+      "tier": "MVP",
+      "support": "CUSTOM",
+      "threeOfficial": null
+    },
+    {
+      "id": "pick-highlight",
+      "name": "点选高亮",
+      "tier": "MVP",
+      "support": "HYBRID",
+      "threeOfficial": "examples/jsm/core/Raycaster.js",
+      "addonOptional": "examples/jsm/postprocessing/OutlinePass.js"
+    },
+    {
+      "id": "marquee-select",
+      "name": "框选",
+      "tier": "LATER",
+      "support": "HYBRID",
+      "threeOfficial": "examples/jsm/interactive/SelectionBox.js"
+    },
+    {
+      "id": "isolate-hide",
+      "name": "隔离/隐藏",
+      "tier": "MVP",
+      "support": "CUSTOM",
+      "threeOfficial": "Object3D.visible"
+    },
+    {
+      "id": "transparency-xray",
+      "name": "透明/x-ray",
+      "tier": "MVP",
+      "support": "BUILTIN",
+      "threeOfficial": "Material.transparent, depthWrite"
+    },
+    {
+      "id": "section-cut",
+      "name": "剖切",
+      "tier": "MVP",
+      "support": "BUILTIN",
+      "threeOfficial": "WebGLRenderer.clippingPlanes",
+      "docUrl": "https://threejs.org/docs/#api/en/renderers/WebGLRenderer.clippingPlanes"
+    },
+    {
+      "id": "measure-distance",
+      "name": "两点测距",
+      "tier": "MVP",
+      "support": "CUSTOM",
+      "threeOfficial": "Vector3.distanceTo",
+      "addonOptional": "examples/jsm/renderers/CSS2DRenderer.js"
+    },
+    {
+      "id": "bom-panel",
+      "name": "BOM 面板",
+      "tier": "MVP",
+      "support": "CUSTOM",
+      "dependsOn": ["MASTER_PLAN Assembly.bom"]
+    },
+    {
+      "id": "joint-glyph",
+      "name": "运动副显示",
+      "tier": "REQUIRES_RESEARCH",
+      "support": "CUSTOM",
+      "threeOfficial": null
+    },
+    {
+      "id": "explode",
+      "name": "爆炸/装回",
+      "tier": "MVP",
+      "support": "CUSTOM",
+      "storage": "assembly JSON explodeVector"
+    },
+    {
+      "id": "variant-diff",
+      "name": "变型前后差异",
+      "tier": "LATER",
+      "support": "CUSTOM",
+      "dependsOn": ["VariantRule", "stable instanceId"]
+    },
+    {
+      "id": "stream-load-gltf",
+      "name": "按需 GLB 加载",
+      "tier": "MVP",
+      "support": "OFFICIAL",
+      "threeOfficial": "examples/jsm/loaders/GLTFLoader.js",
+      "docUrl": "https://threejs.org/docs/#examples/en/loaders/GLTFLoader"
+    },
+    {
+      "id": "orbit-view",
+      "name": "轨道与视角",
+      "tier": "MVP",
+      "support": "OFFICIAL",
+      "threeOfficial": "examples/jsm/controls/OrbitControls.js",
+      "projectEvidence": "src/main.js imports OrbitControls"
+    },
+    {
+      "id": "view-helper",
+      "name": "视角魔方",
+      "tier": "MVP",
+      "support": "OFFICIAL",
+      "threeOfficial": "examples/jsm/helpers/ViewHelper.js"
+    },
+    {
+      "id": "truth-badges",
+      "name": "真实性徽章",
+      "tier": "MVP",
+      "support": "CUSTOM",
+      "dependsOn": ["MASTER_PLAN validationLevel"]
+    },
+    {
+      "id": "legacy-four-modes",
+      "name": "旧四演示模式回归",
+      "tier": "MVP",
+      "support": "CONSTRAINT",
+      "projectEvidence": "src/main.js selectMode + STUDIO_MODES"
+    }
+  ]
+}

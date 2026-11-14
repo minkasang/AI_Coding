@@ -1,0 +1,231 @@
+{
+  "artifact": "RP-01-selftest-result",
+  "tool": "agent-workspace/agents/qwen4/tools/rp01_tree_tool.py",
+  "command": ".venv/Scripts/python.exe agent-workspace/agents/qwen4/tools/rp01_tree_tool.py selftest --out docs/planning/evidence/RP-01-selftest-result.json",
+  "overall": "PASS",
+  "baselineViolations": 0,
+  "caught": 32,
+  "missed": 0,
+  "total": 32,
+  "rulesCovered": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R11",
+    "R12",
+    "R13",
+    "R14",
+    "R15",
+    "R16",
+    "R17",
+    "R18",
+    "R19",
+    "R20",
+    "R21",
+    "R22",
+    "R23",
+    "R24"
+  ],
+  "rulesWithoutNegativeControl": [],
+  "controls": [
+    {
+      "rule": "R03",
+      "mutation": "duplicate node id",
+      "result": "CAUGHT",
+      "sample": "duplicate id PART-20-002"
+    },
+    {
+      "rule": "R05",
+      "mutation": "dangling parent reference",
+      "result": "CAUGHT",
+      "sample": "PART-20-003: dangling parent ASSY-99-999"
+    },
+    {
+      "rule": "R06",
+      "mutation": "parent cycle",
+      "result": "CAUGHT",
+      "sample": "cycle at SUB-20-01"
+    },
+    {
+      "rule": "R04",
+      "mutation": "id prefix does not match kind",
+      "result": "CAUGHT",
+      "sample": "BOLT-20-001: kind=part expects prefix PART-"
+    },
+    {
+      "rule": "R07",
+      "mutation": "id system segment contradicts parent chain",
+      "result": "CAUGHT",
+      "sample": "PART-30-001: id says SYS-30 but parent chain leads to SYS-50"
+    },
+    {
+      "rule": "R10",
+      "mutation": "fabricated mass value",
+      "result": "CAUGHT",
+      "sample": "PART-20-001: fabricated numeric 'massKg=3.42'"
+    },
+    {
+      "rule": "R10",
+      "mutation": "fabricated tolerance value",
+      "result": "CAUGHT",
+      "sample": "PART-20-001: fabricated numeric 'fits.toleranceH7=0.021'"
+    },
+    {
+      "rule": "R11",
+      "mutation": "ANY mixed with concrete architecture",
+      "result": "CAUGHT",
+      "sample": "PART-20-001: body mixes ANY with specific values ['BOF', 'ANY']"
+    },
+    {
+      "rule": "R12",
+      "mutation": "EVIDENCE without any source",
+      "result": "CAUGHT",
+      "sample": "PART-20-001: evidence=EVIDENCE without sources"
+    },
+    {
+      "rule": "R12",
+      "mutation": "citation of unknown source id",
+      "result": "CAUGHT",
+      "sample": "PART-20-001: unknown source S999"
+    },
+    {
+      "rule": "R08",
+      "mutation": "cross-system ref points nowhere",
+      "result": "CAUGHT",
+      "sample": "REF-20-001: refId PART-00-000 not found"
+    },
+    {
+      "rule": "R08",
+      "mutation": "ref node used as a physical parent",
+      "result": "CAUGHT",
+      "sample": "REF-20-001: ref node must be a leaf"
+    },
+    {
+      "rule": "R09",
+      "mutation": "same physical identity declared twice",
+      "result": "CAUGHT",
+      "sample": "PART-30-998 duplicates physical identity of PART-20-001 (Upper control arm body)"
+    },
+    {
+      "rule": "R20",
+      "mutation": "deferred part without reason",
+      "result": "CAUGHT",
+      "sample": "PART-20-001: deferred/out-of-scope without deferReason"
+    },
+    {
+      "rule": "R21",
+      "mutation": "part needing geometry without note",
+      "result": "CAUGHT",
+      "sample": "PART-20-001: geomBasis=NEEDS_MEASUREMENT without geomNote"
+    },
+    {
+      "rule": "R22",
+      "mutation": "familyRef points at a non-family node",
+      "result": "CAUGHT",
+      "sample": "PART-20-002: familyRef PART-30-001 is not kind=family"
+    },
+    {
+      "rule": "R14",
+      "mutation": "config selects two alternatives in one required group",
+      "result": "CAUGHT",
+      "sample": "config CFG-BOF-ICE: required group CG-STEER selects 0 members (need exactly 1)"
+    },
+    {
+      "rule": "R17",
+      "mutation": "function node smuggled into product tree",
+      "result": "CAUGHT",
+      "sample": "product tree contains function node FUNC-BRK-99"
+    },
+    {
+      "rule": "R18",
+      "mutation": "leaf function with no hardware",
+      "result": "CAUGHT",
+      "sample": "leaf function FUNC-DRV-01 has no realizedBy hardware"
+    },
+    {
+      "rule": "R18",
+      "mutation": "leaf function citing nonexistent hardware",
+      "result": "CAUGHT",
+      "sample": "FUNC-DRV-01: realizedBy PART-00-000 not in product tree"
+    },
+    {
+      "rule": "R23",
+      "mutation": "GAP function without a gap note",
+      "result": "CAUGHT",
+      "sample": "function FUNC-SNS-07: coverage=GAP without gapNote"
+    },
+    {
+      "rule": "R15",
+      "mutation": "wheel-end deep dive loses its seal class",
+      "result": "CAUGHT",
+      "sample": "wheel-end ASSY-30-001: no part with partClass in ['seal']"
+    },
+    {
+      "rule": "R16",
+      "mutation": "engine deep dive loses its linkage class",
+      "result": "CAUGHT",
+      "sample": "engine ASSY-50-001: no part with partClass in ['linkage']"
+    },
+    {
+      "rule": "R02",
+      "mutation": "part missing required field",
+      "result": "CAUGHT",
+      "sample": "PART-20-001: part without geomBasis"
+    },
+    {
+      "rule": "R13",
+      "mutation": "config missing a required field",
+      "result": "CAUGHT",
+      "sample": "config CFG-BOF-ICE: missing 'name'"
+    },
+    {
+      "rule": "R13",
+      "mutation": "alternative node without a choice group",
+      "result": "CAUGHT",
+      "sample": "ASSY-20-001: alternative without choiceGroup"
+    },
+    {
+      "rule": "R24",
+      "mutation": "audit summary count does not match items",
+      "result": "CAUGHT",
+      "sample": "summary.planVerdictCounts.MENTIONED=20 but actual=19"
+    },
+    {
+      "rule": "R24",
+      "mutation": "audit cites a nonexistent tree node",
+      "result": "CAUGHT",
+      "sample": "audit A01: treeNodes PART-00-000 not found in any tree"
+    },
+    {
+      "rule": "R24",
+      "mutation": "audit cites an unknown evidence id",
+      "result": "CAUGHT",
+      "sample": "audit A01: evidence M999 not in source register"
+    },
+    {
+      "rule": "R24",
+      "mutation": "audit reviews a GAP id absent from the register",
+      "result": "CAUGHT",
+      "sample": "gapRegisterReview GAP-999 not present in GAP_REGISTER.md"
+    },
+    {
+      "rule": "R19",
+      "mutation": "Markdown tree drifted from JSON",
+      "result": "CAUGHT",
+      "sample": "ids only in Markdown: ['PART-00-999']"
+    },
+    {
+      "rule": "R01",
+      "mutation": "malformed evidence file (in-memory loader patch)",
+      "result": "CAUGHT",
+      "sample": "RP-01-tree-core.json: simulated malformed JSON"
+    }
+  ]
+}

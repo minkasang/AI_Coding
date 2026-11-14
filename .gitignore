@@ -1,0 +1,85 @@
+# CARLAB: keep source, research and task cards in Git.
+# Dependencies and caches belong on F: and can be reconstructed.
+node_modules/
+.venv/
+.cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.uv-cache/
+.vite/
+dist/
+build/
+coverage/
+.cache-*/
+
+# OS / IDE / temporary
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+*.temp
+*.bak
+*.log
+*.pid
+*.orig
+*~
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.credentials
+credentials.json
+secrets.json
+service-account*.json
+id_rsa*
+id_ed25519*
+*.sqlite
+*.db
+
+# CAD/Blender generated assets: reproduce from source scripts.
+# Keep parametric Python, JSON parameters, reports, and test definitions.
+cad/**/out/
+cad/**/output/
+cad/**/outputs/
+cad/**/renders/
+cad/**/renders-*/
+*.blend1
+*.blend2
+*.blend@
+*.blendcache
+*.blendlock
+*.blend.lock
+*.stl
+*.step
+*.stp
+*.iges
+*.igs
+*.obj
+*.fbx
+*.glb
+*.gltf
+*.ply
+*.usd
+*.usdz
+*.exr
+*.hdr
+
+# Test / screenshots / export artifacts
+playwright-report/
+test-results/
+screenshots/

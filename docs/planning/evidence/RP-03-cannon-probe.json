@@ -1,0 +1,282 @@
+{
+  "schema": "carlab.rp03.cannonProbe.v1",
+  "task": "RP-03",
+  "date": "2026-11-14",
+  "command": "node F:\\tmp\\rp03-probe.mjs",
+  "cannonPackage": "cannon-es@0.20.0",
+  "sourceFile": "node_modules/cannon-es/dist/cannon-es.js",
+  "dt_s": 0.016666666666666666,
+  "units": {
+    "length": "m",
+    "mass": "kg",
+    "time": "s",
+    "force": "N",
+    "angle": "rad"
+  },
+  "fixture": {
+    "mass_kg": 920,
+    "wheelbase_m": 2.46,
+    "halfTrack_m": 0.84,
+    "suspension": {
+      "stiffness": 32,
+      "dampingCompression": 2.4,
+      "dampingRelaxation": 3.2,
+      "restLength": 0.34,
+      "maxTravel": 0.22,
+      "frictionSlip": 3.2,
+      "rollInfluence": 0.14
+    },
+    "tireSpec": "245/35 R20",
+    "tireOuterRadius_m": 0.33975,
+    "tireRimRadius_m": 0.254,
+    "tireNote": "半径由 245/35 R20 的名义公式算出，品牌 VULCAN 是项目虚构名称"
+  },
+  "passCount": 16,
+  "failCount": 0,
+  "failed": [],
+  "tests": [
+    {
+      "id": "wheel_not_rigid_body",
+      "pass": true,
+      "worldBodyCount": 2,
+      "wheelInfoCount": 4,
+      "wheelHasBody": false,
+      "expect": "只有地面和车身两个刚体；四个轮子是 WheelInfo，没有 body"
+    },
+    {
+      "id": "camber_unchanged_by_travel",
+      "pass": true,
+      "angleRad": [
+        0,
+        0,
+        0
+      ],
+      "expect": "行程改变时，轮子相对车身的姿态角保持 0（无外倾变化）"
+    },
+    {
+      "id": "positive_steer_yaws_toward_positive_x",
+      "pass": true,
+      "wheelForward": {
+        "x": 0.38941834230865047,
+        "y": 0,
+        "z": 0.9210609940028851
+      },
+      "expect": "正转向角使轮子朝 +X（本项目左轮一侧）偏航"
+    },
+    {
+      "id": "visual_wishbone_changes_length",
+      "pass": true,
+      "spanAtRest_m": {
+        "upper": 0.4964876634922564,
+        "lower": 0.499924994374156
+      },
+      "spanAtBump_m": {
+        "upper": 0.4143669871020132,
+        "lower": 0.43142206712220915
+      },
+      "upperDelta_mm": 82.12067639024323,
+      "lowerDelta_mm": 68.50292725194684,
+      "expect": "按 chassis.js 的枢轴和球头公式，跳动后上下叉臂长度变化超过 10 mm"
+    },
+    {
+      "id": "ackermann_factor_is_not_geometric",
+      "pass": true,
+      "note": "本项记录对比，不把当前 0.94 系数判为合格的阿克曼",
+      "track_m": 1.68,
+      "wheelbase_m": 2.46,
+      "geometricInnerForOuter0_3_rad": 0.3737533043268554,
+      "geometricInnerOverOuter": 1.2458443477561847,
+      "projectLeftTurn": {
+        "FL": 0.3,
+        "FR": 0.282
+      },
+      "projectRightTurn": {
+        "FL": -0.3,
+        "FR": -0.282
+      },
+      "projectMagnitudeRatio": 1.0638297872340425,
+      "wrongWheelOnRightTurn": true,
+      "expect": "右转时内侧轮应是 FR，但 0.94 始终缩小 FR，所以外侧轮转角更大"
+    },
+    {
+      "id": "speed_uses_velocity_magnitude",
+      "pass": true,
+      "vertical5mps_kmh": 18,
+      "forward5mps_kmh": 18,
+      "expect": "竖直 5 m/s 与向前 5 m/s 得到同一个 18 km/h"
+    },
+    {
+      "id": "no_droop_beyond_rest",
+      "pass": true,
+      "maxSuspensionLength_m": 0.34,
+      "restLength_m": 0.34,
+      "expect": "下落过程中悬架长度不超过静止长度；射线模型没有下垂行程"
+    },
+    {
+      "id": "spring_force_is_stiffness_times_mass",
+      "pass": true,
+      "predictedLength_m": 0.263359375,
+      "lengths_m": [
+        0.2633593749985952,
+        0.2633593749985952,
+        0.2633593749985952,
+        0.2633593749985952
+      ],
+      "forces_N": [
+        2256.3000000648544,
+        2256.3000000648544,
+        2256.3000000648544,
+        2256.3000000648544
+      ],
+      "effectiveStiffness_N_per_m": 29440,
+      "expect": "静平衡压缩量等于 g/(4*stiffness)，说明刚度先乘整车质量"
+    },
+    {
+      "id": "coast_has_no_tire_rolling_resistance",
+      "pass": true,
+      "vzAfter1s_m_per_s": 8,
+      "frictionSlip": 3.2,
+      "expect": "不踩刹车、不给驱动力时，1 秒后纵向速度仍接近 8 m/s"
+    },
+    {
+      "id": "straight_brake_ignores_frictionSlip",
+      "pass": true,
+      "hypothesisBeforeRun": "直线制动时，较小的 frictionSlip 应该留下更高的末速度",
+      "hypothesisHeld": false,
+      "brakeImpulseCap": 30,
+      "highFrictionSlip": {
+        "vz": 0.060848022473323354,
+        "z": 6.291126194473104,
+        "rotationDelta": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "sliding": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "lowFrictionSlip": {
+        "vz": 0.060848022473323354,
+        "z": 6.291126194473104,
+        "rotationDelta": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "sliding": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "codeReason": "cannon-es updateFriction 仅在 sideImpulse 非 0 时才用 skidInfo 缩小 forwardImpulse；直线上侧向冲量为 0，frictionSlip 不参与这次刹车",
+      "expect": "frictionSlip 3.2 与 0.08 的直线刹车末速度相同",
+      "limitation": "因此不能把 frictionSlip 当成冰面摩擦系数。直线制动距离不能用来证明附着变化"
+    },
+    {
+      "id": "steered_brake_speed_depends_on_frictionSlip",
+      "pass": true,
+      "highFrictionSlip": {
+        "vz": -0.030894487753726045,
+        "vx": -0.03452667723124546,
+        "yaw": 0.7827813922778752,
+        "speed": 0.04633099194055457,
+        "sliding": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "lowFrictionSlip": {
+        "vz": 9.142225808064737,
+        "vx": 1.0029926897736006,
+        "yaw": 0.13350987963633917,
+        "speed": 9.19708035527494,
+        "sliding": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "expect": "前轮同向偏转 0.35 rad 并制动时，两种 frictionSlip 的水平速度不同",
+      "limitation": "这只说明该参数在有侧向冲量时会进入打滑缩放，仍然不是冰的库仑摩擦系数，也没有水面阻力"
+    },
+    {
+      "id": "brake_freezes_wheel_rotation_while_sliding",
+      "pass": true,
+      "rotationDelta_rad": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "travelZ_m": 6.291126194473104,
+      "expect": "只要刹车量大于驱动力，轮子转角增量被置零，即使车身仍在滑行"
+    },
+    {
+      "id": "wheelbase_changes_yaw_not_steer_angles",
+      "pass": true,
+      "wheelbase2_46": {
+        "yaw_rad": 0.7230209457349106,
+        "steer": [
+          0.25,
+          0.25
+        ]
+      },
+      "wheelbase3_20": {
+        "yaw_rad": 0.5820454954017096,
+        "steer": [
+          0.25,
+          0.25
+        ]
+      },
+      "expect": "轴距变长会减小同样转角下的偏航，但转向角不会因轴距自动改写"
+    },
+    {
+      "id": "fixed_step_repeatable",
+      "pass": true,
+      "runA": {
+        "z": 6.021739130434801,
+        "vz": 2.1739130434782794
+      },
+      "runB": {
+        "z": 6.021739130434801,
+        "vz": 2.1739130434782794
+      }
+    },
+    {
+      "id": "forward_plus_z_makes_negative_wheel_delta",
+      "pass": true,
+      "deltaRotation_rad": -0.29139072847682124,
+      "expect": "车身速度朝 +Z 时，求解器给轮子的转角增量是负数"
+    },
+    {
+      "id": "slider_crank_position_only",
+      "pass": true,
+      "fixture": {
+        "crankRadius_m": 0.045,
+        "rodLength_m": 0.15,
+        "label": "虚构机构，不是某台发动机"
+      },
+      "positionFromCrankCenter_m": {
+        "tdc": 0.195,
+        "at90": 0.14309088021254185,
+        "bdc": 0.105,
+        "at270": 0.14309088021254185
+      },
+      "torque_N_m": null,
+      "pressure_Pa": null,
+      "expect": "只验证曲柄滑块位置；扭矩和缸压没有被计算"
+    }
+  ],
+  "probeSource": "/**\r\n * RP-03 Cannon-es 0.20.0 边界探针。\r\n * 不修改 src/。单位：m, kg, s, N, rad。\r\n * 轮胎半径取项目默认 245/35 R20 的几何推导，不是某量产车测量值。\r\n */\r\nimport { readFileSync, writeFileSync } from 'node:fs';\r\nimport * as CANNON from 'file:///F:/project/cyq/AI_Coding/car/node_modules/cannon-es/dist/cannon-es.js';\r\nimport { CAR_CONFIG, TIRE_SPECS, deriveDimensions } from 'file:///F:/project/cyq/AI_Coding/car/src/specs.js';\r\n\r\nconst DT = 1 / 60;\r\nconst radius = deriveDimensions(TIRE_SPECS[0]).outerRadius;\r\nconst outPath = 'F:/project/cyq/AI_Coding/car/docs/planning/evidence/RP-03-cannon-probe.json';\r\n\r\nfunction quatAngle(a, b) {\r\n  const dot = Math.abs(a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w);\r\n  return 2 * Math.acos(Math.min(1, dot));\r\n}\r\n\r\nfunction yawOf(q) {\r\n  const siny = 2 * (q.w * q.y + q.x * q.z);\r\n  const cosy = 1 - 2 * (q.y * q.y + q.z * q.z);\r\n  return Math.atan2(siny, cosy);\r\n}\r\n\r\nfunction makeWorld(frictionSlip, wheelbase) {\r\n  const world = new CANNON.World({ gravity: new CANNON.Vec3(0, -9.81, 0) });\r\n  world.broadphase = new CANNON.SAPBroadphase(world);\r\n  world.allowSleep = false;\r\n  const ground = new CANNON.Body({ mass: 0 });\r\n  ground.addShape(new CANNON.Plane());\r\n  ground.quaternion.setFromEuler(-Math.PI / 2, 0, 0);\r\n  world.addBody(ground);\r\n\r\n  const chassis = new CANNON.Body({\r\n    mass: CAR_CONFIG.mass,\r\n    linearDamping: 0,\r\n    angularDamping: 0\r\n  });\r\n  chassis.addShape(new CANNON.Box(new CANNON.Vec3(0.56, 0.17, 1.46)));\r\n  const vehicle = new CANNON.RaycastVehicle({\r\n    chassisBody: chassis,\r\n    indexRightAxis: 0,\r\n    indexUpAxis: 1,\r\n    indexForwardAxis: 2\r\n  });\r\n  const halfWB = wheelbase / 2;\r\n  const halfTrack = CAR_CONFIG.halfTrack;\r\n  const susp = CAR_CONFIG.suspension;\r\n  const anchors = [\r\n    [halfTrack, CAR_CONFIG.chassisConnY, halfWB],\r\n    [-halfTrack, CAR_CONFIG.chassisConnY, halfWB],\r\n    [halfTrack, CAR_CONFIG.chassisConnY, -halfWB],\r\n    [-halfTrack, CAR_CONFIG.chassisConnY, -halfWB]\r\n  ];\r\n  for (const [x, y, z] of anchors) {\r\n    vehicle.addWheel({\r\n      radius,\r\n      directionLocal: new CANNON.Vec3(0, -1, 0),\r\n      axleLocal: new CANNON.Vec3(-1, 0, 0),\r\n      suspensionStiffness: susp.stiffness,\r\n      suspensionRestLength: susp.restLength,\r\n      frictionSlip,\r\n      dampingRelaxation: susp.dampingRelaxation,\r\n      dampingCompression: susp.dampingCompression,\r\n      maxSuspensionForce: 90000,\r\n      rollInfluence: susp.rollInfluence,\r\n      maxSuspensionTravel: susp.maxTravel,\r\n      chassisConnectionPointLocal: new CANNON.Vec3(x, y, z),\r\n      customSlidingRotationalSpeed: -24,\r\n      useCustomSlidingRotationalSpeed: true\r\n    });\r\n  }\r\n  vehicle.addToWorld(world);\r\n  chassis.position.set(\r\n    0,\r\n    radius + susp.restLength - CAR_CONFIG.chassisConnY + 0.02,\r\n    0\r\n  );\r\n  chassis.quaternion.set(0, 0, 0, 1);\r\n  chassis.velocity.set(0, 0, 0);\r\n  chassis.angularVelocity.set(0, 0, 0);\r\n  return { world, vehicle, chassis, ground };\r\n}\r\n\r\nfunction stepN(world, n) {\r\n  for (let i = 0; i < n; i++) world.step(DT);\r\n}\r\n\r\nfunction settle(bundle, seconds = 3) {\r\n  stepN(bundle.world, Math.round(seconds / DT));\r\n}\r\n\r\nfunction armSpan(suspLen, side = 1) {\r\n  const z = CAR_CONFIG.wheelbase / 2;\r\n  const hubX = side * CAR_CONFIG.halfTrack;\r\n  const hubY = CAR_CONFIG.chassisConnY - suspLen;\r\n  const upperEnd = { x: hubX - side * 0.14, y: hubY + 0.09, z };\r\n  const lowerEnd = { x: hubX - side * 0.14, y: hubY - 0.085, z };\r\n  const upperPivot = { x: side * 0.29, y: 0.11, z };\r\n  const lowerPivot = { x: side * 0.27, y: -0.09, z };\r\n  const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);\r\n  return {\r\n    upper: dist(upperPivot, upperEnd),\r\n    lower: dist(lowerPivot, lowerEnd)\r\n  };\r\n}\r\n\r\nfunction projectSteer(s) {\r\n  return { FL: s, FR: s * 0.94 };\r\n}\r\n\r\nfunction ackermannInner(outer) {\r\n  const track = CAR_CONFIG.halfTrack * 2;\r\n  const wheelbase = CAR_CONFIG.wheelbase;\r\n  const cotInner = 1 / Math.tan(outer) - track / wheelbase;\r\n  return Math.atan(1 / cotInner);\r\n}\r\n\r\nconst tests = [];\r\nfunction add(id, pass, detail) {\r\n  tests.push({ id, pass: Boolean(pass), ...detail });\r\n}\r\n\r\nconst tire = deriveDimensions(TIRE_SPECS[0]);\r\nconst base = makeWorld(CAR_CONFIG.suspension.frictionSlip, CAR_CONFIG.wheelbase);\r\n\r\nadd('wheel_not_rigid_body', base.world.bodies.length === 2 && base.vehicle.wheelInfos.length === 4, {\r\n  worldBodyCount: base.world.bodies.length,\r\n  wheelInfoCount: base.vehicle.wheelInfos.length,\r\n  wheelHasBody: base.vehicle.wheelInfos.some((w) => w.body != null),\r\n  expect: '只有地面和车身两个刚体；四个轮子是 WheelInfo，没有 body'\r\n});\r\n\r\nconst camberAngles = [];\r\nfor (const L of [0.12, 0.34, 0.5]) {\r\n  base.vehicle.wheelInfos[0].suspensionLength = L;\r\n  base.vehicle.wheelInfos[0].steering = 0;\r\n  base.vehicle.wheelInfos[0].rotation = 0;\r\n  base.vehicle.updateWheelTransform(0);\r\n  camberAngles.push(quatAngle(\r\n    base.vehicle.getWheelTransformWorld(0).quaternion,\r\n    base.chassis.quaternion\r\n  ));\r\n}\r\nadd('camber_unchanged_by_travel', Math.max(...camberAngles) < 1e-8, {\r\n  angleRad: camberAngles,\r\n  expect: '行程改变时，轮子相对车身的姿态角保持 0（无外倾变化）'\r\n});\r\n\r\nbase.vehicle.wheelInfos[0].steering = 0.4;\r\nbase.vehicle.wheelInfos[0].rotation = 0;\r\nbase.vehicle.updateWheelTransform(0);\r\nconst fwd = new CANNON.Vec3();\r\nbase.vehicle.getWheelTransformWorld(0).vectorToWorldFrame(new CANNON.Vec3(0, 0, 1), fwd);\r\nadd('positive_steer_yaws_toward_positive_x', fwd.x > 0.3 && fwd.z > 0.8, {\r\n  wheelForward: { x: fwd.x, y: fwd.y, z: fwd.z },\r\n  expect: '正转向角使轮子朝 +X（本项目左轮一侧）偏航'\r\n});\r\n\r\nconst restL = CAR_CONFIG.suspension.restLength;\r\nconst bumpL = restL - CAR_CONFIG.suspension.maxTravel;\r\nconst spanRest = armSpan(restL);\r\nconst spanBump = armSpan(bumpL);\r\nadd('visual_wishbone_changes_length', Math.abs(spanRest.upper - spanBump.upper) > 0.01, {\r\n  spanAtRest_m: spanRest,\r\n  spanAtBump_m: spanBump,\r\n  upperDelta_mm: (spanRest.upper - spanBump.upper) * 1000,\r\n  lowerDelta_mm: (spanRest.lower - spanBump.lower) * 1000,\r\n  expect: '按 chassis.js 的枢轴和球头公式，跳动后上下叉臂长度变化超过 10 mm'\r\n});\r\n\r\nconst outer = 0.3;\r\nconst inner = ackermannInner(outer);\r\nconst left = projectSteer(outer);\r\nconst right = projectSteer(-outer);\r\nadd('ackermann_factor_is_not_geometric', true, {\r\n  note: '本项记录对比，不把当前 0.94 系数判为合格的阿克曼',\r\n  track_m: CAR_CONFIG.halfTrack * 2,\r\n  wheelbase_m: CAR_CONFIG.wheelbase,\r\n  geometricInnerForOuter0_3_rad: inner,\r\n  geometricInnerOverOuter: inner / outer,\r\n  projectLeftTurn: left,\r\n  projectRightTurn: right,\r\n  projectMagnitudeRatio: Math.abs(left.FL / left.FR),\r\n  wrongWheelOnRightTurn: Math.abs(right.FL) > Math.abs(right.FR),\r\n  expect: '右转时内侧轮应是 FR，但 0.94 始终缩小 FR，所以外侧轮转角更大'\r\n});\r\n\r\nconst airborne = makeWorld(CAR_CONFIG.suspension.frictionSlip, CAR_CONFIG.wheelbase);\r\nairborne.chassis.position.y = 4;\r\nairborne.chassis.velocity.set(0, 5, 0);\r\nairborne.vehicle.updateVehicle(DT);\r\nconst speedUp = airborne.vehicle.currentVehicleSpeedKmHour;\r\nairborne.chassis.velocity.set(0, 0, 5);\r\nairborne.vehicle.updateVehicle(DT);\r\nconst speedFwd = airborne.vehicle.currentVehicleSpeedKmHour;\r\nadd('speed_uses_velocity_magnitude', Math.abs(speedUp - 18) < 1e-6 && Math.abs(speedFwd - 18) < 1e-6, {\r\n  vertical5mps_kmh: speedUp,\r\n  forward5mps_kmh: speedFwd,\r\n  expect: '竖直 5 m/s 与向前 5 m/s 得到同一个 18 km/h'\r\n});\r\n\r\nlet maxLen = 0;\r\nconst drop = makeWorld(CAR_CONFIG.suspension.frictionSlip, CAR_CONFIG.wheelbase);\r\ndrop.chassis.position.y = 1.6;\r\nfor (let i = 0; i < 180; i++) {\r\n  drop.world.step(DT);\r\n  for (const w of drop.vehicle.wheelInfos) maxLen = Math.max(maxLen, w.suspensionLength);\r\n}\r\nadd('no_droop_beyond_rest', maxLen <= CAR_CONFIG.suspension.restLength + 1e-6, {\r\n  maxSuspensionLength_m: maxLen,\r\n  restLength_m: CAR_CONFIG.suspension.restLength,\r\n  expect: '下落过程中悬架长度不超过静止长度；射线模型没有下垂行程'\r\n});\r\n\r\nconst settled = makeWorld(CAR_CONFIG.suspension.frictionSlip, CAR_CONFIG.wheelbase);\r\nsettle(settled, 4);\r\nconst lengths = settled.vehicle.wheelInfos.map((w) => w.suspensionLength);\r\nconst forces = settled.vehicle.wheelInfos.map((w) => w.suspensionForce);\r\nconst predicted = CAR_CONFIG.suspension.restLength - 9.81 / (4 * CAR_CONFIG.suspension.stiffness);\r\nconst meanLen = lengths.reduce((s, v) => s + v, 0) / lengths.length;\r\nadd('spring_force_is_stiffness_times_mass', Math.abs(meanLen - predicted) < 0.005, {\r\n  predictedLength_m: predicted,\r\n  lengths_m: lengths,\r\n  forces_N: forces,\r\n  effectiveStiffness_N_per_m: CAR_CONFIG.suspension.stiffness * CAR_CONFIG.mass,\r\n  expect: '静平衡压缩量等于 g/(4*stiffness)，说明刚度先乘整车质量'\r\n});\r\n\r\nfunction runCoast() {\r\n  const b = makeWorld(CAR_CONFIG.suspension.frictionSlip, CAR_CONFIG.wheelbase);\r\n  settle(b, 3);\r\n  b.chassis.velocity.set(0, 0, 8);\r\n  b.chassis.angularVelocity.set(0, 0, 0);\r\n  for (const w of b.vehicle.wheelInfos) {\r\n    w.brake = 0;\r\n    w.engineForce = 0;\r\n  }\r\n  stepN(b.world, 60);\r\n  return b.chassis.velocity.z;\r\n}\r\nconst coastVz = runCoast();\r\nadd('coast_has_no_tire_rolling_resistance', Math.abs(coastVz - 8) < 0.05, {\r\n  vzAfter1s_m_per_s: coastVz,\r\n  frictionSlip: CAR_CONFIG.suspension.frictionSlip,\r\n  expect: '不踩刹车、不给驱动力时，1 秒后纵向速度仍接近 8 m/s'\r\n});\r\n\r\nfunction runBrake(frictionSlip, brake, seconds, v0 = 10) {\r\n  const b = makeWorld(frictionSlip, CAR_CONFIG.wheelbase);\r\n  settle(b, 3);\r\n  b.chassis.velocity.set(0, 0, v0);\r\n  b.chassis.angularVelocity.set(0, 0, 0);\r\n  const rot0 = b.vehicle.wheelInfos.map((w) => w.rotation);\r\n  for (const w of b.vehicle.wheelInfos) {\r\n    w.brake = brake;\r\n    w.engineForce = 0;\r\n  }\r\n  const n = Math.round(seconds / DT);\r\n  stepN(b.world, n);\r\n  const rot1 = b.vehicle.wheelInfos.map((w) => w.rotation);\r\n  return {\r\n    vz: b.chassis.velocity.z,\r\n    z: b.chassis.position.z,\r\n    rotationDelta: rot1.map((r, i) => r - rot0[i]),\r\n    sliding: b.vehicle.wheelInfos.map((w) => w.sliding)\r\n  };\r\n}\r\n\r\nconst brakeHigh = runBrake(3.2, 30, 2);\r\nconst brakeLow = runBrake(0.08, 30, 2);\r\nadd('straight_brake_ignores_frictionSlip', Math.abs(brakeHigh.vz - brakeLow.vz) < 1e-9, {\r\n  hypothesisBeforeRun: '直线制动时，较小的 frictionSlip 应该留下更高的末速度',\r\n  hypothesisHeld: false,\r\n  brakeImpulseCap: 30,\r\n  highFrictionSlip: brakeHigh,\r\n  lowFrictionSlip: brakeLow,\r\n  codeReason: 'cannon-es updateFriction 仅在 sideImpulse 非 0 时才用 skidInfo 缩小 forwardImpulse；直线上侧向冲量为 0，frictionSlip 不参与这次刹车',\r\n  expect: 'frictionSlip 3.2 与 0.08 的直线刹车末速度相同',\r\n  limitation: '因此不能把 frictionSlip 当成冰面摩擦系数。直线制动距离不能用来证明附着变化'\r\n});\r\n\r\nfunction runSteeredBrake(frictionSlip) {\r\n  const b = makeWorld(frictionSlip, CAR_CONFIG.wheelbase);\r\n  settle(b, 3);\r\n  b.chassis.velocity.set(0, 0, 10);\r\n  b.chassis.angularVelocity.set(0, 0, 0);\r\n  b.vehicle.setSteeringValue(0.35, 0);\r\n  b.vehicle.setSteeringValue(0.35, 1);\r\n  for (const w of b.vehicle.wheelInfos) {\r\n    w.brake = 30;\r\n    w.engineForce = 0;\r\n  }\r\n  stepN(b.world, 90);\r\n  return {\r\n    vz: b.chassis.velocity.z,\r\n    vx: b.chassis.velocity.x,\r\n    yaw: yawOf(b.chassis.quaternion),\r\n    speed: Math.hypot(b.chassis.velocity.x, b.chassis.velocity.z),\r\n    sliding: b.vehicle.wheelInfos.map((w) => w.sliding)\r\n  };\r\n}\r\nconst steeredHigh = runSteeredBrake(3.2);\r\nconst steeredLow = runSteeredBrake(0.08);\r\nadd('steered_brake_speed_depends_on_frictionSlip',\r\n  Math.abs(steeredHigh.speed - steeredLow.speed) > 0.2, {\r\n  highFrictionSlip: steeredHigh,\r\n  lowFrictionSlip: steeredLow,\r\n  expect: '前轮同向偏转 0.35 rad 并制动时，两种 frictionSlip 的水平速度不同',\r\n  limitation: '这只说明该参数在有侧向冲量时会进入打滑缩放，仍然不是冰的库仑摩擦系数，也没有水面阻力'\r\n});\r\n\r\nconst spinSum = brakeLow.rotationDelta.reduce((s, v) => s + Math.abs(v), 0);\r\nadd('brake_freezes_wheel_rotation_while_sliding', spinSum < 1e-6 && brakeLow.z > 5, {\r\n  rotationDelta_rad: brakeLow.rotationDelta,\r\n  travelZ_m: brakeLow.z,\r\n  expect: '只要刹车量大于驱动力，轮子转角增量被置零，即使车身仍在滑行'\r\n});\r\n\r\nfunction runSteer(wheelbase) {\r\n  const b = makeWorld(1.2, wheelbase);\r\n  settle(b, 2);\r\n  b.chassis.velocity.set(0, 0, 8);\r\n  b.chassis.angularVelocity.set(0, 0, 0);\r\n  b.vehicle.setSteeringValue(0.25, 0);\r\n  b.vehicle.setSteeringValue(0.25, 1);\r\n  stepN(b.world, 60);\r\n  return {\r\n    yaw_rad: yawOf(b.chassis.quaternion),\r\n    steer: [b.vehicle.wheelInfos[0].steering, b.vehicle.wheelInfos[1].steering]\r\n  };\r\n}\r\nconst yawShort = runSteer(CAR_CONFIG.wheelbase);\r\nconst yawLong = runSteer(3.2);\r\nadd('wheelbase_changes_yaw_not_steer_angles',\r\n  Math.abs(yawShort.yaw_rad) > Math.abs(yawLong.yaw_rad) + 0.01\r\n  && yawShort.steer[0] === 0.25 && yawLong.steer[0] === 0.25\r\n  && yawShort.steer[1] === 0.25 && yawLong.steer[1] === 0.25, {\r\n  wheelbase2_46: yawShort,\r\n  wheelbase3_20: yawLong,\r\n  expect: '轴距变长会减小同样转角下的偏航，但转向角不会因轴距自动改写'\r\n});\r\n\r\nconst detA = runBrake(0.08, 30, 1);\r\nconst detB = runBrake(0.08, 30, 1);\r\nadd('fixed_step_repeatable', Math.abs(detA.z - detB.z) < 1e-9 && Math.abs(detA.vz - detB.vz) < 1e-9, {\r\n  runA: { z: detA.z, vz: detA.vz },\r\n  runB: { z: detB.z, vz: detB.vz }\r\n});\r\n\r\nconst roll = makeWorld(3.2, CAR_CONFIG.wheelbase);\r\nsettle(roll, 2);\r\nroll.chassis.velocity.set(0, 0, 6);\r\nroll.vehicle.updateVehicle(DT);\r\nconst deltaRot = roll.vehicle.wheelInfos[0].deltaRotation;\r\nadd('forward_plus_z_makes_negative_wheel_delta', deltaRot < 0, {\r\n  deltaRotation_rad: deltaRot,\r\n  expect: '车身速度朝 +Z 时，求解器给轮子的转角增量是负数'\r\n});\r\n\r\nfunction piston(theta, r, l) {\r\n  return r * Math.cos(theta) + Math.sqrt(l * l - (r * Math.sin(theta)) ** 2);\r\n}\r\nconst crankR = 0.045;\r\nconst rodL = 0.15;\r\nconst x0 = piston(0, crankR, rodL);\r\nconst x90 = piston(Math.PI / 2, crankR, rodL);\r\nconst x180 = piston(Math.PI, crankR, rodL);\r\nconst x270 = piston(3 * Math.PI / 2, crankR, rodL);\r\nadd('slider_crank_position_only',\r\n  Math.abs(x0 - (crankR + rodL)) < 1e-12\r\n  && Math.abs(x180 - (-crankR + rodL)) < 1e-12\r\n  && Math.abs(x90 - x270) < 1e-12\r\n  && x0 > x180, {\r\n  fixture: { crankRadius_m: crankR, rodLength_m: rodL, label: '虚构机构，不是某台发动机' },\r\n  positionFromCrankCenter_m: { tdc: x0, at90: x90, bdc: x180, at270: x270 },\r\n  torque_N_m: null,\r\n  pressure_Pa: null,\r\n  expect: '只验证曲柄滑块位置；扭矩和缸压没有被计算'\r\n});\r\n\r\nconst failed = tests.filter((t) => !t.pass).map((t) => t.id);\r\nconst payload = {\r\n  schema: 'carlab.rp03.cannonProbe.v1',\r\n  task: 'RP-03',\r\n  date: '2026-11-14',\r\n  command: 'node F:\\\\tmp\\\\rp03-probe.mjs',\r\n  cannonPackage: 'cannon-es@0.20.0',\r\n  sourceFile: 'node_modules/cannon-es/dist/cannon-es.js',\r\n  dt_s: DT,\r\n  units: { length: 'm', mass: 'kg', time: 's', force: 'N', angle: 'rad' },\r\n  fixture: {\r\n    mass_kg: CAR_CONFIG.mass,\r\n    wheelbase_m: CAR_CONFIG.wheelbase,\r\n    halfTrack_m: CAR_CONFIG.halfTrack,\r\n    suspension: CAR_CONFIG.suspension,\r\n    tireSpec: TIRE_SPECS[0].spec,\r\n    tireOuterRadius_m: radius,\r\n    tireRimRadius_m: tire.rimRadius,\r\n    tireNote: '半径由 245/35 R20 的名义公式算出，品牌 VULCAN 是项目虚构名称'\r\n  },\r\n  passCount: tests.length - failed.length,\r\n  failCount: failed.length,\r\n  failed,\r\n  tests,\r\n  probeSource: readFileSync(new URL(import.meta.url), 'utf8')\r\n};\r\n\r\nwriteFileSync(outPath, JSON.stringify(payload, null, 2));\r\nconsole.log(JSON.stringify({\r\n  passCount: payload.passCount,\r\n  failCount: payload.failCount,\r\n  failed,\r\n  highlights: {\r\n    upperDelta_mm: tests.find((t) => t.id === 'visual_wishbone_changes_length').upperDelta_mm,\r\n    meanLen: meanLen,\r\n    predicted,\r\n    coastVz,\r\n    brakeHighVz: brakeHigh.vz,\r\n    brakeLowVz: brakeLow.vz,\r\n    brakeLowZ: brakeLow.z,\r\n    steeredHighSpeed: steeredHigh.speed,\r\n    steeredLowSpeed: steeredLow.speed,\r\n    yawShort: yawShort.yaw_rad,\r\n    yawLong: yawLong.yaw_rad,\r\n    speedUp,\r\n    maxLen,\r\n    deltaRot\r\n  }\r\n}, null, 2));\r\n"
+}

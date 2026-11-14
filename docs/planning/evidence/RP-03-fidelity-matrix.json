@@ -1,0 +1,388 @@
+{
+  "schema": "carlab.fidelityAcceptance.v1",
+  "task": "RP-03",
+  "date": "2026-11-14",
+  "units": { "length": "m", "mass": "kg", "time": "s", "force": "N", "angle": "rad" },
+  "levelIds": ["FID-V", "FID-G", "FID-K", "FID-D1", "FID-D2"],
+  "phaseNote": "P0–P5 是交付阶段。FID 是某一个零件或总成这次计算声称的物理内容。二者不能互换。",
+  "levels": [
+    {
+      "id": "FID-V",
+      "name": "视觉展示",
+      "answers": "画面上零件是否在动、颜色和方向是否让人看懂。",
+      "mayCompute": "关键帧、沿现成曲线移动、把网格拉长到目标点。",
+      "mustNotClaim": "连杆长度守恒、力平衡、附着或能量转换。"
+    },
+    {
+      "id": "FID-G",
+      "name": "几何与装配",
+      "answers": "尺寸、安装面、孔位和左右方向是否对得上。",
+      "mayCompute": "包围盒、孔距、间隙和干涉。",
+      "mustNotClaim": "机构在行程里仍然装得上，或受力后位置仍然合理。"
+    },
+    {
+      "id": "FID-K",
+      "name": "运动学",
+      "answers": "刚性铰链在给定输入下把零件带到哪里。",
+      "mayCompute": "不变的杆长或点距、转角、轮心轨迹、外倾、前束。",
+      "mustNotClaim": "这个位置是由弹簧力、轮胎力或燃烧压力算出来的。"
+    },
+    {
+      "id": "FID-D1",
+      "name": "简化动力学",
+      "answers": "在声明过的集中参数下，力和运动是否一起变化。",
+      "mayCompute": "单自由度弹簧阻尼、整车刚体、一个显式摩擦系数、查表扭矩。",
+      "mustNotClaim": "多体悬架、魔术公式、液压制动、燃烧或流体仿真已经完成。"
+    },
+    {
+      "id": "FID-D2",
+      "name": "工程级动力学",
+      "answers": "模型种类、系数来源和适用工况是否都写明，并且对过一个声明的参照。",
+      "mayCompute": "多体约束、衬套柔度、轮胎半经验或有限元、制动液压、传动约束。",
+      "mustNotClaim": "法规认证、某一辆量产车的未公开参数、或超出参照工况的精度。"
+    }
+  ],
+  "systems": [
+    {
+      "systemId": "SYS-20",
+      "assembly": "悬架连杆",
+      "currentLevel": "FID-V",
+      "targetLevel": "FID-K",
+      "alternate": "在硬点未定之前继续用射线弹簧，但界面必须写成 FID-D1，不能画成已求解的双叉臂。",
+      "inputs": ["上下枢轴", "球头", "转向节", "拉杆两端", "行程上下限"],
+      "computation": "刚性距离约束或等价的位置求解；杆长不随行程缩放。",
+      "outputs": ["轮心位置", "车轮轴线", "外倾", "前束", "每根杆的长度"],
+      "failIf": ["任一刚性杆长度变化超过 0.1 mm", "只把轮心沿车身竖直轴下移就称为双叉臂求解"],
+      "unknowns": ["可引用的硬点坐标", "主销轴线", "缓冲块接触点"],
+      "experiments": ["EX-ARM-LENGTH", "EX-CAMBER"]
+    },
+    {
+      "systemId": "SYS-20",
+      "assembly": "弹簧与减振器",
+      "currentLevel": "FID-D1",
+      "targetLevel": "FID-D1",
+      "alternate": "运动学阶段可以只规定自由长度和安装点，不计算力。",
+      "inputs": ["质量", "弹簧刚度及其单位定义", "压缩与回弹阻尼", "静止长度", "限位"],
+      "computation": "声明为集中力的弹簧阻尼。现有 Cannon 把刚度先乘整车质量。",
+      "outputs": ["悬架长度", "弹簧力", "车身垂直位移"],
+      "failIf": ["把数值 32 写成 N/m", "宣称已有下垂行程或簧下质量"],
+      "unknowns": ["以 N/m 计的实测弹簧曲线", "簧下质量", "缓冲块刚度"],
+      "experiments": ["EX-SPRING-EQ", "EX-DROOP"]
+    },
+    {
+      "systemId": "SYS-20",
+      "assembly": "转向几何",
+      "currentLevel": "FID-V",
+      "targetLevel": "FID-K",
+      "alternate": "左右轮使用同一个转角，并在界面写明未做阿克曼。",
+      "inputs": ["轴距", "轮距", "齿条行程", "拉杆长度", "转向节臂点"],
+      "computation": "拉杆长度不变，内外轮转角由几何求出。",
+      "outputs": ["左轮转角", "右轮转角", "拉杆长度"],
+      "failIf": ["同一个车轮在左右转时都比另一侧转得更大，却称为阿克曼", "改变轴距后仍沿用 0.94 且不重算拉杆"],
+      "unknowns": ["主销内倾", "后倾", "磨胎半径", "助力比"],
+      "experiments": ["EX-ACK", "EX-WHEELBASE"]
+    },
+    {
+      "systemId": "SYS-30",
+      "assembly": "轮辋与轮胎几何",
+      "currentLevel": "FID-G",
+      "targetLevel": "FID-G",
+      "alternate": "没有断面数据时只标 FID-V，不写规格。",
+      "inputs": ["断面宽", "扁平比", "轮辋直径"],
+      "computation": "名义外半径 = 轮辋半径 + 断面宽 × 扁平比。",
+      "outputs": ["外半径", "轮辋半径", "断面宽"],
+      "failIf": ["把名义半径写成已测量的承载半径", "把虚构品牌写成真实轮胎认证"],
+      "unknowns": ["承载半径", "轮胎质量与转动惯量"],
+      "experiments": ["EX-TIRE-RADIUS"]
+    },
+    {
+      "systemId": "SYS-30",
+      "assembly": "车轮滚动",
+      "currentLevel": "FID-V",
+      "targetLevel": "FID-D1",
+      "alternate": "滚动角只作为动画，不参与滑移计算。",
+      "inputs": ["车身速度", "车轮半径", "左右坐标约定"],
+      "computation": "由接触点速度估计转角，或由轮子自身转速积分。二者必须选用一种并写明。",
+      "outputs": ["车轮转角", "与前进方向的符号对照"],
+      "failIf": ["刹车一加上就把转角增量清零，同时把画面称为带滑移的滚动", "左右轮在前进时滚向相反的路面方向"],
+      "unknowns": ["车轮转动惯量", "滚动阻力系数"],
+      "experiments": ["EX-ROT", "EX-BRAKE-LOCK"]
+    },
+    {
+      "systemId": "SYS-40",
+      "assembly": "行车制动",
+      "currentLevel": "FID-D1",
+      "targetLevel": "FID-D1",
+      "alternate": "只做卡钳夹住圆盘的画面，标 FID-V，不输出减速度。",
+      "inputs": ["制动力或冲量上限", "每轮分配", "轮胎纵向力上限"],
+      "computation": "把声明过单位的制动力交给轮胎力模型。现有实现把 brake 当作每步纵向冲量上限。",
+      "outputs": ["车速", "各轮纵向力或冲量", "轮速"],
+      "failIf": ["把 maxBrake 42 写成卡钳夹紧力 N", "直线工况只改 frictionSlip 就称为冰面制动"],
+      "unknowns": ["管路压力", "活塞面积", "制动块摩擦系数", "有效半径", "热衰退"],
+      "experiments": ["EX-BRAKE-STRAIGHT", "EX-BRAKE-STEER"]
+    },
+    {
+      "systemId": "SYS-50",
+      "assembly": "曲柄连杆与配气",
+      "currentLevel": "FID-V",
+      "targetLevel": "FID-K",
+      "alternate": "只显示外壳和一根旋转的附件皮带，不进入内部机构。",
+      "inputs": ["曲柄半径", "连杆长度", "凸轮型线", "冲程循环是二冲程还是四冲程"],
+      "computation": "活塞位置和气门升程是曲轴转角的函数。",
+      "outputs": ["活塞位置", "气门升程", "零件间隙"],
+      "failIf": ["由活塞位移直接给出扭矩、功率、油耗或缸压"],
+      "unknowns": ["本项目发动机的曲柄半径、连杆长度和凸轮型线", "燃烧压力"],
+      "experiments": ["EX-CRANK"]
+    },
+    {
+      "systemId": "SYS-60",
+      "assembly": "齿轮、差速器和半轴",
+      "currentLevel": "FID-V",
+      "targetLevel": "FID-K",
+      "alternate": "用箭头表示动力方向，不转动齿轮。",
+      "inputs": ["齿数", "所选挡位传动比", "主减速比", "半轴两端点"],
+      "computation": "转角按齿数比传递；半轴长度保持不变，只改变万向节夹角。",
+      "outputs": ["输入轴转角", "半轴长度", "轮端转角"],
+      "failIf": ["挡位参数传入函数但被忽略", "半轴用缩放改变长度仍称为刚性万向节"],
+      "unknowns": ["离合器扭转刚度", "齿轮啮合刚度", "差速器摩擦", "传动阻尼"],
+      "experiments": ["EX-GEAR-RATIO", "EX-SHAFT-LENGTH"]
+    },
+    {
+      "systemId": "SYS-80",
+      "assembly": "冷却液回路",
+      "currentLevel": "FID-V",
+      "targetLevel": "FID-V",
+      "alternate": "用标注过的示意图代替三维液体。",
+      "inputs": ["回路中心线", "泵的转向", "声明的流向"],
+      "computation": "标记沿中心线移动。热容和换热系数只有在单独标成假设后才允许进入集中温度模型。",
+      "outputs": ["流向", "若做集中模型则给出各节点温度"],
+      "failIf": ["粒子速度被称为 CFD", "没有热容和换热数据却给出温升"],
+      "unknowns": ["液体体积", "泵曲线", "散热器换热能力"],
+      "experiments": ["EX-COOLANT-DIRECTION"]
+    },
+    {
+      "systemId": "SYS-120",
+      "assembly": "轮胎与路面",
+      "currentLevel": "FID-D1",
+      "targetLevel": "FID-D1",
+      "alternate": "路面只做视觉材质，车辆放在无轮胎力的运动学演示里。",
+      "inputs": ["法向力", "纵向滑移", "侧向滑移", "各路面的摩擦系数定义", "水深（仅涉水模型）"],
+      "computation": "显式摩擦系数必须同时限制纵向和侧向。涉水至少还要水深、迎风面积和阻力系数。",
+      "outputs": ["纵向力", "侧向力", "车速", "横摆"],
+      "failIf": ["用 frictionSlip 代替 μ", "只改一个摩擦参数就把实验命名为涉水", "把射线接地称为接地印迹"],
+      "unknowns": ["本车轮胎的 μ 或魔术公式系数", "冰面实测附着", "水的阻力系数"],
+      "experiments": ["EX-COAST", "EX-BRAKE-STRAIGHT", "EX-BRAKE-STEER", "EX-SURFACE-NAME"]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "EX-ARM-LENGTH",
+      "status": "measured-current-visual",
+      "level": "FID-K",
+      "inputs": "chassis.js 的枢轴与球头公式；悬架长度 0.34 m 与 0.12 m",
+      "dt_s": null,
+      "outputs": "上叉臂长度由 0.49649 m 变为 0.41437 m，缩短 82.12 mm；下叉臂缩短 68.50 mm",
+      "tolerance": "若声称刚性连杆，长度变化必须小于 0.1 mm",
+      "failIf": "变化超过 0.1 mm 仍标记为 FID-K",
+      "limitation": "这个反例使用的是演示网格公式，不是一组已证实的悬架硬点。"
+    },
+    {
+      "id": "EX-CAMBER",
+      "status": "measured-current-solver",
+      "level": "FID-K",
+      "inputs": "悬架长度 0.12、0.34、0.50 m，转向角 0",
+      "dt_s": null,
+      "outputs": "车轮姿态相对车身的夹角小于 1e-8 rad",
+      "tolerance": "声称有外倾变化时，相对车身的夹角变化要大于 1e-4 rad，并且来自硬点",
+      "failIf": "外倾曲线没有硬点输入",
+      "limitation": "未包含车身侧倾后相对地面的外倾。"
+    },
+    {
+      "id": "EX-ACK",
+      "status": "measured-current-policy",
+      "level": "FID-K",
+      "inputs": "轴距 2.46 m，轮距 1.68 m，外侧转角 0.30 rad",
+      "dt_s": null,
+      "outputs": "几何内侧转角 0.3738 rad，内外比 1.246。现有策略始终是左轮 0.30、右轮 0.282。右转时转角绝对值更大的是外侧轮。",
+      "tolerance": "纯几何阿克曼与余切公式相差小于 1e-4 rad。实车偏离必须另给百分比。",
+      "failIf": "左右转使用同一个车轮作为大转角车轮",
+      "limitation": "几何阿克曼不含轮胎侧偏，不能预测不足转向。"
+    },
+    {
+      "id": "EX-WHEELBASE",
+      "status": "measured-current-solver",
+      "level": "FID-D1",
+      "inputs": "初速 8 m/s，两前轮转角都固定 0.25 rad，轴距 2.46 m 与 3.20 m，步长 1/60 s，时长 1 s",
+      "dt_s": 0.0166666667,
+      "outputs": "偏航 0.7230 rad 与 0.5820 rad。四次记录的转向角都仍是 0.25 rad。",
+      "tolerance": "运动学模块在轴距变化后必须重算拉杆，不能只比较整车偏航",
+      "failIf": "轴距变了，拉杆长度被缩放，或转向角策略不重算却标记为已更新几何",
+      "limitation": "本次偏航差来自射线力作用点移动，不是拉杆机构的解。"
+    },
+    {
+      "id": "EX-ROT",
+      "status": "measured-current-solver",
+      "level": "FID-V",
+      "inputs": "车身速度 +Z 方向 6 m/s，半径 0.33975 m，一步 1/60 s",
+      "dt_s": 0.0166666667,
+      "outputs": "求解器 deltaRotation = -0.2914 rad。纯滚动估算 v·dt/r = 0.2943 rad，只用于对照符号和量级。",
+      "tolerance": "前进时左右视觉滚转必须朝同一路面方向；符号表必须写进测试",
+      "failIf": "没有符号表就比较左右轮的原始转角",
+      "limitation": "该转角是车身速度估计，不是带转动惯量的滚动约束。"
+    },
+    {
+      "id": "EX-BRAKE-LOCK",
+      "status": "measured-current-solver",
+      "level": "FID-D1",
+      "inputs": "刹车冲量上限 30，驱动力 0，直线，初速 10 m/s，2 s",
+      "dt_s": 0.0166666667,
+      "outputs": "制动窗口内四轮转角增量都是 0，车身沿 +Z 移动 6.291 m",
+      "tolerance": "若模型声称车轮仍在滚动，转角增量不能为 0",
+      "failIf": "轮角被锁死却把画面说明写成滚动滑移",
+      "limitation": "这是库在 brake 大于 engineForce 时直接把转角增量写零，不是轮胎抱死力矩平衡。"
+    },
+    {
+      "id": "EX-BRAKE-STRAIGHT",
+      "status": "measured-current-solver",
+      "level": "FID-D1",
+      "inputs": "frictionSlip 3.2 与 0.08，刹车冲量上限 30，初速 10 m/s，2 s，底盘阻尼 0",
+      "dt_s": 0.0166666667,
+      "outputs": "两种参数的末速度都是 0.06085 m/s",
+      "tolerance": "同一次运行重复差小于 1e-9 m。两种摩擦参数的末速度差在本实验中为 0。",
+      "failIf": "用本实验声称冰面和干燥路面的制动距离不同",
+      "limitation": "侧向冲量为 0 时，该库不把 frictionSlip 乘进纵向刹车冲量。"
+    },
+    {
+      "id": "EX-BRAKE-STEER",
+      "status": "measured-current-solver",
+      "level": "FID-D1",
+      "inputs": "两前轮转角 0.35 rad，刹车冲量上限 30，初速 10 m/s，1.5 s，frictionSlip 3.2 与 0.08",
+      "dt_s": 0.0166666667,
+      "outputs": "1.5 s 水平速度 0.0463 m/s 与 9.197 m/s。低参数时四轮 sliding 为 true。",
+      "tolerance": "两组速度差应能复现到 0.1 m/s 以上；这只验收求解器参数，不验收真实附着",
+      "failIf": "把 0.08 写成冰的摩擦系数，或把本结果写成车辆稳定性结论",
+      "limitation": "没有 ABS、载荷转移轮胎模型和水面阻力。高附着组的轮角同样会被刹车逻辑冻住。"
+    },
+    {
+      "id": "EX-COAST",
+      "status": "measured-current-solver",
+      "level": "FID-D1",
+      "inputs": "初速 8 m/s，刹车 0，驱动力 0，frictionSlip 3.2，底盘阻尼 0，1 s",
+      "dt_s": 0.0166666667,
+      "outputs": "1 s 后纵向速度仍为 8 m/s",
+      "tolerance": "速度变化小于 0.05 m/s",
+      "failIf": "把这次滑行写成已经包含滚动阻力",
+      "limitation": "屏幕里的演示另外给车身 linearDamping 0.04，那一部分不是轮胎力。本探针故意把它设为 0。"
+    },
+    {
+      "id": "EX-DROOP",
+      "status": "measured-current-solver",
+      "level": "FID-D1",
+      "inputs": "车身从 y = 1.6 m 落下，静止长度 0.34 m，步长 1/60 s，3 s",
+      "dt_s": 0.0166666667,
+      "outputs": "全过程最大悬架长度 0.34 m",
+      "tolerance": "不超过静止长度 1e-6 m",
+      "failIf": "宣称射线悬架已有回弹下垂",
+      "limitation": "射线长度只有静止长度加半径，接触几何到不了更长的悬架位置。"
+    },
+    {
+      "id": "EX-SPEED",
+      "status": "measured-current-solver",
+      "level": "FID-V",
+      "inputs": "空中速度 (0,5,0) 与 (0,0,5) m/s",
+      "dt_s": 0.0166666667,
+      "outputs": "两次 currentVehicleSpeedKmHour 都是 18",
+      "tolerance": "若指标名为纵向车速，竖直速度贡献必须小于 0.01 km/h",
+      "failIf": "把该字段直接标成路面纵向车速",
+      "limitation": "库使用速度矢量的长度，再按车头方向取正负号。"
+    },
+    {
+      "id": "EX-SPRING-EQ",
+      "status": "measured-current-solver",
+      "level": "FID-D1",
+      "inputs": "质量 920 kg，stiffness 32，重力 9.81，四轮对称，4 s 静置",
+      "dt_s": 0.0166666667,
+      "outputs": "每轮长度 0.263359 m，每轮力 2256.3 N。等效刚度 32×920 = 29440 N/m。",
+      "tolerance": "长度与 g/(4×stiffness) 的预测相差小于 5 mm",
+      "failIf": "文档把 32 的单位写成 N/m",
+      "limitation": "等效刚度是这个库的约定，不是弹簧台架测量。"
+    },
+    {
+      "id": "EX-REPEAT",
+      "status": "measured-current-solver",
+      "level": "FID-D1",
+      "inputs": "与 EX-BRAKE-STRAIGHT 的低参数工况相同，连续跑两次",
+      "dt_s": 0.0166666667,
+      "outputs": "两次位移和末速度差小于 1e-9",
+      "tolerance": "同一固定步长实验差小于 1e-6 m 才可称为可复现；本探针达到 1e-9 m",
+      "failIf": "使用不稳定的帧时间且没有固定步长",
+      "limitation": "可复现只针对这个隔离世界，不包含浏览器帧调度。"
+    },
+    {
+      "id": "EX-TIRE-RADIUS",
+      "status": "measured-formula",
+      "level": "FID-G",
+      "inputs": "245 mm 断面宽，扁平比 35，20 英寸轮辋",
+      "dt_s": null,
+      "outputs": "外半径 0.33975 m",
+      "tolerance": "与 deriveDimensions 相差小于 0.1 mm",
+      "failIf": "改用未注明的承载半径",
+      "limitation": "名义几何半径，不含载荷压缩。"
+    },
+    {
+      "id": "EX-CRANK",
+      "status": "measured-fictional-fixture",
+      "level": "FID-K",
+      "inputs": "虚构曲柄半径 0.045 m，连杆 0.150 m",
+      "dt_s": null,
+      "outputs": "上止点 0.195 m，下止点 0.105 m，90° 与 270° 都是 0.14309 m。扭矩和缸压为 null。",
+      "tolerance": "位置与解析式相差小于 1e-9 m",
+      "failIf": "输出功率、油耗或缸压",
+      "limitation": "尺寸是为了检查公式而设的虚构值，不能写到发动机零件规格里。"
+    },
+    {
+      "id": "EX-GEAR-RATIO",
+      "status": "code-audit",
+      "level": "FID-K",
+      "inputs": "齿数 16 和 24；挡位参数 gearboxRatio",
+      "dt_s": null,
+      "outputs": "网格按 24/16 反向转动。函数收到挡位参数后没有使用它。物理驱动力另按挡位比除以 2.1 缩放。",
+      "tolerance": "运动学合格时，换挡必须改变输入轴相对车轮的转角",
+      "failIf": "挡位变化只改了力的倍率，画面齿比不变，却称为传动链已经联动",
+      "limitation": "尚未运行独立的齿轮转角回归，结论来自源码路径。"
+    },
+    {
+      "id": "EX-SHAFT-LENGTH",
+      "status": "code-audit",
+      "level": "FID-K",
+      "inputs": "轮心跳动后的半轴外端点",
+      "dt_s": null,
+      "outputs": "半轴网格 scale.z 被设为当前端点距离",
+      "tolerance": "刚性半轴长度变化小于 0.1 mm，万向节夹角可以变",
+      "failIf": "用缩放满足端点距离",
+      "limitation": "本次没有给半轴单独的数值扫描；与叉臂共用同一个不合格原则。"
+    },
+    {
+      "id": "EX-COOLANT-DIRECTION",
+      "status": "proposed",
+      "level": "FID-V",
+      "inputs": "一条声明的泵到散热器再到机体的中心线",
+      "dt_s": null,
+      "outputs": "标记移动方向与中心线一致",
+      "tolerance": "方向与声明相反即不合格",
+      "failIf": "没有回路定义却播放液体",
+      "limitation": "项目里还没有这条中心线，所以本实验尚未执行。"
+    },
+    {
+      "id": "EX-SURFACE-NAME",
+      "status": "rule",
+      "level": "FID-D1",
+      "inputs": "实验标题、被修改的参数清单",
+      "dt_s": null,
+      "outputs": "标题中的路面类型必须在输入里有对应量",
+      "tolerance": "名称和输入不一致即不合格",
+      "failIf": "标题含涉水、冰或雪，但输入只有 frictionSlip 或一张贴图",
+      "limitation": "这是命名和输入审核，不是路面试验。"
+    }
+  ]
+}

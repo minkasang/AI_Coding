@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "carlab.rp05.dependencyBaseline/1.1",
+  "task": "RP-05",
+  "owner": "hy4",
+  "revisionNote": "v1.0 基于 16:17 快照，当时仅 RP-06 一份报告归档；16:21—16:28 第一波并行补齐 RP-02/03/04 报告，16:25—16:26 补 RP-01 三份证据。本 v1.1 以 16:36:56 稳定快照重做全部依赖判断，v1.0 的『4/5 报告缺失』结论已作废，不保留在最终判定中。",
+  "snapshots": [
+    {
+      "at": "2026-11-14T16:17:42+08:00",
+      "reportsPresent": ["RP-06"],
+      "evidenceFileCount": 7,
+      "note": "审计启动时的状态"
+    },
+    {
+      "at": "2026-11-14T16:32:18+08:00",
+      "reportsPresent": ["RP-02", "RP-03", "RP-04", "RP-06"],
+      "evidenceFileCount": 12,
+      "note": "15 分钟内新增 3 份报告与 RP-01 证据"
+    },
+    {
+      "at": "2026-11-14T16:36:56+08:00",
+      "reportsPresent": ["RP-02", "RP-03", "RP-04", "RP-06"],
+      "evidenceFileCount": 16,
+      "note": "最终审计快照；RP-01 新增 tree-chassis.json（273 节点）"
+    }
+  ],
+  "finalSnapshotAt": "2026-11-14T16:36:56+08:00",
+  "snapshotNote": "输入在审计期间持续写入，这本身是发现之一（见 INPUT-DRIFT）。本文件的文件存在性结论只对 16:36:56 有效；后续归档需复核。",
+  "method": "文件系统盘点 + 任务卡 frontmatter 核对 + 16 份 evidence JSON 可解析性实测 + 引用路径存在性实测 + 4 份报告交叉比对 + 本机依赖版本/磁盘/服务/GLB 魔数实测。全部只读，未修改他人文件。",
+  "gateRequirement": {
+    "source": "docs/tasks/RP-05-independent-gap-audit.md:8",
+    "quote": "第二波，等待 RP-01、RP-02、RP-03、RP-04、RP-06 的研究报告出现后执行",
+    "programGate": "docs/planning/PLANNING_PROGRAM.md:68 G-PL1 要求 RP-01—04 / RP-06 第一波报告提交；:69 G-PL2 才是 HY4 独立 RP-05"
+  },
+  "firstWaveFinal": [
+    {
+      "taskId": "RP-01",
+      "owner": "qwen4",
+      "expectedReport": "docs/planning/reports/RP-01-vehicle-product-tree.md",
+      "reportPresent": false,
+      "status": "in_progress",
+      "evidenceFiles": ["RP-01-sources.json (82 条来源)", "RP-01-tree-core.json (100 节点)", "RP-01-tree-chassis.json (273 节点)"],
+      "evidenceSummary": "已覆盖 SYS-00/10/130 核心与 SYS-20/30/40 底盘下钻；3 个候选配置全部 PROPOSED_NOT_APPROVED；axisSeparationNote 纠正了总任务书的『三种架构』分类错误",
+      "missing": "报告正文；scopeNote 引用的 RP-01-tree-powertrain.json / RP-01-tree-body-systems.json / RP-01-function-tree.json 三份文件实测 MISSING"
+    },
+    {
+      "taskId": "RP-02",
+      "owner": "deepseek",
+      "expectedReport": "docs/planning/reports/RP-02-interface-graph.md",
+      "reportPresent": true,
+      "status": "submitted",
+      "reportLines": 1551,
+      "evidenceFiles": ["RP-02-interface-graph.example.json (42 nodes/86 edges)", "RP-02-test-cases.json (24 用例)", "RP-02-validation-results.json (24 passed / 0 failed)"],
+      "evidenceSummary": "六类接口、四场景因果链、五类配置传播、7 个自述新缺口、6 项需总控裁定"
+    },
+    {
+      "taskId": "RP-03",
+      "owner": "grok",
+      "expectedReport": "docs/planning/reports/RP-03-fidelity-and-simulation.md",
+      "reportPresent": true,
+      "status": "submitted",
+      "reportLines": 250,
+      "evidenceFiles": ["RP-03-cannon-probe.json (16/16 PASS)", "RP-03-fidelity-matrix.json"],
+      "evidenceSummary": "FID-V/G/K/D1/D2 五级精度、现有代码反例、各总成目标矩阵、Chrono 能力对照；§10 主动列出与总计划及数据协议的冲突"
+    },
+    {
+      "taskId": "RP-04",
+      "owner": "gemini-3-8-flash",
+      "expectedReport": "docs/planning/reports/RP-04-cad-production.md",
+      "reportPresent": true,
+      "status": "submitted",
+      "reportLines": 333,
+      "evidenceFiles": ["RP-04-feasibility.json (4 项 PASS)"],
+      "prototypeArtifacts": "cad/experiments/planning_feasibility/out/ 实测存在 11 个文件，GLB 211592 bytes 且魔数 glTF 已复核",
+      "evidenceSummary": "8 大零件族、三级 LOD、Poka-Yoke 断言、PartBuildTask 契约、6 类失败反例"
+    },
+    {
+      "taskId": "RP-06",
+      "owner": "composer-2-5",
+      "expectedReport": "docs/planning/reports/RP-06-engineering-viewer.md",
+      "reportPresent": true,
+      "status": "submitted",
+      "reportLines": 281,
+      "evidenceFiles": ["RP-06-feature-matrix.json", "RP-06-ui-ia-snapshot.json", "RP-06-user-journey.json", "RP-06-verification-plan.json"],
+      "evidenceSummary": "双模式、八步旅程、真实性徽章、性能指标；verification-plan.json status=PLAN_ONLY，零实测"
+    }
+  ],
+  "gateStatus": "G-PL1_SUBSTANTIALLY_MET_WITH_ONE_REPORT_MISSING",
+  "gateDetail": "4/5 报告已归档并标 submitted；RP-01 正文未归档但已有 3 份结构化证据（373 节点 + 82 条来源）。审计不再因输入缺失而受阻，可对新报告做实质交叉审查。RP-07 仍需等 RP-01 正文与三份被引用分文件。",
+  "residualBlocking": [
+    "docs/planning/reports/RP-01-vehicle-product-tree.md（正文）",
+    "docs/planning/evidence/RP-01-tree-powertrain.json（被 scopeNote 引用但不存在）",
+    "docs/planning/evidence/RP-01-tree-body-systems.json（被 scopeNote 引用但不存在）",
+    "docs/planning/evidence/RP-01-function-tree.json（被 nonPhysicalViews 引用但不存在）"
+  ],
+  "environmentFacts": {
+    "gitRepository": false,
+    "gitCommandResult": "fatal: not a git repository (or any of the parent directories): .git",
+    "masterPlanMeasuredLines": 334,
+    "gapRegisterClaimedLines": 308,
+    "threeDeclared": "^0.170.0",
+    "threeInstalled": "0.170.0",
+    "cannonEsInstalled": "0.20.0",
+    "driveC": {"availGB": 12, "usePercent": 93},
+    "driveF": {"availGB": 242, "usePercent": 94},
+    "http5173": {"code": 200, "sizeDownload": 12878},
+    "http5174": {"code": 200, "sizeDownload": 5375},
+    "plannedDirsMissing": ["assets", "assets/manifests", "assets/public", "assets/source", "tests", "docs/schema", "src/viewer", ".git"],
+    "helloFlangeAssetsPresent": true,
+    "planningFeasibilityGlb": {"path": "cad/experiments/planning_feasibility/out/wheel_hub_assembly.glb", "bytes": 211592, "magic": "glTF", "verified": true}
+  },
+  "verificationCommands": [
+    "git status --short -> fatal: not a git repository",
+    "wc -l MASTER_PLAN.md -> 334",
+    "node -e JSON.parse(...) -> PARSE_OK for all 16 evidence JSON files",
+    "for p in node_modules/three/examples/jsm/core/Raycaster.js ... -> MISSING",
+    "curl -s -o /dev/null -w '%{http_code} %{size_download}' http://localhost:5173/ -> 200 12878",
+    "od -An -tx1 -N12 <wheel_hub_assembly.glb> -> 676c 5446 (glTF)",
+    "df -h -> C: 12G avail / 93%, F: 242G avail / 94%"
+  ],
+  "verifiedFindings": [
+    {
+      "id": "INPUT-DRIFT",
+      "severity": "HIGH",
+      "fact": "审计期间（16:17→16:36，19 分钟）第一波输入从 1 份报告/7 份证据增长到 4 份报告/16 份证据，RP-03 任务卡从 ready 变 in_progress 再变 submitted。任何静态快照审计都可能立即过期。",
+      "evidence": "三次带时间戳的目录盘点 + RP-03 任务卡状态变化",
+      "consequence": "RP-05 必须声明快照边界并要求 RP-07 在汇总前重跑一次门禁检查；不能把本版结论视为永久有效。"
+    },
+    {
+      "id": "BASE-01",
+      "severity": "HIGH",
+      "fact": "Git 基线未建立，但 5 个模型已并行写入同一 evidence 目录且输入持续变化，无回滚/无 diff/无并发控制",
+      "evidence": "git status fatal + MASTER_PLAN.md:290 自述基线未建立 + PLAN_READINESS_REVIEW.md:45 关口 G0 + 三次快照文件增量"
+    },
+    {
+      "id": "BASE-02",
+      "severity": "MEDIUM",
+      "fact": "RP-06-feature-matrix.json 中 threeOfficial='examples/jsm/core/Raycaster.js' 在 three 0.170.0 中不存在；真实位置 src/core/Raycaster.js，且 examples/jsm/core/ 目录不存在",
+      "evidence": "路径存在性实测 + JSON 第 27 行"
+    },
+    {
+      "id": "BASE-03",
+      "severity": "MEDIUM",
+      "fact": "RP-06-verification-plan.json 记录 HTTP 200 / body ~11633，本次复现 200 / 12878，字节数不可精确复现；npm start 的 EADDRINUSE 记为 PASS_WITH_NOTE，实为服务已在运行",
+      "evidence": "curl 实测 + JSON executedInRP06"
+    },
+    {
+      "id": "BASE-04",
+      "severity": "MEDIUM",
+      "fact": "GAP_REGISTER.md:4 自述针对『308 行 MASTER_PLAN.md』，实测 334 行；§14—§19 后增内容未纳入缺口核对",
+      "evidence": "wc -l + GAP_REGISTER.md:4"
+    },
+    {
+      "id": "BASE-05",
+      "severity": "LOW",
+      "fact": "RP-01-tree-core.json scopeNote 引用 3 份分文件，实测全部 MISSING（tree-powertrain / tree-body-systems / function-tree）",
+      "evidence": "文件存在性实测"
+    },
+    {
+      "id": "BASE-06",
+      "severity": "LOW",
+      "fact": "RP-03 探针命令 node F:\\tmp\\rp03-probe.mjs 的脚本本体在项目外临时目录；报告 §7 说明全文内嵌于 JSON 的 probeSource 字段可还原，属于已缓解但非项目内可复现",
+      "evidence": "RP-03-cannon-probe.json command + RP-03 报告:150"
+    }
+  ],
+  "confidence": {
+    "verified": "文件存在性、行数、版本号、16 份 JSON 可解析性、HTTP 状态、磁盘容量、GLB 魔数与字节数均为本机实测",
+    "derived": "门禁状态为任务书原文与实测文件清单的推导；跨模型冲突为多份报告原文逐条比对",
+    "unknown": "RP-01 正文结论、三份被引用分文件内容；本审计不推测其内容"
+  }
+}

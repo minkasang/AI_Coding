@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "RP-06-verification-plan/1.0",
+  "generatedAt": "2026-11-14",
+  "status": "PLAN_ONLY",
+  "executedInRP06": [
+    {
+      "id": "http-5173",
+      "command": "Invoke-WebRequest http://localhost:5173/ -UseBasicParsing",
+      "result": "PASS",
+      "observed": "HTTP 200, body length ~11633",
+      "date": "2026-11-14"
+    },
+    {
+      "id": "npm-start-port",
+      "command": "npm start",
+      "result": "PASS_WITH_NOTE",
+      "observed": "EADDRINUSE :5173 — indicates existing server instance",
+      "date": "2026-11-14"
+    }
+  ],
+  "futureViewerGates": [
+    {
+      "id": "tti-engineering",
+      "metric": "timeToInteractiveMs",
+      "target": 4000,
+      "mode": "engineering",
+      "method": "performance.mark viewer-ready"
+    },
+    {
+      "id": "fps-orbit",
+      "metric": "avgFpsDuringOrbit",
+      "target": 45,
+      "resolution": "1920x1080",
+      "method": "rAF counter 5s sample"
+    },
+    {
+      "id": "pick-latency",
+      "metric": "pickToHighlightMs",
+      "target": 100,
+      "method": "custom instrumentation"
+    },
+    {
+      "id": "legacy-modes",
+      "metric": "regression",
+      "cases": ["vehicle", "tire", "suspension", "drivetrain"],
+      "method": "Playwright or manual script — not run in RP-06",
+      "expected": "stage visible flags match selectMode in src/main.js"
+    }
+  ],
+  "loadScenarios": [
+    { "instances": 50, "purpose": "MVP smoke" },
+    { "instances": 200, "purpose": "mid complexity" },
+    { "instances": 500, "purpose": "stress — REQUIRES_RESEARCH if fail" }
+  ]
+}

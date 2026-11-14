@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>小车工程工坊 · Vehicle Lab / Three.js + Cannon-es</title>
+<link rel="stylesheet" href="./styles.css" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "./node_modules/three/build/three.module.js",
+    "three/addons/": "./node_modules/three/examples/jsm/",
+    "cannon-es": "./node_modules/cannon-es/dist/cannon-es.js"
+  }
+}
+</script>
+<script>
+  function showBootError(msg) {
+    var el = document.getElementById('bootError');
+    if (!el || !el.hidden) return;
+    el.hidden = false;
+    var detail = document.getElementById('bootDetail');
+    if (detail && msg) detail.textContent = msg;
+  }
+  window.addEventListener('error', function (e) {
+    showBootError(e.message || '未知错误');
+  });
+  window.addEventListener('unhandledrejection', function (e) {
+    showBootError(String(e.reason && e.reason.message || e.reason));
+  });
+  setTimeout(function () {
+    if (!window.__CAR_LAB_READY__) {
+      showBootError('页面未能完成初始化。若你是直接双击打开 index.html，请改用本地服务器访问。');
+    }
+  }, 8000);
+</script>
+</head>
+<body>
+
+<canvas id="scene" aria-label="三维小车与机械零件仿真画布"></canvas>
+
+<header class="topbar">
+  <div class="brand-row">
+    <div class="mark" aria-hidden="true">C</div>
+    <div class="title-block">
+      <h1>小车工程工坊 <span>/ Vehicle Lab</span></h1>
+      <p id="modeSubtitle">Cannon-es 3D 物理 · 四轮悬架与机械传动联动</p>
+    </div>
+    <div class="tech-badge"><span class="status-dot" aria-hidden="true"></span>THREE r170 · CANNON-ES</div>
+  </div>
+
+  <nav aria-label="工坊模式切换">
+    <div class="mode-tabs" focusgroup="tablist nomemory" role="tablist" aria-label="视图模式">
+      <button type="button" role="tab" id="tab-vehicle" data-mode="vehicle" aria-selected="true" focusgroupstart>整车物理试验台</button>
+      <button type="button" role="tab" id="tab-tire" data-mode="tire" aria-selected="false">轮胎总成特写</button>
+      <button type="button" role="tab" id="tab-suspension" data-mode="suspension" aria-selected="false">避震弹簧特写</button>
+      <button type="button" role="tab" id="tab-drivetrain" data-mode="drivetrain" aria-selected="false">机械传动特写</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <p role="status" id="liveStatus" class="visually-hidden" aria-live="polite"></p>
+
+  <!-- 右上：控制与调参面板（按不同模式切换专属控制区） -->
+  <section class="control-dock" aria-label="仿真参数与控制">
+    <div class="toolbar" role="toolbar" focusgroup="toolbar wrap" aria-label="视图与物理动作" aria-controls="scene">
+      <div role="group" aria-label="显示切换" class="tool-group">
+        <button class="tbtn" id="btnAutoDemo" type="button" aria-pressed="false" data-modes="vehicle"><i class="dot" aria-hidden="true"></i>自动试驾</button>
+        <button class="tbtn on" id="btnFollow" type="button" aria-pressed="true" data-modes="vehicle"><i class="dot" aria-hidden="true"></i>追随相机</button>
+        <button class="tbtn" id="btnShell" type="button" aria-pressed="false" data-modes="vehicle"><i class="dot" aria-hidden="true"></i>气动外壳</button>
+        <button class="tbtn" id="btnSlowMo" type="button" aria-pressed="false" data-modes="vehicle suspension drivetrain"><i class="dot" aria-hidden="true"></i>0.28x 慢放</button>
+
+        <button class="tbtn on" id="btnSpin" type="button" aria-pressed="true" data-modes="tire"><i class="dot" aria-hidden="true"></i>轮辋自转</button>
+        <button class="tbtn on" id="btnRim" type="button" aria-pressed="true" data-modes="vehicle tire suspension"><i class="dot" aria-hidden="true"></i>显示轮辋</button>
+        <button class="tbtn" id="btnBareRim" type="button" aria-pressed="false" data-modes="tire"><i class="dot" aria-hidden="true"></i>只看轮毂</button>
+        <button class="tbtn" id="btnHi" type="button" aria-pressed="false" data-modes="vehicle tire"><i class="dot" aria-hidden="true"></i>花纹高亮</button>
+      </div>
+
+      <span role="separator" aria-orientation="vertical" class="tool-sep"></span>
+
+      <div role="group" aria-label="物理实验动作" class="tool-group">
+        <button class="tbtn action" id="btnDrop" type="button" data-modes="vehicle">跌落测试</button>
+        <button class="tbtn action" id="btnBumpRun" type="button" data-modes="vehicle">冲减速带</button>
+        <button class="tbtn action" id="btnResetCar" type="button" data-modes="vehicle">重置车辆</button>
+
+        <button class="tbtn action" id="btnTop" type="button" data-modes="tire">俯视胎面</button>
+        <button class="tbtn action" id="btnResetTire" type="button" data-modes="tire">总览轮胎</button>
+
+        <button class="tbtn action" id="btnImpact" type="button" data-modes="suspension">施加冲击</button>
+        <button class="tbtn on" id="btnArticulate" type="button" aria-pressed="true" data-modes="drivetrain"><i class="dot" aria-hidden="true"></i>摆臂随动</button>
+      </div>
+    </div>
+
+    <!-- 各模式专属参数面板 -->
+    <div class="tab-panels">
+      <div role="tabpanel" id="panel-vehicle" aria-labelledby="tab-vehicle" tabindex="0">
+        <div class="panel-inner">
+          <div class="gear-row" role="group" aria-label="变速箱档位">
+            <span class="row-label">档位</span>
+            <div class="gear-pills" id="gearGroup">
+              <button type="button" class="gbtn" data-gear="0">1</button>
+              <button type="button" class="gbtn on" data-gear="1">2</button>
+              <button type="button" class="gbtn" data-gear="2">3</button>
+              <button type="button" class="gbtn" data-gear="3">R</button>
+            </div>
+            <span class="gear-note" id="gearNote">2 档 · 2.10:1</span>
+          </div>
+
+          <div class="slider-item">
+            <div class="slider-head"><label for="rangeStiffness">弹簧刚度 k</label><output id="valStiffness" for="rangeStiffness">32</output></div>
+            <input id="rangeStiffness" type="range" min="16" max="68" step="1" value="32" />
+          </div>
+          <div class="slider-item">
+            <div class="slider-head"><label for="rangeDamping">减震阻尼 c</label><output id="valDamping" for="rangeDamping">2.8</output></div>
+            <input id="rangeDamping" type="range" min="0.8" max="6.0" step="0.2" value="2.8" />
+          </div>
+          <div class="slider-item">
+            <div class="slider-head"><label for="rangeTravel">悬架原长</label><output id="valTravel" for="rangeTravel">340 mm</output></div>
+            <input id="rangeTravel" type="range" min="26" max="42" step="1" value="34" />
+          </div>
+          <div class="slider-item">
+            <div class="slider-head"><label for="rangeLight">摄影棚光强</label><output id="valLight" for="rangeLight">55%</output></div>
+            <input id="rangeLight" type="range" min="0" max="100" step="1" value="55" />
+          </div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="panel-tire" aria-labelledby="tab-tire" hidden="until-found">
+        <div class="panel-inner">
+          <p class="panel-tip">点击画面中的轮胎或下方卡片可拉近特写；支持把选中的规格直接装配到整车物理场。</p>
+          <div class="slider-item">
+            <div class="slider-head"><label for="rangeLightTire">摄影棚光强</label><output id="valLightTire" for="rangeLightTire">55%</output></div>
+            <input id="rangeLightTire" type="range" min="0" max="100" step="1" value="55" />
+          </div>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="panel-suspension" aria-labelledby="tab-suspension" hidden="until-found">
+        <div class="panel-inner">
+          <div class="slider-item">
+            <div class="slider-head"><label for="rangeBenchLoad">手动压载测试</label><output id="valBenchLoad" for="rangeBenchLoad">0%</output></div>
+            <input id="rangeBenchLoad" type="range" min="0" max="100" step="1" value="0" />
+          </div>
+          <div class="slider-item">
+            <div class="slider-head"><label for="rangeBenchStiff">弹簧刚度 k</label><output id="valBenchStiff" for="rangeBenchStiff">32</output></div>
+            <input id="rangeBenchStiff" type="range" min="14" max="68" step="1" value="32" />
+          </div>
+          <div class="slider-item">
+            <div class="slider-head"><label for="rangeBenchDamp">减震阻尼 c</label><output id="valBenchDamp" for="rangeBenchDamp">2.8</output></div>
+            <input id="rangeBenchDamp" type="range" min="0.5" max="6.0" step="0.1" value="2.8" />
+          </div>
+          <p class="panel-tip">弹簧采用动态螺旋线顶点重算，压缩时钢丝线径严格保持圆形不变扁。</p>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="panel-drivetrain" aria-labelledby="tab-drivetrain" hidden="until-found">
+        <div class="panel-inner">
+          <div class="slider-item">
+            <div class="slider-head"><label for="rangeMotorRpm">电机输入转速</label><output id="valMotorRpm" for="rangeMotorRpm">120 RPM</output></div>
+            <input id="rangeMotorRpm" type="range" min="-240" max="320" step="10" value="120" />
+          </div>
+          <div class="dl-specs">
+            <div><span>主动/从动齿数</span><b>16T : 24T</b></div>
+            <div><span>变速级减速比</span><b>1.50 : 1</b></div>
+            <div><span>前后差速器比</span><b>3.73 : 1</b></div>
+            <div><span>万向节联轴器</span><b>4 × 随动半轴</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3D 浮标层（轮胎模式用） -->
+  <div id="labels"></div>
+
+  <!-- 整车实时物理遥测 HUD（左下角） -->
+  <section class="telemetry-hud" id="telemetryHud" aria-label="实时物理与悬架遥测">
+    <div class="tele-top">
+      <div class="tele-stat"><span>车速</span><b id="hudSpeed">0.0</b><small>km/h</small></div>
+      <div class="tele-stat"><span>传动轴</span><b id="hudRpm">0</b><small>RPM</small></div>
+      <div class="tele-stat"><span>当前轮胎</span><b id="hudTireSpec">245/35 R20</b></div>
+    </div>
+    <div class="susp-bars" aria-label="四轮悬架压缩行程">
+      <div class="sb-row"><span>FL 左前</span><div class="sb-track"><i id="barFL"></i></div><b id="valFL">0%</b></div>
+      <div class="sb-row"><span>FR 右前</span><div class="sb-track"><i id="barFR"></i></div><b id="valFR">0%</b></div>
+      <div class="sb-row"><span>RL 左后</span><div class="sb-track"><i id="barRL"></i></div><b id="valRL">0%</b></div>
+      <div class="sb-row"><span>RR 右后</span><div class="sb-track"><i id="barRR"></i></div><b id="valRR">0%</b></div>
+    </div>
+  </section>
+
+  <!-- 驾驶控制台（底部，整车模式） -->
+  <div class="drive-dock" id="driveDock" aria-label="车辆驾驶控制">
+    <div class="drive-pad" role="group" aria-label="方向与油门触控按键">
+      <button type="button" class="dbtn" data-drive="left" aria-label="向左转向">← A</button>
+      <button type="button" class="dbtn primary" data-drive="forward" aria-label="加速前进">↑ W</button>
+      <button type="button" class="dbtn" data-drive="backward" aria-label="倒车或制动">↓ S</button>
+      <button type="button" class="dbtn" data-drive="right" aria-label="向右转向">D →</button>
+      <button type="button" class="dbtn brake" data-drive="brake" aria-label="手刹制动">空格 刹车</button>
+    </div>
+    <div class="hint">
+      <span>WASD / 方向键驾驶</span>
+      <span>拖拽旋转视角</span>
+      <span>滚轮缩放</span>
+      <span>前方黄色区为减速带 · 左侧交叉轴 · 右侧斜坡</span>
+    </div>
+  </div>
+</main>
+
+<!-- 右侧详情抽屉（轮胎特写时弹出） -->
+<aside id="panel" aria-label="轮胎规格详情"><div id="panelBody"></div></aside>
+
+<!-- 轮胎模式底部规格卡 -->
+<footer class="bottom" id="tireBottom" hidden>
+  <div id="cards"></div>
+  <div class="hint">
+    <span>拖拽旋转</span><span>滚轮缩放</span><span>点击轮胎看细节</span>
+    <span>1–4 切换</span><span>Esc 返回</span><span>空格暂停自转</span>
+  </div>
+</footer>
+
+<div id="bootError" hidden>
+  <div class="boot-card">
+    <h2>需要通过本地服务器打开</h2>
+    <p>这个项目使用 ES Module，浏览器不允许用 <code>file://</code> 直接加载模块。</p>
+    <p>在 <code>car</code> 文件夹里执行 <b>npm start</b>，然后访问 <b>http://localhost:5173</b>。</p>
+    <p class="boot-detail" id="bootDetail"></p>
+  </div>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

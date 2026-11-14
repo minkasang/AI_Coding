@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="dark"/>
+  <title>CARLAB · AI 指挥中心</title>
+  <meta name="description" content="汽车数字工程平台｜多模型研发任务看板"/>
+  <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand" data-nav="overview" tabindex="0" role="button" aria-label="回到总览">
+        <div class="brand-mark"><span></span><span></span><span></span></div>
+        <div class="brand-name">CARLAB <small>ENGINEERING LAB</small></div>
+      </div>
+
+      <div class="sidebar-group-label">WORKSPACE</div>
+      <nav class="primary-nav" aria-label="主导航">
+        <button class="nav-item active" data-nav="overview" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          <span>指挥总览</span>
+        </button>
+        <button class="nav-item" data-nav="dispatch" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 3-7 18-3.8-7.2L3 10Z"/><path d="M10.2 13.8 21 3"/></svg>
+          <span>任务派发与回报</span><small id="sidebarInboxCount">—</small>
+        </button>
+        <button class="nav-item" data-nav="tasks" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><path d="m2.5 6 1.5 1.5L6.5 5M2.5 12l1.5 1.5 2.5-2.5M2.5 18l1.5 1.5 2.5-2.5"/></svg>
+          <span>总任务池</span><small id="sidebarTaskCount">—</small>
+        </button>
+        <button class="nav-item" data-nav="agents" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="4"/><path d="M12 5V2M9 10h.01M15 10h.01M9 15c1.5 1.5 4.5 1.5 6 0M2 10v4M22 10v4"/></svg>
+          <span>模型成员</span><small id="sidebarAgentCount">—</small>
+        </button>
+      </nav>
+
+      <div class="sidebar-group-label stage-head">PROJECT ROADMAP</div>
+      <div id="sidebarStages" class="roadmap"></div>
+
+      <div class="sidebar-bottom">
+        <div class="source-tag"><span class="source-led"></span><span>Markdown 驱动</span></div>
+        <div class="sidebar-foot">本地文件即真实进度<br/>不依赖模型自行汇报在线状态</div>
+        <div class="sidebar-version">CARLAB / COMMAND CENTER · V1.0</div>
+      </div>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div class="bread"><span>CARLAB</span><span class="bread-slash">/</span><strong id="crumbTitle">指挥总览</strong></div>
+        <div class="topbar-actions">
+          <span class="sync-state" id="syncState"><i></i> 连接中</span>
+          <span class="sync-time" id="syncTime">—</span>
+          <button class="icon-button" id="refreshButton" type="button" aria-label="刷新任务数据" title="立即刷新">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.2 5.6"/><path d="M20 4v7h-7"/></svg>
+          </button>
+        </div>
+      </header>
+      <main id="content" class="content" aria-live="polite">
+        <div class="loading-state"><div class="loading-orbit"></div><p>正在读取各模型的任务文件…</p></div>
+      </main>
+    </section>
+  </div>
+  <div class="drawer-overlay" id="drawerOverlay" hidden></div>
+  <aside class="task-drawer" id="taskDrawer" aria-label="任务详情" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="drawer-eyebrow">TASK DETAILS <span id="drawerTaskId"></span></div>
+      <button class="icon-button" id="drawerClose" type="button" aria-label="关闭任务详情">×</button>
+    </div>
+    <div id="drawerBody" class="drawer-body"></div>
+  </aside>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="reportDialog" class="report-dialog" aria-labelledby="reportDialogTitle">
+    <form id="reportForm" class="report-form">
+      <div class="report-dialog-top">
+        <div><div class="eyebrow">FEEDBACK INBOX</div><h2 id="reportDialogTitle">提交 AI 回报</h2>
+          <p id="reportDialogHint">把另一个 AI 的结果粘贴进来，保存到本项目。</p></div>
+        <button type="button" class="icon-button" id="reportDialogClose" aria-label="关闭">×</button>
+      </div>
+      <label class="report-label" for="reportText">AI 返回的结果、交付文件路径与测试情况</label>
+      <textarea id="reportText" rows="12" placeholder="把 AI 的回报粘贴到这里。建议包含：完成什么、保存在哪里、验证结果、问题与下一步。" required minlength="20" maxlength="40000"></textarea>
+      <div class="report-actions">
+        <div id="reportSaveMessage" class="report-save-message">仅保存到本机 F 盘；不代表审核通过。</div>
+        <button type="button" class="action-button subtle" id="reportCancel">取消</button>
+        <button type="submit" class="action-button primary" id="reportSubmit">保存回报</button>
+      </div>
+    </form>
+  </dialog>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

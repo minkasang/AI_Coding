@@ -1,0 +1,98 @@
+{
+  "task_id": "RP-04",
+  "display_code": "02.05",
+  "prototype": "parametric_wheel_hub_bearing_assembly",
+  "timestamp": "2026-11-14",
+  "tests": [
+    {
+      "name": "valid_assembly_cad_build",
+      "status": "PASS",
+      "clearance_check": {
+        "hole_diameter_mm": 15.0,
+        "stud_diameter_mm": 14.0,
+        "radial_clearance_mm": 0.5,
+        "status": "PASS"
+      },
+      "components": {
+        "hub": {
+          "solid_valid": true,
+          "volume_mm3": 228265.67,
+          "bbox_size_mm": [
+            152.0,
+            152.0,
+            32.0
+          ],
+          "files": {
+            "step": "wheel_hub_assembly_hub.step",
+            "stl": "wheel_hub_assembly_hub.stl"
+          }
+        },
+        "bearing": {
+          "solid_valid": true,
+          "volume_mm3": 118098.75,
+          "bbox_size_mm": [
+            80.0,
+            80.0,
+            42.0
+          ],
+          "files": {
+            "step": "wheel_hub_assembly_bearing.step",
+            "stl": "wheel_hub_assembly_bearing.stl"
+          }
+        },
+        "studs": {
+          "solid_valid": true,
+          "volume_mm3": 46040.04,
+          "bbox_size_mm": [
+            125.385,
+            130.706,
+            51.0
+          ],
+          "files": {
+            "step": "wheel_hub_assembly_studs.step",
+            "stl": "wheel_hub_assembly_studs.stl"
+          }
+        }
+      },
+      "assembly_bbox_mm": [
+        152.0,
+        152.0,
+        87.0
+      ]
+    },
+    {
+      "name": "blender_multi_node_glb_export",
+      "status": "PASS",
+      "glb_path": "cad\\experiments\\planning_feasibility\\out\\wheel_hub_assembly.glb",
+      "file_size_bytes": 211592,
+      "magic_header": "glTF",
+      "unit_scaling": "0.001 (mm -> m)",
+      "hierarchy_nodes": [
+        "Assembly_WheelHub",
+        "Part_Hub",
+        "Part_Bearing",
+        "Part_WheelStuds"
+      ]
+    },
+    {
+      "name": "poka_yoke_wall_thickness_rejection",
+      "status": "PASS",
+      "input_override": {
+        "hub.pcd_mm": 75.0
+      },
+      "expected_failure": "POKA-YOKE STRUCTURAL REJECTED",
+      "actual_exit_code": 2,
+      "defense_outcome": "Prevented kernel boolean collapse and geometric wall puncture."
+    },
+    {
+      "name": "poka_yoke_outer_margin_rejection",
+      "status": "PASS",
+      "input_override": {
+        "hub.pcd_mm": 150.0
+      },
+      "expected_failure": "POKA-YOKE STRUCTURAL REJECTED",
+      "actual_exit_code": 2,
+      "defense_outcome": "Prevented hole punch through outer flange perimeter."
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "assembly_name": "wheel_hub_bearing_assembly",
+  "unit": "mm",
+  "fidelity_level": "DEMONSTRATION_PROTOTYPE",
+  "notes": "Generic demonstration prototype. All dimensions are explicit ASSUMPTION for geometric pipeline validation, not verified OEM production vehicle parts.",
+  "hub": {
+    "outer_diameter_mm": 152.0,
+    "flange_thickness_mm": 14.0,
+    "center_bore_mm": 67.1,
+    "pilot_diameter_mm": 84.0,
+    "pilot_height_mm": 18.0,
+    "pcd_mm": 114.3,
+    "bolt_count": 5,
+    "bolt_hole_diameter_mm": 15.5,
+    "clearance_series": "medium"
+  },
+  "bearing": {
+    "catalog_code": "DAC42800042_ENVELOPE_SIMPLIFICATION",
+    "modeling_fidelity": "GEOMETRIC_ENVELOPE_ONLY",
+    "disclaimer": "Simplified packaging envelope and seal profile; internal rolling elements, contact kinematics, press-fit tolerances, and preload stresses are NOT simulated.",
+    "inner_diameter_mm": 42.0,
+    "outer_diameter_mm": 80.0,
+    "width_mm": 42.0,
+    "chamfer_mm": 2.5
+  },
+  "stud": {
+    "standard": "ISO_M14x1.5_SCHEMATIC",
+    "modeling_fidelity": "NOMINAL_CYLINDER_PLUS_METADATA",
+    "nominal_diameter_mm": 14.0,
+    "head_diameter_mm": 22.0,
+    "head_thickness_mm": 6.0,
+    "shank_length_mm": 45.0,
+    "thread_spec": "M14x1.5-6g"
+  },
+  "tolerances": {
+    "standard_reference": "ISO 273:1979 Fasteners - Clearance holes for bolts and screws",
+    "selected_series": "medium",
+    "iso273_series_options_for_m14": {
+      "fine": 15.0,
+      "medium": 15.5,
+      "coarse": 16.5
+    },
+    "radial_clearance_mm": 0.75,
+    "min_wall_margin_mm": 5.0
+  }
+}

@@ -1,0 +1,346 @@
+{
+  "schemaVersion": "carlab.rp05.gapVerdicts/1.1",
+  "task": "RP-05",
+  "owner": "hy4",
+  "snapshotAt": "2026-11-14T16:36:56+08:00",
+  "revisionNote": "v1.0 基于 16:17 快照（仅 RP-06 归档），多项判定以『报告未归档』为理由。v1.1 在 4 份第一波报告归档后重做：GAP-002/005/007/008/009/010/012 依据新报告改判或加强证据，新增 6 项跨模型冲突发现。v1.0 判定不保留。",
+  "verdictVocabulary": ["CONFIRMED_GAP", "ALREADY_COVERED", "NOT_REQUIRED", "NEEDS_DECISION"],
+  "evidencePolicy": "每条判定引用原计划章节或已归档报告/证据的具体位置。submitted 不等于 approved：报告已提交但仍待总控审核，本审计据其文本做独立核对，不代表认可其结论。",
+  "registerBaseline": {
+    "claimedMasterPlanLines": 308,
+    "measuredMasterPlanLines": 334,
+    "deltaLines": 26,
+    "impact": "GAP_REGISTER.md:4 的审查基线早于 MASTER_PLAN §14—§19；且 16 条候选均基于『三种架构』并列假设，RP-01 axisSeparationNote 已证明该分类有误（见 NEW-09）"
+  },
+  "verdicts": [
+    {
+      "gapId": "GAP-001",
+      "verdict": "CONFIRMED_GAP",
+      "title": "首发车型架构/动力形式/精度等级是否已明确选定",
+      "evidenceRefs": [
+        "docs/planning/evidence/RP-01-tree-core.json VEH-001 note『基型待总控批准』；configurations 三项全部 status=PROPOSED_NOT_APPROVED",
+        "RP-01 CFG-BOF-ICE 标注『首发基型候选』（非承载式越野·燃油）",
+        "docs/planning/evidence/RP-02-interface-graph.example.json scope: unibody + ICE FWD (ASSUMPTION)",
+        "docs/planning/reports/RP-06-engineering-viewer.md:266 §11 OPEN 1『首个纵切样板总成未定』",
+        "docs/planning/VEHICLE_SYSTEM_TREE_SEED.md:51-53 优先示意型越野/通用底盘",
+        "docs/planning/PLANNING_PROGRAM.md:67 G-PL0『确认一个首发演示基型』"
+      ],
+      "rationale": "四份产物隐含四种基准：RP-01 提出 3 个未批准候选并倾向 BOF-ICE、种子建议越野/通用底盘、RP-02 接口图用承载式 ICE FWD、RP-06 把首个样板列为 OPEN。RP-01 证据的诚实度很高（明确标 PROPOSED_NOT_APPROVED），但这恰恰证明基型至今未定。所有第一波成果因此无法直接合并。",
+      "dependencyStatus": "ESCALATE_TO_GPT6",
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-002",
+      "verdict": "ALREADY_COVERED",
+      "title": "物理产品树能否分解到零件/紧固件并标明条件适用",
+      "evidenceRefs": [
+        "docs/planning/evidence/RP-01-tree-core.json 100 节点：idPolicy 九类前缀、canonicalIdentity 单一规范身份、architectures×powertrains 两轴、3 个配置",
+        "docs/planning/evidence/RP-01-tree-chassis.json 273 节点：SYS-20/30/40 下钻，188 个 PART、16 个 REF、16 个 DAT",
+        "实测节点名含『车身悬置螺栓与螺母』『前副车架衬套』『前副车架紧固螺栓』等 22 项紧固件/衬套/轴承",
+        "docs/planning/evidence/RP-01-sources.json 82 条来源，honestyPolicy 与 spotChecked 标记"
+      ],
+      "rationale": "v1.0 判 CONFIRMED_GAP 的理由是产品树未交付；16:25—16:36 的 RP-01 证据已把顶层分类、编号规则、单一身份、条件适用和底盘零件级下钻做实，改判已覆盖。范围例外需记录：报告正文未归档；SYS-80/90/100/110 在 deferredScope 明确 DEFERRED（总成级）；scopeNote 引用的 3 份分文件实测不存在。",
+      "scopeExceptions": ["RP-01 报告正文", "动力/车身/电气/安全系统零件级下钻", "三份被引用但未落盘的分文件"],
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-003",
+      "verdict": "CONFIRMED_GAP",
+      "title": "装配接口、基准轴、左右镜像、单元变换统一规范",
+      "evidenceRefs": [
+        "MASTER_PLAN.md:85『+X 为车辆一侧，+Y 向上，+Z 向前。先确认当前 FL/FR 约定』——明写未确认",
+        "docs/planning/reports/RP-02-interface-graph.md:41『现有 +Y 上/+Z 前；本报告采用 x 前/y 左/z 上，两者必须显式变换，未统一前不得进入生产』；JSON coordinateConvention.status=OPEN",
+        "docs/planning/reports/RP-03-fidelity-and-simulation.md:73 实测『正转角使车轮朝 +X 偏，也就是本项目的左侧』（+X=左、+Z=前）",
+        "docs/planning/reports/RP-04-cad-production.md:220『STEP +Z 朝上；Three.js/glTF +Y 朝上、-Z 朝前』——与总计划 +Z 向前相反",
+        "docs/planning/reports/RP-02-interface-graph.md:844 §11.3 风险『坐标混用…未统一前不得用于生产』；:849 §11.4 第 2 项把坐标/Frame 归属列为需总控裁定"
+      ],
+      "rationale": "四份文件出现至少四种坐标表述：总计划/现有代码（+X 左、+Y 上、+Z 前）、RP-02 提案（ISO 8855：x 前/y 左/z 上）、RP-04 的 glTF 说法（-Z 前）、RP-04 的 STEP 说法（+Z 上）。RP-02 与 RP-04 都自认需要显式变换，但没有任何一方给出变换矩阵，也没有 ADR 冻结。这是跨模型接口冲突的最高项，直接影响所有装配硬点、左右镜像与 GLB 导出。",
+      "dependencyStatus": "ESCALATE_TO_GPT6",
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-004",
+      "verdict": "NEEDS_DECISION",
+      "title": "结构承载路径、车身/车架和副车架的架构差异如何表达",
+      "evidenceRefs": [
+        "MASTER_PLAN.md:269-277 §14 Architecture→PlatformFamily→VehicleVariant 原则",
+        "docs/planning/evidence/RP-01-tree-core.json architectures[BOF/UNI].loadPath：每条都明确拆分 EVIDENCE 与 ASSUMPTION",
+        "RP-01-tree-core.json nodes 含 PART-10-023 前副车架衬套、PART-10-024 前副车架紧固螺栓、PART-10-005 车身悬置螺栓",
+        "docs/planning/evidence/RP-02-interface-graph.example.json 全文检索 subframe/副车架 命中 0，仅 N-BODY 单节点"
+      ],
+      "rationale": "RP-01 已把承载结构的『已知/假设』分得很清楚，产品树层面部分覆盖；但接口图没有副车架/悬置连接节点，承载路径仍无数据结构表达。且是否本轮就要表达取决于 GAP-001 首发架构选型，属设计决策而非单纯缺件。",
+      "dependencyStatus": "BLOCKED_BY_GAP001",
+      "confidence": "MEDIUM"
+    },
+    {
+      "gapId": "GAP-005",
+      "verdict": "ALREADY_COVERED",
+      "title": "液压制动、空气/油/冷却液回路与机械机构的数据链路",
+      "evidenceRefs": [
+        "docs/planning/reports/RP-02-interface-graph.md §2.5 流体/液压接口单位与失效条件、§4.1 制动因果链含方程与示意算例、§4.3 发动机冷却因果链",
+        "RP-02-interface-graph.example.json 42 nodes / 86 edges",
+        "RP-02-validation-results.json 24 passed / 0 failed；TC-02 主缸→FL 卡钳液压路径连通"
+      ],
+      "rationale": "报告归档后确认液压制动与冷却液主链路已有节点、边、单位、失效条件、因果链和自动测试。范围例外：scope.excluded 明确排除燃油系统细节、HVAC 制冷剂回路、排气后处理；流体流量/热标定在 RP-02 §11.1 自述缺少。",
+      "scopeExceptions": ["燃油供给回路", "空调制冷剂回路", "排气后处理", "真实流量/热标定数值"],
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-006",
+      "verdict": "NEEDS_DECISION",
+      "title": "发动机配气/曲柄连杆/正时/附件驱动与电驱的建模层级",
+      "evidenceRefs": [
+        "docs/planning/reports/RP-03-fidelity-and-simulation.md §8：FID-K 内部机构→查表扭矩 FID-D1→燃烧 FID-D2 的三级路径；:182 曲柄滑块探针只验证位置，扭矩/缸压为空",
+        "docs/planning/reports/RP-04-cad-production.md §2.1 零件族 3/5：缸体缸盖、齿轮传动给出建模边界",
+        "docs/planning/evidence/RP-01-tree-core.json deferredScope：混动专用总成 OUT_OF_SCOPE；SYS-80/90/100/110 下钻 DEFERRED",
+        "docs/planning/reports/RP-06-engineering-viewer.md:66 §3 REQUIRES_RESEARCH 提到 Showcase 合并网格 vs 实例保留需 RP-04 对齐"
+      ],
+      "rationale": "简化路径与反例边界已由 RP-03 成文，建模边界由 RP-04 给出，比 v1.0 时期充分得多。但『首发到底下钻到哪一级』仍未冻结：RP-01 把动力树分文件列为待交付、HEV 明确不做，而 RP-03 的 FID-K 是目标不是决定。需总控在精度与成本间裁决。",
+      "dependencyStatus": "BLOCKED_BY_GAP001_AND_RP01_REPORT",
+      "confidence": "MEDIUM"
+    },
+    {
+      "gapId": "GAP-007",
+      "verdict": "ALREADY_COVERED",
+      "title": "线束/电连接器/低高压配电与控制信号拓扑",
+      "evidenceRefs": [
+        "docs/planning/reports/RP-02-interface-graph.md §2.3 电能接口、§2.4 信息/控制接口、§4.4 电驱加速/回收制动因果链",
+        "RP-02 图含 N-BATTERY-12V、N-FUSEBOX、N-CAN-BUS、N-ECM、N-IMU、N-EPS-MOTOR；units 含 V/A/W",
+        "RP-02 报告:85『CAN 边的 evidence.level=OPEN、validation.status=BLOCKED，TC-24 验证只产生警告不伪造数据』"
+      ],
+      "rationale": "12V 配电与控制总线拓扑已建模并测试；EV 高压片段在测试用例中。RP-02 对未知协议保持 OPEN/BLOCKED 且写了专门测试，是正确处理。详细线束三维走向按任务书不需编造（见 notRequiredSubItems）。",
+      "scopeExceptions": ["HV 高压系统主图", "真实 DBC/ARXML/接地策略（RP-02 自列 GAP-RP02-03）"],
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-008",
+      "verdict": "ALREADY_COVERED",
+      "title": "衬套、轴承、密封/公差、紧固件及复用件的验证规则",
+      "evidenceRefs": [
+        "docs/planning/reports/RP-04-cad-production.md §3.3 ISO 273 通孔配合与 polygonOffset 防 Z-Fighting、§4.1 离散标准件 IncompatibleCatalogError、§4.2 四条 Poka-Yoke 断言代码、§9 六维自动化测试标准",
+        "docs/planning/evidence/RP-04-feasibility.json 4 项 PASS，含 0.5mm 径向间隙校验与两个防呆反例（PCD 75/150 均返回码 2）",
+        "cad/experiments/planning_feasibility/out/wheel_hub_assembly_metadata.json engineering_standards 列 ISO 273/4014/15",
+        "RP-01-tree-core.json FAM-130-* 37 个通用件家族目录 + SUB-130-01 紧固件家族"
+      ],
+      "rationale": "v1.0 判 CONFIRMED_GAP 的理由是『无成族验证规则』；RP-04 报告已给出可执行的断言代码、标准件离散检索规则、六维验收标准和带反例的实测，RP-01 给出通用件家族目录，改判已覆盖。剩余限制：实测原型只覆盖轮毂-轴承-螺柱一种组合，密封件与衬套未做原型。",
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-009",
+      "verdict": "ALREADY_COVERED",
+      "title": "轮胎/道路/涉水/冰雪模型的保真度与实验边界",
+      "evidenceRefs": [
+        "docs/planning/reports/RP-03-fidelity-and-simulation.md §2 五级精度、§4 各总成目标、§5 物理量需求表、§7 16 项实验含『不合格条件』与『局限』、§9 事实/假设/未知三分",
+        "docs/planning/evidence/RP-03-fidelity-matrix.json levelIds + experiments(failIf)",
+        "RP-03-cannon-probe.json straight_brake_ignores_frictionSlip 的 limitation『不能把 frictionSlip 当成冰面摩擦系数』；:152 保留被否定的初始假设",
+        "docs/research/RESEARCH_BASELINE.md:25-28 E5 Chrono 轮胎模型分级"
+      ],
+      "rationale": "报告归档后，『游戏物理不等于工程仿真』已有成文矩阵、可复现实验、容差原则和明确的不能宣称范围，且探针保留了被证伪的假设。这是本轮质量最高的覆盖之一。RP-03 §10 建议把 GAP-009 收窄为『现有参数不能代表冰/雪/水』，本审计认同并据此判定。",
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-010",
+      "verdict": "CONFIRMED_GAP",
+      "title": "模型生成的质量、惯量、碰撞体与渲染资产信息如何对应",
+      "evidenceRefs": [
+        "MASTER_PLAN.md:94-95 PartSpec 要求 mechanical(材料/质量/质心/惯量/摩擦) 与 assets(CAD 源/STEP/GLB/LOD/碰撞几何/哈希)",
+        "cad/experiments/hello_flange/out/hello_flange_metadata.json 实测字段仅 part_name/unit/parameters/measured/files/notes",
+        "cad/experiments/planning_feasibility/out/wheel_hub_assembly_metadata.json 实测仅 unit/engineering_standards/clearance_fit_check/components(体积+包围盒)/assembly——无质量、无惯量、无碰撞体、无 GLB 路径、无哈希、无材质",
+        "docs/planning/reports/RP-04-cad-production.md:311-313 §9.3 明确要求『输出标准质量(kg)与惯性矩张量供动力学仿真读取』、:145 §5 Step 2 声称 B-rep 有『精确质量属性』",
+        "docs/planning/reports/RP-03-fidelity-and-simulation.md:227 建议把 GAP-010 收窄为『920 kg 没有对应 CAD 转动惯量，视觉摆臂也没有质量』"
+      ],
+      "rationale": "这是最强的可复核缺口：RP-04 报告在验收标准里要求输出质量与惯性矩，但同一任务实测产出的两份 metadata 都没有这些字段。不是『尚未规划』，而是『规范写了、样板没做』。RP-04 §5 的信息保留矩阵把『精确质量属性』标为 B-rep 保留项，却未落地到交付元数据，属于把能力描述当成已交付数据。",
+      "dependencyStatus": "ESCALATE_TO_GPT6",
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-011",
+      "verdict": "ALREADY_COVERED",
+      "title": "乘员保护、碰撞、法规要求的演示边界和非认证声明",
+      "evidenceRefs": [
+        "MASTER_PLAN.md:18 禁止把未测试结果标称量产设计或安全认证结果",
+        "docs/planning/PLANNING_PROGRAM.md:84『不是要求执行量产整车所有供应链、碰撞法规与安全认证流程』",
+        "docs/planning/reports/RP-06-engineering-viewer.md:117-122 §5.3 一次性声明/截图水印/Cannon 标注非多体悬架",
+        "docs/planning/reports/RP-03-fidelity-and-simulation.md:31 FID-D2『不能顺便声称法规认证』、:138『本任务不集成 Chrono』",
+        "docs/planning/evidence/RP-01-tree-core.json deferredScope 碰撞法规认证 OUT_OF_SCOPE"
+      ],
+      "rationale": "非认证边界在总计划、纲领、RP-03、RP-06、RP-01 五处一致成文，且 RP-06 落地为可实现的 UI 规则。碰撞认证级仿真明确裁剪（见 notRequiredSubItems），不应重复立项。",
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-012",
+      "verdict": "CONFIRMED_GAP",
+      "title": "复杂整车规模下的 GLB 层级、加载、LOD、可拆解与性能瓶颈",
+      "evidenceRefs": [
+        "docs/planning/reports/RP-04-cad-production.md:92 整车 ≤800,000 三角面 / 60FPS、:150 Step 7 『实时帧率 ≥60 FPS、DrawCall ≤150』标签写 EVIDENCE",
+        "docs/planning/reports/RP-06-engineering-viewer.md:184-188 §7.1 工程 ≥45fps@1080p / Showcase ≥30fps@1440p、:280 §12 自标 ASSUMPTION",
+        "docs/planning/evidence/RP-06-verification-plan.json status=PLAN_ONLY，4 项 futureViewerGates 全未运行，legacy-modes 注明 not run in RP-06",
+        "实测 tests/、assets/、src/viewer/ 目录均不存在；cad/experiments/planning_feasibility/out/ 只有单个 211592 bytes GLB"
+      ],
+      "rationale": "规划层现在很丰富（LOD 预算、能力矩阵、指标表），但实测层为零，且两份报告给出互相冲突的帧率目标（60 vs 45/30）。更严重的是 RP-04 §5 把未实测的『≥60 FPS』标为 EVIDENCE——把验收目标写成证据，正是任务书禁止的虚假真实度。缺口是实测基线与目标统一，不是文档页数。",
+      "dependencyStatus": "ESCALATE_TO_GPT6",
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-013",
+      "verdict": "CONFIRMED_GAP",
+      "title": "需求→系统→接口→模型→测试的双向追溯路径",
+      "evidenceRefs": [
+        "docs/planning/PLANNING_PROGRAM.md:70 G-PL3 要求『需求—测试映射』；:76-80 NASA 双向追溯",
+        "docs/planning/reports/RP-02-interface-graph.md:823 §11.1 自述『给出 systemRef/pbsRef/evidence.refs/validation 和测试用例；但尚未接入正式需求库』",
+        "RP-01 idPolicy 九类前缀（VEH/SYS/SUB/ASSY/PART/FAM/DAT/REF）与 RP-02 节点 ID（N-xxx）、RP-04 partId 示例（SYS-30-HUB-001）三套并存且互相冲突（见 NEW-10）",
+        "实测无 tests/、无 docs/schema/、无 requirements/traceability 文件；GAP_REGISTER.md:20 自标 MISSING"
+      ],
+      "rationale": "RP-02 提供了字段级追溯能力并诚实说明未接需求库，但跨报告连『同一个零件的 ID 长什么样』都未统一，追溯链在第一环就断开。RP-04 的 partId 示例 SYS-30-HUB-001 违反 RP-01 idPolicy（SYS 前缀专指系统级，零件应为 PART-30-xxx）。",
+      "dependencyStatus": "ESCALATE_TO_GPT6",
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-014",
+      "verdict": "CONFIRMED_GAP",
+      "title": "复杂型号版权、标准/资料可用性和真实尺寸的证明方法",
+      "evidenceRefs": [
+        "MASTER_PLAN.md:208『发布资产标明来源与许可』；:249 整车模型真实来源与授权待定",
+        "docs/planning/reports/RP-04-cad-production.md:83-88 引用 ISO 273、:111 ISO 15/DIN 625/ISO 4014、:320 §9.6『必须记录 CC-BY/MIT 或允许商业化使用的开源 CAD 协议来源』——但全文未给出这些标准的可定位出处或许可清单",
+        "docs/planning/reports/RP-04-cad-production.md §2.2 决策树含『导入开源 STEP 模板』分支，未定义许可审查流程",
+        "实测根目录无 LICENSE/ASSET_PROVENANCE 清单，assets/ 不存在",
+        "正面证据：RP-01-sources.json 82 条来源含 accessNote/honestyPolicy/spotChecked；RP-03 探针标注 VULCAN 为虚构品牌；RP-03 报告:136 记录 Chrono LICENSE 为 BSD 风格且说明『不构成接入承诺』"
+      ],
+      "rationale": "来源治理比 v1.0 时期明显改善（RP-01 有 82 条登记、RP-03 有许可说明），但仍是分散在各报告里的做法，没有项目级载体：RP-04 大量引用 ISO 标准却无出处 URL/版本，且自身 §9.6 要求的许可清单未产出。标准文本通常受版权保护，不能把标准编号当作可自由复用的尺寸依据。",
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-015",
+      "verdict": "CONFIRMED_GAP",
+      "title": "诊断、故障、维护/拆卸工序与交互演示范围",
+      "evidenceRefs": [
+        "MASTER_PLAN.md:162 P2 仅提『拆装顺序』一词（MENTIONED）",
+        "docs/planning/reports/RP-06-engineering-viewer.md:37-41 八步旅程不含诊断/故障/维护工序/工具/扭矩",
+        "docs/planning/reports/RP-02-interface-graph.md:811 §10.5『拆解/爆炸应沿接口边断开，断开后应显示哪些下游功能失效』——是建议，非实现",
+        "docs/planning/reports/RP-04-cad-production.md §7 六类失败反例是 CAD 生成失败，不是车辆故障诊断",
+        "docs/planning/GAP_REGISTER.md:22 自标 MISSING"
+      ],
+      "rationale": "四份新报告都没有补上这块：RP-02 给出了最接近的『沿接口边拆解并显示失效功能』建议，但仍无拆装顺序、专用工具、扭矩/间隙约束、故障注入。『爆炸/装回』与『维护工序』不是一回事。",
+      "confidence": "HIGH"
+    },
+    {
+      "gapId": "GAP-016",
+      "verdict": "CONFIRMED_GAP",
+      "title": "规划本身的验证矩阵、独立审查与失效处理",
+      "evidenceRefs": [
+        "docs/planning/PLANNING_PROGRAM.md:59-73 §5 三维验收与 G-PL0…G-PL4 门禁（文字已有）",
+        "docs/planning/reports/RP-02-interface-graph.md:846-853 §11.4 自列 6 项需总控裁定；:829-835 §11.2 自列 7 个新缺口",
+        "docs/planning/reports/RP-03-fidelity-and-simulation.md:222-228 §10 自列 4 项与总计划/数据协议的冲突",
+        "docs/planning/reports/RP-06-engineering-viewer.md:264-268 §11 自列 2 个 OPEN + 1 个 CONFLICT",
+        "实测无 tests/ 目录、无规划验证矩阵、无自动化门禁脚本、无 needs_work 返工实例、无 Git 基线"
+      ],
+      "rationale": "每份报告都诚实列出了待裁决项，但没有任何跨报告汇总与裁决载体：RP-02 的 6 项裁定、RP-03 的 4 项冲突、RP-06 的 3 项 OPEN 至今无人合并，GAP_REGISTER 仍是 308 行基线的 INITIAL 版。门禁写在文档、没有执行脚本；审计期间输入两次漂移且无版本控制。本任务的真正价值正是把这些分散的『自认待决』汇总成一张可裁决清单。",
+      "dependencyStatus": "ESCALATE_TO_GPT6",
+      "confidence": "HIGH"
+    }
+  ],
+  "newFindings": [
+    {
+      "id": "NEW-01",
+      "severity": "P0",
+      "title": "坐标系至少四种表述并存，无任何变换矩阵或 ADR",
+      "linkedGaps": ["GAP-003"],
+      "evidence": "MASTER_PLAN.md:85 (+X 侧/+Y 上/+Z 前，FL/FR 待确认)；RP-02:41 + JSON (ISO 8855 x前/y左/z上, status OPEN)；RP-03:73 (+X=左, +Z=前 实测)；RP-04:220 (STEP +Z 上, glTF -Z 前)",
+      "type": "CROSS_MODEL_INTERFACE_CONFLICT",
+      "note": "RP-02 §11.4 第 2 项与 RP-04 §7 反例 5 都自认需统一，但均未给出变换契约。RP-04 的 -Z 前与总计划 +Z 前直接相反。"
+    },
+    {
+      "id": "NEW-02",
+      "severity": "P0",
+      "title": "首发基型四处口径不一致，且 RP-01 三个候选全部未批准",
+      "linkedGaps": ["GAP-001"],
+      "evidence": "RP-01-tree-core.json configurations[].status=PROPOSED_NOT_APPROVED；VEHICLE_SYSTEM_TREE_SEED.md:51-53；RP-02 scope unibody ICE FWD；RP-06:266 OPEN",
+      "type": "BASELINE_CONFLICT"
+    },
+    {
+      "id": "NEW-03",
+      "severity": "P0",
+      "title": "真实性/证据标签至少 5 套词汇并行，三份报告各自提出不同映射且无人裁决",
+      "linkedGaps": ["GAP-013", "GAP-016"],
+      "evidence": "MASTER_PLAN.md:104-110（标题『三种验证等级』却列 VISUAL/GEOMETRY/KINEMATIC/DYNAMIC 四项）；RP-03 FID-V/G/K/D1/D2 五级且 :224 要求拆 DYNAMIC；RP-02 evidenceLevels 四类 + :798 提议 fidelityLevel 三级 + :783-794 自行给出映射表；RP-06 truthLabels 四徽章且 :123 称供 RP-02 合并（RP-02 报告未采纳）；RP-01 EVIDENCE/ASSUMPTION/OPEN + DEFERRED/OUT_OF_SCOPE",
+      "type": "VOCABULARY_CONFLICT",
+      "note": "RP-02 的映射表把 FLUID/THERMAL/ELEC/CONTACT 通过工况校验映射为 DYNAMIC，而 RP-03 明确要求把 DYNAMIC 拆成 D1/D2；两套映射不能同时成立。"
+    },
+    {
+      "id": "NEW-04",
+      "severity": "P0",
+      "title": "四驱动力链路在唯一接口图中缺席；RP-03 反证现有代码有前40/后60 分配却无差速器",
+      "linkedGaps": ["GAP-005", "GAP-001"],
+      "evidence": "RP-02 图 42 节点为 ICE FWD，仅 N-HALFSHAFT-FL/FR；MASTER_PLAN.md:169 要求前/后/四驱适配器；RP-03:79『前 40%、后 60% 分到四条射线…没有差速器约束，也没有用上视觉齿轮的 16/24』",
+      "type": "END_TO_END_BREAK"
+    },
+    {
+      "id": "NEW-05",
+      "severity": "P1",
+      "title": "RP-04 验收标准与自身样板产物不一致：要求质量/惯性矩，metadata 却没有",
+      "linkedGaps": ["GAP-010"],
+      "evidence": "RP-04:311-313 §9.3 vs wheel_hub_assembly_metadata.json 与 hello_flange_metadata.json 实测字段",
+      "type": "SPEC_VS_ARTIFACT_CONFLICT"
+    },
+    {
+      "id": "NEW-06",
+      "severity": "P1",
+      "title": "帧率/面数目标跨报告冲突，且 RP-04 把未实测目标标为 EVIDENCE",
+      "linkedGaps": ["GAP-012"],
+      "evidence": "RP-04:92 60FPS/≤800,000 tris、:150 ≥60 FPS 标 EVIDENCE；RP-06:185 ≥45fps@1080p / ≥30fps@1440p 且 :280 自标 ASSUMPTION；RP-06-verification-plan.json status=PLAN_ONLY",
+      "type": "TARGET_CONFLICT_AND_MISLABEL"
+    },
+    {
+      "id": "NEW-07",
+      "severity": "P1",
+      "title": "零件 ID 规则冲突：RP-04 partId 示例违反 RP-01 idPolicy",
+      "linkedGaps": ["GAP-013"],
+      "evidence": "RP-04:239 partId='SYS-30-HUB-001'（SYS 前缀 + 非三位序号）；RP-01 idPolicy.rule='<PREFIX>-<系统号>-<三位序号>'，prefixes.SYS=系统、PART=零件",
+      "type": "IDENTITY_CONFLICT"
+    },
+    {
+      "id": "NEW-08",
+      "severity": "P1",
+      "title": "跨 AI 并发写入无冲突控制，且审计期间输入两次漂移",
+      "linkedGaps": ["GAP-016"],
+      "evidence": "三次带时间戳快照（7→12→16 份 evidence，1→4 份报告）；RP-03 任务卡 ready→in_progress→submitted；AGENTS.md:299 自述并发/身份权限尚未解决；git 无仓库",
+      "type": "PROCESS_RISK"
+    },
+    {
+      "id": "NEW-09",
+      "severity": "P1",
+      "title": "总控种子把『纯电』当作车身架构并列，RP-01 证明为分类学错误，但种子与 GAP_REGISTER 未修订",
+      "linkedGaps": ["GAP-001", "GAP-004"],
+      "evidence": "RP-01-tree-core.json axisSeparationNote『前两者是车身承载结构，纯电是动力形式，二者正交』；VEHICLE_SYSTEM_TREE_SEED.md 顶层备注与 RP-01 任务书仍用三分法；GAP_REGISTER GAP-004 沿用旧分类",
+      "type": "TAXONOMY_ERROR",
+      "note": "此项由 RP-01 首先发现，本审计独立复核确认并升级为需总控修订共享种子的范围问题。"
+    },
+    {
+      "id": "NEW-10",
+      "severity": "P2",
+      "title": "已归档报告存在未核实引用、不可精确复现记录与引用未落盘文件",
+      "linkedGaps": ["GAP-016"],
+      "evidence": "RP-06-feature-matrix.json Raycaster 路径不存在；verification-plan.json body ~11633 vs 实测 12878，EADDRINUSE 记 PASS_WITH_NOTE；RP-01-tree-core.json scopeNote 引用 3 份 MISSING 分文件",
+      "type": "EVIDENCE_QUALITY"
+    }
+  ],
+  "notRequiredSubItems": [
+    {"item": "量产级碰撞安全认证仿真", "basis": "PLANNING_PROGRAM.md:84；MASTER_PLAN.md:18；RP-01 deferredScope OUT_OF_SCOPE"},
+    {"item": "复杂发动机燃烧/传热 CFD", "basis": "PLANNING_PROGRAM.md:35；RP-03 §8 明确 OUT_OF_SCOPE"},
+    {"item": "真实轮胎有限元、全系统流体动力学", "basis": "PLANNING_PROGRAM.md:35；RP-03 §8"},
+    {"item": "详细线束三维走向与真实 DBC/ARXML 协议", "basis": "RP-02 任务书:18；RP-02 报告:85 保持 OPEN/BLOCKED 并写 TC-24 验证"},
+    {"item": "P0 阶段迁移 WebGPU", "basis": "MASTER_PLAN.md:70；PLAN_READINESS_REVIEW.md:16"},
+    {"item": "混动专用总成（功率分流/混动变速箱）本轮展开", "basis": "RP-01-tree-core.json deferredScope OUT_OF_SCOPE"}
+  ],
+  "summary": {
+    "total": 16,
+    "CONFIRMED_GAP": 8,
+    "ALREADY_COVERED": 6,
+    "NOT_REQUIRED": 0,
+    "NEEDS_DECISION": 2,
+    "newFindings": 10,
+    "notRequiredSubItems": 6,
+    "changeFromV10": "CONFIRMED_GAP 由 10 降为 8、ALREADY_COVERED 由 4 升为 6，变化恰为 GAP-002（产品树）与 GAP-008（紧固件验证规则）两项改判：16:25—16:36 落地的 RP-01 树证据与 RP-04 报告把它们做实了。其余 14 项判定未变，只是证据从『报告未归档』换成已归档报告的原文。这不是放宽标准，而是输入变化后的重新取证。",
+    "note": "NOT_REQUIRED 全数以子项形式记录：16 条 GAP 均非整条『不必做』，强行整条判 NOT_REQUIRED 会掩盖已覆盖或遗漏部分。"
+  }
+}

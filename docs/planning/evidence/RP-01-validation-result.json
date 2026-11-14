@@ -1,0 +1,86 @@
+{
+  "artifact": "RP-01-validation-result",
+  "tool": "agent-workspace/agents/qwen4/tools/rp01_tree_tool.py",
+  "command": ".venv/Scripts/python.exe agent-workspace/agents/qwen4/tools/rp01_tree_tool.py validate --out docs/planning/evidence/RP-01-validation-result.json",
+  "overall": "PASS",
+  "violationCount": 0,
+  "violations": [],
+  "metrics": {
+    "configurations": [
+      "CFG-BOF-ICE",
+      "CFG-UNI-ICE",
+      "CFG-UNI-BEV"
+    ],
+    "wheel-end_depth_below_assembly": 3,
+    "wheel-end_node_count": 41,
+    "engine_depth_below_assembly": 3,
+    "engine_node_count": 105,
+    "function_nodes": 77,
+    "function_coverage": {
+      "REALIZED": 65,
+      "PARTIAL": 9,
+      "GAP": 3
+    },
+    "audit_items": 36,
+    "audit_verdicts_actual": {
+      "MENTIONED": 19,
+      "MISSING": 11,
+      "COVERED": 2,
+      "UNKNOWN": 4
+    },
+    "source_count": 82,
+    "sources_by_kind": {
+      "external": 69,
+      "local-measurement": 9,
+      "project-internal": 4
+    },
+    "sources_usable_for_claims": 80,
+    "node_count": 780,
+    "physical_nodes": 745,
+    "ref_nodes": 35,
+    "max_depth": 6,
+    "systems": [
+      "SYS-00",
+      "SYS-10",
+      "SYS-100",
+      "SYS-110",
+      "SYS-130",
+      "SYS-20",
+      "SYS-30",
+      "SYS-40",
+      "SYS-50",
+      "SYS-60",
+      "SYS-70",
+      "SYS-80",
+      "SYS-90"
+    ],
+    "non_physical_views": [
+      "SYS-120",
+      "SYS-140",
+      "SYS-00",
+      "SYS-130"
+    ],
+    "nodes_per_system": {
+      "ROOT": 1,
+      "SYS-00": 13,
+      "SYS-10": 42,
+      "SYS-100": 37,
+      "SYS-110": 18,
+      "SYS-130": 44,
+      "SYS-20": 115,
+      "SYS-30": 48,
+      "SYS-40": 96,
+      "SYS-50": 112,
+      "SYS-60": 76,
+      "SYS-70": 53,
+      "SYS-80": 41,
+      "SYS-90": 49
+    },
+    "evidence_mix": {
+      "ASSUMPTION": 493,
+      "OPEN": 55,
+      "EVIDENCE": 232
+    },
+    "markdown_ids": 780
+  }
+}

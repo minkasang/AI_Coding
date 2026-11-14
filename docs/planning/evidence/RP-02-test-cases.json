@@ -1,0 +1,1902 @@
+{
+  "schemaVersion": "carlab.interface-tests/0.1.0-proposal",
+  "graphFile": "RP-02-interface-graph.example.json",
+  "generatedAt": "2026-11-14",
+  "description": "正常/异常接口图自动测试。patch 为对本图的最小改动；expect 描述期望错误码。",
+  "cases": [
+    {
+      "caseId": "TC-01",
+      "title": "基础接口图应无结构错误（OPEN 项只产生警告）",
+      "op": "validate",
+      "patch": [],
+      "expect": {
+        "ok": true,
+        "codesInclude": [],
+        "warningsInclude": [
+          "INTF-W001"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-02",
+      "title": "制动液压路径从主缸到 FL 卡钳应连通",
+      "op": "path",
+      "from": {
+        "nodeId": "N-BRAKE-MASTER",
+        "portId": "P-PRESSURE"
+      },
+      "to": {
+        "nodeId": "N-CALIPER-FL",
+        "portId": "P-IN"
+      },
+      "classes": [
+        "FLUID_HYDRAULIC"
+      ],
+      "expect": {
+        "ok": true,
+        "codesInclude": []
+      }
+    },
+    {
+      "caseId": "TC-03",
+      "title": "拔掉主缸到 HCU 的液压管后路径应断开",
+      "op": "path",
+      "patch": [
+        {
+          "op": "removeEdge",
+          "edgeId": "E-MASTER-HCU"
+        }
+      ],
+      "from": {
+        "nodeId": "N-BRAKE-MASTER",
+        "portId": "P-PRESSURE"
+      },
+      "to": {
+        "nodeId": "N-CALIPER-FL",
+        "portId": "P-IN"
+      },
+      "classes": [
+        "FLUID_HYDRAULIC"
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E020"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-04",
+      "title": "把制动压力单位写成 N（量纲错误）应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setEdge",
+          "edgeId": "E-MASTER-HCU",
+          "path": "quantity.unit",
+          "value": "N"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E003"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-05",
+      "title": "端口额定值用 mm 而未声明换算应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setPort",
+          "nodeId": "N-BODY",
+          "portId": "P-CLEARANCE",
+          "path": "rating.0.unit",
+          "value": "mm"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E019"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-06",
+      "title": "卡钳液压口只接受 12V 电能（能力不兼容）应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setPort",
+          "nodeId": "N-CALIPER-FL",
+          "portId": "P-IN",
+          "path": "accepts",
+          "value": [
+            "ELEC_12V"
+          ]
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E004"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-07",
+      "title": "把 CAN 信息边直接接到卡钳液压口（类别不兼容）应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-BAD-CAN-CAL",
+            "interfaceClass": "INFO_CONTROL",
+            "subtype": "BUS_LINK",
+            "capability": "INFO_CAN_FRAME",
+            "from": {
+              "nodeId": "N-CAN-BUS",
+              "portId": "P-CAN"
+            },
+            "to": {
+              "nodeId": "N-CALIPER-FL",
+              "portId": "P-IN"
+            },
+            "direction": "FROM_TO",
+            "edgeRole": "SIGNAL_LINK",
+            "graphRole": "SIGNAL_LINK",
+            "medium": "electrical",
+            "quantity": {
+              "kind": "signal",
+              "nominal": null,
+              "max": null,
+              "unit": "1",
+              "unknown": true
+            },
+            "evidence": {
+              "level": "OPEN",
+              "refs": [
+                "SRC-03"
+              ],
+              "note": "test"
+            },
+            "validation": {
+              "requiredLevel": "OPEN",
+              "checks": [
+                "structural"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            }
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E004"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-08",
+      "title": "EPS 的 12V 端口被标成 400V 高压（电压等级不匹配）应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setPort",
+          "nodeId": "N-EPS-MOTOR",
+          "portId": "P-POWER",
+          "path": "voltageClass",
+          "value": "HV_400"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E017"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-09",
+      "title": "把卡钳介质改为冷却液（介质不匹配）应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setPort",
+          "nodeId": "N-CALIPER-FL",
+          "portId": "P-IN",
+          "path": "medium",
+          "value": "coolant_50_50"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E016"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-10",
+      "title": "构造一个动力流闭环应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "addNode",
+          "node": {
+            "nodeId": "N-LOOP-A",
+            "systemRef": "SYS-50",
+            "name": "测试闭环 A",
+            "kind": "ASSEMBLY",
+            "pbsRef": "RP-01:SYS-50",
+            "renderOnly": false,
+            "frame": null,
+            "ports": [
+              {
+                "portId": "P-OUT",
+                "interfaceClass": "MECH_FORCE_MOTION",
+                "subtype": "ROTATING_SHAFT",
+                "medium": "solid",
+                "provides": [
+                  "MECH_TORQUE"
+                ],
+                "accepts": [],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-LOOP-A",
+                  "originM": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "torque",
+                    "max": 100,
+                    "unit": "N*m"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": []
+              },
+              {
+                "portId": "P-IN",
+                "interfaceClass": "MECH_FORCE_MOTION",
+                "subtype": "ROTATING_SHAFT",
+                "medium": "solid",
+                "provides": [],
+                "accepts": [
+                  "MECH_TORQUE"
+                ],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-LOOP-A2",
+                  "originM": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "torque",
+                    "max": 100,
+                    "unit": "N*m"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": []
+              }
+            ],
+            "unknowns": []
+          }
+        },
+        {
+          "op": "addNode",
+          "node": {
+            "nodeId": "N-LOOP-B",
+            "systemRef": "SYS-50",
+            "name": "测试闭环 B",
+            "kind": "ASSEMBLY",
+            "pbsRef": "RP-01:SYS-50",
+            "renderOnly": false,
+            "frame": null,
+            "ports": [
+              {
+                "portId": "P-IN",
+                "interfaceClass": "MECH_FORCE_MOTION",
+                "subtype": "ROTATING_SHAFT",
+                "medium": "solid",
+                "provides": [],
+                "accepts": [
+                  "MECH_TORQUE"
+                ],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-LOOP-B",
+                  "originM": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "torque",
+                    "max": 100,
+                    "unit": "N*m"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": []
+              },
+              {
+                "portId": "P-OUT",
+                "interfaceClass": "MECH_FORCE_MOTION",
+                "subtype": "ROTATING_SHAFT",
+                "medium": "solid",
+                "provides": [
+                  "MECH_TORQUE"
+                ],
+                "accepts": [],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-LOOP-B2",
+                  "originM": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "torque",
+                    "max": 100,
+                    "unit": "N*m"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": []
+              }
+            ],
+            "unknowns": []
+          }
+        },
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-LOOP-A-B",
+            "interfaceClass": "MECH_FORCE_MOTION",
+            "subtype": "ROTATING_SHAFT",
+            "capability": "MECH_TORQUE",
+            "from": {
+              "nodeId": "N-LOOP-A",
+              "portId": "P-OUT"
+            },
+            "to": {
+              "nodeId": "N-LOOP-B",
+              "portId": "P-IN"
+            },
+            "direction": "FROM_TO",
+            "edgeRole": "PHYSICAL_CONNECTION",
+            "graphRole": "POWER_FLOW",
+            "flowDirection": "FROM_TO",
+            "medium": "solid",
+            "quantity": {
+              "kind": "torque",
+              "nominal": 10,
+              "max": 100,
+              "unit": "N*m"
+            },
+            "spanM": 0,
+            "maxAngleDeg": 0,
+            "allowRelativeMotion": false,
+            "evidence": {
+              "level": "ASSUMPTION",
+              "refs": [],
+              "note": "test"
+            },
+            "validation": {
+              "requiredLevel": "ASSUMPTION",
+              "checks": [
+                "cycle"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            }
+          }
+        },
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-LOOP-B-A",
+            "interfaceClass": "MECH_FORCE_MOTION",
+            "subtype": "ROTATING_SHAFT",
+            "capability": "MECH_TORQUE",
+            "from": {
+              "nodeId": "N-LOOP-B",
+              "portId": "P-OUT"
+            },
+            "to": {
+              "nodeId": "N-LOOP-A",
+              "portId": "P-IN"
+            },
+            "direction": "FROM_TO",
+            "edgeRole": "PHYSICAL_CONNECTION",
+            "graphRole": "POWER_FLOW",
+            "flowDirection": "FROM_TO",
+            "medium": "solid",
+            "quantity": {
+              "kind": "torque",
+              "nominal": 10,
+              "max": 100,
+              "unit": "N*m"
+            },
+            "spanM": 0,
+            "maxAngleDeg": 0,
+            "allowRelativeMotion": false,
+            "evidence": {
+              "level": "ASSUMPTION",
+              "refs": [],
+              "note": "test"
+            },
+            "validation": {
+              "requiredLevel": "ASSUMPTION",
+              "checks": [
+                "cycle"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            }
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E009"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-11",
+      "title": "冷却回路存在环但未声明 loop 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setEdge",
+          "edgeId": "E-COOL-RAD-PUMP",
+          "path": "loop",
+          "value": false
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E009"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-12",
+      "title": "同一卡钳液压口被接了两条边（端口冲突）应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-HCU-CAL-FL-DUP",
+            "interfaceClass": "FLUID_HYDRAULIC",
+            "subtype": "HYDRAULIC_HOSE",
+            "capability": "FLUID_PRESSURE_SEALED",
+            "from": {
+              "nodeId": "N-BRAKE-HCU",
+              "portId": "P-OUT-FR"
+            },
+            "to": {
+              "nodeId": "N-CALIPER-FL",
+              "portId": "P-IN"
+            },
+            "direction": "FROM_TO",
+            "edgeRole": "FLUID_CIRCUIT",
+            "graphRole": "FLUID_FLOW",
+            "medium": "brake_fluid_DOT4",
+            "quantity": {
+              "kind": "pressure",
+              "nominal": 7000000,
+              "max": 12000000,
+              "unit": "Pa"
+            },
+            "spanM": 0.5,
+            "maxAngleDeg": 30,
+            "allowRelativeMotion": true,
+            "evidence": {
+              "level": "ENGINEERING_DERIVATION",
+              "refs": [
+                "SRC-10"
+              ],
+              "note": "test"
+            },
+            "validation": {
+              "requiredLevel": "ENGINEERING_DERIVATION",
+              "checks": [
+                "port"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            }
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E010"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-13",
+      "title": "刚性连接的制动盘/轮毂基准错位 5mm 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setPort",
+          "nodeId": "N-DISC-FL",
+          "portId": "P-HUB",
+          "path": "frame.originM",
+          "value": [
+            0.005,
+            0.8,
+            0.32
+          ]
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E008"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-14",
+      "title": "仅渲染的车标被当作传力路径应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-BADGE-FORCE",
+            "interfaceClass": "MECH_FORCE_MOTION",
+            "subtype": "FIXED_JOINT",
+            "capability": "MECH_FORCE",
+            "from": {
+              "nodeId": "N-BADGE-RENDER",
+              "portId": "P-VISUAL"
+            },
+            "to": {
+              "nodeId": "N-BODY",
+              "portId": "P-VISUAL"
+            },
+            "direction": "FROM_TO",
+            "edgeRole": "PHYSICAL_CONNECTION",
+            "graphRole": "STATIC_LOAD_PATH",
+            "medium": "solid",
+            "quantity": {
+              "kind": "force",
+              "nominal": 10,
+              "max": 100,
+              "unit": "N"
+            },
+            "spanM": 0,
+            "maxAngleDeg": 0,
+            "allowRelativeMotion": false,
+            "evidence": {
+              "level": "ASSUMPTION",
+              "refs": [],
+              "note": "test"
+            },
+            "validation": {
+              "requiredLevel": "ASSUMPTION",
+              "checks": [
+                "render"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            }
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E013"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-15",
+      "title": "扭矩额定 500 N·m 超过端口 350 N·m 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setEdge",
+          "edgeId": "E-ENG-TRANS",
+          "path": "quantity.max",
+          "value": 500
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E006"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-16",
+      "title": "证据等级不足以支撑 EVIDENCE 要求应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setEdge",
+          "edgeId": "E-MASTER-HCU",
+          "path": "validation.requiredLevel",
+          "value": "EVIDENCE"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E015"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-17",
+      "title": "未知单位 banana 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setEdge",
+          "edgeId": "E-COOL-ENG-TSTAT",
+          "path": "quantity.unit",
+          "value": "banana"
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E014"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-18",
+      "title": "轴距变化的影响集漏掉后轮速线束长度应被拒绝",
+      "op": "impact",
+      "changed": [
+        "wheelbase"
+      ],
+      "declared": [
+        "prop_shaft_length",
+        "driveshaft_angle",
+        "rear_brake_line_length",
+        "body_floor_length",
+        "rear_seat_position",
+        "mass_cg",
+        "brake_bias",
+        "load_transfer",
+        "rear_suspension_hardpoints",
+        "rear_alignment",
+        "rear_wheel_arch"
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E012"
+        ],
+        "missingInclude": [
+          "rear_harness_length"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-19",
+      "title": "双向 HV 边缺少反向额定应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "addNode",
+          "node": {
+            "nodeId": "N-HV-BATTERY",
+            "systemRef": "SYS-70",
+            "name": "高压电池包（测试片段）",
+            "kind": "ASSEMBLY",
+            "pbsRef": "RP-01:SYS-70",
+            "renderOnly": false,
+            "frame": null,
+            "ports": [
+              {
+                "portId": "P-DC",
+                "interfaceClass": "ELEC_POWER",
+                "subtype": "CONNECTOR",
+                "medium": "copper",
+                "provides": [
+                  "ELEC_HV_DC"
+                ],
+                "accepts": [
+                  "ELEC_HV_DC"
+                ],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-HVB-DC",
+                  "originM": [
+                    -1.2,
+                    0,
+                    0.35
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "power",
+                    "max": 150000,
+                    "unit": "W"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": [],
+                "voltageClass": "HV_400"
+              }
+            ],
+            "unknowns": [
+              "U-HV-PACK"
+            ]
+          }
+        },
+        {
+          "op": "addNode",
+          "node": {
+            "nodeId": "N-INVERTER",
+            "systemRef": "SYS-50",
+            "name": "逆变器（测试片段）",
+            "kind": "CONTROLLER",
+            "pbsRef": "RP-01:SYS-50",
+            "renderOnly": false,
+            "frame": null,
+            "ports": [
+              {
+                "portId": "P-DC",
+                "interfaceClass": "ELEC_POWER",
+                "subtype": "CONNECTOR",
+                "medium": "copper",
+                "provides": [
+                  "ELEC_HV_DC"
+                ],
+                "accepts": [
+                  "ELEC_HV_DC"
+                ],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-INV-DC",
+                  "originM": [
+                    0.2,
+                    0,
+                    0.5
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "power",
+                    "max": 150000,
+                    "unit": "W"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": [],
+                "voltageClass": "HV_400"
+              },
+              {
+                "portId": "P-AC",
+                "interfaceClass": "ELEC_POWER",
+                "subtype": "CONNECTOR",
+                "medium": "copper",
+                "provides": [
+                  "ELEC_HV_AC"
+                ],
+                "accepts": [
+                  "ELEC_HV_AC"
+                ],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-INV-AC",
+                  "originM": [
+                    0.3,
+                    0,
+                    0.5
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "power",
+                    "max": 150000,
+                    "unit": "W"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": [],
+                "voltageClass": "HV_400"
+              }
+            ],
+            "unknowns": []
+          }
+        },
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-EV-HV-LINK-NOREV",
+            "interfaceClass": "ELEC_POWER",
+            "subtype": "CONNECTOR",
+            "capability": "ELEC_HV_DC",
+            "from": {
+              "nodeId": "N-HV-BATTERY",
+              "portId": "P-DC"
+            },
+            "to": {
+              "nodeId": "N-INVERTER",
+              "portId": "P-DC"
+            },
+            "direction": "BIDIRECTIONAL",
+            "edgeRole": "ELEC_POWER",
+            "graphRole": "POWER_FLOW",
+            "medium": "copper",
+            "quantity": {
+              "kind": "power",
+              "nominal": 80000,
+              "max": 150000,
+              "unit": "W"
+            },
+            "allowRelativeMotion": true,
+            "loop": false,
+            "feedbackLoop": false,
+            "lossModel": null,
+            "failureModes": [
+              "绝缘失效",
+              "接触器粘连",
+              "过流",
+              "过压",
+              "互锁断开"
+            ],
+            "evidence": {
+              "level": "ENGINEERING_DERIVATION",
+              "refs": [
+                "SRC-08",
+                "SRC-09"
+              ],
+              "note": "测试用：故意缺少反向额定。"
+            },
+            "validation": {
+              "requiredLevel": "ENGINEERING_DERIVATION",
+              "checks": [
+                "structural"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            },
+            "flowDirection": "FROM_TO",
+            "voltageClass": "HV_400",
+            "spanM": 1.4,
+            "maxAngleDeg": 10
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E005"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-20",
+      "title": "重复 edgeId 应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-MASTER-HCU",
+            "interfaceClass": "ELEC_POWER",
+            "subtype": "CONNECTOR",
+            "capability": "ELEC_HV_DC",
+            "from": {
+              "nodeId": "N-HV-BATTERY",
+              "portId": "P-DC"
+            },
+            "to": {
+              "nodeId": "N-INVERTER",
+              "portId": "P-DC"
+            },
+            "direction": "BIDIRECTIONAL",
+            "edgeRole": "ELEC_POWER",
+            "graphRole": "POWER_FLOW",
+            "medium": "copper",
+            "quantity": {
+              "kind": "power",
+              "nominal": 80000,
+              "max": 150000,
+              "unit": "W"
+            },
+            "allowRelativeMotion": true,
+            "loop": false,
+            "feedbackLoop": false,
+            "lossModel": null,
+            "failureModes": [
+              "绝缘失效",
+              "接触器粘连",
+              "过流",
+              "过压",
+              "互锁断开"
+            ],
+            "evidence": {
+              "level": "ENGINEERING_DERIVATION",
+              "refs": [
+                "SRC-08",
+                "SRC-09"
+              ],
+              "note": "HV 等级为示例；未绑定具体电池包。"
+            },
+            "validation": {
+              "requiredLevel": "ENGINEERING_DERIVATION",
+              "checks": [
+                "structural"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            },
+            "flowDirection": "FROM_TO",
+            "reverseRating": {
+              "kind": "power",
+              "max": 150000,
+              "unit": "W",
+              "note": "回馈/充电方向"
+            },
+            "voltageClass": "HV_400",
+            "spanM": 1.4,
+            "maxAngleDeg": 10
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-21",
+      "title": "引用不存在的节点应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-MISSING-NODE",
+            "interfaceClass": "ELEC_POWER",
+            "subtype": "CONNECTOR",
+            "capability": "ELEC_HV_DC",
+            "from": {
+              "nodeId": "N-HV-BATTERY",
+              "portId": "P-DC"
+            },
+            "to": {
+              "nodeId": "N-MISSING",
+              "portId": "P-DC"
+            },
+            "direction": "BIDIRECTIONAL",
+            "edgeRole": "ELEC_POWER",
+            "graphRole": "POWER_FLOW",
+            "medium": "copper",
+            "quantity": {
+              "kind": "power",
+              "nominal": 80000,
+              "max": 150000,
+              "unit": "W"
+            },
+            "allowRelativeMotion": true,
+            "loop": false,
+            "feedbackLoop": false,
+            "lossModel": null,
+            "failureModes": [
+              "绝缘失效",
+              "接触器粘连",
+              "过流",
+              "过压",
+              "互锁断开"
+            ],
+            "evidence": {
+              "level": "ENGINEERING_DERIVATION",
+              "refs": [
+                "SRC-08",
+                "SRC-09"
+              ],
+              "note": "HV 等级为示例；未绑定具体电池包。"
+            },
+            "validation": {
+              "requiredLevel": "ENGINEERING_DERIVATION",
+              "checks": [
+                "structural"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            },
+            "flowDirection": "FROM_TO",
+            "reverseRating": {
+              "kind": "power",
+              "max": 150000,
+              "unit": "W",
+              "note": "回馈/充电方向"
+            },
+            "voltageClass": "HV_400",
+            "spanM": 1.4,
+            "maxAngleDeg": 10
+          }
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E001"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-22",
+      "title": "热端温度 1200K 超过制动盘 1000K 限值应被拒绝",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setEdge",
+          "edgeId": "E-DISC-AIR-FL",
+          "path": "temperatureMaxK",
+          "value": 1200
+        }
+      ],
+      "expect": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E018"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-23",
+      "title": "完整的 EV 高压片段（含反向额定）应通过",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "addNode",
+          "node": {
+            "nodeId": "N-HV-BATTERY",
+            "systemRef": "SYS-70",
+            "name": "高压电池包（测试片段）",
+            "kind": "ASSEMBLY",
+            "pbsRef": "RP-01:SYS-70",
+            "renderOnly": false,
+            "frame": null,
+            "ports": [
+              {
+                "portId": "P-DC",
+                "interfaceClass": "ELEC_POWER",
+                "subtype": "CONNECTOR",
+                "medium": "copper",
+                "provides": [
+                  "ELEC_HV_DC"
+                ],
+                "accepts": [
+                  "ELEC_HV_DC"
+                ],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-HVB-DC",
+                  "originM": [
+                    -1.2,
+                    0,
+                    0.35
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "power",
+                    "max": 150000,
+                    "unit": "W"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": [],
+                "voltageClass": "HV_400"
+              }
+            ],
+            "unknowns": [
+              "U-HV-PACK"
+            ]
+          }
+        },
+        {
+          "op": "addNode",
+          "node": {
+            "nodeId": "N-INVERTER",
+            "systemRef": "SYS-50",
+            "name": "逆变器（测试片段）",
+            "kind": "CONTROLLER",
+            "pbsRef": "RP-01:SYS-50",
+            "renderOnly": false,
+            "frame": null,
+            "ports": [
+              {
+                "portId": "P-DC",
+                "interfaceClass": "ELEC_POWER",
+                "subtype": "CONNECTOR",
+                "medium": "copper",
+                "provides": [
+                  "ELEC_HV_DC"
+                ],
+                "accepts": [
+                  "ELEC_HV_DC"
+                ],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-INV-DC",
+                  "originM": [
+                    0.2,
+                    0,
+                    0.5
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "power",
+                    "max": 150000,
+                    "unit": "W"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": [],
+                "voltageClass": "HV_400"
+              },
+              {
+                "portId": "P-AC",
+                "interfaceClass": "ELEC_POWER",
+                "subtype": "CONNECTOR",
+                "medium": "copper",
+                "provides": [
+                  "ELEC_HV_AC"
+                ],
+                "accepts": [
+                  "ELEC_HV_AC"
+                ],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-INV-AC",
+                  "originM": [
+                    0.3,
+                    0,
+                    0.5
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "power",
+                    "max": 150000,
+                    "unit": "W"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": [],
+                "voltageClass": "HV_400"
+              }
+            ],
+            "unknowns": []
+          }
+        },
+        {
+          "op": "addNode",
+          "node": {
+            "nodeId": "N-EV-MOTOR",
+            "systemRef": "SYS-50",
+            "name": "驱动电机（测试片段）",
+            "kind": "ACTUATOR",
+            "pbsRef": "RP-01:SYS-50",
+            "renderOnly": false,
+            "frame": null,
+            "ports": [
+              {
+                "portId": "P-AC",
+                "interfaceClass": "ELEC_POWER",
+                "subtype": "CONNECTOR",
+                "medium": "copper",
+                "provides": [
+                  "ELEC_HV_AC"
+                ],
+                "accepts": [
+                  "ELEC_HV_AC"
+                ],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-MOT-AC",
+                  "originM": [
+                    0.4,
+                    0,
+                    0.5
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "power",
+                    "max": 150000,
+                    "unit": "W"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": [],
+                "voltageClass": "HV_400"
+              },
+              {
+                "portId": "P-MECH",
+                "interfaceClass": "MECH_FORCE_MOTION",
+                "subtype": "ROTATING_SHAFT",
+                "medium": "solid",
+                "provides": [
+                  "MECH_TORQUE"
+                ],
+                "accepts": [],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-MOT-MECH",
+                  "originM": [
+                    0.5,
+                    0,
+                    0.5
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "torque",
+                    "max": 400,
+                    "unit": "N*m"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": []
+              }
+            ],
+            "unknowns": []
+          }
+        },
+        {
+          "op": "addNode",
+          "node": {
+            "nodeId": "N-REDUCER",
+            "systemRef": "SYS-60",
+            "name": "减速器（测试片段）",
+            "kind": "ASSEMBLY",
+            "pbsRef": "RP-01:SYS-60",
+            "renderOnly": false,
+            "frame": null,
+            "ports": [
+              {
+                "portId": "P-IN",
+                "interfaceClass": "MECH_FORCE_MOTION",
+                "subtype": "ROTATING_SHAFT",
+                "medium": "solid",
+                "provides": [],
+                "accepts": [
+                  "MECH_TORQUE"
+                ],
+                "required": false,
+                "maxConnections": 1,
+                "frame": {
+                  "frameId": "F-RED-IN",
+                  "originM": [
+                    0.5,
+                    0,
+                    0.5
+                  ],
+                  "axes": {
+                    "x": [
+                      1,
+                      0,
+                      0
+                    ],
+                    "y": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "z": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "toleranceM": 0.001,
+                  "angularToleranceDeg": 0.5
+                },
+                "rating": [
+                  {
+                    "kind": "torque",
+                    "max": 400,
+                    "unit": "N*m"
+                  }
+                ],
+                "limits": {},
+                "evidence": {
+                  "level": "ENGINEERING_DERIVATION",
+                  "refs": [],
+                  "note": ""
+                },
+                "unknowns": []
+              }
+            ],
+            "unknowns": []
+          }
+        },
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-EV-HV-LINK",
+            "interfaceClass": "ELEC_POWER",
+            "subtype": "CONNECTOR",
+            "capability": "ELEC_HV_DC",
+            "from": {
+              "nodeId": "N-HV-BATTERY",
+              "portId": "P-DC"
+            },
+            "to": {
+              "nodeId": "N-INVERTER",
+              "portId": "P-DC"
+            },
+            "direction": "BIDIRECTIONAL",
+            "edgeRole": "ELEC_POWER",
+            "graphRole": "POWER_FLOW",
+            "medium": "copper",
+            "quantity": {
+              "kind": "power",
+              "nominal": 80000,
+              "max": 150000,
+              "unit": "W"
+            },
+            "allowRelativeMotion": true,
+            "loop": false,
+            "feedbackLoop": false,
+            "lossModel": null,
+            "failureModes": [
+              "绝缘失效",
+              "接触器粘连",
+              "过流",
+              "过压",
+              "互锁断开"
+            ],
+            "evidence": {
+              "level": "ENGINEERING_DERIVATION",
+              "refs": [
+                "SRC-08",
+                "SRC-09"
+              ],
+              "note": "HV 等级为示例；未绑定具体电池包。"
+            },
+            "validation": {
+              "requiredLevel": "ENGINEERING_DERIVATION",
+              "checks": [
+                "structural"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            },
+            "flowDirection": "FROM_TO",
+            "reverseRating": {
+              "kind": "power",
+              "max": 150000,
+              "unit": "W",
+              "note": "回馈/充电方向"
+            },
+            "voltageClass": "HV_400",
+            "spanM": 1.4,
+            "maxAngleDeg": 10
+          }
+        },
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-EV-INV-MOTOR",
+            "interfaceClass": "ELEC_POWER",
+            "subtype": "CONNECTOR",
+            "capability": "ELEC_HV_AC",
+            "from": {
+              "nodeId": "N-INVERTER",
+              "portId": "P-AC"
+            },
+            "to": {
+              "nodeId": "N-EV-MOTOR",
+              "portId": "P-AC"
+            },
+            "direction": "BIDIRECTIONAL",
+            "edgeRole": "ELEC_POWER",
+            "graphRole": "POWER_FLOW",
+            "medium": "copper",
+            "quantity": {
+              "kind": "power",
+              "nominal": 80000,
+              "max": 150000,
+              "unit": "W"
+            },
+            "allowRelativeMotion": true,
+            "loop": false,
+            "feedbackLoop": false,
+            "lossModel": null,
+            "failureModes": [
+              "过流",
+              "过热",
+              "相间短路"
+            ],
+            "evidence": {
+              "level": "ENGINEERING_DERIVATION",
+              "refs": [
+                "SRC-08"
+              ],
+              "note": "示例。"
+            },
+            "validation": {
+              "requiredLevel": "ENGINEERING_DERIVATION",
+              "checks": [
+                "structural"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            },
+            "flowDirection": "FROM_TO",
+            "reverseRating": {
+              "kind": "power",
+              "max": 150000,
+              "unit": "W",
+              "note": "回馈方向"
+            },
+            "voltageClass": "HV_400",
+            "spanM": 0.1,
+            "maxAngleDeg": 10
+          }
+        },
+        {
+          "op": "addEdge",
+          "edge": {
+            "edgeId": "E-EV-MOTOR-REDUCER",
+            "interfaceClass": "MECH_FORCE_MOTION",
+            "subtype": "ROTATING_SHAFT",
+            "capability": "MECH_TORQUE",
+            "from": {
+              "nodeId": "N-EV-MOTOR",
+              "portId": "P-MECH"
+            },
+            "to": {
+              "nodeId": "N-REDUCER",
+              "portId": "P-IN"
+            },
+            "direction": "FROM_TO",
+            "edgeRole": "PHYSICAL_CONNECTION",
+            "graphRole": "POWER_FLOW",
+            "medium": "solid",
+            "quantity": {
+              "kind": "torque",
+              "nominal": 300,
+              "max": 400,
+              "unit": "N*m"
+            },
+            "allowRelativeMotion": false,
+            "loop": false,
+            "feedbackLoop": false,
+            "lossModel": null,
+            "failureModes": [
+              "花键磨损",
+              "超扭"
+            ],
+            "evidence": {
+              "level": "ASSUMPTION",
+              "refs": [
+                "SRC-01"
+              ],
+              "note": "示例。"
+            },
+            "validation": {
+              "requiredLevel": "ASSUMPTION",
+              "checks": [
+                "structural"
+              ],
+              "status": "UNTESTED"
+            },
+            "render": {
+              "visible": true,
+              "visualOnly": false,
+              "meshRefs": []
+            },
+            "flowDirection": "FROM_TO",
+            "spanM": 0,
+            "maxAngleDeg": 0
+          }
+        }
+      ],
+      "expect": {
+        "ok": true,
+        "codesInclude": []
+      }
+    },
+    {
+      "caseId": "TC-24",
+      "title": "未知 CAN 协议只能产生警告，不能伪造报文定义",
+      "op": "validate",
+      "patch": [
+        {
+          "op": "setEdge",
+          "edgeId": "E-HCU-CAN",
+          "path": "quantity.nominal",
+          "value": 999999
+        }
+      ],
+      "expect": {
+        "ok": true,
+        "codesInclude": [],
+        "warningsInclude": [
+          "INTF-W001"
+        ]
+      }
+    }
+  ]
+}

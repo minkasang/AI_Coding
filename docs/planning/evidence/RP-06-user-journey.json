@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "RP-06-user-journey/1.0",
+  "generatedAt": "2026-11-14",
+  "personas": [
+    {
+      "id": "learner",
+      "label": "科普/学习者",
+      "primaryGoal": "理解系统如何工作",
+      "defaultMode": "engineering"
+    },
+    {
+      "id": "reviewer",
+      "label": "工程审查者",
+      "primaryGoal": "核对尺寸来源与装配关系",
+      "defaultMode": "engineering"
+    },
+    {
+      "id": "presenter",
+      "label": "展示/汇报",
+      "primaryGoal": "高画质陈述",
+      "defaultMode": "showcase"
+    }
+  ],
+  "journeySteps": [
+    {
+      "step": 1,
+      "id": "vehicle-overview",
+      "label": "整车浏览",
+      "userAction": "选择车型变型，旋转总览",
+      "uiZones": ["topbar", "canvas"],
+      "pbsScope": "SYS-00",
+      "tier": "MVP"
+    },
+    {
+      "step": 2,
+      "id": "locate-assembly",
+      "label": "总成定位",
+      "userAction": "在系统树展开并点击总成",
+      "uiZones": ["left-nav", "canvas"],
+      "camera": "fly-to bounding box",
+      "tier": "MVP"
+    },
+    {
+      "step": 3,
+      "id": "select-part",
+      "label": "零件选择",
+      "userAction": "点选网格或树节点",
+      "uiZones": ["left-nav", "canvas", "inspector"],
+      "sync": "tree-selection-bidirectional",
+      "tier": "MVP"
+    },
+    {
+      "step": 4,
+      "id": "inspect-spec",
+      "label": "参数与材质",
+      "userAction": "阅读检查器内参数、来源、材质",
+      "uiZones": ["inspector"],
+      "data": "PartSpec",
+      "tier": "MVP"
+    },
+    {
+      "step": 5,
+      "id": "explode-assemble",
+      "label": "爆炸/装回",
+      "userAction": "拖动爆炸滑杆，撤销",
+      "uiZones": ["float-tools"],
+      "tier": "MVP"
+    },
+    {
+      "step": 6,
+      "id": "motion-playback",
+      "label": "装配运动",
+      "userAction": "播放关节或演示动画",
+      "uiZones": ["timeline", "canvas"],
+      "truthLabel": "motionPlaybackKind",
+      "tier": "MVP"
+    },
+    {
+      "step": 7,
+      "id": "scenario-compare",
+      "label": "工况比较",
+      "userAction": "切换变型或并排对比",
+      "uiZones": ["timeline", "inspector"],
+      "tier": "LATER"
+    },
+    {
+      "step": 8,
+      "id": "trace-evidence",
+      "label": "追溯证据",
+      "userAction": "打开来源链接、查看哈希与测试",
+      "uiZones": ["inspector-evidence-tab"],
+      "tier": "MVP"
+    }
+  ]
+}

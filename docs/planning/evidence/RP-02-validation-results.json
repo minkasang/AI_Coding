@@ -1,0 +1,548 @@
+{
+  "graph": "docs/planning/evidence/RP-02-interface-graph.example.json",
+  "cases": "docs/planning/evidence/RP-02-test-cases.json",
+  "baseGraph": {
+    "ok": true,
+    "errors": 0,
+    "warnings": [
+      "INTF-W001",
+      "INTF-W002"
+    ],
+    "summary": {
+      "nodes": 42,
+      "edges": 86
+    }
+  },
+  "totals": {
+    "cases": 24,
+    "passed": 24,
+    "failed": 0
+  },
+  "results": [
+    {
+      "caseId": "TC-01",
+      "title": "基础接口图应无结构错误（OPEN 项只产生警告）",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": true,
+        "codesInclude": [],
+        "warningsInclude": [
+          "INTF-W001"
+        ]
+      },
+      "actual": {
+        "ok": true,
+        "errorCodes": [],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-02",
+      "title": "制动液压路径从主缸到 FL 卡钳应连通",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": true,
+        "codesInclude": []
+      },
+      "actual": {
+        "ok": true,
+        "errorCodes": [],
+        "warningCodes": [],
+        "path": [
+          "N-BRAKE-MASTER/P-PRESSURE",
+          "N-BRAKE-HCU/P-IN",
+          "N-BRAKE-HCU/P-OUT-FL",
+          "N-CALIPER-FL/P-IN"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-03",
+      "title": "拔掉主缸到 HCU 的液压管后路径应断开",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E020"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "code": "INTF-E020",
+        "errorCodes": [],
+        "warningCodes": [],
+        "path": []
+      }
+    },
+    {
+      "caseId": "TC-04",
+      "title": "把制动压力单位写成 N（量纲错误）应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E003"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E003"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-05",
+      "title": "端口额定值用 mm 而未声明换算应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E019"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E019"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-06",
+      "title": "卡钳液压口只接受 12V 电能（能力不兼容）应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E004"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E004"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-07",
+      "title": "把 CAN 信息边直接接到卡钳液压口（类别不兼容）应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E004"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E004",
+          "INTF-E010"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-08",
+      "title": "EPS 的 12V 端口被标成 400V 高压（电压等级不匹配）应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E017"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E017"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-09",
+      "title": "把卡钳介质改为冷却液（介质不匹配）应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E016"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E016"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-10",
+      "title": "构造一个动力流闭环应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E009"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E009"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-11",
+      "title": "冷却回路存在环但未声明 loop 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E009"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E009"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-12",
+      "title": "同一卡钳液压口被接了两条边（端口冲突）应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E010"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E010"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-13",
+      "title": "刚性连接的制动盘/轮毂基准错位 5mm 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E008"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E008"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-14",
+      "title": "仅渲染的车标被当作传力路径应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E013"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E013",
+          "INTF-E004",
+          "INTF-E007"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002",
+          "INTF-W003"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-15",
+      "title": "扭矩额定 500 N·m 超过端口 350 N·m 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E006"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E006"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-16",
+      "title": "证据等级不足以支撑 EVIDENCE 要求应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E015"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E015"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-17",
+      "title": "未知单位 banana 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E014"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E014"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-18",
+      "title": "轴距变化的影响集漏掉后轮速线束长度应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E012"
+        ],
+        "missingInclude": [
+          "rear_harness_length"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "code": "INTF-E012",
+        "errorCodes": [],
+        "warningCodes": [],
+        "missing": [
+          "rear_harness_length"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-19",
+      "title": "双向 HV 边缺少反向额定应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E005"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E005"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-20",
+      "title": "重复 edgeId 应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E002"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E002",
+          "INTF-E001"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-21",
+      "title": "引用不存在的节点应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E001"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E001"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-22",
+      "title": "热端温度 1200K 超过制动盘 1000K 限值应被拒绝",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": false,
+        "codesInclude": [
+          "INTF-E018"
+        ]
+      },
+      "actual": {
+        "ok": false,
+        "errorCodes": [
+          "INTF-E018"
+        ],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-23",
+      "title": "完整的 EV 高压片段（含反向额定）应通过",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": true,
+        "codesInclude": []
+      },
+      "actual": {
+        "ok": true,
+        "errorCodes": [],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    },
+    {
+      "caseId": "TC-24",
+      "title": "未知 CAN 协议只能产生警告，不能伪造报文定义",
+      "pass": true,
+      "problems": [],
+      "expected": {
+        "ok": true,
+        "codesInclude": [],
+        "warningsInclude": [
+          "INTF-W001"
+        ]
+      },
+      "actual": {
+        "ok": true,
+        "errorCodes": [],
+        "warningCodes": [
+          "INTF-W001",
+          "INTF-W002"
+        ]
+      }
+    }
+  ]
+}

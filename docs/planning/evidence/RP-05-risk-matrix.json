@@ -1,0 +1,339 @@
+{
+  "schemaVersion": "carlab.rp05.riskMatrix/1.1",
+  "task": "RP-05",
+  "owner": "hy4",
+  "snapshotAt": "2026-11-14T16:36:56+08:00",
+  "revisionNote": "v1.0 因 4 份报告未归档，端到端追踪多处判 MISSING。v1.1 在报告归档后重做：接口/仿真/建模三环有大量新证据，断链点从『没有文档』变为『文档之间有冲突』——这比缺文档更危险，因为会被误认为已闭环。",
+  "stageOrder": ["产品总成(PBS)", "接口(Interface)", "建模(CAD/GLB)", "仿真(Solver)", "渲染(Viewer)", "验收(Test/Gate)"],
+  "statusVocabulary": ["PRESENT_VERIFIED", "PRESENT_UNVERIFIED", "MENTIONED_ONLY", "PARTIAL", "MISSING", "CONFLICT"],
+  "note": "PRESENT_UNVERIFIED：报告/证据已提交但 status=submitted 待总控审核，不等于已冻结。CONFLICT：该环有多份互相矛盾的规范，比 MISSING 风险更高。",
+  "endToEndTraces": [
+    {
+      "scenario": "SC-01 液压制动（踏板→助力→主缸→ABS/HCU→管路→四轮卡钳/盘→车轮减速）",
+      "stages": [
+        {
+          "stage": "产品总成(PBS)",
+          "status": "PRESENT_UNVERIFIED",
+          "evidence": "RP-01-tree-chassis.json SYS-40 下钻：5 个 SUB、15 个 ASSY、70 个 PART、7 个 REF、4 个 DAT（实测节点分布）",
+          "missing": "RP-01 报告正文未归档；跨 SYS-30/SYS-40 轮端单一身份在 RP-06:268 仍列为 CONFLICT 风险"
+        },
+        {
+          "stage": "接口(Interface)",
+          "status": "CONFLICT",
+          "evidence": "RP-02 §4.1 制动因果链含方程与示意算例、§2.5 流体单位/失效条件；TC-02 液压路径连通 PASS（24/24）",
+          "missing": "coordinateConvention.status=OPEN；真实流量/液压力/热标定在 RP-02 §11.1 自述缺少",
+          "conflict": "接口层把主缸→卡钳液压路径判 PASS，仿真层 RP-03 探针却证明现有物理里 brake_freezes_wheel_rotation_while_sliding 且 straight_brake_ignores_frictionSlip——『刹车』在现有实现中不是液压/摩擦模型。两套语义没对齐。"
+        },
+        {
+          "stage": "建模(CAD/GLB)",
+          "status": "PARTIAL",
+          "evidence": "RP-04 §2.1 把制动盘/鼓、液压制动硬管、制动软管列入零件族并给出工具边界；§3.3 ISO 273 通孔配合；原型有轮毂-轴承-螺柱 GLB（实测 211592 bytes、魔数 glTF）",
+          "missing": "原型不含制动盘/卡钳；RP-04 §5 信息保留矩阵要求的质量/惯量/碰撞体在产物 metadata 中实测不存在"
+        },
+        {
+          "stage": "仿真(Solver)",
+          "status": "PRESENT_UNVERIFIED",
+          "evidence": "RP-03 §4 制动目标为『单位写明的 FID-D1』；§7 16 项实验含直线制动/转向制动/轮角冻结的不合格条件与局限；RP-03-cannon-probe.json 16/16 PASS",
+          "missing": "液压压力→夹紧力→制动力矩求解链、ABS 循环、热衰退明确列为 FID-D2；报告自身标『尚未形成』"
+        },
+        {
+          "stage": "渲染(Viewer)",
+          "status": "MENTIONED_ONLY",
+          "evidence": "MASTER_PLAN.md:170 P3『制动液动态信号可视化』；RP-06 §5.3 仅要求 Cannon 标注非多体悬架",
+          "missing": "制动液流动/压力控件、数据源与真实性徽章联动；RP-06 §10.5 建议『拆解沿接口边断开并显示下游失效』未实现"
+        },
+        {
+          "stage": "验收(Test/Gate)",
+          "status": "MISSING",
+          "evidence": "实测无 tests/；RP-06-verification-plan.json status=PLAN_ONLY；RP-03 的 failIf 是可转成断言的草案但尚未接入测试框架",
+          "missing": "制动距离/踏板力/四轮力矩分配的可复现工况；需求→测试映射"
+        }
+      ],
+      "verdict": "6 环中 2 环有提交待审的实质成果、2 环部分覆盖、1 环仅提名、1 环完全缺失。关键不是缺文档，而是接口层的 PASS 与仿真层的反例语义冲突。"
+    },
+    {
+      "scenario": "SC-02 四驱动力（动力源→变速/分动→前后传动轴→差速器→半轴→轮端→轮胎力）",
+      "stages": [
+        {
+          "stage": "产品总成(PBS)",
+          "status": "MENTIONED_ONLY",
+          "evidence": "VEHICLE_SYSTEM_TREE_SEED.md SYS-60 列分动箱/传动轴/万向节/差速器名称；RP-01 已交付的 tree-core + tree-chassis 实测只覆盖 SYS-00/10/20/30/40/130",
+          "missing": "SYS-60 动力传递树在 scopeNote 引用的 RP-01-tree-powertrain.json 中，该文件实测 MISSING"
+        },
+        {
+          "stage": "接口(Interface)",
+          "status": "CONFLICT",
+          "evidence": "RP-02 图 scope.powertrain='ICE FWD (ASSUMPTION)'，42 节点仅 N-ENGINE→N-TRANS-DIFF→N-HALFSHAFT-FL/FR；无分动箱/传动轴/后差速器/后驱半轴",
+          "missing": "AWD 扭矩分配接口、分动箱→后轴机械连接、差速器约束",
+          "conflict": "MASTER_PLAN.md:169 要求『适配器支持前驱/后驱/四驱』；RP-03:79 反证现有 vehicleWorld.js 已有『前40%/后60%』驱动力分配却无差速器约束、动画齿轮 16/24 与驱动力倍率互不相干——规划目标、接口图、现有实现三者互不一致"
+        },
+        {
+          "stage": "建模(CAD/GLB)",
+          "status": "PARTIAL",
+          "evidence": "RP-04 §2.1 齿轮传动机构族给出渐开线参数与工具边界；原型无传动件",
+          "missing": "传动轴万向节、差速器齿轮、分动箱参数化几何与啮合约束"
+        },
+        {
+          "stage": "仿真(Solver)",
+          "status": "MISSING",
+          "evidence": "RP-03-cannon-probe.json 16 项无驱动扭矩分配/差速/分动用例；RP-03 §4 把齿轮与半轴目标定为 FID-K，现状 FID-V",
+          "missing": "前后轴扭矩分配、差速器转速关系、传动效率与载荷转移"
+        },
+        {
+          "stage": "渲染(Viewer)",
+          "status": "MENTIONED_ONLY",
+          "evidence": "src/parts/drivetrain.js 为程序化演示；RP-06 §1 判定四模式为子系统摄影棚演示，非 PBS 工程查看器",
+          "missing": "按 instanceId 可选的动力流可视化；RP-03:77 证实 gearboxRatio 参数未被动画使用",
+          "conflict": "动画演示不得计入工程装配覆盖"
+        },
+        {
+          "stage": "验收(Test/Gate)",
+          "status": "MISSING",
+          "evidence": "RP-02 24 用例为 FWD 图结构校验；无 AWD 合法/非法配置样例",
+          "missing": "MASTER_PLAN.md:169『无匹配接口则报错，不自动错装』的测试用例"
+        }
+      ],
+      "verdict": "三条场景中唯一连接口层都未覆盖的。且 RP-03 反证现有代码已有一套无定义的四驱式分配，属于『先有实现、后补规范』的返工风险。"
+    },
+    {
+      "scenario": "SC-03 冷却（热源→冷却液泵→节温器→散热器→风扇→环境空气→ECU 控制）",
+      "stages": [
+        {
+          "stage": "产品总成(PBS)",
+          "status": "MENTIONED_ONLY",
+          "evidence": "VEHICLE_SYSTEM_TREE_SEED.md SYS-80 列名称；RP-01-tree-core.json deferredScope 明确 SYS-80 零件级下钻 DEFERRED",
+          "missing": "管路/管夹/密封/换热器总成身份与安装点"
+        },
+        {
+          "stage": "接口(Interface)",
+          "status": "PARTIAL",
+          "evidence": "RP-02 §4.3 冷却因果链 C1—C8、§2.6 热交换接口；图含 N-RADIATOR/N-THERMOSTAT/N-COOLANT-PUMP/N-FAN/N-ENV-AIR/N-ECM，units 含 K/W/Pa",
+          "missing": "scope.excluded 排除 HVAC refrigerant loop 与 exhaust aftertreatment；RP-02 §11.1 自述缺真实流量/热标定；冷却液-机油-排气热耦合未定义"
+        },
+        {
+          "stage": "建模(CAD/GLB)",
+          "status": "PARTIAL",
+          "evidence": "RP-04 §2.1 零件族 7 把散热水管/软管列为 build123d 空间样条/Blender 软管并给出接头与弯曲半径边界",
+          "missing": "无散热器芯体/管路/泵的实际样板"
+        },
+        {
+          "stage": "仿真(Solver)",
+          "status": "PARTIAL",
+          "evidence": "RP-03 §4 把冷却液目标定为 FID-V（平面示意）；§8 允许以后做集中热容模型但要求每个系数标来源；RP-03 §9 把冷却液体积/泵曲线/散热器能力列为仍未知",
+          "missing": "任何热平衡求解。注：CFD 判 NOT_REQUIRED，但『零热模型』与『FID-V 示意』需明确标注，不能混称仿真"
+        },
+        {
+          "stage": "渲染(Viewer)",
+          "status": "MENTIONED_ONLY",
+          "evidence": "MASTER_PLAN.md:170 提『冷却液动态信号可视化』；RP-06 八步旅程无冷却流控件",
+          "missing": "流向/温度着色最小实现与 FID-V 真实性标注"
+        },
+        {
+          "stage": "验收(Test/Gate)",
+          "status": "MISSING",
+          "evidence": "无 tests/；RP-02 24 用例为图结构校验不含热工况；RP-06 verification-plan status=PLAN_ONLY",
+          "missing": "进出口温差/流量/风扇启停阈值的可复现实验"
+        }
+      ],
+      "verdict": "接口与仿真分级比 v1.0 明显改善（RP-02 有因果链、RP-03 明确 FID-V 边界），但产品树、渲染、验收仍缺。热流只有单位没有量值。"
+    }
+  ],
+  "risks": [
+    {
+      "id": "R-01",
+      "title": "坐标系至少四种表述并存，无变换矩阵、无 ADR、FL/FR 未定义",
+      "impact": "所有装配硬点、左右镜像、GLB 导出与物理轴索引可能整体错位；错误在渲染上不易察觉，属于高隐蔽返工",
+      "likelihoodOrUnknown": "CERTAIN（四份文件原文实测冲突；RP-02 自标 OPEN 且禁止用于生产；RP-04 的 -Z 前与总计划 +Z 前相反）",
+      "prerequisites": ["RP-01-S01 坐标实测复核", "旧 R-02 数据契约结论", "RP-02 §11.4 第 2 项裁定"],
+      "suggestedOwner": "GPT-6 裁决 + DeepSeek/Qwen4/Gemini 联合对齐",
+      "minimalFixTask": "产出 ADR 冻结唯一整车坐标系（含 FL/FR 正负、原点、单位），给出 总计划代码系 / ISO 8855 提案系 / STEP Z-up / glTF 系 之间的显式变换矩阵，并附至少 4 个方向的反例单测；同步修订 RP-02 与 RP-04 报告中的坐标表述",
+      "priority": "P0",
+      "linkedGaps": ["GAP-003", "NEW-01"],
+      "verification": "变换矩阵单测通过；RP-02 coordinateConvention.status 由 OPEN 变 FROZEN；四份文件坐标表述一致"
+    },
+    {
+      "id": "R-02",
+      "title": "首发基型四处口径不一致，RP-01 三个候选全部 PROPOSED_NOT_APPROVED",
+      "impact": "产品树配置、接口图 scope、查看器 MVP 树深度基于不同车型假设，RP-07 无法合并",
+      "likelihoodOrUnknown": "CERTAIN（RP-01 根节点与 configurations 明写未批准）",
+      "prerequisites": ["G-PL0 决策"],
+      "suggestedOwner": "GPT-6",
+      "minimalFixTask": "写单页 ADR 选定首发演示基型（车身结构×动力形式×驱动形式×首个纵切样板总成），并逐份核对 RP-01/02/04/06 的 ASSUMPTION 是否随之失效",
+      "priority": "P0",
+      "linkedGaps": ["GAP-001", "NEW-02"],
+      "verification": "四份产物对首发基型描述一致；RP-01 configurations 中选中项 status 变 APPROVED"
+    },
+    {
+      "id": "R-03",
+      "title": "真实性/证据标签 5 套词汇并行，三份报告各自给出不同映射",
+      "impact": "真实性徽章、证据等级、覆盖标签语义混淆；『把动画当仿真』『把规划当实测』无法被系统拦截",
+      "likelihoodOrUnknown": "CERTAIN（MASTER_PLAN §4.4 标题写三种却列 4 项；RP-03 五级并要求拆 DYNAMIC；RP-02 自提三级 fidelityLevel 与映射表；RP-06 truthLabels 四徽章称供 RP-02 合并但未被采纳；RP-01 另用 DEFERRED/OUT_OF_SCOPE）",
+      "prerequisites": ["RP-03 §12 第 1 项", "RP-02 §11.4 第 6 项", "RP-06 §5.3 字段归属"],
+      "suggestedOwner": "GPT-6 归档 DECISIONS.md",
+      "minimalFixTask": "建立单一标签字典：分别定义 validationLevel（真实性）、evidenceLevel（证据强度）、coverageStatus（覆盖判定）三组术语及互斥规则；裁定 FID 五级是否写回总计划；给出 RP-06 truthLabels 与 RP-02 evidenceLevels 的唯一映射；修正 MASTER_PLAN §4.4 标题与条目数不一致（需总控授权）",
+      "priority": "P0",
+      "linkedGaps": ["GAP-013", "GAP-016", "NEW-03"],
+      "verification": "字典 JSON 可解析，且 RP-02 映射表与 RP-03 分级不再矛盾"
+    },
+    {
+      "id": "R-04",
+      "title": "四驱动力链路在唯一接口图中缺席，与总计划 AWD 目标及现有代码相互冲突",
+      "impact": "P3 前/后/四驱适配器没有接口依据；现有『前40/后60』实现无定义，后期需重画接口图并重做变型传播",
+      "likelihoodOrUnknown": "CERTAIN（42 节点清单实测；RP-03:79 反证现有分配逻辑）",
+      "prerequisites": ["R-02 首发基型决策（决定是否本轮含 AWD）"],
+      "suggestedOwner": "DeepSeek（RP-02 补充）+ Grok（现状对齐）",
+      "minimalFixTask": "若首发含 AWD，补 AWD 片段接口图（分动箱/前后传动轴/后差速器/后驱半轴）与非法配置反例；若本轮不含，把 AWD 明确标为后续平台家族而非 P3 验收项，并把现有前40/后60 分配标为待清理的演示实现",
+      "priority": "P0",
+      "linkedGaps": ["GAP-005", "NEW-04"],
+      "verification": "AWD 片段通过 RP-02 现有 24 用例风格的连通性校验，或总计划范围声明更新"
+    },
+    {
+      "id": "R-05",
+      "title": "RP-04 验收要求与样板产物不一致：规范要质量/惯性矩，两份 metadata 都没有",
+      "impact": "P1/P4 的几何—物理对应在首个样板上没有数据通路，后续批量零件会复制此缺陷",
+      "likelihoodOrUnknown": "CERTAIN（RP-04:311-313 与两处 metadata 逐字段实测）",
+      "prerequisites": ["PartSpec/Assembly Schema 冻结（ADR-P02 仍 PROPOSED）"],
+      "suggestedOwner": "Gemini Flash（RP-04）+ 架构 Agent",
+      "minimalFixTask": "为 wheel_hub_assembly 补扩展元数据：mass_kg/inertiaTensor/collisionShape/glbPath/sha256/material/sourceProvenance，未知显式 null 并标来源；写进 PartSpec 最小校验脚本并在 verify_assembly.py 增加字段存在性断言",
+      "priority": "P0",
+      "linkedGaps": ["GAP-010", "NEW-05"],
+      "verification": "扩展 metadata 可解析，字段与 MASTER_PLAN.md:94-95 逐项对应，校验脚本 PASS"
+    },
+    {
+      "id": "R-06",
+      "title": "G-PL1 门禁无执行载体，且 RP-01 正文与 3 份被引用分文件仍缺",
+      "impact": "RP-07 若在输入未齐时汇总，蓝图 V1 会缺产品树完整结论；审计期间输入两次漂移说明静态快照随时过期",
+      "likelihoodOrUnknown": "CERTAIN（16:17→16:36 三次快照实测；4 份被引用/期望文件 MISSING）",
+      "prerequisites": ["RP-01 报告与分文件归档"],
+      "suggestedOwner": "GPT-6（总控）",
+      "minimalFixTask": "在 RP-07 启动前执行文件级门禁脚本：确认 5 份报告 + RP-01 三份分文件存在且全部 JSON 可解析，输出带时间戳的 gate 结果；本版 RP-05 标记为快照级结论并要求在门禁通过后复审",
+      "priority": "P0",
+      "linkedGaps": ["GAP-016", "NEW-08"],
+      "verification": "gate 输出由 SUBSTANTIALLY_MET 变为 SATISFIED 才解冻蓝图"
+    },
+    {
+      "id": "R-07",
+      "title": "无 Git 基线却已多模型并行写入，且输入在审计期间持续变化",
+      "impact": "无回滚、无 diff、无法判定谁改了哪个证据；一旦覆盖无法恢复本次审计所依赖的输入",
+      "likelihoodOrUnknown": "HIGH（git status fatal；7→16 份 evidence 增量实测）",
+      "prerequisites": ["A-00 安全基线任务授权（含创建 Git/ignore 的明确许可）"],
+      "suggestedOwner": "GPT-6 / 项目所有者",
+      "minimalFixTask": "完成 A-00：建立可恢复基线并明确 node_modules/.venv/.cache 忽略规则；在此之前约定一模型一文件前缀的写入纪律并记录写入时间",
+      "priority": "P0",
+      "linkedGaps": ["GAP-016", "NEW-08"],
+      "verification": "git log 存在初始提交，git status 无未受控批量新文件"
+    },
+    {
+      "id": "R-08",
+      "title": "帧率/面数目标跨报告冲突，且未实测目标被标为 EVIDENCE",
+      "impact": "下游不知按 60 / 45 / 30 fps 哪个验收；把目标写成证据会污染证据体系，规模风险可能到 P5 才暴露",
+      "likelihoodOrUnknown": "HIGH（RP-04:92/150 与 RP-06:185/280 实测冲突；verification-plan status=PLAN_ONLY）",
+      "prerequisites": ["50/200/500 instance 合成 manifest", "首个轮端纵切样板"],
+      "suggestedOwner": "Composer 2.5 + Gemini Flash + 前端实现 Agent",
+      "minimalFixTask": "总控统一一套帧率/面数/DrawCall 目标并注明测量设备与分辨率；把 RP-04 §5 Step 7 的 EVIDENCE 标签改为 TARGET/ASSUMPTION；用合成 manifest 跑 50/200/500 instance 基线并回填实测值，替换 PLAN_ONLY",
+      "priority": "P1",
+      "linkedGaps": ["GAP-012", "NEW-06"],
+      "verification": "verification-plan.json 出现 executed 记录与实测数值；两报告目标数值一致"
+    },
+    {
+      "id": "R-09",
+      "title": "零件 ID 规则冲突：RP-04 partId 示例违反 RP-01 idPolicy",
+      "impact": "同一零件在不同任务里身份不同，追溯链在第一环断开，BOM/实例映射无法对齐",
+      "likelihoodOrUnknown": "CERTAIN（RP-04:239 与 RP-01 idPolicy 原文比对）",
+      "prerequisites": ["旧 R-02 数据契约结论"],
+      "suggestedOwner": "GPT-6 裁决 + Qwen4/Gemini 对齐",
+      "minimalFixTask": "裁定唯一 partId 语法，把 RP-04 PartBuildTask.partId 示例改为符合 RP-01 idPolicy 的形式；同时统一 RP-02 的 N-xxx 节点 ID、pbsRef 与 RP-01 REF 指针的映射关系",
+      "priority": "P1",
+      "linkedGaps": ["GAP-013", "NEW-07"],
+      "verification": "三份产物中同一轮毂零件的 ID 可互相解析且唯一"
+    },
+    {
+      "id": "R-10",
+      "title": "总控种子把『纯电』当车身架构并列，属分类学错误且未修订",
+      "impact": "GAP_REGISTER、系统树种子与任务书的架构分类误导后续变型设计；BOF+BEV（电动皮卡）组合会被漏掉",
+      "likelihoodOrUnknown": "CERTAIN（RP-01 axisSeparationNote 论证 + 种子原文）",
+      "prerequisites": ["R-02 首发基型决策"],
+      "suggestedOwner": "GPT-6（共享种子维护人）",
+      "minimalFixTask": "按 RP-01 建议把架构改为 bodyStructure × powertrain 两轴修订 VEHICLE_SYSTEM_TREE_SEED.md 与 GAP_REGISTER GAP-004 表述；RP-01 任务书的『三种架构』措辞同步修正（本审计不擅自改共享文档）",
+      "priority": "P1",
+      "linkedGaps": ["GAP-001", "GAP-004", "NEW-09"],
+      "verification": "种子与登记簿不再把 BEV 与 BOF/UNI 并列为互斥架构"
+    },
+    {
+      "id": "R-11",
+      "title": "资产来源/许可无项目级载体，RP-04 大量引用 ISO 标准却无出处",
+      "impact": "标准文本受版权保护，标准编号不等于可自由复用的尺寸依据；外部 STEP/HDR 授权无法审计",
+      "likelihoodOrUnknown": "MEDIUM（原则已有、载体缺失为确定事实；C 盘 12G / F 盘 242G 可用）",
+      "prerequisites": ["首个外部参考资产引入前"],
+      "suggestedOwner": "GPT-6 / 项目所有者",
+      "minimalFixTask": "建立 assets/ 来源清单（标准编号/版本/URL/检索日期/许可/是否衍生/尺寸依据），先覆盖 RP-04 引用的 ISO 273/4014/15/DIN 625 与 RP-06 引用的 Three 官方资料；为生成物设体积上限与保留/清理分级",
+      "priority": "P1",
+      "linkedGaps": ["GAP-014"],
+      "verification": "清单存在且每条可定位到具体资产或标准文本"
+    },
+    {
+      "id": "R-12",
+      "title": "诊断/故障/维护拆装工序无任何交付；需求—测试追溯矩阵缺失",
+      "impact": "『可拆解』停留在爆炸图；看板完成率无法代表工程覆盖，RP-07 无法证明需求被验证",
+      "likelihoodOrUnknown": "MEDIUM（是否本轮必需属范围决策；无 tests/ 与追溯文件为确定事实）",
+      "prerequisites": ["G-PL0 范围确认"],
+      "suggestedOwner": "需总控决策归属（GAP_REGISTER 记 Composer / GPT-6）",
+      "minimalFixTask": "先做范围决策：本轮是否包含维护演示与正式需求库；若包含，只针对首个轮端总成给出拆装顺序/工具/扭矩约束、一个故障注入样例，并用制动链路做一行完整的 需求→系统→接口→模型→测试 追溯样例 + 一行故意断链反例",
+      "priority": "P2",
+      "linkedGaps": ["GAP-015", "GAP-013"],
+      "verification": "范围决策写入 DECISIONS.md，或产出追溯表且能自动报出反例断链"
+    },
+    {
+      "id": "R-13",
+      "title": "已归档报告的证据质量瑕疵（引用路径、复现记录、引用未落盘文件）",
+      "impact": "下游把 evidence JSON 当权威来源引用会传播错误；PASS 记录口径不清削弱独立验收",
+      "likelihoodOrUnknown": "CERTAIN（三项均实测）",
+      "prerequisites": [],
+      "suggestedOwner": "Composer 2.5 / Qwen4（各自作者）",
+      "minimalFixTask": "修正 RP-06-feature-matrix.json 的 Raycaster 路径并注明属核心导出；verification-plan.json 补响应哈希/抓取时间/统计口径，EADDRINUSE 改标 INCONCLUSIVE；RP-01 补齐 scopeNote 引用的 3 份分文件或改为不引用",
+      "priority": "P2",
+      "linkedGaps": ["GAP-016", "NEW-10"],
+      "verification": "修正后 JSON 通过解析校验，引用路径/文件存在性检查全部 EXISTS"
+    }
+  ],
+  "priorityCounts": {"P0": 7, "P1": 4, "P2": 2},
+  "escalations": [
+    {
+      "to": "GPT-6",
+      "reason": "涉及跨模型接口、共享分类与整体范围变化，按 AGENTS.md:22 与 RP-05 任务书要求提交总控讨论；本审计不擅自修改总计划、系统树种子、缺口登记簿或其他模型报告",
+      "items": ["R-01 坐标系冻结（含 RP-02/RP-04 表述修订）", "R-02 首发基型", "R-03 标签字典与 MASTER_PLAN §4.4 标题修正授权", "R-04 AWD 是否本轮范围", "R-05 元数据字段与 PartSpec 对齐", "R-06 门禁判定与 RP-07 解冻", "R-07 A-00/Git 基线授权", "R-08 性能目标统一", "R-09 partId 语法", "R-10 共享种子分类修订", "R-12 维护演示与需求库范围"]
+    }
+  ],
+  "antiExamples": [
+    {
+      "claim": "RP-02 已交付 1551 行报告、42 节点、24/24 PASS，因此跨系统接口已闭环",
+      "refutation": "报告 §11.2 自列 7 个新缺口、§11.4 自列 6 项待总控裁定；图为 ICE FWD，四驱链路无分动箱/后差速器；坐标 status=OPEN 且明写『未统一前不得进入生产』。24/24 只证明该图自洽。",
+      "rule": "报告篇幅与测试 PASS ≠ 覆盖完整；必须核对 scope.excluded、OPEN 项与总计划目标"
+    },
+    {
+      "claim": "RP-04 报告 §5 信息保留矩阵把『精确质量属性』列为 B-rep 保留项，因此质量/惯量已打通",
+      "refutation": "同一任务产出的 wheel_hub_assembly_metadata.json 与 hello_flange_metadata.json 实测都只有体积/包围盒/间隙，无质量、惯量、碰撞体、GLB 哈希；RP-04 §9.3 自己要求输出质量与惯性矩张量。",
+      "rule": "能力描述 ≠ 已交付数据；验收标准要与同一任务的实测产物逐字段对照"
+    },
+    {
+      "claim": "RP-04 已给出 ≥60 FPS、≤150 DrawCall 等指标且标 EVIDENCE，因此性能有依据",
+      "refutation": "这是验收目标不是实测结果；RP-06-verification-plan.json status=PLAN_ONLY，4 项 futureViewerGates 全未运行，且 RP-06 另一套目标是 45/30 fps。",
+      "rule": "把目标标为 EVIDENCE 属于虚假真实度；无实测记录的性能数字不能作为证据"
+    },
+    {
+      "claim": "现有 drivetrain 演示能展示传动，因此传动总成已有模型",
+      "refutation": "RP-03:77-79 实测 gearboxRatio 参数未被动画使用、16/24 齿轮与主减速比写死、驱动力按前40/后60 分配且无差速器约束；RP-06 §1 判定四模式为程序化摄影棚演示。",
+      "rule": "动画演示 ≠ 可装配工程零件，更不等于受力正确"
+    },
+    {
+      "claim": "hello_flange 与 wheel_hub_assembly 两条 GLB 链路均已验收，因此 CAD→GLB 全流程打通",
+      "refutation": "RESEARCH_BASELINE.md:70 明确尚未验证 GLB 作为独立 PartInstance 在 Chrome 中渲染/选择/替换/回归；两份 metadata 都无质量/惯量/碰撞体，且 src/viewer/ 与 assets/ 目录不存在。",
+      "rule": "单零件/单总成文件产出 ≠ 平台装配能力"
+    },
+    {
+      "claim": "第一波 4 份报告都标 submitted，G-PL1 已满足可以启动 RP-07",
+      "refutation": "RP-01 正文未归档，scopeNote 引用的 3 份分文件实测 MISSING；submitted 不等于 approved；四份报告之间尚有 10 项未裁决冲突（NEW-01…10）。",
+      "rule": "任务卡状态 ≠ 内容一致性；门禁要看文件齐备与跨报告冲突裁决，不是状态字段"
+    }
+  ]
+}

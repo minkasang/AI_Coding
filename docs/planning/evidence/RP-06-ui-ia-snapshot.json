@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "RP-06-ui-ia/1.0",
+  "generatedAt": "2026-11-14",
+  "productBoundary": {
+    "carViewerPort": 5173,
+    "commandCenterPort": 5174,
+    "note": "EVIDENCE from AGENTS.md — separate products"
+  },
+  "layout": {
+    "zones": [
+      { "id": "topbar", "width": "100%", "contains": ["variant-picker", "mode-toggle-engineering-showcase", "global-search"] },
+      { "id": "left-nav", "width": "280px", "contains": ["system-tree", "favorites", "filter"] },
+      { "id": "canvas", "flex": 1, "contains": ["webgl", "view-helper", "truth-corner-badge"] },
+      { "id": "inspector", "width": "320px", "contains": ["part-header", "parameters", "materials", "bom-tab", "evidence-tab"] },
+      { "id": "timeline", "height": "72px", "contains": ["playback", "scenario-selector"] },
+      { "id": "float-tools", "position": "overlay", "contains": ["section-plane", "measure", "explode-slider"] }
+    ],
+    "toolbarMaxPrimaryActions": 7,
+    "overflowMenu": "engineering-tools-more"
+  },
+  "modules": [
+    { "layer": "L0", "id": "viewer-shell" },
+    { "layer": "L1", "id": "scene-runtime" },
+    { "layer": "L2", "id": "asset-index" },
+    { "layer": "L3", "id": "pick-explode-measure" },
+    { "layer": "L4", "id": "truth-chrome" },
+    { "layer": "L5", "id": "variant-compare" },
+    { "layer": "L6", "id": "lab-bridge-legacy-four-modes" }
+  ]
+}

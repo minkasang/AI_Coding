@@ -1,0 +1,21 @@
+{
+  "name": "car",
+  "version": "1.0.0",
+  "description": "Three.js 轮胎工坊：四种规格、真实高宽比、程序化实体花纹",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dashboard": "node command-center/server.mjs"
+  },
+  "keywords": [
+    "three.js",
+    "tire",
+    "webgl"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cannon-es": "^0.20.0",
+    "three": "^0.170.0"
+  }
+}

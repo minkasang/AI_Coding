@@ -1,0 +1,5187 @@
+{
+  "artifact": "RP-01-geometry-needs",
+  "generatedBy": "agent-workspace/agents/qwen4/tools/rp01_tree_tool.py geomneeds",
+  "date": "2026-11-14",
+  "purpose": "从产品树自动导出的几何依据缺口清单，供 RP-04 / G-PL4 样板任务直接消费。不手填，避免与树漂移。",
+  "countsByGeomBasis": {
+    "DEFERRED": 10,
+    "DEMO_ASSUMPTION": 216,
+    "NEEDS_MEASUREMENT": 261,
+    "NOT_APPLICABLE": 6
+  },
+  "totalParts": 493,
+  "prioritySystems": [
+    "SYS-30",
+    "SYS-20",
+    "SYS-40",
+    "SYS-50",
+    "SYS-60"
+  ],
+  "bySystem": {
+    "SYS-30": [
+      {
+        "id": "PART-30-001",
+        "name": "轴承外圈（压入转向节）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "外径/宽度需轴承目录；ISO 15 只给径向轴承外形尺寸总方案，不覆盖轮毂单元",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S05"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-002",
+        "name": "轴承内圈（两列配对）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "配对滚道与预紧无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S05"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-003",
+        "name": "滚动体（两列球）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "球径/数量无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S05",
+          "S06"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-004",
+        "name": "保持架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S05 未明确命名保持架，属工程通识",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-005",
+        "name": "多唇密封（内侧/外侧）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S05 明确多唇密封；唇口几何无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S05"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-006",
+        "name": "独立轮毂法兰",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "Gen1 的轮毂是独立件；法兰 OD/厚/PCD/CB 需来源。既有 params.json 给了一组无来源数值（M09）",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S04",
+          "S05"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-007",
+        "name": "轮毂锁紧螺母/铆压边",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "预紧方式（螺母/铆压）是变型；扭矩无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-008",
+        "name": "轴头卡簧",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-009",
+        "name": "车轮螺柱（压装于轮毂）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "压装螺柱用花键过盈，不是 ISO 273 通孔——既有脚本把轮毂孔当通孔是可疑简化（M09）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-010",
+        "name": "带车轮/制动盘法兰的内圈（整体）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "法兰与内圈集成；法兰 OD/PCD/CB/ET 需来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S05",
+          "S04"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-011",
+        "name": "内侧球列独立内圈",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "SKF 明确 HBU3 仍有 separate inner ring；这是最容易被漏掉的零件",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S05"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-012",
+        "name": "外圈（带悬架安装法兰）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "第二法兰用于把单元固定到悬架；螺栓孔布置无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S05",
+          "S06"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-013",
+        "name": "滚动体（两列）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "球径/数量无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S06"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-014",
+        "name": "保持架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "来源未明确命名",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-015",
+        "name": "单元密封（内侧/外侧）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "密封存在已核实；唇口几何无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S05"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-016",
+        "name": "ABS 磁性编码环（选配）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实是选配而非代际定义特征；Bosch 传感器也可读钢质齿圈。极对数/气隙无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S05",
+          "S10",
+          "S04"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-017",
+        "name": "法兰螺柱（压装）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "M12×1.5 / M14×1.5 / 1/2-20 等规格需来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-018",
+        "name": "单元→转向节安装螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "数量/规格/预紧力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-019",
+        "name": "轮辋（轮圈）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "ET/PCD/CB 定义已核实（OZ）；5° 锥面落底轮辋术语已核实（ISO 4000-2 范围）。具体轮廓尺寸无来源。现有 wheelRim.js 已有 J/JJ 法兰、5° 胎圈座、H2 hump、落底槽与真实钻孔（M05），但未对标准轮廓验证",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S16",
+          "S20",
+          "M05"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-021",
+        "name": "内衬层（气密层）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "厚度无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S15"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-022",
+        "name": "帘布层（胎体）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "层数/帘线角度无来源；材料不采信该页",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S15"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-023",
+        "name": "冠部帘层与帽层",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "带束角度无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S15"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-024",
+        "name": "胎侧胶",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "厚度无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S15"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-025",
+        "name": "胎圈钢丝与下胎圈区",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "胎圈必须夹紧轮辋胎圈座；三角胶/apex 该页未提及，标 OPEN",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S15"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-026",
+        "name": "胎面胶",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "现有 specs.js 有花纹节距与沟槽描述但纯属视觉（M02）；花纹对摩擦系数的影响无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S15",
+          "M02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-027",
+        "name": "气门嘴",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "现有 wheelRim.js 已有气门嘴网格（M05）；TPMS 传感器是选配变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-028",
+        "name": "车轮平衡块",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "质量与位置取决于动平衡结果，不预填",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-029",
+        "name": "车轮螺栓/螺母（按座型）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实存在球面座与法兰面两类螺母、hub-piloted 与 stud-piloted 两种定心方式。乘用车 60° 锥面与 R12/R13/R14 球面半径本轮无一手来源 → 座型不可互换的具体论断标 OPEN",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S17",
+          "S16"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-030",
+        "name": "中心盖",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "现有 wheelRim.js 已有（M05）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-031",
+        "name": "制动盘定位螺钉",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "装配定位用，非承载件；规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-30-032",
+        "name": "轴头防尘盖",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "Gen1 常用，Gen3 常不需要——是代际变型属性",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      }
+    ],
+    "SYS-20": [
+      {
+        "id": "PART-20-001",
+        "name": "上摆臂本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "锻铝/冲压钢/管焊三种工艺，臂长与断面无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-002",
+        "name": "上摆臂内衬套（前/后）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "实心或液压变体；径向/轴向/扭转刚度无来源，演示级用线性衬套",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-003",
+        "name": "上球铰总成",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "球头销/球座/预紧无来源；是否可单独更换是变型属性（SKF 套件后缀 B）",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01",
+          "S02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-004",
+        "name": "上球铰防尘罩",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "波纹形状与卡箍无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-005",
+        "name": "上球铰卡簧",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "轴用/孔用挡圈规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-006",
+        "name": "上摆臂枢轴螺栓与螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格/等级/预紧力未定，禁止预填",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-007",
+        "name": "外倾/主销后倾调整垫片",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "越野双叉臂常用偏心螺栓或垫片调整；是否配备取决于设计",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-008",
+        "name": "下摆臂本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "承受弹簧/减振器载荷，断面与臂长无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-009",
+        "name": "下摆臂内衬套（前/后）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "前后衬套刚度常不同，影响纵向柔性转向；数值无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-010",
+        "name": "下球铰总成",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "承载球铰，尺寸与预紧无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01",
+          "S02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-011",
+        "name": "下球铰防尘罩",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "同上",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-012",
+        "name": "下球铰卡簧与槽顶螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "防松方式（开口销/自锁螺母）取决于设计",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-013",
+        "name": "下摆臂枢轴螺栓与螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-014",
+        "name": "减振器下安装座与衬套",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "现有代码把减振器脚硬编码在摆臂 72% 处（M06），不是真实安装座",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-015",
+        "name": "稳定杆连杆安装座",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "也可装在转向节或减振器筒上，位置是变型属性",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-016",
+        "name": "转向节本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "上下球铰孔、轴承座孔/安装面、卡钳安装耳、拉杆臂、主销轴线都是本体特征，不是独立零件——不得拆成多个 PART",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-017",
+        "name": "球铰→转向节紧固螺栓/螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-018",
+        "name": "轮速传感器安装支架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "传感器本体归 SYS-90，此处只有支架；气隙无来源（S10 未给）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-019",
+        "name": "前螺旋弹簧",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "现有 coilSpring.js 有线径/圈数几何但无 N/m 刚度（M02/M07）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-020",
+        "name": "上弹簧座与隔振垫",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "橡胶隔振垫刚度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-021",
+        "name": "下弹簧座",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "常与摆臂一体冲压；是否独立件是变型属性",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-022",
+        "name": "减振器筒身",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "单筒/双筒结构无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-023",
+        "name": "活塞杆",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "杆径/行程/表面粗糙度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-024",
+        "name": "活塞与阀片组",
+        "geomBasis": "DEFERRED",
+        "geomNote": "",
+        "deferReason": "阀片节流特性需要阻尼力-速度曲线数据，属 RP-03 动力学范围，本轮不建模内部阀系",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-025",
+        "name": "活塞杆油封",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "旋转/往复唇形密封，可参考 ISO 6194-1 的尺寸体系但具体规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-026",
+        "name": "杆导向座与衬套",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "导向长度与配合无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-027",
+        "name": "减振器防尘罩",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "KYB 确认为可独立更换件；波纹几何无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S03"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-028",
+        "name": "缓冲块（行程限位）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "KYB 确认为可独立更换件；渐进刚度曲线无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S03"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-029",
+        "name": "减振器上支座（顶胶）与轴承",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "麦弗逊上支座需承受转向转动，双叉臂上支座只承受轴向力——两者不是同一零件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-030",
+        "name": "活塞杆锁紧螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格与预紧力未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-031",
+        "name": "稳定杆本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "实心/空心、直径、臂长无来源；扭转刚度决定侧倾刚度分配",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-032",
+        "name": "稳定杆衬套",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "内径与夹紧力无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-033",
+        "name": "稳定杆卡箍与支架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "支架位置随车架/副车架变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-034",
+        "name": "稳定杆连杆（左/右）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "杆长与两端接头形式无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01",
+          "S02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-035",
+        "name": "连杆球铰/衬套",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "两端可为球铰或衬套，是变型属性",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-036",
+        "name": "连杆锁紧螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-037",
+        "name": "滑柱筒身（带转向节连接耳）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "筒身下端与转向节螺栓连接，承受侧向力——这是与双叉臂减振器筒的关键差别",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-038",
+        "name": "滑柱活塞杆与活塞阀组",
+        "geomBasis": "DEFERRED",
+        "geomNote": "",
+        "deferReason": "阀系特性属 RP-03 动力学范围",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-039",
+        "name": "滑柱杆油封与导向座",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-040",
+        "name": "滑柱螺旋弹簧",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "刚度无来源；侧向力补偿弹簧（side-load spring）是变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-041",
+        "name": "滑柱上支座与转向轴承",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "必须允许转向转动，与双叉臂顶胶不同",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-042",
+        "name": "滑柱防尘罩与缓冲块",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "KYB 确认两者可独立更换；本轮合并为一个演示节点",
+        "deferReason": "减少非关键节点，量产应拆分",
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S03"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-043",
+        "name": "麦弗逊下摆臂",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "只有下摆臂，无上摆臂",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-044",
+        "name": "下摆臂衬套与球铰",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "球铰常集成于摆臂（S01 control arms with joints）",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01",
+          "S02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-045",
+        "name": "麦弗逊转向节",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "上端与滑柱筒身螺栓连接，无双叉臂的上球铰孔——与 PART-20-016 不是同一零件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-046",
+        "name": "滑柱上安装螺栓与下摆臂螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-047",
+        "name": "上控制臂",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "臂长与硬点无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-048",
+        "name": "下控制臂",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "常承载弹簧座",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-049",
+        "name": "前束控制臂",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "决定后轮前束曲线，是操稳关键件；长度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-050",
+        "name": "纵臂/拖曳臂",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "承受纵向力与制动反力",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-051",
+        "name": "各臂衬套与球铰",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "本轮合并计数；量产每臂衬套规格不同",
+        "deferReason": "控制节点数，刚度差异属 RP-03",
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01",
+          "S02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-052",
+        "name": "后转向节",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "驱动轮需半轴通过，非驱动轮不需要——是 power/drivetrain 变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-053",
+        "name": "后悬架紧固螺栓组",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-054",
+        "name": "后螺旋弹簧",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "刚度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-055",
+        "name": "后减振器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "本轮不重复展开内部（见 ASSY-20-006），行程与阻尼无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-056",
+        "name": "后减振器上支座与缓冲块",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "缓冲块可独立更换（KYB）",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S03"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-057",
+        "name": "桥壳本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "冲焊/铸造/整体锻造三种工艺；断面与长度随轮距变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-058",
+        "name": "桥壳油封与通气塞",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "半轴油封规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-059",
+        "name": "钢板弹簧或纵连杆",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "钢板弹簧兼作导向件时不需要额外连杆；片数/夹箍无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-060",
+        "name": "U 型螺栓与压板",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格与预紧力未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-061",
+        "name": "推力杆/瓦特连杆/横向稳定杆",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": " coil-spring 整体桥需横向定位件；钢板弹簧方案可不需要",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-062",
+        "name": "扭力梁本体（横梁+纵臂）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "横梁断面（V/U/管）决定扭转刚度与侧倾特性；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-063",
+        "name": "纵臂衬套",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "衬套轴线角度影响柔性转向；刚度无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-064",
+        "name": "弹簧座与减振器安装座",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "常与纵臂一体冲压",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-065",
+        "name": "扭力梁紧固螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-066",
+        "name": "方向盘",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "骨架+发泡+表皮；本轮只做外形",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-067",
+        "name": "转向柱上/下轴与万向节",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "万向节夹角与相位影响转向手感；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-068",
+        "name": "转向中间轴",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "长度随前围板位置变化，是轴距/布置变型的联动件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-069",
+        "name": "转向柱安装支架与螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-070",
+        "name": "转向器壳体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "齿条行程与壳体长度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-071",
+        "name": "齿条",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "齿形/模数/行程无来源；现有代码用平移代替啮合（M06）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-072",
+        "name": "小齿轮与轴承",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "齿轮齿条传动比无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-073",
+        "name": "转向器安装衬套与螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "安装点在副车架或车架上，随架构变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-074",
+        "name": "内拉杆（轴向接头 axial joint）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "转向器侧接头，ZF/SKF 明确命名为 axial joint；杆长无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01",
+          "S02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-075",
+        "name": "外拉杆端（tie rod end）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "车轮侧角度接头，与内拉杆不是同一零件；锥柄尺寸无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S01",
+          "S02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-076",
+        "name": "拉杆锁紧螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "前束调整靠旋合长度，螺纹规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-077",
+        "name": "转向器防尘罩（波纹管）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "SKF 有独立 steering boots 目录条目；两端卡箍无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S02"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-078",
+        "name": "拉杆端卡簧与槽顶螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "防松方式取决于设计",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-088",
+        "name": "转向柱锁止/点火开关",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "功能树反查补入：防盗与起动授权机构初版遗漏。纯电/无钥匙启动改为电子转向锁 ESCL",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": "FUNC-ACC-05 反查"
+      },
+      {
+        "id": "PART-20-079",
+        "name": "助力泵（叶片式）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "排量/压力/流量无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-080",
+        "name": "助力油罐与滤网",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "容积无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-081",
+        "name": "高/低压油管",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "走向随发动机布置变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-082",
+        "name": "转向器内液压缸与转阀",
+        "geomBasis": "DEFERRED",
+        "geomNote": "",
+        "deferReason": "液压助力特性曲线属 RP-02/RP-03，本轮只保留身份",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-083",
+        "name": "助力泵皮带轮与支架",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "由附件皮带驱动，与 SYS-50 附件驱动联动",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-084",
+        "name": "EPS 电机",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "功率/转速无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-085",
+        "name": "EPS 减速机构",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "蜗轮蜗杆或滚珠丝杠，传动比无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-086",
+        "name": "扭矩转角传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "信号接口属 RP-02",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-20-087",
+        "name": "EPS 安装支架与螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      }
+    ],
+    "SYS-40": [
+      {
+        "id": "PART-40-001",
+        "name": "制动踏板臂",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "杠杆比与行程无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-002",
+        "name": "踏板轴与衬套",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "配合间隙无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-003",
+        "name": "踏板回位弹簧",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "刚度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-004",
+        "name": "踏板支架",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "安装在前围板上，BOF/UNI 的前围板不同 → 支架不同",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-005",
+        "name": "制动灯开关",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "信号接口属 RP-02",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-006",
+        "name": "踏板紧固螺栓与限位块",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-007",
+        "name": "助力器前/后壳体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "直径与深度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-008",
+        "name": "膜片与盘",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "有效面积无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-009",
+        "name": "控制阀体（空气阀/真空阀）",
+        "geomBasis": "DEFERRED",
+        "geomNote": "",
+        "deferReason": "助力特性曲线属 RP-03，本轮只保留身份",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-010",
+        "name": "助力器复位弹簧",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "刚度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-011",
+        "name": "输出推杆与反作用盘",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "推杆长度与间隙决定踏板自由行程；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-012",
+        "name": "助力器安装螺母与壳体密封",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-013",
+        "name": "差动行程传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "集成于助力器；量程无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S08"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-014",
+        "name": "助力电机",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "功率/转速无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S08"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-015",
+        "name": "三级齿轮机构",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实为三级；各级传动比无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S08"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-016",
+        "name": "助力器壳体与安装支架",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "外形无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-017",
+        "name": "主缸体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "缸径/行程无来源；补偿孔与回油孔是缸体特征，不是独立零件",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S11"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-018",
+        "name": "第一活塞（主活塞）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "串列双活塞是已核实的方案，但单个活塞几何无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-019",
+        "name": "第二活塞（副活塞）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "同上",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-020",
+        "name": "活塞密封（皮碗）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "液压往复密封，不适用 ISO 6194（旋转唇形）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-021",
+        "name": "活塞复位弹簧",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "刚度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-022",
+        "name": "缸体卡簧/活塞限位",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-023",
+        "name": "中央阀（ABS 兼容设计）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "ATE 明确 ABS-capable in central valve design；是否配备取决于 ABS 方案",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S11"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-024",
+        "name": "储液罐本体",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "容积与分腔无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S11"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-025",
+        "name": "罐盖与通气",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "通气膜无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-026",
+        "name": "滤网与液位传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "本轮合并计数",
+        "deferReason": "控制节点数",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-027",
+        "name": "罐体密封圈",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-028",
+        "name": "制动硬管（前/后回路）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "管径/壁厚/走向无来源；长度随轴距变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-029",
+        "name": "柔性制动软管",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "ATE 有独立目录条目；长度随悬架行程变化，是运动学联动件",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S11"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-030",
+        "name": "管接头/banjo 螺栓与铜垫片",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格与密封面形式无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-031",
+        "name": "管夹与支架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "固定点随车架/车身变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-032",
+        "name": "制动力比例/减压阀",
+        "geomBasis": "DEFERRED",
+        "geomNote": "",
+        "deferReason": "ABS/EBD 普及后常取消机械比例阀；特性属 RP-03",
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S11"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-034",
+        "name": "卡钳体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "浮动式单侧活塞/固定式双侧活塞；缸径无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S07",
+          "S11"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-035",
+        "name": "卡钳活塞",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S07 提到浮动卡钳回退活塞但未给活塞几何；缸径/行程无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-036",
+        "name": "活塞矩形密封圈",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "本轮无一手来源确认名称与回位机理；不得引用 ISO 6194（那是旋转唇形密封）。沟槽尺寸无来源",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-037",
+        "name": "活塞防尘罩",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S07 提到 dust cap cover 但未明确是活塞防尘罩；标 ASSUMPTION",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-038",
+        "name": "卡钳导向销（浮动式）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "仅浮动式有；固定式无此件 → 是变型属性",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-039",
+        "name": "导向销防尘套",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "仅浮动式",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-040",
+        "name": "放气螺钉",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-041",
+        "name": "卡钳安装螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格与预紧力未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-042",
+        "name": "摩擦片总成（背板+摩擦材料）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "背板/摩擦材料/倒角/开槽无来源；摩擦系数-温度特性属 RP-03",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S07"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-043",
+        "name": "消音片（shims）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "Brembo 明确可单独检查更换；层数/材料无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S07"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-044",
+        "name": "防响夹/固定销/弹簧",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "Brembo 命名 retaining clips / fixing pins / springs / screws；具体形式随卡钳变型",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S07"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-045",
+        "name": "摩擦片磨损传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "Brembo 提到 wear indicator connector",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S07"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-046",
+        "name": "通风制动盘（摩擦环+筋+盘帽）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "盘径/厚/筋数/帽高无来源；一体式盘帽是本体特征，分体式才是独立件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-047",
+        "name": "分体式盘帽（选配）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "分体式设计才有独立盘帽与连接螺栓；本轮标可选",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-048",
+        "name": "卡钳支架",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "浮动式必有支架；固定式常直接螺接转向节 → 变型属性",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-049",
+        "name": "卡钳支架螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格与预紧力未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-071",
+        "name": "制动导风管/冷却挡板",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "功能树反查补入：制动热管理功能初版无对应硬件。越野/长下坡/性能配置需要；导风管走向无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": "FUNC-BRK-10 反查"
+      },
+      {
+        "id": "PART-40-050",
+        "name": "制动鼓",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "内径/宽度/材质无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S13"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-051",
+        "name": "领蹄与从蹄",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实两个制动蹄；领从蹄几何与增势作用无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S13"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-052",
+        "name": "蹄片摩擦衬片",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "铆接/粘接方式无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-053",
+        "name": "轮缸",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "ATE 有独立目录条目（铝制）；缸径无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S11"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-054",
+        "name": "轮缸皮碗与防尘罩",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-055",
+        "name": "蹄片回位弹簧与自动间隙调整机构",
+        "geomBasis": "DEFERRED",
+        "geomNote": "",
+        "deferReason": "调整机构是棘轮/螺杆机构，本轮无一手来源且非演示重点",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-056",
+        "name": "制动底板与驻车拉杆接口",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "底板安装在转向节/桥壳上，随架构变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-057",
+        "name": "驻车手柄/踏板",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "杠杆比无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-058",
+        "name": "驻车拉索与导管",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "长度随轴距变型；走向无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-059",
+        "name": "拉索均衡器与调整螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-060",
+        "name": "EPB 电机与减速机构",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "安装方式未核实（见 S14 限制）；功率无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-061",
+        "name": "卡钳集成丝杠与螺母",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "把旋转转为活塞轴向力；螺距无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-062",
+        "name": "EPB 开关与执行器螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-063",
+        "name": "集成 EPB 的鼓式制动器本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "内部划分无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S12"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-064",
+        "name": "鼓式 EPB 电机与丝杠",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-065",
+        "name": "阀体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "油道布置无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-066",
+        "name": "进液/出液电磁阀",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S09 未给阀数量；每轮进/出各一是工程通识但无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-067",
+        "name": "回流泵与泵电机",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实 DC 电机泵技术；排量无来源（8 cm3/s 是来源自述示例）",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S09"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-068",
+        "name": "低压蓄能腔",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实为再生制动而修改；容积无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S09"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-069",
+        "name": "压力传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S09 未列举传感器清单",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-40-070",
+        "name": "单元安装支架与减振垫",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "安装位置随发动机舱/前舱布置变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      }
+    ],
+    "SYS-50": [
+      {
+        "id": "PART-50-001",
+        "name": "活塞",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "直径/裙部型线/凹腔形状无来源；Mazda 凹腔活塞已核实存在但无几何",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S42",
+          "S43",
+          "S45"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-002",
+        "name": "活塞环组（压缩环+油环）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "MAHLE 有独立活塞环产品线；环数/环型/端隙无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S42",
+          "S43"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-003",
+        "name": "活塞销",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "MAHLE 有独立产品线；全浮/半浮式无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S42",
+          "S43"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-004",
+        "name": "活塞销卡簧",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S42 明确未覆盖销卡簧；全浮式才需要",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-005",
+        "name": "连杆本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "MAHLE 有独立产品线；中心距/断面/裂解工艺无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S42",
+          "S43"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-006",
+        "name": "连杆轴瓦",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "MAHLE 明确 bearing shells 属 PCU；厚度/间隙无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S42",
+          "S43"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-007",
+        "name": "连杆螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S42 明确未覆盖连杆螺栓；多为屈服点拧紧一次性件，规格与预紧力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-008",
+        "name": "连杆小头衬套",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S42 明确未覆盖小头衬套",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-009",
+        "name": "曲轴本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "曲柄半径/主轴颈/连杆轴颈/平衡重无来源；行程决定排量，不得编造",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-010",
+        "name": "主轴承轴瓦",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "MAHLE 有轴承产品线但未区分主/连杆轴瓦（S43 限制）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-011",
+        "name": "主轴承盖",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-012",
+        "name": "主轴承盖螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格与预紧力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-013",
+        "name": "曲轴止推垫片",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S43 明确未覆盖止推垫片；控制曲轴轴向窜动",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-014",
+        "name": "曲轴前油封",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "旋转唇形密封，尺寸体系可参考 ISO 6194-1（S21）但具体规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-015",
+        "name": "曲轴后油封",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "同上；常带安装座总成",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-016",
+        "name": "曲轴键与定位销",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "正时链轮与皮带轮的周向定位",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-017",
+        "name": "扭转减振器/曲轴皮带轮",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "橡胶环式减振器；惯量无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-018",
+        "name": "飞轮（MT）/柔性盘（AT）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "随变速箱形式变型；现有 drivetrain.js 有飞轮视觉件但无惯量数据（M02）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-019",
+        "name": "飞轮齿圈",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "起动机啮合用；齿数/模数无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-020",
+        "name": "飞轮螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格与预紧力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-021",
+        "name": "缸体本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "缸径/缸心距/水套/主油道都是本体特征，不是独立零件；材料（铸铁/铝+套）无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-022",
+        "name": "气缸套（可换式）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "MAHLE 有独立气缸套产品线；但是否可换取决于缸体设计（母体缸孔 vs 压入套）→ 变型属性",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S42",
+          "S43"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-023",
+        "name": "缸体堵盖/水套塞",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "铸造工艺孔堵塞；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-024",
+        "name": "缸体定位销",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "缸盖/变速箱/轴承盖定位；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-025",
+        "name": "油底壳",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "冲压/铸铝；越野常加护板，容积无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-026",
+        "name": "油底壳垫片与放油螺塞",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "密封垫/密封胶两种方案；规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-027",
+        "name": "缸盖本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "燃烧室形状/进排气道/凸轮轴座无来源；Toyota 加大气门夹角以增强滚流已核实但无角度值（S40）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-028",
+        "name": "缸盖垫片",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "多层钢 MLS 厚度决定压缩比；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-029",
+        "name": "缸盖螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "多为屈服点拧紧一次性件；规格/顺序/预紧力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-030",
+        "name": "气门导管",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "MAHLE 明确独立产品线；内径/压入过盈无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S44"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-031",
+        "name": "气门座圈",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "MAHLE 独立产品线；Toyota 激光熔覆气门座已核实（是工艺不是独立件）→ 座圈是否可换是变型属性",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S44",
+          "S40"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-032",
+        "name": "凸轮轴轴承/轴颈盖",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S44 明确未覆盖凸轮轴轴承",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-033",
+        "name": "进气门",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "盘径/杆径/长度无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S44"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-034",
+        "name": "排气门",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "常为耐热合金/中空充钠；无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S44"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-035",
+        "name": "气门杆密封",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "MAHLE 明确独立件；规格无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S44"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-036",
+        "name": "气门弹簧",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "刚度/预紧/并圈高度无来源；双弹簧是变型",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S44"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-037",
+        "name": "上气门弹簧座",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "MAHLE 明确命名 top retainer（常为钛/钢）",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S44"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-038",
+        "name": "下气门弹簧座",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "纠正：MAHLE 明确有 top 与 bottom 两个弹簧座，常见示意图只画一个",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S44"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-039",
+        "name": "气门锁片",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S44 明确未覆盖 keepers；每气门两片",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-040",
+        "name": "挺柱/垫片或滚子摇臂",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S44 明确未覆盖；直接作用式/摇臂式是配气拓扑变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-041",
+        "name": "进气凸轮轴",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "凸轮型线/升程/相位无来源——这是配气运动学的核心输入",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S44"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-042",
+        "name": "排气凸轮轴",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "DOHC 才有两根；SOHC 是一根 → 变型",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S44"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-043",
+        "name": "正时链条/皮带",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "链/带是互斥变型；节距/长度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-044",
+        "name": "曲轴与凸轮轴正时链轮",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "齿数比决定 2:1 传动；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-045",
+        "name": "正时张紧器与导轨",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "液压/机械张紧；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-046",
+        "name": "VVT 相位器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S44 明确未覆盖 VVT；叶片式液压相位器，调节范围无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-047",
+        "name": "VVT 机油控制阀 OCV",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S44 明确未覆盖；与 VVT 相位器成对存在",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-048",
+        "name": "机油泵（摆线式）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实为连续可变容量摆线泵；排量/压力无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S40"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-049",
+        "name": "机油集滤器与吸油管",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-050",
+        "name": "机油滤清器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "旋装/滤芯式是变型；旁通阀开启压力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-051",
+        "name": "机油压力调节阀",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "开启压力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-052",
+        "name": "机油冷却器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "油-水/油-空气两种；换热能力属 SYS-80 联动",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-053",
+        "name": "机油尺与导管",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "部分新机型取消机油尺改用电子液位",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-055",
+        "name": "高压油泵 HDP（直喷）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "由凸轮轴驱动；压力/排量无来源。仅直喷机型有",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S41"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-056",
+        "name": "燃油轨",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "容积/压力等级无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S41"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-057",
+        "name": "喷油器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "多孔直喷喷油器已核实（Toyota/Mazda）；孔径/孔数/流量无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S41",
+          "S40",
+          "S45"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-058",
+        "name": "燃油压力调节器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S41 明确未覆盖；进气道喷射系统常用",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-059",
+        "name": "高压油管与接头",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "仅直喷；规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-060",
+        "name": "点火线圈",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实为含两个嵌套线圈的变压器；COP/pencil 命名与集成功率级未核实",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S46",
+          "S41"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-061",
+        "name": "火花塞",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "S46 明确未把火花塞列为独立件；热值/间隙无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-062",
+        "name": "节气门体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "电子节气门含电机与位置传感器；口径无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-063",
+        "name": "进气歧管与稳压腔",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "塑料/铝；长度影响充气效率，无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-064",
+        "name": "空气滤清器与进气管",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "越野常改高位进气；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-065",
+        "name": "排气歧管",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实 4-2-1 布置存在；管长/管径无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S45"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-066",
+        "name": "涡轮增压器与废气旁通阀",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "本轮无一手来源；增压压力/转子惯量无来源。中冷器归 SYS-80",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-067",
+        "name": "EGR 阀与 PCV 阀",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "排放相关，本轮不做流量特性",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-068",
+        "name": "催化器与排气后处理",
+        "geomBasis": "DEFERRED",
+        "geomNote": "",
+        "deferReason": "排放化学与转化效率需要量产数据，MASTER_PLAN §12 已列暂缓",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-069",
+        "name": "消声器与尾管",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "走向随轴距变型；声学不做",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-070",
+        "name": "多楔带",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "楔数/长度/走向无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-071",
+        "name": "皮带张紧器与惰轮",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "张紧力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-072",
+        "name": "发电机",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "纯电由 DC-DC 替代 → 架构差异件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-073",
+        "name": "空调压缩机（皮带驱动）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "纯电改电动压缩机（SYS-80）→ 不是同一零件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-074",
+        "name": "附件支架与螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "支架位置随发动机外形变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-075",
+        "name": "发动机装饰罩",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "纯外观件，不影响机构",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-078",
+        "name": "排气吊挂与隔热罩",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "功能树反查补入：排气系统需要吊挂与隔热，否则无法装配。橡胶吊挂刚度与隔热罩间隙无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": "FUNC-DRV-07 反查"
+      },
+      {
+        "id": "PART-50-076",
+        "name": "起动机（含电磁开关）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "与飞轮齿圈啮合；功率/减速比无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": "FUNC-DRV-06 反查"
+      },
+      {
+        "id": "PART-50-077",
+        "name": "起动机安装螺栓与定位销",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-090",
+        "name": "电子油门踏板模块",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "集成双路位置传感器（冗余）；踏板力-行程特性无来源。拉索式节气门是旧变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": "FUNC-DRV-08 反查"
+      },
+      {
+        "id": "PART-50-091",
+        "name": "油门踏板支架与螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "与制动踏板常共用前围板支架",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-080",
+        "name": "定子（含绕组）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实定子是可分离供货件；槽数/绕组形式/尺寸无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S53"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-081",
+        "name": "转子（含永磁体）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实转子是可分离供货件；磁钢牌号/布置/尺寸未核实（S53 未列）",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S53"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-082",
+        "name": "电机轴承",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S53 明确未列轴承；高速轴承需防电蚀，规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-083",
+        "name": "电机壳体与冷却水套",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实 E-GMP 用油雾喷淋冷却电机线圈；水套/油道几何无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S49"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-084",
+        "name": "电机轴油封",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "旋转唇形密封；规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-085",
+        "name": "功率模块（SiC MOSFET）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实驱动 SiC MOSFET；封装/电流等级无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S55"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-086",
+        "name": "栅极驱动板",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实高压栅极驱动 IC 存在；板级划分无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S55"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-087",
+        "name": "直流母线电容",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S55 只提到 DC bus 能量，未把电容列为命名零件；容量/纹波电流无来源",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-088",
+        "name": "逆变器控制板",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S55 未列；与 SYS-90 的 ECU 划分需 RP-02 裁决",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-50-089",
+        "name": "逆变器壳体与冷却板",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "eAxle 集成时与电机/减速器共用壳体（S54）→ 壳体归属是变型属性",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      }
+    ],
+    "SYS-60": [
+      {
+        "id": "PART-60-001",
+        "name": "变速箱壳体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "轴承座孔位置决定齿轮中心距；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-002",
+        "name": "输入轴",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "花键/轴径无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-003",
+        "name": "输出轴",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "同上",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-004",
+        "name": "各档齿轮组",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "模数/齿数/螺旋角无来源；现有代码用直线梯形齿冒充渐开线（M03），必须重做",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-005",
+        "name": "同步器总成",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "锁环式/锁销式；锥面摩擦无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-006",
+        "name": "换挡拨叉与导轨",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "换挡行程无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-007",
+        "name": "变速箱轴承组",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "球/圆锥/滚针混用；规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-008",
+        "name": "变速箱油封组",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "输入/输出/选换挡轴油封",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-010",
+        "name": "壳体螺栓与定位销",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-011",
+        "name": "液力变矩器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "泵轮/涡轮/导轮/锁止离合器；特性曲线无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-012",
+        "name": "行星齿轮组",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "太阳轮/行星轮/齿圈/行星架；排数与齿数无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-013",
+        "name": "离合器与制动器片组",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "片数/活塞/回位弹簧无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-014",
+        "name": "阀体与电磁阀",
+        "geomBasis": "DEFERRED",
+        "geomNote": "",
+        "deferReason": "液压换挡逻辑属 RP-02/RP-03，本轮只保留身份",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-015",
+        "name": "变速箱油泵",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "排量/压力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-016",
+        "name": "AT 壳体与油底壳",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-017",
+        "name": "AT 轴承与油封组",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-030",
+        "name": "减速器壳体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "eAxle 集成时与电机共用壳体（S54）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-031",
+        "name": "输入齿轮与轴",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "模数/齿数/螺旋角无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-032",
+        "name": "中间/输出齿轮与轴",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "两级减速常见；总速比无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-033",
+        "name": "减速器轴承组",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "高速轴承规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-034",
+        "name": "减速器油封与润滑油",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "油冷电机可能共用油液（S49 油雾喷淋）→ 润滑回路归属需 RP-02 裁决",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-040",
+        "name": "离合器从动盘",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "摩擦片/扭转减振弹簧；直径无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-041",
+        "name": "压盘总成",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "膜片弹簧压紧力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-042",
+        "name": "分离轴承与分离拨叉",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "液压分离轴承（CSC）是变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-043",
+        "name": "离合器主缸/工作缸或拉索",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "液压/拉索是互斥变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-044",
+        "name": "前/后传动轴管",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "管径/壁厚/长度/临界转速无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-045",
+        "name": "万向节",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "十字轴式/球笼式；夹角与相位无来源。现有代码用盒状叉架冒充万向节（M03）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-046",
+        "name": "中间支承轴承与支架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "两段式传动轴才有",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-047",
+        "name": "伸缩花键与防尘罩",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "补偿轴距/悬架行程变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-048",
+        "name": "传动轴法兰螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格与预紧力未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-049",
+        "name": "分动箱壳体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-050",
+        "name": "分动链条或齿轮组",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "链传动/齿轮传动是变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-051",
+        "name": "高低档切换机构",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "越野低速档是功能差异件；速比无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-052",
+        "name": "中央差速器与差速锁",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "托森/粘性/多片离合/牙嵌锁是变型；锁止率无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-053",
+        "name": "分动箱轴承油封与油液",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-071",
+        "name": "换挡杆/选挡开关",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "机械/电子换挡是变型；行程无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": "FUNC-DRV-09 反查"
+      },
+      {
+        "id": "PART-60-072",
+        "name": "换挡拉索/连杆与支架",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "长度随轴距/动力布置变型；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-073",
+        "name": "离合器踏板与回位弹簧",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "仅 MT；踏板力-行程与分离点无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": "FUNC-DRV-09 反查"
+      },
+      {
+        "id": "PART-60-054",
+        "name": "主动锥齿轮",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "准双曲面/螺旋锥齿；齿数/偏置距无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-055",
+        "name": "从动锥齿轮（盆齿）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "齿数比=主减速比；现有代码硬编码 3.73（M02/M03）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-056",
+        "name": "差速器壳",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-057",
+        "name": "行星齿轮与半轴齿轮",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "锥齿轮式/圆柱齿轮式；齿数无来源。现有代码两侧同角度，无差速作用（M03）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-058",
+        "name": "行星齿轮十字轴与止推垫片",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-059",
+        "name": "主减速器轴承组",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "圆锥滚子轴承成对预紧；规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-060",
+        "name": "主减速器油封与调整垫片",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "垫片决定齿面接触印痕；厚度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-061",
+        "name": "桥壳内半轴",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "半浮/全浮式是变型；长度随轮距变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-062",
+        "name": "差速锁执行机构",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "气动/电磁/机械；越野功能差异件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-063",
+        "name": "主减速器齿轮对",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "圆柱齿轮（横置）或锥齿轮（纵置）；速比无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-064",
+        "name": "差速器壳与齿轮组",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "开放式/限滑/托森是变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-065",
+        "name": "差速器轴承油封与安装支架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "支架决定硬点位置",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-021",
+        "name": "半轴外端球笼（轮端侧）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "固定式球笼，摆角可达 45°+；球道/保持架/星形套无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-066",
+        "name": "半轴内端球笼/三销节（差速器侧）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "可伸缩式，补偿悬架跳动；与外端不是同一零件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-067",
+        "name": "半轴杆",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "实心/空心、直径、长度无来源；长度随轮距变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-068",
+        "name": "球笼防尘罩与卡箍",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "波纹罩+两端卡箍；失效即漏脂",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-60-069",
+        "name": "半轴卡簧与锁紧螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "外端锁紧螺母扭矩无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      }
+    ],
+    "SYS-10": [
+      {
+        "id": "PART-10-001",
+        "name": "车架纵梁（左/右）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "断面形状/料厚/变截面位置无来源；需公开车架断面图或明确演示假设",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-002",
+        "name": "车架横梁（前/中/后/变速箱）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "横梁数量与位置随轴距变型变化，是变型传播的关键件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-003",
+        "name": "车身悬置支座（车架侧）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "悬置点数量/位置决定车身与车架的载荷传递，是 BOF 与 UNI 的核心差异接口",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-004",
+        "name": "车身悬置隔振垫",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "橡胶/液压悬置刚度无来源；演示级用线性弹簧替代",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-005",
+        "name": "车身悬置螺栓与螺母",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格/等级/预紧力未定，禁止预填",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-006",
+        "name": "前防撞梁与吸能盒",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "吸能盒诱导槽形状无来源；碰撞性能不在本轮验证范围",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-007",
+        "name": "后防撞梁",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "同上",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-008",
+        "name": "拖车钩安装座（recovery point）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "越野配置相关，演示级简化为安装座",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-009",
+        "name": "发动机/变速箱悬置支架（车架侧）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "纯电架构下改为电驱悬置支架，位置与载荷不同",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-010",
+        "name": "前/中/后地板面板",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "轴距变型时中地板必须重生成，不是整体缩放",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-011",
+        "name": "门槛梁（左/右）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "纯电平台中门槛梁常兼作电池包侧面碰撞保护路径",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-012",
+        "name": "地板横梁与中央通道",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "燃油车中央通道容纳传动轴/排气；纯电可取消或改为电池安装梁，是架构差异件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-013",
+        "name": "电池包安装横梁与密封面",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "电池包既是能源件也是结构件时，地板刚度与碰撞路径都要重算",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-014",
+        "name": "前纵梁与吸能盒",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "承载式的前纵梁直接参与碰撞载荷路径，与 BOF 车架纵梁不是同一零件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-015",
+        "name": "前减振器塔",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "麦弗逊拓扑下载荷经塔顶传入车身；双叉臂拓扑上摆臂支座位置不同",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-016",
+        "name": "前围板与转向柱穿孔",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "踏板/助力器/转向柱/线束/空调管路的共同穿孔接口",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-017",
+        "name": "后纵梁与后地板横梁",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "后悬架形式（整体桥/多连杆/扭力梁）决定此处安装点",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-018",
+        "name": "后减振器塔/弹簧座",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "同上",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-019",
+        "name": "备胎池/后储物井",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "纯电平台常取消备胎池以布置电池或后电驱",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-020",
+        "name": "A/B/C 柱",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "柱断面与高强钢分布无来源；碰撞性能不验证",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-021",
+        "name": "顶盖纵梁与横梁",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "与柱构成封闭环，是承载式区别于非承载式的关键",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-022",
+        "name": "前副车架本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "摆臂内硬点与转向器安装点都在其上，是悬架硬点的载体",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-023",
+        "name": "前副车架衬套",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "刚度无来源；演示级用固定约束或线性衬套",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-024",
+        "name": "前副车架紧固螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "规格与预紧力未定",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-025",
+        "name": "后副车架本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "承载差速器或后电驱安装点",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-026",
+        "name": "后副车架衬套与螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "衬套与螺栓合并为一个演示节点，量产应拆分",
+        "deferReason": "非优先系统，本轮减少节点数",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-027",
+        "name": "悬置软垫（橡胶/液压）",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "三向刚度无来源；演示级用各向同性线性弹簧",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-028",
+        "name": "悬置支架与紧固螺栓",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "支架形状随动力总成外形变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-10-029",
+        "name": "扭矩拉杆/防扭支架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "横置动力总成常用；纯电单速减速器反扭矩路径不同",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      }
+    ],
+    "SYS-100": [
+      {
+        "id": "PART-100-001",
+        "name": "车门外板与内板骨架",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "冲压翻边/包边无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-002",
+        "name": "侧碰防撞梁",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "管式/冲压式；是安全结构，SYS-110 需引用",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-003",
+        "name": "玻璃升降器与门锁执行器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "绳轮/臂式是变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-004",
+        "name": "车门铰链与限位器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "铰链轴线决定开闭运动学；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-005",
+        "name": "门内饰板与密封条",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "密封条断面影响风噪，本轮不做",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-006",
+        "name": "罩盖外板与铰链",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "铝/钢是变型（Ford F-150 铝车身已核实 S58）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-007",
+        "name": "撑杆/气弹簧与锁释放机构",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "力值无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-008",
+        "name": "翼子板与轮罩内衬",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "轮距/轮胎变型时必须重算包络",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-009",
+        "name": "保险杠蒙皮与格栅",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "纯电常封闭格栅以降低风阻",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-010",
+        "name": "风窗/侧窗/后窗玻璃",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "夹层/钢化、曲率、黑边无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-011",
+        "name": "玻璃胶/密封条与天窗总成",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "天窗是选配；结构胶已核实用于车身（S61）",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-012",
+        "name": "雨刮电机/连杆/臂片",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "四连杆运动学可建模；刮拭角度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-013",
+        "name": "清洗泵/壶/喷嘴与后视镜",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "本轮合并计数",
+        "deferReason": "非优先系统",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-014",
+        "name": "座椅骨架（座盆/侧构件/横梁/后管）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "管件断面与高强钢牌号无来源（SSAB 牌号是来源自述示例）",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S67"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-015",
+        "name": "滑轨与调角器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实为独立命名件；锁止机构细节未核实",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S67"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-016",
+        "name": "头枕与坐垫靠背泡沫面套",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "头枕管已核实；泡沫密度无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S67"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-017",
+        "name": "座椅调节电机/手柄与加热垫",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "电动/手动是配置变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-018",
+        "name": "仪表板骨架与表皮",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "骨架常为镁/铝压铸或钢管；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-019",
+        "name": "副仪表板/顶棚/立柱饰板/地毯",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "本轮合并计数",
+        "deferReason": "非优先系统，控制节点数",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-020",
+        "name": "前照灯与尾灯",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "卤素/LED/激光是变型；配光不做",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-021",
+        "name": "雾灯/转向灯/高位制动灯/室内灯",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "本轮合并计数",
+        "deferReason": "非优先系统",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-022",
+        "name": "车顶行李架/侧踏板/拖车钩/备胎架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "承载能力无来源；本轮合并计数",
+        "deferReason": "非优先系统",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-100-023",
+        "name": "发动机/电池/差速器下护板",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "功能树反查补入：越野架构的关键保护件，初版遗漏。纯电改为电池下护板，是架构差异件；材料/厚度/离地间隙无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": "FUNC-PRO-05 反查"
+      }
+    ],
+    "SYS-110": [
+      {
+        "id": "PART-110-001",
+        "name": "卷收器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实为独立产品线；锁止机构（车感/带感）无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S63",
+          "S64"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-110-002",
+        "name": "预紧器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实密封式预紧器单元、通过限力器实现预紧；气体发生器/扭杆细节未核实",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S63",
+          "S64"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-110-003",
+        "name": "限力器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "ZF 明确限力器卷收器架构；Autoliv 页面未把限力器列为独立件 → 是否独立件是供应商变型",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S64"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-110-004",
+        "name": "织带/锁扣/锁舌/锚固点/高度调节器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "Autoliv 明确这些是独立产品线；本轮合并计数",
+        "deferReason": "非优先系统",
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S63"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-110-005",
+        "name": "驾驶员/乘员/膝部气囊模块",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "已核实类型划分；模块壳体/盖板未列为命名子件",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S65"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-110-006",
+        "name": "侧气囊与侧气帘",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "已核实侧气帘与双腔侧气囊；气垫展开形状不做",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S65"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-110-007",
+        "name": "气体发生器与点火具",
+        "geomBasis": "DEFERRED",
+        "geomNote": "",
+        "deferReason": "烟火式/混合式/冷气式已核实存在，但产气药/过滤器/压力容器属危险品与认证范围，本轮不建模内部",
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S66"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-110-008",
+        "name": "ISOFIX 锚固杆与顶部系带锚点",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "锚点位置有法规要求，本轮未取得条款",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      }
+    ],
+    "SYS-70": [
+      {
+        "id": "PART-70-001",
+        "name": "油箱本体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "塑料多层/金属；形状随底盘布置变化，容积无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-002",
+        "name": "油箱绑带与托架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "BOF 挂车架上，UNI 挂地板上 → 架构差异件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-003",
+        "name": "加油口颈与油箱盖",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "含防误加/蒸发密封；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-004",
+        "name": "燃油泵模块（含液位传感器）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "Bosch 命名燃油供给模块；流量/压力无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S41"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-005",
+        "name": "燃油滤清器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "内置/外置是变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-006",
+        "name": "通气管与碳罐",
+        "geomBasis": "DEFERRED",
+        "geomNote": "",
+        "deferReason": "蒸发排放控制属排放化学，本轮暂缓",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-007",
+        "name": "供油/回油管与接头",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "长度随轴距变型；快插接头规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-009",
+        "name": "12V 蓄电池",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "铅酸/锂铁是变型；容量/CCA 无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-010",
+        "name": "电池托盘与压板",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "安装位置随架构变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-011",
+        "name": "端子线夹与电池传感器 IBS",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "IBS 用于电源管理；信号属 RP-02",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-012",
+        "name": "DC-DC 本体与安装支架",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "功率/电压等级无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-013",
+        "name": "电芯",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "方形/软包/圆柱是变型；尺寸与容量无来源（VW 每模组 24 芯/408V 是来源自述示例）",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S50"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-014",
+        "name": "模组框架与端板",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实模组存在（最多 12 个）；框架几何无来源。CTP/CTB 无模组方案是变型",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S50"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-015",
+        "name": "母排与电芯互连",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S50 明确未覆盖母排/互连；激光焊/线焊/螺栓是变型",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-016",
+        "name": "电池冷却板",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实『新的独立冷却块结构』；流道/接口无来源。与 SYS-80 冷板回路联动",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S48"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-017",
+        "name": "包壳体/托盘",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实铝壳体带集成碰撞框架；断面/料厚无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S50"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-018",
+        "name": "包盖与密封",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S50 未覆盖密封；IP 等级与密封槽无来源",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-019",
+        "name": "电池包固定螺栓与支撑结构",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实穿透式固定与超高强钢支撑；八根长螺栓是来源自述示例，不是本项目设计值",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S49",
+          "S48"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-020",
+        "name": "泄压阀/防爆阀",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S50 未覆盖；热失控排气路径无来源。安全相关，不得凭想象建模",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-021",
+        "name": "维修断开开关 MSD",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S51 明确未覆盖 MSD；位置与额定电流无来源",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-022",
+        "name": "主接触器（正/负）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实接触器受控；额定电流/电压无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S51",
+          "S52"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-023",
+        "name": "预充接触器与预充电阻",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S51 明确未覆盖预充电阻；阻值/功率无来源。功能上必需（限制母线电容涌流）",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-024",
+        "name": "烟火式熔断器 pyrofuse",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实存在且由 BMS 触发；额定值无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S51",
+          "S52"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-025",
+        "name": "分流器/ pack 电流传感器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实 BMS 监测电流；分流器 vs 霍尔是变型",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S52"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-026",
+        "name": "BDU 壳体与母排",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "all-in-one 集成度已核实，内部布置无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-027",
+        "name": "BMS 主控单元",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实 TC3xx 32 位核（Schaeffler）；算力/接口无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S51",
+          "S52"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-028",
+        "name": "电芯监控电路 CSC（从板）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实主/从划分；每板监控芯数无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S51",
+          "S52"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-029",
+        "name": "绝缘监测与高压互锁 HVIL",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实绝缘监测是 BMS 功能；HVIL 回路作为独立零件未核实 → 回路是功能，接插件是零件",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S52"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-030",
+        "name": "充电口（AC/DC）与锁止机构",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "本轮无一手来源；接口标准（CCS/GB/T/NACS）是变型，不得默认",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-031",
+        "name": "车载充电机 OBC / 集成 ICCU",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实 ICCU 集成方案存在；独立 OBC 与集成 ICCU 是互斥变型",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S48"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-032",
+        "name": "高压线束（含屏蔽）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "走向随轴距/电池布置变型；截面积/屏蔽层无来源",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-033",
+        "name": "高压接插件与互锁端子",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "HVIL 是回路功能，互锁端子是零件——不要把功能当零件",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-70-034",
+        "name": "高压配电盒",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "集成度是变型；无来源",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      }
+    ],
+    "SYS-80": [
+      {
+        "id": "PART-80-001",
+        "name": "散热器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "芯体尺寸/管带式或管片式/散热量无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-002",
+        "name": "冷却风扇与驱动",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "电动/硅油离合器是变型；风量无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-003",
+        "name": "风扇护罩与安装支架",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "含隔振垫；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-004",
+        "name": "散热器上下水管与卡箍",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "走向随发动机布置变型；内径/耐压无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-005",
+        "name": "膨胀水箱与压力盖",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "开启压力无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-006",
+        "name": "水泵（机械/电子）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "电子泵已核实命名零件：定子绕组/控制 PCB/电机壳体/电磁转子带叶片/静密封泵壳；流量-扬程无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S56"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-007",
+        "name": "节温器与壳体",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "蜡式/电子控制式是变型；开启温度无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-008",
+        "name": "水泵密封与轴承",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "机械端面密封；规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-009",
+        "name": "旁通阀与管路",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "小循环路径；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-011",
+        "name": "中冷器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "空-空/空-水是变型；芯体尺寸无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-012",
+        "name": "中冷器管路与卡箍",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "走向随布置变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-020",
+        "name": "电子冷却水泵",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实命名零件（定子/PCB/壳体/转子带叶片/静密封泵壳）；与 ICE 共用硬件家族",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S56"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-021",
+        "name": "低温散热器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "电驱回路温度低于发动机回路，常独立散热器；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-022",
+        "name": "多通冷却液阀",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S57 明确未覆盖冷却液阀；回路切换逻辑属 RP-02",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-023",
+        "name": "电机油冷器与喷淋喷嘴",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实 E-GMP 用油雾喷淋冷却电机线圈；喷嘴布置无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S49"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-024",
+        "name": "制冷剂-冷却液换热器 chiller",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S57 明确未从可抓取 HTML 核实 chiller（相关 MAHLE 手册 PDF 不可解析）；换热量无来源",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-025",
+        "name": "PTC 加热器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实 MAHLE 供应电 PTC 加热元件；功率/电压无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S57"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-026",
+        "name": "热泵总成（选配）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实热泵是与 PTC 并列的独立产品线；与 PTC 可共存或互斥，是配置变型",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S57"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-027",
+        "name": "电池回路水管与接插件",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "与电池冷却板（PART-70-016）对接；快插接头规格无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-030",
+        "name": "空调压缩机（皮带/电动）",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "ICE 皮带驱动 vs BEV 高压电动是不同零件，不是同一件换驱动方式",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-031",
+        "name": "冷凝器与膨胀阀",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "常与散热器并排布置；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-032",
+        "name": "蒸发器与储液干燥器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "装在 HVAC 风箱内；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-033",
+        "name": "制冷剂管路与制冷剂",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "R134a/R1234yf/CO2 是变型；充注量无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-034",
+        "name": "风箱壳体与鼓风机",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "穿越前围板，是 UNI/BOF 前围板差异的联动件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-035",
+        "name": "混合/模式风门与执行器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "风门角度决定出风温度分配；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-80-036",
+        "name": "空调滤芯与出风口/除霜风管",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "本轮合并计数",
+        "deferReason": "非优先系统，控制节点数",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      }
+    ],
+    "SYS-90": [
+      {
+        "id": "PART-90-001",
+        "name": "发动机 ECU",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "已核实控制燃油供给/空气管理/喷射/点火；外形与接插件无来源",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S47",
+          "S41"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-002",
+        "name": "变速箱 TCU",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "AT 必有，MT 无；常集成于阀体",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-003",
+        "name": "整车控制器 VCU / 域控制器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "集中式/分布式电子架构是变型；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-004",
+        "name": "EPS 控制单元",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "常与电机集成；被 SYS-20 引用",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-005",
+        "name": "制动助力控制单元",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "已核实 iBooster 链路含控制单元；被 SYS-40 引用",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S08"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-006",
+        "name": "EPB 控制单元",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "常集成于 ESC 单元",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-007",
+        "name": "ABS/ESC 控制单元",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "ATE 有 MK60 ABS 控制单元独立条目；常与液压调节单元集成",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S11"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-008",
+        "name": "车身控制器 BCM",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "灯光/门锁/雨刮控制；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-009",
+        "name": "网关",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "CAN/LIN/以太网互联；拓扑属 RP-02",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-010",
+        "name": "热管理控制器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "阀/泵/压缩机协调；无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-012",
+        "name": "气囊控制单元 ACU",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "本轮无一手来源；被 SYS-110 引用",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-020",
+        "name": "轮速传感器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "已核实霍尔单芯片、读多极磁环或钢齿圈、供 ABS/ESP；气隙/齿数无来源。被 SYS-30 与 SYS-40 同时引用",
+        "deferReason": null,
+        "evidence": "EVIDENCE",
+        "sources": [
+          "S10"
+        ],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-030",
+        "name": "转向角传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "ESC 必需；常与时钟弹簧集成",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-031",
+        "name": "横摆角速度与加速度传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "ESC 必需；安装位置需在质心附近",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-032",
+        "name": "碰撞传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "本轮无一手来源（Autoliv 页面未列）；被 SYS-110 引用",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-033",
+        "name": "胎压传感器 TPMS",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "直接式/间接式是变型；间接式无独立零件",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-021",
+        "name": "曲轴位置传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "磁电/霍尔；信号盘齿数无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-022",
+        "name": "凸轮轴位置传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "用于判缸与 VVT 闭环",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-023",
+        "name": "爆震传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "压电式；安装扭矩影响灵敏度",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-024",
+        "name": "空气流量/进气压力传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "MAF/MAP 是互斥或并存变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-025",
+        "name": "氧/空燃比传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "前后各一；窄域/宽域是变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-026",
+        "name": "冷却液温度传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "ICE 与 BEV 都有，但测点不同",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-027",
+        "name": "机油压力传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "开关式/模拟式是变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-028",
+        "name": "电机旋变/位置传感器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S53 明确未列旋变；极对数/安装无来源",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-029",
+        "name": "逆变器相电流传感器",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "S55 未列；霍尔/磁通门是变型",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-034",
+        "name": "加速踏板位置传感器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "功能树反查补入；物理上集成在油门踏板模块（PART-50-090），此处只登记电气/信号身份",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": "FUNC-DRV-08 反查"
+      },
+      {
+        "id": "PART-90-040",
+        "name": "主线束/发动机线束/底盘线束/仪表板线束",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "分段方式与长度随轴距/动力方案变型；本轮合并为一个节点",
+        "deferReason": "逐段建模属 RP-02 接口图范围",
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-041",
+        "name": "接插件与端子",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "防水等级/针数无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-042",
+        "name": "保险丝盒与继电器",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "配电拓扑属 RP-02",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-043",
+        "name": "接地点与线束固定件",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "接地点位置随架构变化",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-011",
+        "name": "时钟弹簧/螺旋电缆",
+        "geomBasis": "NEEDS_MEASUREMENT",
+        "geomNote": "本轮只找到售后/SEO 页面，无一手供应商来源 → OPEN。被 SYS-20 转向与 SYS-110 气囊同时引用，是典型跨系统单身份件",
+        "deferReason": null,
+        "evidence": "OPEN",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-050",
+        "name": "组合仪表",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "机械/液晶是变型",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-051",
+        "name": "中控屏与车机主机",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "无来源",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-052",
+        "name": "方向盘开关与诊断接口",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "OBD 接口位置有法规要求，本轮未取得条款",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": null
+      },
+      {
+        "id": "PART-90-054",
+        "name": "喇叭与喇叭开关",
+        "geomBasis": "DEMO_ASSUMPTION",
+        "geomNote": "功能树反查补入：声响告知装置初版遗漏。开关在方向盘上，经时钟弹簧供电",
+        "deferReason": null,
+        "evidence": "ASSUMPTION",
+        "sources": [],
+        "foundBy": "FUNC-VIS-04 反查"
+      }
+    ]
+  }
+}

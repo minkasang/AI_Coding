@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "RP01-VMAP-0.1",
+  "artifact": "system-to-validation-map",
+  "owner": "qwen4",
+  "taskId": "RP-01",
+  "date": "2026-11-14",
+  "purpose": "把每个物理系统映射到下游必须做的验证类别、目标等级、具体可执行测试、负责任务与当前阻塞。这是『需求→系统→验证』追溯链的第一段，供 RP-07 汇总与 G-PL4 样板筛选用。",
+  "levelLadder": "沿用 MASTER_PLAN §4.4：VISUAL → GEOMETRY → KINEMATIC → DYNAMIC。本表给的是目标等级，不是已达成等级。当前全项目只有 hello_flange 达到 GEOMETRY 实测（M04）。",
+  "categories": {
+    "GEOMETRY": "尺寸/孔位/形体/包围盒/拓扑有来源并通过几何检查",
+    "ASSEMBLY": "装配基准、干涉、间隙、紧固孔位匹配、拆装顺序",
+    "KINEMATIC": "自由度、铰链轴向、限位、行程、左右对称、传动比",
+    "DYNAMIC": "质量/惯量/轮胎力/弹簧阻尼/载荷转移，按已说明模型求解并可复现",
+    "FLUID": "液压/冷却/燃油/制冷剂回路的连通性、压力/流量关系（不含 CFD 精度）",
+    "ELECTRICAL": "供电配电、信号拓扑、高低压隔离与互锁（不含 EMC）",
+    "THERMAL": "热路连通性与温度窗口（不含传热精度）",
+    "VARIANT": "架构/动力/拓扑变型后模块重生成、接口匹配、非法组合被拒绝",
+    "VISUAL": "材质/倒角/比例/光照/多角度，与机械检查分开验收",
+    "PERFORMANCE": "GLB 层级、LOD、加载、帧率、draw call、可拆解交互"
+  },
+  "map": [
+    {"system": "SYS-00", "name": "平台架构与整车布置基准", "categories": ["GEOMETRY", "VARIANT", "ASSEMBLY"], "targetLevel": "GEOMETRY", "tests": ["坐标约定单元测试：断言 FL=+X、前进=+Z、右手系 X×Y=Z", "硬点文件存在性与单位检查（mm vs m）", "两组合法配置 + 一组非法配置生成并给出拒绝原因"], "owner": "GPT-6 / DeepSeek(RP-02)", "blockedBy": "无任何硬点文件；DAT-00-001..006 全 OPEN", "treeAnchor": "SUB-00-01"},
+    {"system": "SYS-10", "name": "车身结构与车架", "categories": ["GEOMETRY", "ASSEMBLY", "VARIANT"], "targetLevel": "GEOMETRY", "tests": ["BOF 车架纵梁/横梁包围盒与悬置点数量检查", "UNI 地板/门槛/柱环闭合性检查", "轴距变型后中地板与横梁重生成、传动轴/管路长度联动", "非法组合拒绝：BOF 车架 + UNI 车身骨架同时必选"], "owner": "Gemini(RP-04) / Qwen4(变型规则)", "blockedBy": "构件断面与料厚无来源；车身悬置连接方式本轮未取得 OEM 一手文本", "treeAnchor": "SUB-10-01"},
+    {"system": "SYS-20", "name": "悬架、转向与车轴定位", "categories": ["GEOMETRY", "ASSEMBLY", "KINEMATIC", "VARIANT"], "targetLevel": "KINEMATIC", "tests": ["双叉臂准静态位姿求解：给定硬点，跳动行程内外倾/前束曲线连续且无奇异", "球铰/转动副轴向与限位检查", "转向梯形阿克曼误差检查（替换现有 FR×0.94 伪阿克曼）", "麦弗逊↔双叉臂切换后转向节与上支座零件号必须变化", "轮距变型后摆臂/拉杆/半轴长度联动"], "owner": "Grok(RP-03) / Gemini(RP-04)", "blockedBy": "全部硬点 OPEN；衬套刚度无来源；现有代码是硬编码视觉联动（M06）", "treeAnchor": "ASSY-20-001"},
+    {"system": "SYS-30", "name": "车轮、轮胎与轮端", "categories": ["GEOMETRY", "ASSEMBLY", "KINEMATIC", "VISUAL", "PERFORMANCE"], "targetLevel": "GEOMETRY", "tests": ["轮辋轮廓对 ISO 4000-2 术语体系核对（5° 锥面落底）", "PCD/ET/CB 改变后紧固孔位与轮毂接口同步验证", "Gen1 与 Gen3 轴承单元零件数差异断言（Gen3 必须含独立内圈 PART-30-011）", "卡钳对制动盘的跨骑几何与间隙检查", "轮胎外径由标记推导并与 specs.js 一致"], "owner": "Gemini(RP-04) / Composer(RP-06)", "blockedBy": "轴承目录尺寸、轮辋轮廓、负荷指数/胎压无来源；既有 params.json 标准引用可疑（A33）", "treeAnchor": "ASSY-30-001", "priority": "G-PL4 首个纵切样板"},
+    {"system": "SYS-40", "name": "制动与驻车", "categories": ["GEOMETRY", "ASSEMBLY", "FLUID", "KINEMATIC", "DYNAMIC"], "targetLevel": "KINEMATIC", "tests": ["液压回路连通性图检查：主缸→管路→卡钳/轮缸，X 型分割", "踏板→助力→主缸推杆行程链运动学", "卡钳活塞面积×压力=夹紧力 的量纲与数值一致性（数值待来源）", "纯电配置拒绝真空助力器（CG-BOOST × power 约束）", "浮动/固定卡钳变型后导向销与支架存在性断言"], "owner": "DeepSeek(RP-02) / Grok(RP-03)", "blockedBy": "主缸/卡钳尺寸、摩擦系数-温度、助力特性全无来源；现有 maxBrake=42 是冲量不是压力", "treeAnchor": "ASSY-40-007"},
+    {"system": "SYS-50", "name": "动力源", "categories": ["GEOMETRY", "ASSEMBLY", "KINEMATIC", "FLUID", "ELECTRICAL", "THERMAL"], "targetLevel": "KINEMATIC", "tests": ["曲柄连杆运动学：曲轴转角→活塞位移解析式对照", "配气正时：凸轮轴 2:1 传动与气门升程曲线连续性", "正时链/带路径与张紧器位置检查", "电驱定子/转子气隙与轴承跨距检查", "ICE→BEV 切换后附件驱动/燃油/点火/真空助力子系统必须整体消失"], "owner": "Gemini(RP-04) / Grok(RP-03)", "blockedBy": "缸径/行程/凸轮型线/曲轴几何全无来源；曲轴组与正时驱动整块 ASSUMPTION；燃烧与传热 OUT_OF_SCOPE", "treeAnchor": "ASSY-50-001", "priority": "第二个深钻样板"},
+    {"system": "SYS-60", "name": "动力传递", "categories": ["GEOMETRY", "KINEMATIC", "DYNAMIC", "VARIANT"], "targetLevel": "KINEMATIC", "tests": ["渐开线齿廓生成验证（替换现有直线梯形齿 M03）", "齿轮啮合中心距与侧隙检查", "差速器运动学：左右轮转速和=2×壳转速（现有代码两侧同角度，必须失败）", "万向节夹角与相位、二阶转速波动检查", "半轴长度随轮距/行程变型重算", "传动比与 specs.js 一致性"], "owner": "Grok(RP-03) / Gemini(RP-04)", "blockedBy": "模数/齿数/螺旋角/主减速比来源缺失；现有齿廓与差速作用均不正确", "treeAnchor": "ASSY-60-011"},
+    {"system": "SYS-70", "name": "能源供给与储存", "categories": ["GEOMETRY", "ASSEMBLY", "ELECTRICAL", "THERMAL", "VARIANT"], "targetLevel": "GEOMETRY", "tests": ["电池包与地板/门槛梁安装接口与螺栓孔位匹配", "高压回路连通性与互锁回路闭合检查", "ICE 配置拒绝高压电池/充电口；BEV 配置拒绝油箱/燃油泵", "电池包兼作结构件时地板刚度联动（定性检查）", "低压电源来源断言：ICE=发电机，BEV=DC-DC"], "owner": "DeepSeek(RP-02) / Gemini(RP-04)", "blockedBy": "电芯/模组尺寸、母排、冷却板、MSD、泄压阀、充电口标准全无来源；多项 OPEN", "treeAnchor": "ASSY-70-005"},
+    {"system": "SYS-80", "name": "热管理、润滑与流体", "categories": ["FLUID", "THERMAL", "ASSEMBLY", "VARIANT"], "targetLevel": "GEOMETRY", "tests": ["冷却回路连通性图：发动机水套→水泵→节温器→散热器→膨胀水箱", "BEV 三回路（电驱/电池/座舱）与 chiller/阀的连通性", "管路走向随轴距/布置变型重生成", "ICE 与 BEV 共用电子水泵家族断言（S56）"], "owner": "DeepSeek(RP-02)", "blockedBy": "chiller 与多通阀 OPEN；换热能力与温度窗口无来源；CFD OUT_OF_SCOPE", "treeAnchor": "SUB-80-02"},
+    {"system": "SYS-90", "name": "电气电子、通信和控制", "categories": ["ELECTRICAL", "ASSEMBLY", "PERFORMANCE"], "targetLevel": "GEOMETRY", "tests": ["线束分段与接插件针数定义存在性", "传感器→ECU→执行器信号拓扑闭合检查", "高压/低压隔离与接地点检查", "ECU 盒体安装位置与包络干涉"], "owner": "DeepSeek(RP-02)", "blockedBy": "本轮无一手来源命名高压线束/接插件；网络拓扑与信号定义属 RP-02，本树只留身份", "treeAnchor": "SUB-90-03"},
+    {"system": "SYS-100", "name": "车身附件与座舱", "categories": ["GEOMETRY", "KINEMATIC", "VISUAL", "PERFORMANCE"], "targetLevel": "VISUAL", "tests": ["车门铰链轴线→开闭运动学", "玻璃升降器行程与密封条干涉", "雨刮四连杆刮拭角度", "座椅滑轨/调角器行程", "轮距/轮胎变型后轮罩包络检查"], "owner": "Gemini(RP-04) / HY4(视觉) / Composer(RP-06)", "blockedBy": "非优先系统，本轮 demoSimplification 合并多处；完整冲压件 OUT_OF_SCOPE", "treeAnchor": "ASSY-100-001"},
+    {"system": "SYS-110", "name": "乘员保护与辅助安全", "categories": ["GEOMETRY", "ASSEMBLY"], "targetLevel": "VISUAL", "tests": ["安全带锚固点与座椅/车身接口位置检查", "气囊模块安装包络与方向盘/仪表板干涉", "ISOFIX 锚固杆位置存在性", "非认证声明必须随资产一起展示"], "owner": "HY4(RP-05 审计) / Gemini(RP-04)", "blockedBy": "触发阈值/展开时序属功能视图；碰撞仿真与法规认证 OUT_OF_SCOPE；气体发生器内部 DEFERRED", "treeAnchor": "ASSY-110-001"},
+    {"system": "SYS-130", "name": "工程公共件目录", "categories": ["GEOMETRY", "ASSEMBLY", "VARIANT"], "targetLevel": "GEOMETRY", "tests": ["每个 familyRef 指向存在的 FAM 节点（已由 R22 强制）", "紧固件规格改变后所有引用处的孔位/预紧联动", "轴承/密封家族参数化维度定义存在性", "禁止同一螺栓在多个系统重复建实体身份（已由 R07/R09 强制）"], "owner": "Gemini(RP-04) / DeepSeek(RP-02)", "blockedBy": "家族只有身份，无参数化维度与公差规则；ISO 官方文本不可达", "treeAnchor": "SUB-130-01"},
+    {"system": "SYS-120", "name": "底盘与环境接触仿真（非实体）", "categories": ["DYNAMIC", "PERFORMANCE"], "targetLevel": "DYNAMIC", "tests": ["轮胎力模型（纵向/横向）与路面附着系数分离", "涉水/冰雪/砂石工况不等于只改摩擦系数", "固定步长与可复现种子", "结果可回放且与图形同步"], "owner": "Grok(RP-03)", "blockedBy": "建议从实体 PBS 移出；现有 Cannon RaycastVehicle 只能作游戏级基线（M07）", "treeAnchor": "nonPhysicalViews"},
+    {"system": "SYS-140", "name": "车载软件与功能行为（非实体）", "categories": ["ELECTRICAL", "DYNAMIC"], "targetLevel": "DYNAMIC", "tests": ["功能树每个叶子有 realizedBy 硬件（已由 R18 强制）", "控制状态机与信号定义", "诊断/DTC 定义（当前 GAP）"], "owner": "DeepSeek(RP-02) / Composer(RP-06)", "blockedBy": "建议从实体 PBS 移出，归功能树；FUNC-SNS-07 诊断为 GAP 待指派", "treeAnchor": "RP-01-function-tree.json"}
+  ],
+  "crossCutting": [
+    {"id": "XC-01", "name": "变型传播验证", "categories": ["VARIANT", "ASSEMBLY", "KINEMATIC"], "test": "轴距/轮距/悬架拓扑/动力方案四类变型各生成一次，断言：模块重生成、接口匹配、运动学更新、质量属性更新、非法组合被拒绝并给出原因", "owner": "Qwen4(规则) + Gemini(实现) + Grok(运动学)", "basis": "MASTER_PLAN.md:273-277 与既有平台研究 §5"},
+    {"id": "XC-02", "name": "单位与坐标一致性", "categories": ["GEOMETRY", "DYNAMIC"], "test": "CAD mm ↔ 仿真 m/kg/s/N 转换点断言；禁止 cannon 归一化系数被标为 SI（现有 specs.js:253 违反）", "owner": "DeepSeek(RP-02)", "basis": "M01/M02/M04"},
+    {"id": "XC-03", "name": "来源与验证等级标注", "categories": ["GEOMETRY", "VISUAL"], "test": "每个资产必须带 evidence 等级与来源；ASSUMPTION 不得宣传为 GEOMETRY；本树 493/780 节点为 ASSUMPTION，必须如实展示", "owner": "HY4(RP-05) + GPT-6", "basis": "MASTER_PLAN.md:110, 208"},
+    {"id": "XC-04", "name": "浏览器性能与可拆解", "categories": ["PERFORMANCE", "VISUAL"], "test": "780 节点规模下的 GLB 层级/LOD/按需加载/拾取/爆炸/剖切帧率基线", "owner": "Composer(RP-06) + Gemini(RP-04)", "basis": "GAP-012；本树规模可作为性能压力测试输入"}
+  ],
+  "firstSampleRecommendation": {
+    "gate": "G-PL4",
+    "recommendation": "选 SYS-30 轮端总成（ASSY-30-001）+ SYS-20 双叉臂（ASSY-20-001）作为第一个纵切样板，而不是发动机。",
+    "reasons": [
+      "轮端已有 hello_flange 的 GEOMETRY 级实测基础（M04），链路风险最低",
+      "轮端是四角复用件，一个样板可验证 4 个实例与左右镜像",
+      "轮端跨 SYS-20/30/40/60/90 五个系统，能真正检验 REF 引用机制与单身份规则",
+      "发动机深钻的证据最薄（曲轴组/正时驱动整块 ASSUMPTION），先做会把几何来源风险带进样板"
+    ],
+    "mustFixBeforeSample": ["A33 既有 params.json 的 ISO 273 标签与自造公式", "M03 渐开线齿廓过度宣称", "A12 坐标约定定案"]
+  }
+}
