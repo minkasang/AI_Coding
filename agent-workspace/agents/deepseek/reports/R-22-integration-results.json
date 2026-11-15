@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "carlab.vehicle-integration/0.1.0-proposal",
+  "artifactId": "INTEGRATION-R16-R17-R18-V1",
+  "status": "CANDIDATE_NOT_FROZEN",
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "inputHashes": {
+    "ok": true,
+    "errors": []
+  },
+  "coverage": {
+    "r16": {
+      "systems": 13,
+      "subsystems": 53,
+      "assemblyDefinitions": 108,
+      "assemblyInstances": 37,
+      "partDefinitions": 493,
+      "partInstances": 278,
+      "mountFrames": 37,
+      "references": 35,
+      "bomLines": 190,
+      "geometrySourcedInstances": 0,
+      "noGeometryInstances": 278,
+      "modelBlockedItems": 10,
+      "modelBlockedDefinitions": 13,
+      "qtyConflicts": 12
+    },
+    "r17": {
+      "systems": 3,
+      "partInstances": 11,
+      "bound": 10,
+      "unbound": 1
+    },
+    "r18": {
+      "samples": 9,
+      "poses": 5,
+      "boundToR16": 4,
+      "boundToR17": 2,
+      "unbound": 1
+    },
+    "domainView": {
+      "systems": 3,
+      "partInstances": 4,
+      "joints": 5,
+      "constraints": 6,
+      "bomLines": 4
+    },
+    "solve": {
+      "assemblyInstances": 37,
+      "hardpointAnchoredAssemblyInstances": 0,
+      "demoHardpointAssemblyInstances": 4,
+      "solvablePartInstances": 4
+    }
+  },
+  "qtyAudit": {
+    "status": "CONSISTENT",
+    "derivedMismatches": 12,
+    "declaredConflicts": 12,
+    "unlisted": [],
+    "declaredButMatching": []
+  },
+  "conflicts": [
+    {
+      "conflictId": "CF-R22-01",
+      "severity": "P0",
+      "topic": "instanceId namespace",
+      "decisionId": "D-R22-01"
+    },
+    {
+      "conflictId": "CF-R22-02",
+      "severity": "P0",
+      "topic": "R-18 identity reuse",
+      "decisionId": "D-R22-02"
+    },
+    {
+      "conflictId": "CF-R22-03",
+      "severity": "P1",
+      "topic": "FL frame disagreement",
+      "decisionId": "D-R22-03"
+    },
+    {
+      "conflictId": "CF-R22-04",
+      "severity": "P1",
+      "topic": "fixture-only R-17 instance",
+      "decisionId": "D-R22-04"
+    },
+    {
+      "conflictId": "CF-R22-05",
+      "severity": "P1",
+      "topic": "variant-safe identity",
+      "decisionId": "D-R22-05"
+    },
+    {
+      "conflictId": "CF-R22-06",
+      "severity": "P1",
+      "topic": "unanchored mount frames",
+      "decisionId": "D-R22-06"
+    },
+    {
+      "conflictId": "CF-R22-07",
+      "severity": "P1",
+      "topic": "quantity double-count",
+      "decisionId": "D-R22-07"
+    },
+    {
+      "conflictId": "CF-R22-08",
+      "severity": "P1",
+      "topic": "run lineage",
+      "decisionId": "D-R22-08"
+    },
+    {
+      "conflictId": "CF-R22-09",
+      "severity": "P2",
+      "topic": "source evidence",
+      "decisionId": "D-R22-09"
+    },
+    {
+      "conflictId": "CF-R22-10",
+      "severity": "P2",
+      "topic": "inherited quantity conflicts",
+      "decisionId": "D-R22-10"
+    }
+  ],
+  "decisions": [
+    "D-R22-01",
+    "D-R22-02",
+    "D-R22-03",
+    "D-R22-04",
+    "D-R22-05",
+    "D-R22-06",
+    "D-R22-07",
+    "D-R22-08",
+    "D-R22-09",
+    "D-R22-10"
+  ]
+}

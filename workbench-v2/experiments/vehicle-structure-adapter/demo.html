@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>R-25 整车对象树（隔离样例）</title>
+  <link rel="stylesheet" href="./demo.css">
+</head>
+<body>
+  <header>
+    <h1>R-25 · 整车工程对象树（隔离 demo）</h1>
+    <p>输入 R-16 索引 + R-17 域 fixture；选择键为 <code>instanceId</code>。不覆盖 5173 主工作台。</p>
+  </header>
+  <div class="layout">
+    <div class="tree-pane">
+      <div id="tree" class="tree" role="tree" aria-label="整车对象树"></div>
+    </div>
+    <div class="inspector" id="inspector">
+      <p class="hint">在左侧树中选择一个<strong>零件实例</strong>查看属性与几何状态。</p>
+    </div>
+  </div>
+  <footer id="foot">载入中…</footer>
+  <script type="module" src="./demo.mjs"></script>
+</body>
+</html>

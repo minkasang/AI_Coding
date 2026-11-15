@@ -1,0 +1,100 @@
+{
+  "schema": "carlab.r23.motionStreamRun.v1",
+  "date": "2026-11-15",
+  "command": "node src-experiments/mechanism-stream-v1/run-checks.mjs",
+  "staticUrl": "/src-experiments/mechanism-stream-v1/motion-stream.json",
+  "passCount": 13,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "S01_cycle_returns_to_start",
+      "pass": true,
+      "frames": 9,
+      "travel": [
+        -0.04,
+        -0.04
+      ]
+    },
+    {
+      "id": "S02_quaternion_has_no_jump",
+      "pass": true,
+      "maxStepRad": 0.07925747392170984
+    },
+    {
+      "id": "S03_length_and_closure_hold",
+      "pass": true,
+      "upperRangeM": 4.26078616833081e-11,
+      "closure": 6.694852425581005e-11
+    },
+    {
+      "id": "S04_scale_one_and_force_na",
+      "pass": true
+    },
+    {
+      "id": "S05_reuses_skeleton_ids",
+      "pass": true
+    },
+    {
+      "id": "S06_missing_instances_stay_unbound",
+      "pass": true,
+      "tie": "DEFERRED_NO_INSTANCE",
+      "hub": "UNBOUND_NO_HUB_BODY"
+    },
+    {
+      "id": "S07_constraint_ids_and_residuals",
+      "pass": true,
+      "statuses": [
+        [
+          "CON-SUSP-UPPER-CIRCLE",
+          "SATISFIED"
+        ],
+        [
+          "CON-SUSP-LOWER-CIRCLE",
+          "SATISFIED"
+        ],
+        [
+          "CON-KINGPIN-LENGTH",
+          "SATISFIED"
+        ],
+        [
+          "CON-TIE-ROD-LENGTH",
+          "SATISFIED"
+        ],
+        [
+          "CON-WHEEL-CENTER-HEIGHT",
+          "SATISFIED"
+        ],
+        [
+          "CON-SHOCK-OUTPUT",
+          "OUTPUT"
+        ]
+      ]
+    },
+    {
+      "id": "S08_shock_is_output",
+      "pass": true
+    },
+    {
+      "id": "S09_revision_change_is_stale",
+      "pass": true
+    },
+    {
+      "id": "S10_frame_change_is_blocked",
+      "pass": true
+    },
+    {
+      "id": "S11_bad_input_publishes_no_frames",
+      "pass": true,
+      "code": "KIN-E-LENGTH"
+    },
+    {
+      "id": "S12_clearance_is_demo_proxy",
+      "pass": true
+    },
+    {
+      "id": "S13_hash_repeats",
+      "pass": true
+    }
+  ]
+}

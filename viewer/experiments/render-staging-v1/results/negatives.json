@@ -1,0 +1,56 @@
+[
+  {
+    "id": "bad-m",
+    "qs": "m=9",
+    "expect": "非法 m",
+    "desc": "非法变量值不得静默回退基线",
+    "rejected": true,
+    "matched": true,
+    "error": "非法 m=9（只允许 0/1），拒绝静默回退基线"
+  },
+  {
+    "id": "bad-g",
+    "qs": "g=2",
+    "expect": "非法 g",
+    "desc": "非法变量值不得静默回退基线",
+    "rejected": true,
+    "matched": true,
+    "error": "非法 g=2（只允许 0/1），拒绝静默回退基线"
+  },
+  {
+    "id": "bad-combination",
+    "qs": "m=1&g=1",
+    "expect": "违反一轮一个变量",
+    "desc": "未标记 all 的多变量组合必须被拒绝",
+    "rejected": true,
+    "matched": true,
+    "error": "违反一轮一个变量：同时开启 m, g；请使用 all=1 明确标记组合反例"
+  },
+  {
+    "id": "hardcoded-ground",
+    "qs": "groundPolicy=hardcoded",
+    "expect": "拒绝写死地面",
+    "desc": "禁止复用 R-19 写死的 -0.043 常量",
+    "rejected": true,
+    "matched": true,
+    "error": "拒绝写死地面：R-24 要求由 GLB bounds 推导，禁止复用 R-19 的 -0.043 常量"
+  },
+  {
+    "id": "bad-unit",
+    "qs": "unit=mm",
+    "expect": "米",
+    "desc": "生产 viewport.load() 必须拒绝非米 GLB",
+    "rejected": true,
+    "matched": true,
+    "error": "RUNTIME: Error: GLB 必须以米为单位，不允许自动猜测缩放\n    at EngineeringViewport.load (http://127.0.0.1:5173/workbench-v2/viewport.js:124:37)\n    at main (http://127.0.0.1:5173/viewer/experiments/render-staging-v1/main.js:120:14)"
+  },
+  {
+    "id": "missing-glb",
+    "qs": "asset=/viewer/experiments/engineering-viewer/assets/__missing__.glb",
+    "expect": "GLB",
+    "desc": "缺失资产必须显式失败",
+    "rejected": true,
+    "matched": true,
+    "error": "RUNTIME: Error: GLB 资产不可访问（HTTP 404）: /viewer/experiments/engineering-viewer/assets/__missing__.glb\n    at main (http://127.0.0.1:5173/viewer/experiments/render-staging-v1/main.js:111:11)"
+  }
+]

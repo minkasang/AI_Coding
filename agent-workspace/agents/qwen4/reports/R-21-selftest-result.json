@@ -1,0 +1,405 @@
+{
+  "taskId": "R-21",
+  "verdict": "PASS",
+  "caught": 42,
+  "missed": 0,
+  "total": 42,
+  "rulesCovered": [
+    "W01",
+    "W02",
+    "W03",
+    "W04",
+    "W05",
+    "W06",
+    "W07",
+    "W08",
+    "W09",
+    "W10",
+    "W11",
+    "W12",
+    "W13",
+    "W14",
+    "W15",
+    "W16",
+    "W17",
+    "W18",
+    "W19"
+  ],
+  "rulesUncovered": [],
+  "cases": [
+    {
+      "rule": "W01",
+      "mutation": "mapped R-16 instance id does not exist",
+      "caught": true,
+      "codes": [
+        "R16_INSTANCE_NOT_FOUND"
+      ]
+    },
+    {
+      "rule": "W01",
+      "mutation": "mapped R-17 instance id does not exist",
+      "caught": true,
+      "codes": [
+        "R17_INSTANCE_NOT_FOUND"
+      ]
+    },
+    {
+      "rule": "W02",
+      "mutation": "force-map two different parts as identical",
+      "caught": true,
+      "codes": [
+        "MAPPED_PAIR_DIFFERENT_PART"
+      ]
+    },
+    {
+      "rule": "W02",
+      "mutation": "semantic broadening claimed as identical mapping",
+      "caught": true,
+      "codes": [
+        "SEMANTIC_BROADENING_CLAIMED_IDENTICAL"
+      ]
+    },
+    {
+      "rule": "W03",
+      "mutation": "RP-01 canonical name fabricated",
+      "caught": true,
+      "codes": [
+        "RP01_NAME_FABRICATED"
+      ]
+    },
+    {
+      "rule": "W03",
+      "mutation": "RP-01 familyRef fabricated",
+      "caught": true,
+      "codes": [
+        "RP01_FAMILYREF_FABRICATED"
+      ]
+    },
+    {
+      "rule": "W04",
+      "mutation": "R-16 only count understated to hide dropped nodes",
+      "caught": true,
+      "codes": [
+        "R16_ONLY_COUNT_WRONG"
+      ]
+    },
+    {
+      "rule": "W04",
+      "mutation": "unmapped R-17 instance removed from list",
+      "caught": true,
+      "codes": [
+        "R17_ONLY_LIST_INCOMPLETE"
+      ]
+    },
+    {
+      "rule": "W05",
+      "mutation": "GEOMETRY_PENDING turned into real geometry",
+      "caught": true,
+      "codes": [
+        "GEOMETRY_STATUS_LOST"
+      ]
+    },
+    {
+      "rule": "W05",
+      "mutation": "SOURCED geometry introduced by mapping",
+      "caught": true,
+      "codes": [
+        "SOURCED_GEOMETRY_INTRODUCED"
+      ]
+    },
+    {
+      "rule": "W06",
+      "mutation": "ASSUMPTION upgraded through evidence mapping",
+      "caught": true,
+      "codes": [
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "EVIDENCE_UPGRADED_IN_MAPPING",
+        "DEFINITION_EVIDENCE_UPGRADED",
+        "DEFINITION_EVIDENCE_UPGRADED",
+        "DEFINITION_EVIDENCE_UPGRADED",
+        "DEFINITION_EVIDENCE_UPGRADED",
+        "R17_UPGRADED_ABOVE_CANONICAL",
+        "DEFINITION_EVIDENCE_UPGRADED",
+        "DEFINITION_EVIDENCE_UPGRADED",
+        "R17_UPGRADED_ABOVE_CANONICAL",
+        "DEFINITION_EVIDENCE_UPGRADED",
+        "DEFINITION_EVIDENCE_UPGRADED"
+      ]
+    },
+    {
+      "rule": "W06",
+      "mutation": "R-17 evidence upgraded above RP-01 canonical",
+      "caught": true,
+      "codes": [
+        "DEFINITION_EVIDENCE_UPGRADED",
+        "R17_UPGRADED_ABOVE_CANONICAL"
+      ]
+    },
+    {
+      "rule": "W07",
+      "mutation": "one of the 12 qty conflicts silently dropped",
+      "caught": true,
+      "codes": [
+        "QTY_CONFLICT_COUNT_DROPPED"
+      ]
+    },
+    {
+      "rule": "W07",
+      "mutation": "qty conflict value altered",
+      "caught": true,
+      "codes": [
+        "QTY_CONFLICT_ALTERED"
+      ]
+    },
+    {
+      "rule": "W08",
+      "mutation": "BOM qty per assembly detached from instance count",
+      "caught": true,
+      "codes": [
+        "BOM_QTY_MISMATCH_UNRECORDED"
+      ]
+    },
+    {
+      "rule": "W08",
+      "mutation": "another part's recorded conflict must not excuse this mismatch",
+      "caught": true,
+      "codes": [
+        "BOM_QTY_MISMATCH_UNRECORDED"
+      ]
+    },
+    {
+      "rule": "W09",
+      "mutation": "Dorman specimen mapped as a vehicle part",
+      "caught": true,
+      "codes": [
+        "DORMAN_MAPPED_AS_VEHICLE_PART"
+      ]
+    },
+    {
+      "rule": "W09",
+      "mutation": "dorman invariant flipped",
+      "caught": true,
+      "codes": [
+        "DORMAN_INVARIANT_WRONG"
+      ]
+    },
+    {
+      "rule": "W10",
+      "mutation": "R-18 INST-SLA id claimed canonical",
+      "caught": true,
+      "codes": [
+        "R18_ID_CLAIMED_CANONICAL"
+      ]
+    },
+    {
+      "rule": "W10",
+      "mutation": "R-18 fictional provenance lost",
+      "caught": true,
+      "codes": [
+        "R18_PROVENANCE_LOST"
+      ]
+    },
+    {
+      "rule": "W11",
+      "mutation": "numeric demo frame origin claimed SOURCED",
+      "caught": true,
+      "codes": [
+        "DEMO_ORIGIN_CLAIMED_SOURCED"
+      ]
+    },
+    {
+      "rule": "W11",
+      "mutation": "ungraded numeric origin conflict deleted",
+      "caught": true,
+      "codes": [
+        "NUMERIC_ORIGIN_CONFLICT_MISSING"
+      ]
+    },
+    {
+      "rule": "W12",
+      "mutation": "parent drift conflict deleted",
+      "caught": true,
+      "codes": [
+        "PARENT_DRIFT_CONFLICT_MISSING"
+      ]
+    },
+    {
+      "rule": "W12",
+      "mutation": "RP-01 parent fabricated to hide flattening",
+      "caught": true,
+      "codes": [
+        "RP01_PARENT_FABRICATED"
+      ]
+    },
+    {
+      "rule": "W13",
+      "mutation": "same R-17 instance mapped twice",
+      "caught": true,
+      "codes": [
+        "R17_INSTANCE_MAPPED_TWICE",
+        "R16_INSTANCE_REUSED"
+      ]
+    },
+    {
+      "rule": "W13",
+      "mutation": "same R-16 instance reused for two R-17 instances",
+      "caught": true,
+      "codes": [
+        "R16_INSTANCE_REUSED"
+      ]
+    },
+    {
+      "rule": "W14",
+      "mutation": "evidence enum value left unmapped",
+      "caught": true,
+      "codes": [
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED",
+        "EVIDENCE_VALUE_UNMAPPED"
+      ]
+    },
+    {
+      "rule": "W14",
+      "mutation": "choice group value left unmapped",
+      "caught": true,
+      "codes": [
+        "CHOICE_GROUP_VALUE_UNMAPPED",
+        "CHOICE_GROUP_VALUE_UNMAPPED"
+      ]
+    },
+    {
+      "rule": "W15",
+      "mutation": "mapping claimed frozen",
+      "caught": true,
+      "codes": [
+        "MAPPING_CLAIMED_FROZEN"
+      ]
+    },
+    {
+      "rule": "W15",
+      "mutation": "patch claimed executed without authority",
+      "caught": true,
+      "codes": [
+        "PATCH_CLAIMED_EXECUTED"
+      ]
+    },
+    {
+      "rule": "W16",
+      "mutation": "coverage count falsified",
+      "caught": true,
+      "codes": [
+        "COVERAGE_COUNT_MISMATCH"
+      ]
+    },
+    {
+      "rule": "W16",
+      "mutation": "summary conflict count falsified",
+      "caught": true,
+      "codes": [
+        "SUMMARY_COUNT_MISMATCH"
+      ]
+    },
+    {
+      "rule": "W17",
+      "mutation": "conflict resolution removed",
+      "caught": true,
+      "codes": [
+        "CONFLICT_FIELD_MISSING"
+      ]
+    },
+    {
+      "rule": "W17",
+      "mutation": "conflict severity invalid",
+      "caught": true,
+      "codes": [
+        "CONFLICT_SEVERITY_INVALID"
+      ]
+    },
+    {
+      "rule": "W17",
+      "mutation": "variant-conditional conflict stripped of its resolution",
+      "caught": true,
+      "codes": [
+        "CONFLICT_FIELD_MISSING"
+      ]
+    },
+    {
+      "rule": "W18",
+      "mutation": "input marked writable",
+      "caught": true,
+      "codes": [
+        "INPUT_NOT_READONLY"
+      ]
+    },
+    {
+      "rule": "W18",
+      "mutation": "canonical authority removed",
+      "caught": true,
+      "codes": [
+        "CANONICAL_AUTHORITY_MISSING"
+      ]
+    },
+    {
+      "rule": "W19",
+      "mutation": "different variant ids claimed equal",
+      "caught": true,
+      "codes": [
+        "VARIANT_EQUALITY_FABRICATED"
+      ]
+    },
+    {
+      "rule": "W19",
+      "mutation": "variant mismatch conflict silently dropped",
+      "caught": true,
+      "codes": [
+        "VARIANT_MISMATCH_UNRECORDED"
+      ]
+    },
+    {
+      "rule": "W19",
+      "mutation": "unaligned variants claimed ALIGNED",
+      "caught": true,
+      "codes": [
+        "VARIANT_CLAIMED_ALIGNED"
+      ]
+    },
+    {
+      "rule": "W19",
+      "mutation": "generation agreement fabricated",
+      "caught": true,
+      "codes": [
+        "GENERATION_AGREEMENT_FABRICATED"
+      ]
+    },
+    {
+      "rule": "W19",
+      "mutation": "Project/VehicleVariant layer dropped from field mapping",
+      "caught": true,
+      "codes": [
+        "PROJECT_VARIANT_LAYER_UNMAPPED"
+      ]
+    }
+  ]
+}

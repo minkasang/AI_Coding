@@ -1,0 +1,368 @@
+{
+  "schemaVersion": "carlab.r24.patchCandidate/1.0",
+  "status": "PROPOSAL_NOT_APPLIED",
+  "target": "workbench-v2/viewport.js",
+  "policy": "ONE_VARIABLE_PER_STEP",
+  "requiresApproval": [
+    "gpt-6",
+    "composer-2-5"
+  ],
+  "generatedAt": "2026-11-15T14:52:57.778Z",
+  "measuredOn": "headless Chrome + SwiftShader 软件光栅化；无真实 GPU FPS / 帧时间 / 显存数据",
+  "productionFileModified": false,
+  "groundDerivation": {
+    "policy": "GLB_BOUNDS_DERIVED",
+    "boundsSource": "FULL_MODEL_ALL_VISIBLE_EXPLODE_0",
+    "boundsMinY": -0.042,
+    "clearanceM": 0.001,
+    "groundY": -0.043,
+    "gridY": -0.042,
+    "hardcodedY": -0.043,
+    "deltaFromHardcodedM": 0,
+    "v2GroundY": -0.096,
+    "gapFromV2GroundM": 0.054,
+    "evidenceLevel": "GLB_GEOMETRY_MEASURED"
+  },
+  "steps": [
+    {
+      "variable": "M",
+      "order": 1,
+      "parameter": "materialOverride",
+      "source": "workbench-v2/viewport.js:163-170",
+      "baseline": {
+        "mode": "V2_UNIFORM_OVERRIDE",
+        "metalness": 0.7,
+        "roughness": 0.34
+      },
+      "proposed": {
+        "mode": "GLB_NATIVE_PBR",
+        "action": "不覆盖 mat.metalness / mat.roughness，保留 GLB 自带分档"
+      },
+      "evidenceLevel": "GLB_BINARY_EVIDENCE + VISUAL_ASSUMPTION",
+      "changeCount": 1,
+      "note": "单参数单变量",
+      "metricDelta": {
+        "isoNearWhiteRatio": 0.008724,
+        "isoLumaStdDev": 12.254,
+        "isoEdgeGradient": 1.7697,
+        "sideMinLuma": -14.97,
+        "sideContactGroundMinLuma": 0,
+        "sideContactGroundRectY": 0
+      },
+      "adverse": {
+        "nearWhiteRatioIncreased": true,
+        "contactDarker": true
+      },
+      "costDelta": {
+        "calls": 0,
+        "triangles": 0,
+        "geometries": 0,
+        "textures": 0
+      },
+      "status": "PROPOSAL_NOT_APPLIED",
+      "recommendation": "优先单独在 V2 真实 UI 状态复核：数值来自项目自身 GLB 二进制，且几何/纹理/draw-call 成本不变"
+    },
+    {
+      "variable": "G",
+      "order": 2,
+      "parameter": "groundY / gridY",
+      "source": "workbench-v2/viewport.js:46,56",
+      "baseline": {
+        "groundY": -0.096,
+        "gridY": -0.095,
+        "policy": "FIXED_CONSTANT"
+      },
+      "proposed": {
+        "policy": "GLB_BOUNDS_DERIVED",
+        "clearanceM": 0.001
+      },
+      "evidenceLevel": "GLB_GEOMETRY_MEASURED + VISUAL_ASSUMPTION",
+      "changeCount": 2,
+      "note": "groundY 与 gridY 必须成对由同一 bounds 推导；本轮作为「一个接地变量」而非两个独立变量",
+      "metricDelta": {
+        "isoNearWhiteRatio": 0.036375,
+        "isoLumaStdDev": 0.468,
+        "isoEdgeGradient": -0.0518,
+        "sideMinLuma": 0,
+        "sideContactGroundMinLuma": -90.66,
+        "sideContactGroundRectY": -130
+      },
+      "adverse": {
+        "nearWhiteRatioIncreased": true,
+        "contactDarker": false
+      },
+      "costDelta": {
+        "calls": 0,
+        "triangles": 0,
+        "geometries": 0,
+        "textures": 0
+      },
+      "status": "PROPOSAL_NOT_APPLIED",
+      "recommendation": "可单独复核，但必须保留 bounds 推导逻辑，禁止把实测值写成常量；换 GLB 后须重算"
+    },
+    {
+      "variable": "H",
+      "order": 3,
+      "parameter": "hemiIntensity",
+      "source": "workbench-v2/viewport.js:33",
+      "baseline": 0.9,
+      "proposed": 0.45,
+      "evidenceLevel": "VISUAL_ASSUMPTION",
+      "changeCount": 1,
+      "note": "单参数单变量",
+      "metricDelta": {
+        "isoNearWhiteRatio": -0.000379,
+        "isoLumaStdDev": 0.956,
+        "isoEdgeGradient": 0.1011,
+        "sideMinLuma": -2.45,
+        "sideContactGroundMinLuma": 0,
+        "sideContactGroundRectY": 0
+      },
+      "adverse": {
+        "nearWhiteRatioIncreased": false,
+        "contactDarker": true
+      },
+      "costDelta": {
+        "calls": 0,
+        "triangles": 0,
+        "geometries": 0,
+        "textures": 0
+      },
+      "status": "PROPOSAL_NOT_APPLIED",
+      "recommendation": "纯视觉假设，须在真实 GPU 与 5173 工作台复测后再议，不建议单独先上"
+    },
+    {
+      "variable": "S",
+      "order": 4,
+      "parameter": "sunIntensity",
+      "source": "workbench-v2/viewport.js:34",
+      "baseline": 2,
+      "proposed": 2.4,
+      "evidenceLevel": "VISUAL_ASSUMPTION",
+      "changeCount": 1,
+      "note": "单参数单变量",
+      "metricDelta": {
+        "isoNearWhiteRatio": 0.002383,
+        "isoLumaStdDev": -0.476,
+        "isoEdgeGradient": -0.0493,
+        "sideMinLuma": 0.22,
+        "sideContactGroundMinLuma": 0,
+        "sideContactGroundRectY": 0
+      },
+      "adverse": {
+        "nearWhiteRatioIncreased": true,
+        "contactDarker": false
+      },
+      "costDelta": {
+        "calls": 0,
+        "triangles": 0,
+        "geometries": 0,
+        "textures": 0
+      },
+      "status": "PROPOSAL_NOT_APPLIED",
+      "recommendation": "纯视觉假设，须在真实 GPU 与 5173 工作台复测后再议，不建议单独先上"
+    }
+  ],
+  "separabilityAnalysis": {
+    "method": "四个单变量相对基线的增量之和，与 all 组合反例的实际增量对比；差值记为交互项",
+    "metrics": {
+      "isoNearWhiteRatio": {
+        "baseline": 0.433843,
+        "singles": [
+          {
+            "id": "m",
+            "delta": 0.008724
+          },
+          {
+            "id": "g",
+            "delta": 0.036375
+          },
+          {
+            "id": "h",
+            "delta": -0.000379
+          },
+          {
+            "id": "s",
+            "delta": 0.002383
+          }
+        ],
+        "sumOfSingles": 0.047103,
+        "combined": 0.04558,
+        "interaction": -0.001523,
+        "relativeInteraction": 0.0334
+      },
+      "isoLumaStdDev": {
+        "baseline": 34.108,
+        "singles": [
+          {
+            "id": "m",
+            "delta": 12.254
+          },
+          {
+            "id": "g",
+            "delta": 0.468
+          },
+          {
+            "id": "h",
+            "delta": 0.956
+          },
+          {
+            "id": "s",
+            "delta": -0.476
+          }
+        ],
+        "sumOfSingles": 13.202,
+        "combined": 12.92,
+        "interaction": -0.282,
+        "relativeInteraction": 0.0218
+      },
+      "isoEdgeGradient": {
+        "baseline": 3.1475,
+        "singles": [
+          {
+            "id": "m",
+            "delta": 1.7697
+          },
+          {
+            "id": "g",
+            "delta": -0.0518
+          },
+          {
+            "id": "h",
+            "delta": 0.1011
+          },
+          {
+            "id": "s",
+            "delta": -0.0493
+          }
+        ],
+        "sumOfSingles": 1.7697,
+        "combined": 1.7437,
+        "interaction": -0.026,
+        "relativeInteraction": 0.0149
+      },
+      "sideMinLuma": {
+        "baseline": 126.58,
+        "singles": [
+          {
+            "id": "m",
+            "delta": -14.97
+          },
+          {
+            "id": "g",
+            "delta": 0
+          },
+          {
+            "id": "h",
+            "delta": -2.45
+          },
+          {
+            "id": "s",
+            "delta": 0.22
+          }
+        ],
+        "sumOfSingles": -17.2,
+        "combined": -15.25,
+        "interaction": 1.95,
+        "relativeInteraction": 0.1279
+      },
+      "sideContactGroundMinLuma": {
+        "baseline": 215.32,
+        "singles": [
+          {
+            "id": "m",
+            "delta": 0
+          },
+          {
+            "id": "g",
+            "delta": -90.66
+          },
+          {
+            "id": "h",
+            "delta": 0
+          },
+          {
+            "id": "s",
+            "delta": 0
+          }
+        ],
+        "sumOfSingles": -90.66,
+        "combined": -126.95,
+        "interaction": -36.29,
+        "relativeInteraction": 0.2859
+      }
+    },
+    "brightnessMetricsApproximatelyAdditive": true,
+    "mShareOfCombinedContrastGain": 0.9485,
+    "mShareOfCombinedNearWhiteCost": 0.1914,
+    "conclusion": "亮度类指标近似线性可加（交互项占比 <25%），四变量同时开启没有额外增益。对比度改善的 94.8% 来自 M 单变量，而组合的近白上升是 M 单变量的 5.2 倍。因此推荐只按 M 小步推进，G 单独复核接地，H/S 暂不采用。接地类指标存在交互（M 改变阴影强度 × G 改变阴影位置），不可简单相加。"
+  },
+  "combinationNegative": {
+    "id": "all",
+    "description": "四变量一次性全开的组合反例；用于复现 R-19「不能整包无条件合入」的负面信号",
+    "isoNearWhiteRatio": {
+      "baseline": 0.433843,
+      "combined": 0.479423,
+      "delta": 0.04558
+    },
+    "isoLumaStdDev": {
+      "baseline": 34.108,
+      "combined": 47.028,
+      "delta": 12.92
+    },
+    "sideContactGroundRectY": {
+      "baseline": 617,
+      "combined": 487,
+      "delta": -130,
+      "note": "地面投影条带的 y 位置；G 变量把地面抬到 GLB 最低点附近时会明显上移"
+    },
+    "verdict": "组合后近白像素比上升，整包合入存在发白风险，不予推荐"
+  },
+  "negativeChecks": [
+    {
+      "id": "bad-m",
+      "expect": "非法 m",
+      "rejected": true,
+      "desc": "非法变量值不得静默回退基线"
+    },
+    {
+      "id": "bad-g",
+      "expect": "非法 g",
+      "rejected": true,
+      "desc": "非法变量值不得静默回退基线"
+    },
+    {
+      "id": "bad-combination",
+      "expect": "违反一轮一个变量",
+      "rejected": true,
+      "desc": "未标记 all 的多变量组合必须被拒绝"
+    },
+    {
+      "id": "hardcoded-ground",
+      "expect": "拒绝写死地面",
+      "rejected": true,
+      "desc": "禁止复用 R-19 写死的 -0.043 常量"
+    },
+    {
+      "id": "bad-unit",
+      "expect": "米",
+      "rejected": true,
+      "desc": "生产 viewport.load() 必须拒绝非米 GLB"
+    },
+    {
+      "id": "missing-glb",
+      "expect": "GLB",
+      "rejected": true,
+      "desc": "缺失资产必须显式失败"
+    }
+  ],
+  "caveats": [
+    "所有 proposed 数值为 VISUAL_ASSUMPTION，不是厂商材料、OEM 尺寸或计量认证",
+    "M 的 PBR 数值取自项目自身 GLB，仍属 DEMO 材质，不构成真实材料证据",
+    "G 的 groundY/gridY 必须由 Box3 实测 bounds 推导，换资产后重算，不得写死 -0.043 或本轮实测值；本轮实测值恰好也等于 -0.043（Δ=0），但这是数值巧合而非复用常量，verify.mjs 用换资产敏感性反例证明推导会随 GLB 变化",
+    "H/S 只改灯光强度，未分离 PMREM 环境、曝光与 fill 的贡献",
+    "nearWhiteRatio 受浅色背景(#eef3f8 约 luma 242)污染，不能单独作为过曝判据",
+    "本轮不改几何法线（R-14 已记录 toCreasedNormals 成本）",
+    "SwiftShader 只支持像素级可复验截图与 renderer.info 计数，不能声称 RTX 5060 或真实 GPU 性能"
+  ]
+}

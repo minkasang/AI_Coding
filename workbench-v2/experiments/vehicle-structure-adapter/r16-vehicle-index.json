@@ -1,0 +1,176 @@
+{
+  "schemaVersion": "carlab.vehicle-structure-adapter/r16-index/0.1",
+  "source": "docs/research/R-16-vehicle-skeleton.fixture.json",
+  "generatedAt": "2026-11-15T14:25:38.473Z",
+  "vehicle": {
+    "vehicleId": "VEH-001",
+    "name": "RP-01 工程骨架整车（R-16 候选，非冻结）",
+    "schemaStatus": "CANDIDATE_NOT_FROZEN"
+  },
+  "totals": {
+    "systems": 13,
+    "subsystems": 53,
+    "assemblies": 108,
+    "partDefinitions": 493,
+    "partFamilies": 37,
+    "datums": 40,
+    "references": 35,
+    "assemblyInstances": 37,
+    "partInstances": 278,
+    "mountFrames": 37,
+    "cornerStations": 4,
+    "deepSliceCorners": 1,
+    "definitionsInstantiated": 83,
+    "definitionsDeferred": 410,
+    "geometryPending": 493,
+    "modelBlockedItems": 10,
+    "qtyConflicts": 12,
+    "instancesSourced": 0,
+    "instancesIdentitySourcedSecondary": 124,
+    "instancesValueBasis": {
+      "UNKNOWN": 278
+    },
+    "instancesIdentityBasis": {
+      "ASSUMPTION": 152,
+      "SOURCED_SECONDARY": 124,
+      "UNKNOWN": 2
+    },
+    "referenceSpecimensInstalled": 0,
+    "rp01FilesModified": false,
+    "r06Modified": false,
+    "r11Modified": false,
+    "srcModified": false
+  },
+  "systems": [
+    {
+      "systemId": "SYS-00",
+      "name": "平台架构与整车布置基准",
+      "nameEn": "Platform architecture and vehicle layout datums",
+      "r16Counts": {
+        "assemblyDefinitions": 0,
+        "assemblyInstances": 0,
+        "partInstances": 0
+      }
+    },
+    {
+      "systemId": "SYS-10",
+      "name": "车身结构与车架",
+      "nameEn": "Body structure and frame",
+      "r16Counts": {
+        "assemblyDefinitions": 8,
+        "assemblyInstances": 0,
+        "partInstances": 0
+      }
+    },
+    {
+      "systemId": "SYS-100",
+      "name": "车身附件与座舱",
+      "nameEn": "Body attachments and cabin",
+      "r16Counts": {
+        "assemblyDefinitions": 9,
+        "assemblyInstances": 0,
+        "partInstances": 0
+      }
+    },
+    {
+      "systemId": "SYS-110",
+      "name": "乘员保护与辅助安全",
+      "nameEn": "Occupant protection and safety",
+      "r16Counts": {
+        "assemblyDefinitions": 3,
+        "assemblyInstances": 0,
+        "partInstances": 0
+      }
+    },
+    {
+      "systemId": "SYS-130",
+      "name": "工程公共件与装配基础（通用件目录）",
+      "nameEn": "Common engineering parts catalogue",
+      "r16Counts": {
+        "assemblyDefinitions": 0,
+        "assemblyInstances": 0,
+        "partInstances": 0
+      }
+    },
+    {
+      "systemId": "SYS-20",
+      "name": "悬架、转向与车轴定位",
+      "nameEn": "Suspension steering and axle location",
+      "r16Counts": {
+        "assemblyDefinitions": 8,
+        "assemblyInstances": 2,
+        "partInstances": 23
+      }
+    },
+    {
+      "systemId": "SYS-30",
+      "name": "车轮、轮胎与轮端",
+      "nameEn": "Wheel tyre and wheel end",
+      "r16Counts": {
+        "assemblyDefinitions": 3,
+        "assemblyInstances": 4,
+        "partInstances": 8
+      }
+    },
+    {
+      "systemId": "SYS-40",
+      "name": "制动与驻车",
+      "nameEn": "Braking and parking brake",
+      "r16Counts": {
+        "assemblyDefinitions": 13,
+        "assemblyInstances": 2,
+        "partInstances": 20
+      }
+    },
+    {
+      "systemId": "SYS-50",
+      "name": "动力源",
+      "nameEn": "Power source",
+      "r16Counts": {
+        "assemblyDefinitions": 2,
+        "assemblyInstances": 0,
+        "partInstances": 0
+      }
+    },
+    {
+      "systemId": "SYS-60",
+      "name": "动力传递",
+      "nameEn": "Driveline and transmission",
+      "r16Counts": {
+        "assemblyDefinitions": 10,
+        "assemblyInstances": 0,
+        "partInstances": 0
+      }
+    },
+    {
+      "systemId": "SYS-70",
+      "name": "能源供给与储存",
+      "nameEn": "Energy supply and storage",
+      "r16Counts": {
+        "assemblyDefinitions": 9,
+        "assemblyInstances": 0,
+        "partInstances": 0
+      }
+    },
+    {
+      "systemId": "SYS-80",
+      "name": "热管理、润滑与流体",
+      "nameEn": "Thermal management and fluids",
+      "r16Counts": {
+        "assemblyDefinitions": 7,
+        "assemblyInstances": 0,
+        "partInstances": 0
+      }
+    },
+    {
+      "systemId": "SYS-90",
+      "name": "电气电子、通信和控制",
+      "nameEn": "Electrical electronic and control",
+      "r16Counts": {
+        "assemblyDefinitions": 5,
+        "assemblyInstances": 0,
+        "partInstances": 0
+      }
+    }
+  ]
+}

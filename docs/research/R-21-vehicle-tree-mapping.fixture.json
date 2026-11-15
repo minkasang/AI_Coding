@@ -1,0 +1,2710 @@
+{
+  "schemaVersion": "R21-TREE-DOMAIN-MAPPING-0.1",
+  "artifact": "vehicle-tree-domain-mapping",
+  "owner": "qwen4",
+  "taskId": "R-21",
+  "date": "2026-11-15",
+  "status": "CANDIDATE_NOT_FROZEN",
+  "purpose": "把 R-16 详细整车树与 R-17 可执行领域夹具建立机器可读、可核验对照；保留差异，不丢弃真实节点，不把空几何贴成实体，不静默消掉数量冲突。",
+  "authorityPolicy": {
+    "canonical": "RP-01（已验收）——名称与父级的规范权威",
+    "r16": "详细工程树：13 系统 / 493 定义 / 278 实例",
+    "r17": "可执行领域夹具：10 系统 / 11 定义 / 14 实例（简化，非缺陷）",
+    "r18": "候选位姿：INST-SLA-* 非规范身份，按角色映射",
+    "rule": "任何一方都不得覆盖 RP-01 规范名；差异并列保留并标 status"
+  },
+  "inputs": [
+    {
+      "path": "docs/research/R-16-vehicle-skeleton.fixture.json",
+      "role": "R16_DETAILED_TREE",
+      "readOnly": true,
+      "counts": {
+        "systems": 13,
+        "partDefinitions": 493,
+        "partInstances": 278,
+        "assemblyInstances": 37,
+        "mountFrames": 37
+      }
+    },
+    {
+      "path": "src-experiments/domain-contract-v1/fixtures/vehicle-skeleton.json",
+      "role": "R17_DOMAIN_VEHICLE",
+      "readOnly": true,
+      "counts": {
+        "systems": 10,
+        "partDefinitions": 11,
+        "partInstances": 14,
+        "assemblies": 15,
+        "frames": 27
+      }
+    },
+    {
+      "path": "src-experiments/domain-contract-v1/fixtures/fl-wheel-end.json",
+      "role": "R17_DOMAIN_FL_SLICE",
+      "readOnly": true,
+      "counts": {
+        "partInstances": 11,
+        "assemblies": 5,
+        "frames": 21
+      }
+    },
+    {
+      "path": "src-experiments/mechanism-vertical-slice-v1/R-18-results.json",
+      "role": "R18_CANDIDATE_POSES",
+      "readOnly": true,
+      "instanceIdStatus": "CANDIDATE_NOT_FROZEN",
+      "provenance": "FICTIONAL_FIXTURE",
+      "valueBasis": "DEMO_ASSUMPTION"
+    },
+    {
+      "path": "docs/planning/evidence/RP-01-tree-*.json",
+      "role": "CANONICAL_AUTHORITY",
+      "readOnly": true,
+      "counts": {
+        "nodes": 780
+      }
+    }
+  ],
+  "fieldMapping": {
+    "projectId": {
+      "r16": null,
+      "r17": "projectId",
+      "r18": null,
+      "valueDomain": "R17=PROJECT-CARLAB-DEMO；R-16 无 Project 层",
+      "transform": "R16_LAYER_ABSENT",
+      "status": "R17_ONLY_GAP",
+      "note": "R-16 顶层直接是 variant，没有 Project 容器；不得据此声称两者属同一项目声明。见 CF-09"
+    },
+    "vehicleVariantId": {
+      "r16": "variant.id",
+      "r17": "variant.variantId",
+      "r18": null,
+      "valueDomain": "R16=VAR-R16-BOF-ICE（basedOn CFG-BOF-ICE）；R17=VV-A-SWB-STD（platformFamilyRef PF-DEMO-BOF-01）",
+      "transform": "DIFFERENT_DECLARATIONS_NOT_ALIGNED",
+      "status": "NEEDS_ADJUDICATION",
+      "note": "两侧声明的是不同变型 ID，代际同为 GEN1 但变型身份未对齐；跨夹具 join 实例前必须先声明变型关系。见 CF-09"
+    },
+    "systemId": {
+      "r16": "systems[].id",
+      "r17": "systems[].systemId",
+      "r18": null,
+      "valueDomain": "SYS-*（沿用 RP-01）",
+      "transform": "IDENTICAL",
+      "status": "ALIGNED",
+      "note": "值域一致；R-17 只有 10 个，R-16 有 13 个"
+    },
+    "assemblyDefinitionId": {
+      "r16": "assemblies[].id",
+      "r17": "assemblyDefinitions[].assemblyId",
+      "r18": null,
+      "valueDomain": "ASSY-*",
+      "transform": "IDENTICAL_VALUES_BUT_SEMANTIC_DRIFT",
+      "status": "NEEDS_ADJUDICATION",
+      "note": "值相同但 7/12 名称不同，其中 6 个是把 RP-01 具体总成 broadening 成占位名；见 CF-01"
+    },
+    "assemblyInstanceId": {
+      "r16": "assemblyInstances[].instanceId",
+      "r17": "assemblies[].assemblyId",
+      "r18": null,
+      "valueDomain": "R16=AI-<sys>-<seq>-<corner>；R17=ASM-<ROLE>-<corner>",
+      "transform": "VIA_DEFINITION_AND_CORNER",
+      "status": "MAPPABLE_PARTIAL",
+      "note": "R-17 用同一字段名 assemblyId 同时承载定义与实例两个命名空间；见 CF-02"
+    },
+    "partDefinitionId": {
+      "r16": "partDefinitions[].id",
+      "r17": "partDefinitions[].partId",
+      "r18": null,
+      "valueDomain": "PART-*",
+      "transform": "IDENTICAL",
+      "status": "ALIGNED",
+      "note": "值域一致；4/11 名称漂移，见 CF-03"
+    },
+    "partInstanceId": {
+      "r16": "partInstances[].instanceId",
+      "r17": "partInstances[].instanceId",
+      "r18": "designSample.instances[].instanceId",
+      "valueDomain": "R16=PI-<sys>-<seq>-<corner>[-<ord>]；R17=INST-<ROLE>-<corner>[-<n>]；R18=INST-SLA-<ROLE>-<corner>",
+      "transform": "VIA_PART_AND_CORNER_AND_ORDINAL",
+      "status": "MAPPABLE_PARTIAL",
+      "note": "R-18 的 INST-SLA-* 自标 CANDIDATE_NOT_FROZEN / FICTIONAL_FIXTURE，按角色映射，不当规范身份"
+    },
+    "mountFrameId": {
+      "r16": "mountFrames[].frameId",
+      "r17": "frames[].frameId",
+      "r18": "designSample.frameId",
+      "valueDomain": "R16=FR-<sys>-<seq>-<corner>（总成实例级）；R17=FR-<ROLE>-<corner>（含零件实例级）",
+      "transform": "VIA_ASSEMBLY_INSTANCE",
+      "status": "GRANULARITY_MISMATCH",
+      "note": "R-16 每总成实例一个 Frame；R-17 每零件实例也有 Frame。粒度不同，不强行合并；见 CF-05"
+    }
+  },
+  "variantAlignment": {
+    "r16ProjectId": null,
+    "r17ProjectId": "PROJECT-CARLAB-DEMO",
+    "r17ProjectName": "CARLAB 演示整车骨架（GEN1，非实车）",
+    "r17Revision": 3,
+    "r16VariantId": "VAR-R16-BOF-ICE",
+    "r16VariantBasedOn": "CFG-BOF-ICE",
+    "r16VariantStatus": "PROPOSED_NOT_APPROVED",
+    "r16BodyStructure": "BOF",
+    "r16Powertrain": "ICE",
+    "r17VariantId": "VV-A-SWB-STD",
+    "r17PlatformFamilyRef": "PF-DEMO-BOF-01",
+    "r17Generation": "GEN1",
+    "r17VariantEvidenceInherited": "DEMO_ASSUMPTION",
+    "r17Parameters": {
+      "PD-WB": {
+        "value": 2460,
+        "unit": "mm",
+        "valueBasis": "DEMO_ASSUMPTION"
+      },
+      "PD-FT": {
+        "value": 1680,
+        "unit": "mm",
+        "valueBasis": "DEMO_ASSUMPTION"
+      }
+    },
+    "generationAgrees": true,
+    "r16ChoiceGroupCount": 10,
+    "r17ChoiceGroupCount": 1,
+    "r17UnsetChoiceGroups": [
+      "CG-BOOST",
+      "CG-FASTENER",
+      "CG-FSUSP",
+      "CG-PARK",
+      "CG-POWER",
+      "CG-RBRK",
+      "CG-RSUSP",
+      "CG-STEER",
+      "CG-TRANS"
+    ],
+    "variantIdsEqual": false,
+    "alignmentStatus": "NOT_DECLARED"
+  },
+  "enumMapping": {
+    "evidenceInherited": {
+      "r17Domain": [
+        "EVIDENCE",
+        "ASSUMPTION",
+        "OPEN"
+      ],
+      "r16Domain": [
+        "SOURCED_SECONDARY",
+        "ASSUMPTION",
+        "UNKNOWN"
+      ],
+      "map": {
+        "EVIDENCE": "SOURCED_SECONDARY",
+        "ASSUMPTION": "ASSUMPTION",
+        "OPEN": "UNKNOWN"
+      },
+      "caveat": "R-16 规定 EVIDENCE 必须带 sources 才给 SOURCED_SECONDARY，否则 UNKNOWN；R-17 未做此区分",
+      "status": "MAPPABLE_WITH_CONDITION"
+    },
+    "geometryBasis": {
+      "r17Domain": [
+        "NEEDS_MEASUREMENT",
+        "DEMO_ASSUMPTION"
+      ],
+      "r16Domain": [
+        "UNKNOWN",
+        "DEMO_ASSUMPTION",
+        "SOURCED",
+        "OUT_OF_SCOPE"
+      ],
+      "map": {
+        "SOURCED": "SOURCED",
+        "NEEDS_MEASUREMENT": "UNKNOWN",
+        "DEMO_ASSUMPTION": "DEMO_ASSUMPTION",
+        "DEFERRED": "UNKNOWN",
+        "NOT_APPLICABLE": "OUT_OF_SCOPE"
+      },
+      "status": "MAPPABLE",
+      "caveat": "R-17 保留 RP-01 原始枚举，R-16 已映射为统一可信度枚举；两者不得混用同一字段名而不转换"
+    },
+    "choiceGroupValue": {
+      "r17Domain": [
+        "GEN1",
+        "GEN3"
+      ],
+      "r16Domain": [
+        "ASSY-30-002",
+        "ASSY-30-003"
+      ],
+      "map": {
+        "GEN1": "ASSY-30-002",
+        "GEN3": "ASSY-30-003"
+      },
+      "status": "MAPPABLE",
+      "caveat": "R-17 moduleSelections/applicableWhen 用代际标签，R-16 用总成 ID；需显式转换"
+    },
+    "fidelityTarget": {
+      "r17Domain": [
+        "FID-V",
+        "FID-G"
+      ],
+      "r16Domain": [],
+      "map": {},
+      "status": "R17_ONLY_GAP",
+      "caveat": "R-16 无 fidelityTarget 字段。FID-G 是目标不是达成；R-16 全部 GEOMETRY_PENDING，不得读作已达成几何级"
+    },
+    "unknowns": {
+      "r17Domain": "U-* 本地未知登记",
+      "r16Domain": "modelBlocked[].r06ParamIds (PR-*)",
+      "map": {},
+      "status": "TWO_REGISTRIES_NEED_CROSSWALK",
+      "caveat": "两套未知编号未对齐；本轮不合并，只并列保留"
+    }
+  },
+  "systemMapping": [
+    {
+      "r16SystemId": "SYS-00",
+      "r16Name": "平台架构与整车布置基准",
+      "r17SystemId": "SYS-00",
+      "r17Name": "平台架构与整车布置",
+      "status": "MAPPED",
+      "nameDrift": true
+    },
+    {
+      "r16SystemId": "SYS-10",
+      "r16Name": "车身结构与车架",
+      "r17SystemId": "SYS-10",
+      "r17Name": "车身结构与车架",
+      "status": "MAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-100",
+      "r16Name": "车身附件与座舱",
+      "r17SystemId": null,
+      "r17Name": null,
+      "status": "R16_ONLY_UNMAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-110",
+      "r16Name": "乘员保护与辅助安全",
+      "r17SystemId": null,
+      "r17Name": null,
+      "status": "R16_ONLY_UNMAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-130",
+      "r16Name": "工程公共件与装配基础（通用件目录）",
+      "r17SystemId": null,
+      "r17Name": null,
+      "status": "R16_ONLY_UNMAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-20",
+      "r16Name": "悬架、转向与车轴定位",
+      "r17SystemId": "SYS-20",
+      "r17Name": "悬架、转向与车轴定位",
+      "status": "MAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-30",
+      "r16Name": "车轮、轮胎与轮端",
+      "r17SystemId": "SYS-30",
+      "r17Name": "车轮、轮胎与轮端",
+      "status": "MAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-40",
+      "r16Name": "制动与驻车",
+      "r17SystemId": "SYS-40",
+      "r17Name": "制动与驻车",
+      "status": "MAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-50",
+      "r16Name": "动力源",
+      "r17SystemId": "SYS-50",
+      "r17Name": "动力源",
+      "status": "MAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-60",
+      "r16Name": "动力传递",
+      "r17SystemId": "SYS-60",
+      "r17Name": "动力传递",
+      "status": "MAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-70",
+      "r16Name": "能源供给与储存",
+      "r17SystemId": "SYS-70",
+      "r17Name": "能源供给与储存",
+      "status": "MAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-80",
+      "r16Name": "热管理、润滑与流体",
+      "r17SystemId": "SYS-80",
+      "r17Name": "热管理、润滑与流体",
+      "status": "MAPPED",
+      "nameDrift": false
+    },
+    {
+      "r16SystemId": "SYS-90",
+      "r16Name": "电气电子、通信和控制",
+      "r17SystemId": "SYS-90",
+      "r17Name": "电气电子、通信和控制",
+      "status": "MAPPED",
+      "nameDrift": false
+    }
+  ],
+  "assemblyDefinitionMapping": [
+    {
+      "assemblyId": "ASSY-30-001",
+      "r17Name": "轮端总成（双叉臂前轮端）",
+      "rp01Name": "轮端总成（双叉臂前轮端深钻样例）",
+      "r16Name": "轮端总成（双叉臂前轮端深钻样例）",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "semanticBroadening": false,
+      "r17SystemId": "SYS-30",
+      "status": "MAPPED_WITH_DRIFT"
+    },
+    {
+      "assemblyId": "ASSY-30-002",
+      "r17Name": "轮毂轴承 Gen1（外购不可拆）",
+      "rp01Name": "轮毂轴承 Gen1（双列角接触球轴承+独立轮毂）",
+      "r16Name": "轮毂轴承 Gen1（双列角接触球轴承+独立轮毂）",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "semanticBroadening": false,
+      "r17SystemId": "SYS-30",
+      "status": "MAPPED_WITH_DRIFT"
+    },
+    {
+      "assemblyId": "ASSY-40-009",
+      "r17Name": "制动盘总成",
+      "rp01Name": "制动盘总成",
+      "r16Name": "制动盘总成",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": false,
+      "semanticBroadening": false,
+      "r17SystemId": "SYS-40",
+      "status": "MAPPED"
+    },
+    {
+      "assemblyId": "ASSY-40-008",
+      "r17Name": "卡钳总成",
+      "rp01Name": "卡钳总成",
+      "r16Name": "卡钳总成",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": false,
+      "semanticBroadening": false,
+      "r17SystemId": "SYS-40",
+      "status": "MAPPED"
+    },
+    {
+      "assemblyId": "ASSY-20-001",
+      "r17Name": "双叉臂前悬架总成",
+      "rp01Name": "双叉臂前悬架总成",
+      "r16Name": "双叉臂前悬架总成",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": false,
+      "semanticBroadening": false,
+      "r17SystemId": "SYS-20",
+      "status": "MAPPED"
+    },
+    {
+      "assemblyId": "ASSY-20-014",
+      "r17Name": "转向拉杆组（轮端侧）",
+      "rp01Name": "转向操纵与齿轮齿条转向器",
+      "r16Name": "转向操纵与齿轮齿条转向器",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "semanticBroadening": false,
+      "r17SystemId": "SYS-20",
+      "status": "MAPPED_WITH_DRIFT"
+    },
+    {
+      "assemblyId": "ASSY-50-001",
+      "r17Name": "动力源总成（占位）",
+      "rp01Name": "发动机总成（直列四缸火花点火，深钻样例）",
+      "r16Name": "发动机总成（直列四缸火花点火，深钻样例）",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "semanticBroadening": true,
+      "r17SystemId": "SYS-50",
+      "status": "MAPPED_WITH_DRIFT"
+    },
+    {
+      "assemblyId": "ASSY-60-001",
+      "r17Name": "动力传递总成（占位）",
+      "rp01Name": "手动变速箱 MT",
+      "r16Name": "手动变速箱 MT",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "semanticBroadening": true,
+      "r17SystemId": "SYS-60",
+      "status": "MAPPED_WITH_DRIFT"
+    },
+    {
+      "assemblyId": "ASSY-70-001",
+      "r17Name": "能源供给总成（占位）",
+      "rp01Name": "燃油箱总成",
+      "r16Name": "燃油箱总成",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "semanticBroadening": true,
+      "r17SystemId": "SYS-70",
+      "status": "MAPPED_WITH_DRIFT"
+    },
+    {
+      "assemblyId": "ASSY-80-001",
+      "r17Name": "热管理总成（占位）",
+      "rp01Name": "散热器与风扇模块",
+      "r16Name": "散热器与风扇模块",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "semanticBroadening": true,
+      "r17SystemId": "SYS-80",
+      "status": "MAPPED_WITH_DRIFT"
+    },
+    {
+      "assemblyId": "ASSY-90-001",
+      "r17Name": "电气总成（占位）",
+      "rp01Name": "控制器组",
+      "r16Name": "控制器组",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "semanticBroadening": true,
+      "r17SystemId": "SYS-90",
+      "status": "MAPPED_WITH_DRIFT"
+    },
+    {
+      "assemblyId": "ASSY-10-001",
+      "r17Name": "车身结构总成（占位）",
+      "rp01Name": "梯形车架总成",
+      "r16Name": "梯形车架总成",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "semanticBroadening": true,
+      "r17SystemId": "SYS-10",
+      "status": "MAPPED_WITH_DRIFT"
+    }
+  ],
+  "assemblyInstanceMapping": [
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-WHEEL-END-FL",
+      "definitionRef": "ASSY-30-001",
+      "corner": "FL",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-WHEEL-END-FL",
+      "r16AssemblyInstanceId": "AI-30-001-FL",
+      "r16MountFrameId": "FR-30-001-FL",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-WHEEL-END-FR",
+      "definitionRef": "ASSY-30-001",
+      "corner": "FR",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-WHEEL-END-FR",
+      "r16AssemblyInstanceId": "AI-30-001-FR",
+      "r16MountFrameId": "FR-30-001-FR",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-WHEEL-END-RL",
+      "definitionRef": "ASSY-30-001",
+      "corner": "RL",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-WHEEL-END-RL",
+      "r16AssemblyInstanceId": "AI-30-001-RL",
+      "r16MountFrameId": "FR-30-001-RL",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-WHEEL-END-RR",
+      "definitionRef": "ASSY-30-001",
+      "corner": "RR",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-WHEEL-END-RR",
+      "r16AssemblyInstanceId": "AI-30-001-RR",
+      "r16MountFrameId": "FR-30-001-RR",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-HUB-BRG-FL",
+      "definitionRef": "ASSY-30-002",
+      "corner": "FL",
+      "r17ParentAssemblyId": "ASM-WHEEL-END-FL",
+      "r17FrameId": "FR-HUB-BRG-FL",
+      "r16AssemblyInstanceId": "AI-30-002-FL",
+      "r16MountFrameId": "FR-30-002-FL",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-DISC-FL",
+      "definitionRef": "ASSY-40-009",
+      "corner": "FL",
+      "r17ParentAssemblyId": "ASM-WHEEL-END-FL",
+      "r17FrameId": "FR-DISC-ASM-FL",
+      "r16AssemblyInstanceId": "AI-40-009-FL",
+      "r16MountFrameId": "FR-40-009-FL",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-CALIPER-FL",
+      "definitionRef": "ASSY-40-008",
+      "corner": "FL",
+      "r17ParentAssemblyId": "ASM-WHEEL-END-FL",
+      "r17FrameId": "FR-CALIPER-ASM-FL",
+      "r16AssemblyInstanceId": "AI-40-008-FL",
+      "r16MountFrameId": "FR-40-008-FL",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-SUSP-FL",
+      "definitionRef": "ASSY-20-001",
+      "corner": "FL",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-SUSP-FL",
+      "r16AssemblyInstanceId": null,
+      "r16MountFrameId": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "unmappedReason": "R-16 未实例化该总成（不在 PLAN 内）或角位不匹配"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-STEER",
+      "definitionRef": "ASSY-20-014",
+      "corner": "VEH",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-VEHICLE",
+      "r16AssemblyInstanceId": "AI-20-014-VEH",
+      "r16MountFrameId": "FR-20-014-VEH",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-POWERTRAIN",
+      "definitionRef": "ASSY-50-001",
+      "corner": "VEH",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-VEHICLE",
+      "r16AssemblyInstanceId": null,
+      "r16MountFrameId": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "unmappedReason": "R-16 未实例化该总成（不在 PLAN 内）或角位不匹配"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-DRIVETRAIN",
+      "definitionRef": "ASSY-60-001",
+      "corner": "VEH",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-VEHICLE",
+      "r16AssemblyInstanceId": null,
+      "r16MountFrameId": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "unmappedReason": "R-16 未实例化该总成（不在 PLAN 内）或角位不匹配"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-ENERGY",
+      "definitionRef": "ASSY-70-001",
+      "corner": "VEH",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-VEHICLE",
+      "r16AssemblyInstanceId": null,
+      "r16MountFrameId": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "unmappedReason": "R-16 未实例化该总成（不在 PLAN 内）或角位不匹配"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-THERMAL",
+      "definitionRef": "ASSY-80-001",
+      "corner": "VEH",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-VEHICLE",
+      "r16AssemblyInstanceId": null,
+      "r16MountFrameId": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "unmappedReason": "R-16 未实例化该总成（不在 PLAN 内）或角位不匹配"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-ELECTRICAL",
+      "definitionRef": "ASSY-90-001",
+      "corner": "VEH",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-VEHICLE",
+      "r16AssemblyInstanceId": null,
+      "r16MountFrameId": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "unmappedReason": "R-16 未实例化该总成（不在 PLAN 内）或角位不匹配"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17AssemblyInstanceId": "ASM-BODY",
+      "definitionRef": "ASSY-10-001",
+      "corner": "VEH",
+      "r17ParentAssemblyId": null,
+      "r17FrameId": "FR-VEHICLE",
+      "r16AssemblyInstanceId": null,
+      "r16MountFrameId": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "unmappedReason": "R-16 未实例化该总成（不在 PLAN 内）或角位不匹配"
+    }
+  ],
+  "partDefinitionMapping": [
+    {
+      "partId": "PART-20-016",
+      "fixture": "VEHICLE",
+      "r17Name": "转向节本体",
+      "rp01Name": "转向节本体",
+      "r16Name": "转向节本体",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": false,
+      "familyRefDrift": false,
+      "r17FamilyRef": null,
+      "rp01FamilyRef": null,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16ValueBasis": "ASSUMPTION",
+      "evidenceMapAgrees": true,
+      "r17GeometryBasis": "NEEDS_MEASUREMENT",
+      "r16GeometryBasis": "UNKNOWN",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-G",
+      "r17ApplicableWhen": null,
+      "r16InstancePolicy": "INSTANTIATED",
+      "status": "MAPPED"
+    },
+    {
+      "partId": "PART-30-006",
+      "fixture": "VEHICLE",
+      "r17Name": "独立轮毂法兰",
+      "rp01Name": "独立轮毂法兰",
+      "r16Name": "独立轮毂法兰",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": false,
+      "familyRefDrift": false,
+      "r17FamilyRef": null,
+      "rp01FamilyRef": null,
+      "r17EvidenceInherited": "EVIDENCE",
+      "r16ValueBasis": "SOURCED_SECONDARY",
+      "evidenceMapAgrees": true,
+      "r17GeometryBasis": "NEEDS_MEASUREMENT",
+      "r16GeometryBasis": "UNKNOWN",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-G",
+      "r17ApplicableWhen": {
+        "CG-HUB": [
+          "GEN1"
+        ]
+      },
+      "r16InstancePolicy": "INSTANTIATED",
+      "status": "MAPPED"
+    },
+    {
+      "partId": "PART-30-009",
+      "fixture": "VEHICLE",
+      "r17Name": "车轮螺柱（压装于轮毂）",
+      "rp01Name": "车轮螺柱（压装于轮毂）",
+      "r16Name": "车轮螺柱（压装于轮毂）",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": false,
+      "familyRefDrift": false,
+      "r17FamilyRef": "FAM-130-007",
+      "rp01FamilyRef": "FAM-130-007",
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16ValueBasis": "ASSUMPTION",
+      "evidenceMapAgrees": true,
+      "r17GeometryBasis": "NEEDS_MEASUREMENT",
+      "r16GeometryBasis": "UNKNOWN",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-G",
+      "r17ApplicableWhen": {
+        "CG-HUB": [
+          "GEN1"
+        ]
+      },
+      "r16InstancePolicy": "INSTANTIATED",
+      "status": "MAPPED"
+    },
+    {
+      "partId": "PART-30-010",
+      "fixture": "VEHICLE",
+      "r17Name": "Gen3 带法兰内圈（整体）",
+      "rp01Name": "带车轮/制动盘法兰的内圈（整体）",
+      "r16Name": "带车轮/制动盘法兰的内圈（整体）",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "familyRefDrift": false,
+      "r17FamilyRef": null,
+      "rp01FamilyRef": null,
+      "r17EvidenceInherited": "EVIDENCE",
+      "r16ValueBasis": "SOURCED_SECONDARY",
+      "evidenceMapAgrees": true,
+      "r17GeometryBasis": "NEEDS_MEASUREMENT",
+      "r16GeometryBasis": "UNKNOWN",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-G",
+      "r17ApplicableWhen": {
+        "CG-HUB": [
+          "GEN3"
+        ]
+      },
+      "r16InstancePolicy": "DEFERRED",
+      "status": "MAPPED"
+    },
+    {
+      "partId": "PART-30-017",
+      "fixture": "VEHICLE",
+      "r17Name": "法兰螺柱（Gen3）",
+      "rp01Name": "法兰螺柱（压装）",
+      "r16Name": "法兰螺柱（压装）",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "familyRefDrift": false,
+      "r17FamilyRef": "FAM-130-007",
+      "rp01FamilyRef": "FAM-130-007",
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16ValueBasis": "ASSUMPTION",
+      "evidenceMapAgrees": true,
+      "r17GeometryBasis": "NEEDS_MEASUREMENT",
+      "r16GeometryBasis": "UNKNOWN",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-G",
+      "r17ApplicableWhen": {
+        "CG-HUB": [
+          "GEN3"
+        ]
+      },
+      "r16InstancePolicy": "DEFERRED",
+      "status": "MAPPED"
+    },
+    {
+      "partId": "PART-30-019",
+      "fixture": "VEHICLE",
+      "r17Name": "轮辋（轮圈）占位",
+      "rp01Name": "轮辋（轮圈）",
+      "r16Name": "轮辋（轮圈）",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "familyRefDrift": false,
+      "r17FamilyRef": null,
+      "rp01FamilyRef": null,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16ValueBasis": "SOURCED_SECONDARY",
+      "evidenceMapAgrees": false,
+      "r17GeometryBasis": "NEEDS_MEASUREMENT",
+      "r16GeometryBasis": "UNKNOWN",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-V",
+      "r17ApplicableWhen": null,
+      "r16InstancePolicy": "INSTANTIATED",
+      "status": "MAPPED"
+    },
+    {
+      "partId": "PART-30-029",
+      "fixture": "VEHICLE",
+      "r17Name": "车轮螺栓/螺母（按座型）",
+      "rp01Name": "车轮螺栓/螺母（按座型）",
+      "r16Name": "车轮螺栓/螺母（按座型）",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": false,
+      "familyRefDrift": false,
+      "r17FamilyRef": "FAM-130-007",
+      "rp01FamilyRef": "FAM-130-007",
+      "r17EvidenceInherited": "EVIDENCE",
+      "r16ValueBasis": "SOURCED_SECONDARY",
+      "evidenceMapAgrees": true,
+      "r17GeometryBasis": "NEEDS_MEASUREMENT",
+      "r16GeometryBasis": "UNKNOWN",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-G",
+      "r17ApplicableWhen": null,
+      "r16InstancePolicy": "INSTANTIATED",
+      "status": "MAPPED"
+    },
+    {
+      "partId": "PART-30-031",
+      "fixture": "VEHICLE",
+      "r17Name": "制动盘定位螺钉",
+      "rp01Name": "制动盘定位螺钉",
+      "r16Name": "制动盘定位螺钉",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": false,
+      "familyRefDrift": false,
+      "r17FamilyRef": "FAM-130-002",
+      "rp01FamilyRef": "FAM-130-002",
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16ValueBasis": "ASSUMPTION",
+      "evidenceMapAgrees": true,
+      "r17GeometryBasis": "DEMO_ASSUMPTION",
+      "r16GeometryBasis": "DEMO_ASSUMPTION",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-V",
+      "r17ApplicableWhen": null,
+      "r16InstancePolicy": "INSTANTIATED",
+      "status": "MAPPED"
+    },
+    {
+      "partId": "PART-40-034",
+      "fixture": "VEHICLE",
+      "r17Name": "卡钳体",
+      "rp01Name": "卡钳体",
+      "r16Name": "卡钳体",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": false,
+      "familyRefDrift": false,
+      "r17FamilyRef": "FAM-130-036",
+      "rp01FamilyRef": "FAM-130-036",
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16ValueBasis": "SOURCED_SECONDARY",
+      "evidenceMapAgrees": false,
+      "r17GeometryBasis": "NEEDS_MEASUREMENT",
+      "r16GeometryBasis": "UNKNOWN",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-G",
+      "r17ApplicableWhen": null,
+      "r16InstancePolicy": "INSTANTIATED",
+      "status": "MAPPED"
+    },
+    {
+      "partId": "PART-40-046",
+      "fixture": "VEHICLE",
+      "r17Name": "通风制动盘",
+      "rp01Name": "通风制动盘（摩擦环+筋+盘帽）",
+      "r16Name": "通风制动盘（摩擦环+筋+盘帽）",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": true,
+      "familyRefDrift": false,
+      "r17FamilyRef": null,
+      "rp01FamilyRef": null,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16ValueBasis": "ASSUMPTION",
+      "evidenceMapAgrees": true,
+      "r17GeometryBasis": "NEEDS_MEASUREMENT",
+      "r16GeometryBasis": "UNKNOWN",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-G",
+      "r17ApplicableWhen": null,
+      "r16InstancePolicy": "INSTANTIATED",
+      "status": "MAPPED"
+    },
+    {
+      "partId": "PART-40-048",
+      "fixture": "VEHICLE",
+      "r17Name": "卡钳支架",
+      "rp01Name": "卡钳支架",
+      "r16Name": "卡钳支架",
+      "existsInRP01": true,
+      "existsInR16": true,
+      "nameDrift": false,
+      "familyRefDrift": false,
+      "r17FamilyRef": null,
+      "rp01FamilyRef": null,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16ValueBasis": "ASSUMPTION",
+      "evidenceMapAgrees": true,
+      "r17GeometryBasis": "NEEDS_MEASUREMENT",
+      "r16GeometryBasis": "UNKNOWN",
+      "geometryMapAgrees": true,
+      "r17FidelityTarget": "FID-G",
+      "r17ApplicableWhen": null,
+      "r16InstancePolicy": "DEFERRED",
+      "status": "MAPPED"
+    }
+  ],
+  "partInstanceMapping": [
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-HUB-FL",
+      "partId": "PART-30-006",
+      "corner": "FL",
+      "ordinal": null,
+      "r17AssemblyId": "ASM-HUB-BRG-FL",
+      "r17ParentDefinitionRef": "ASSY-30-002",
+      "r17FrameId": "FR-HUB-INST-FL",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "EVIDENCE",
+      "r16InstanceId": "PI-30-006-FL",
+      "r16AssemblyInstanceId": "AI-30-002-FL",
+      "r16ParentDefinitionId": "ASSY-30-002",
+      "r16MountFrameId": "FR-30-002-FL",
+      "r16QtyPerCorner": 1,
+      "r16IdentityBasis": "SOURCED_SECONDARY",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-002",
+      "parentLevelMatch": true,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-STUD-FL-1",
+      "partId": "PART-30-009",
+      "corner": "FL",
+      "ordinal": 1,
+      "r17AssemblyId": "ASM-HUB-BRG-FL",
+      "r17ParentDefinitionRef": "ASSY-30-002",
+      "r17FrameId": "FR-STUD-FL-1",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-30-009-FL-01",
+      "r16AssemblyInstanceId": "AI-30-002-FL",
+      "r16ParentDefinitionId": "ASSY-30-002",
+      "r16MountFrameId": "FR-30-002-FL",
+      "r16QtyPerCorner": 5,
+      "r16IdentityBasis": "ASSUMPTION",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-002",
+      "parentLevelMatch": true,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-STUD-FL-2",
+      "partId": "PART-30-009",
+      "corner": "FL",
+      "ordinal": 2,
+      "r17AssemblyId": "ASM-HUB-BRG-FL",
+      "r17ParentDefinitionRef": "ASSY-30-002",
+      "r17FrameId": "FR-STUD-FL-2",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-30-009-FL-02",
+      "r16AssemblyInstanceId": "AI-30-002-FL",
+      "r16ParentDefinitionId": "ASSY-30-002",
+      "r16MountFrameId": "FR-30-002-FL",
+      "r16QtyPerCorner": 5,
+      "r16IdentityBasis": "ASSUMPTION",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-002",
+      "parentLevelMatch": true,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-STUD-FL-3",
+      "partId": "PART-30-009",
+      "corner": "FL",
+      "ordinal": 3,
+      "r17AssemblyId": "ASM-HUB-BRG-FL",
+      "r17ParentDefinitionRef": "ASSY-30-002",
+      "r17FrameId": "FR-STUD-FL-3",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-30-009-FL-03",
+      "r16AssemblyInstanceId": "AI-30-002-FL",
+      "r16ParentDefinitionId": "ASSY-30-002",
+      "r16MountFrameId": "FR-30-002-FL",
+      "r16QtyPerCorner": 5,
+      "r16IdentityBasis": "ASSUMPTION",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-002",
+      "parentLevelMatch": true,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-STUD-FL-4",
+      "partId": "PART-30-009",
+      "corner": "FL",
+      "ordinal": 4,
+      "r17AssemblyId": "ASM-HUB-BRG-FL",
+      "r17ParentDefinitionRef": "ASSY-30-002",
+      "r17FrameId": "FR-STUD-FL-4",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-30-009-FL-04",
+      "r16AssemblyInstanceId": "AI-30-002-FL",
+      "r16ParentDefinitionId": "ASSY-30-002",
+      "r16MountFrameId": "FR-30-002-FL",
+      "r16QtyPerCorner": 5,
+      "r16IdentityBasis": "ASSUMPTION",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-002",
+      "parentLevelMatch": true,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-STUD-FL-5",
+      "partId": "PART-30-009",
+      "corner": "FL",
+      "ordinal": 5,
+      "r17AssemblyId": "ASM-HUB-BRG-FL",
+      "r17ParentDefinitionRef": "ASSY-30-002",
+      "r17FrameId": "FR-STUD-FL-5",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-30-009-FL-05",
+      "r16AssemblyInstanceId": "AI-30-002-FL",
+      "r16ParentDefinitionId": "ASSY-30-002",
+      "r16MountFrameId": "FR-30-002-FL",
+      "r16QtyPerCorner": 5,
+      "r16IdentityBasis": "ASSUMPTION",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-002",
+      "parentLevelMatch": true,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-CALIPER-FL",
+      "partId": "PART-40-034",
+      "corner": "FL",
+      "ordinal": null,
+      "r17AssemblyId": "ASM-CALIPER-FL",
+      "r17ParentDefinitionRef": "ASSY-40-008",
+      "r17FrameId": "FR-CALIPER-INST-FL",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-40-034-FL",
+      "r16AssemblyInstanceId": "AI-40-008-FL",
+      "r16ParentDefinitionId": "ASSY-40-008",
+      "r16MountFrameId": "FR-40-008-FL",
+      "r16QtyPerCorner": 1,
+      "r16IdentityBasis": "SOURCED_SECONDARY",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-40-008",
+      "parentLevelMatch": true,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-CALIPER-BRACKET-FL",
+      "partId": "PART-40-048",
+      "corner": "FL",
+      "ordinal": null,
+      "r17AssemblyId": "ASM-CALIPER-FL",
+      "r17ParentDefinitionRef": "ASSY-40-008",
+      "r17FrameId": "FR-CALIPER-BRACKET-INST-FL",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": null,
+      "r16AssemblyInstanceId": null,
+      "r16ParentDefinitionId": null,
+      "r16MountFrameId": null,
+      "r16QtyPerCorner": null,
+      "r16IdentityBasis": null,
+      "r16ValueBasis": null,
+      "r16GeometryStatus": null,
+      "rp01ParentAssemblyId": "ASSY-40-007",
+      "parentLevelMatch": false,
+      "r16InstancePolicy": "DEFERRED",
+      "r16VariantFlag": "caliperFixedOrFloating",
+      "r16Optionality": "required",
+      "status": "R17_ONLY_UNMAPPED",
+      "unmappedReason": "R-16 instancePolicy=DEFERRED：变型条件 caliperFixedOrFloating 未裁决，本变型是否含该零件尚未确定（不在 PLAN/DIST 内）"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-KNUCKLE-FL",
+      "partId": "PART-20-016",
+      "corner": "FL",
+      "ordinal": null,
+      "r17AssemblyId": "ASM-SUSP-FL",
+      "r17ParentDefinitionRef": "ASSY-20-001",
+      "r17FrameId": "FR-KNUCKLE-INST-FL",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-20-016-FL",
+      "r16AssemblyInstanceId": "AI-20-004-FL",
+      "r16ParentDefinitionId": "ASSY-20-004",
+      "r16MountFrameId": "FR-20-004-FL",
+      "r16QtyPerCorner": 1,
+      "r16IdentityBasis": "ASSUMPTION",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-20-004",
+      "parentLevelMatch": false,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-DISC-SCREW-FL",
+      "partId": "PART-30-031",
+      "corner": "FL",
+      "ordinal": null,
+      "r17AssemblyId": "ASM-WHEEL-END-FL",
+      "r17ParentDefinitionRef": "ASSY-30-001",
+      "r17FrameId": "FR-DISC-SCREW-INST-FL",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-30-031-FL",
+      "r16AssemblyInstanceId": "AI-30-001-FL",
+      "r16ParentDefinitionId": "ASSY-30-001",
+      "r16MountFrameId": "FR-30-001-FL",
+      "r16QtyPerCorner": 1,
+      "r16IdentityBasis": "ASSUMPTION",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-001",
+      "parentLevelMatch": true,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-WHEEL-FL",
+      "partId": "PART-30-019",
+      "corner": "FL",
+      "ordinal": null,
+      "r17AssemblyId": "ASM-WHEEL-END-FL",
+      "r17ParentDefinitionRef": "ASSY-30-001",
+      "r17FrameId": "FR-WHEEL-INST-FL",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-30-019-FL",
+      "r16AssemblyInstanceId": "AI-30-004-FL",
+      "r16ParentDefinitionId": "ASSY-30-004",
+      "r16MountFrameId": "FR-30-004-FL",
+      "r16QtyPerCorner": 1,
+      "r16IdentityBasis": "SOURCED_SECONDARY",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-004",
+      "parentLevelMatch": false,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-WHEEL-FR",
+      "partId": "PART-30-019",
+      "corner": "FR",
+      "ordinal": null,
+      "r17AssemblyId": "ASM-WHEEL-END-FR",
+      "r17ParentDefinitionRef": "ASSY-30-001",
+      "r17FrameId": "FR-WHEEL-INST-FR",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-30-019-FR",
+      "r16AssemblyInstanceId": "AI-30-004-FR",
+      "r16ParentDefinitionId": "ASSY-30-004",
+      "r16MountFrameId": "FR-30-004-FR",
+      "r16QtyPerCorner": 1,
+      "r16IdentityBasis": "SOURCED_SECONDARY",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-004",
+      "parentLevelMatch": false,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-WHEEL-RL",
+      "partId": "PART-30-019",
+      "corner": "RL",
+      "ordinal": null,
+      "r17AssemblyId": "ASM-WHEEL-END-RL",
+      "r17ParentDefinitionRef": "ASSY-30-001",
+      "r17FrameId": "FR-WHEEL-INST-RL",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-30-019-RL",
+      "r16AssemblyInstanceId": "AI-30-004-RL",
+      "r16ParentDefinitionId": "ASSY-30-004",
+      "r16MountFrameId": "FR-30-004-RL",
+      "r16QtyPerCorner": 1,
+      "r16IdentityBasis": "SOURCED_SECONDARY",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-004",
+      "parentLevelMatch": false,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17InstanceId": "INST-WHEEL-RR",
+      "partId": "PART-30-019",
+      "corner": "RR",
+      "ordinal": null,
+      "r17AssemblyId": "ASM-WHEEL-END-RR",
+      "r17ParentDefinitionRef": "ASSY-30-001",
+      "r17FrameId": "FR-WHEEL-INST-RR",
+      "r17QuantityPerAssembly": 1,
+      "r17EvidenceInherited": "ASSUMPTION",
+      "r16InstanceId": "PI-30-019-RR",
+      "r16AssemblyInstanceId": "AI-30-004-RR",
+      "r16ParentDefinitionId": "ASSY-30-004",
+      "r16MountFrameId": "FR-30-004-RR",
+      "r16QtyPerCorner": 1,
+      "r16IdentityBasis": "SOURCED_SECONDARY",
+      "r16ValueBasis": "UNKNOWN",
+      "r16GeometryStatus": "GEOMETRY_PENDING",
+      "rp01ParentAssemblyId": "ASSY-30-004",
+      "parentLevelMatch": false,
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16VariantFlag": null,
+      "r16Optionality": "required",
+      "status": "MAPPED",
+      "unmappedReason": null
+    }
+  ],
+  "frameMapping": [
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-VEHICLE",
+      "corner": null,
+      "parentFrameId": null,
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": "FR-20-014-VEH",
+      "r16WorldFrame": "UNFROZEN_PENDING_RP07",
+      "status": "MAPPED_ASSEMBLY_LEVEL",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-WHEEL-END-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0.84,
+        0.32,
+        1.23
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": "FR-30-001-FL",
+      "r16WorldFrame": "UNFROZEN_PENDING_RP07",
+      "status": "MAPPED_ASSEMBLY_LEVEL",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-WHEEL-END-FR",
+      "corner": "FR",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        -0.84,
+        0.32,
+        1.23
+      ],
+      "mirror": {
+        "axis": "x",
+        "handednessFlip": true,
+        "mirrorOfFrameId": "FR-WHEEL-END-FL"
+      },
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": "FR-30-001-FR",
+      "r16WorldFrame": "UNFROZEN_PENDING_RP07",
+      "status": "MAPPED_ASSEMBLY_LEVEL",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-WHEEL-END-RL",
+      "corner": "RL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0.84,
+        0.32,
+        -1.23
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": "FR-30-001-RL",
+      "r16WorldFrame": "UNFROZEN_PENDING_RP07",
+      "status": "MAPPED_ASSEMBLY_LEVEL",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-WHEEL-END-RR",
+      "corner": "RR",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        -0.84,
+        0.32,
+        -1.23
+      ],
+      "mirror": {
+        "axis": "x",
+        "handednessFlip": true,
+        "mirrorOfFrameId": "FR-WHEEL-END-RL"
+      },
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": "FR-30-001-RR",
+      "r16WorldFrame": "UNFROZEN_PENDING_RP07",
+      "status": "MAPPED_ASSEMBLY_LEVEL",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-HUB-BRG-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": "FR-30-002-FL",
+      "r16WorldFrame": "UNFROZEN_PENDING_RP07",
+      "status": "MAPPED_ASSEMBLY_LEVEL",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-HUB-INST-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-STUD-FL-1",
+      "corner": "FL",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0.05715,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-STUD-FL-2",
+      "corner": "FL",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0.01766,
+        0.054353
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-STUD-FL-3",
+      "corner": "FL",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        -0.046235,
+        0.033592
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-STUD-FL-4",
+      "corner": "FL",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        -0.046235,
+        -0.033592
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-STUD-FL-5",
+      "corner": "FL",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0.01766,
+        -0.054353
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-DISC-ASM-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": "FR-40-009-FL",
+      "r16WorldFrame": "UNFROZEN_PENDING_RP07",
+      "status": "MAPPED_ASSEMBLY_LEVEL",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-CALIPER-ASM-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0.13,
+        -0.18
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": "FR-40-008-FL",
+      "r16WorldFrame": "UNFROZEN_PENDING_RP07",
+      "status": "MAPPED_ASSEMBLY_LEVEL",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-CALIPER-INST-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-CALIPER-ASM-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-CALIPER-BRACKET-INST-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-CALIPER-ASM-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        -0.03,
+        0.02
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-SUSP-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0.55,
+        0.45,
+        1.23
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-KNUCKLE-INST-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-SUSP-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-DISC-SCREW-INST-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0.05715,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-WHEEL-INST-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-WHEEL-INST-FR",
+      "corner": "FR",
+      "parentFrameId": "FR-WHEEL-END-FR",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-WHEEL-INST-RL",
+      "corner": "RL",
+      "parentFrameId": "FR-WHEEL-END-RL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-WHEEL-INST-RR",
+      "corner": "RR",
+      "parentFrameId": "FR-WHEEL-END-RR",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "PART_INSTANCE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-HUB-AXIS-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-KNUCKLE-AXIS-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-CALIPER-GUIDE-A-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-CALIPER-ASM-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": false,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    },
+    {
+      "fixture": "VEHICLE",
+      "r17FrameId": "FR-CALIPER-GUIDE-B-FL",
+      "corner": "FL",
+      "parentFrameId": "FR-CALIPER-ASM-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        -0.03,
+        0.02
+      ],
+      "mirror": null,
+      "hasNonZeroNumericOrigin": true,
+      "r17ValueBasis": null,
+      "r16FrameId": null,
+      "r16WorldFrame": null,
+      "status": "R17_ONLY_UNMAPPED",
+      "granularity": "ASSEMBLY_OR_VEHICLE_LEVEL"
+    }
+  ],
+  "r18RoleMapping": [
+    {
+      "r18InstanceId": "INST-SLA-HUB-FL",
+      "role": "HUB",
+      "corner": "FL",
+      "mappedPartDefinitionId": "PART-30-006",
+      "r16InstanceId": "PI-30-006-FL",
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16Optionality": "required",
+      "r16HandednessKind": "SYMMETRIC_PART_DISTINCT_MOUNT",
+      "r16QtyVehicleTotal": 4,
+      "bindingStatus": "BOUND_TO_INSTANCE",
+      "mappingKind": "ROLE_BASED_NOT_IDENTITY",
+      "canonicalIdentity": false,
+      "r18ValueBasis": "DEMO_ASSUMPTION",
+      "r18Provenance": "FICTIONAL_FIXTURE",
+      "r18InstanceIdStatus": "CANDIDATE_NOT_FROZEN",
+      "note": "R-18 自标 CANDIDATE_NOT_FROZEN / FICTIONAL_FIXTURE；按角色对应到规范定义，**不得把 INST-SLA-* 当规范零件身份**，也不得据此补轮端力。"
+    },
+    {
+      "r18InstanceId": "INST-SLA-LOWER-ARM-FL",
+      "role": "LOWER-ARM",
+      "corner": "FL",
+      "mappedPartDefinitionId": "PART-20-008",
+      "r16InstanceId": "PI-20-008-FL",
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16Optionality": "required",
+      "r16HandednessKind": "MIRROR_REGENERATE",
+      "r16QtyVehicleTotal": 2,
+      "bindingStatus": "BOUND_TO_INSTANCE",
+      "mappingKind": "ROLE_BASED_NOT_IDENTITY",
+      "canonicalIdentity": false,
+      "r18ValueBasis": "DEMO_ASSUMPTION",
+      "r18Provenance": "FICTIONAL_FIXTURE",
+      "r18InstanceIdStatus": "CANDIDATE_NOT_FROZEN",
+      "note": "R-18 自标 CANDIDATE_NOT_FROZEN / FICTIONAL_FIXTURE；按角色对应到规范定义，**不得把 INST-SLA-* 当规范零件身份**，也不得据此补轮端力。"
+    },
+    {
+      "r18InstanceId": "INST-SLA-TIEROD-FL",
+      "role": "TIEROD",
+      "corner": "FL",
+      "mappedPartDefinitionId": "PART-20-075",
+      "r16InstanceId": null,
+      "r16InstancePolicy": "DEFERRED",
+      "r16Optionality": "required",
+      "r16HandednessKind": "MIRROR_REGENERATE",
+      "r16QtyVehicleTotal": 2,
+      "bindingStatus": "DEFERRED_NO_INSTANCE",
+      "mappingKind": "ROLE_BASED_NOT_IDENTITY",
+      "canonicalIdentity": false,
+      "r18ValueBasis": "DEMO_ASSUMPTION",
+      "r18Provenance": "FICTIONAL_FIXTURE",
+      "r18InstanceIdStatus": "CANDIDATE_NOT_FROZEN",
+      "note": "R-18 自标 CANDIDATE_NOT_FROZEN / FICTIONAL_FIXTURE；按角色对应到规范定义，**不得把 INST-SLA-* 当规范零件身份**，也不得据此补轮端力。该定义在 R-16 为 DEFERRED 但 optionality=required：零件在本变型必需，只是几何/来源未闭合，**不是可选件也不是不存在**；下游不得因缺实例而省略它。"
+    },
+    {
+      "r18InstanceId": "INST-SLA-UPPER-ARM-FL",
+      "role": "UPPER-ARM",
+      "corner": "FL",
+      "mappedPartDefinitionId": "PART-20-001",
+      "r16InstanceId": "PI-20-001-FL",
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16Optionality": "required",
+      "r16HandednessKind": "MIRROR_REGENERATE",
+      "r16QtyVehicleTotal": 2,
+      "bindingStatus": "BOUND_TO_INSTANCE",
+      "mappingKind": "ROLE_BASED_NOT_IDENTITY",
+      "canonicalIdentity": false,
+      "r18ValueBasis": "DEMO_ASSUMPTION",
+      "r18Provenance": "FICTIONAL_FIXTURE",
+      "r18InstanceIdStatus": "CANDIDATE_NOT_FROZEN",
+      "note": "R-18 自标 CANDIDATE_NOT_FROZEN / FICTIONAL_FIXTURE；按角色对应到规范定义，**不得把 INST-SLA-* 当规范零件身份**，也不得据此补轮端力。"
+    },
+    {
+      "r18InstanceId": "INST-SLA-UPRIGHT-FL",
+      "role": "UPRIGHT",
+      "corner": "FL",
+      "mappedPartDefinitionId": "PART-20-016",
+      "r16InstanceId": "PI-20-016-FL",
+      "r16InstancePolicy": "INSTANTIATED",
+      "r16Optionality": "required",
+      "r16HandednessKind": "MIRROR_REGENERATE",
+      "r16QtyVehicleTotal": 2,
+      "bindingStatus": "BOUND_TO_INSTANCE",
+      "mappingKind": "ROLE_BASED_NOT_IDENTITY",
+      "canonicalIdentity": false,
+      "r18ValueBasis": "DEMO_ASSUMPTION",
+      "r18Provenance": "FICTIONAL_FIXTURE",
+      "r18InstanceIdStatus": "CANDIDATE_NOT_FROZEN",
+      "note": "R-18 自标 CANDIDATE_NOT_FROZEN / FICTIONAL_FIXTURE；按角色对应到规范定义，**不得把 INST-SLA-* 当规范零件身份**，也不得据此补轮端力。"
+    }
+  ],
+  "qtyReconciliation": [
+    {
+      "partId": "PART-20-016",
+      "r16QtyPerCorner": 1,
+      "r16Distribution": "FRONT2",
+      "r16Divisor": 2,
+      "r16QtyVehicleTotalInherited": 2,
+      "r16QtyVariantMismatch": false,
+      "r16ConflictRecorded": false,
+      "r17BomQtyPerAssembly": null,
+      "r17BomInstanceCount": null,
+      "r17QuantityFact": null,
+      "r17InstanceCountInFixtures": 1,
+      "perParentSemanticsAgree": null,
+      "status": "R16_ONLY_NO_R17_BOM_LINE"
+    },
+    {
+      "partId": "PART-30-006",
+      "r16QtyPerCorner": 1,
+      "r16Distribution": "ALL4",
+      "r16Divisor": 4,
+      "r16QtyVehicleTotalInherited": 4,
+      "r16QtyVariantMismatch": false,
+      "r16ConflictRecorded": false,
+      "r17BomQtyPerAssembly": 1,
+      "r17BomInstanceCount": 1,
+      "r17QuantityFact": null,
+      "r17InstanceCountInFixtures": 1,
+      "perParentSemanticsAgree": true,
+      "status": "RECONCILED"
+    },
+    {
+      "partId": "PART-30-009",
+      "r16QtyPerCorner": 5,
+      "r16Distribution": "ALL4",
+      "r16Divisor": 4,
+      "r16QtyVehicleTotalInherited": 20,
+      "r16QtyVariantMismatch": false,
+      "r16ConflictRecorded": false,
+      "r17BomQtyPerAssembly": 5,
+      "r17BomInstanceCount": 5,
+      "r17QuantityFact": {
+        "partId": "PART-30-009",
+        "qtyPerCorner": 5,
+        "vehicleTotal": 20,
+        "cornerCount": 4,
+        "valueBasis": "ASSUMPTION"
+      },
+      "r17InstanceCountInFixtures": 5,
+      "perParentSemanticsAgree": true,
+      "status": "RECONCILED"
+    },
+    {
+      "partId": "PART-30-019",
+      "r16QtyPerCorner": 1,
+      "r16Distribution": "ALL4",
+      "r16Divisor": 4,
+      "r16QtyVehicleTotalInherited": 4,
+      "r16QtyVariantMismatch": false,
+      "r16ConflictRecorded": false,
+      "r17BomQtyPerAssembly": 1,
+      "r17BomInstanceCount": 1,
+      "r17QuantityFact": null,
+      "r17InstanceCountInFixtures": 4,
+      "perParentSemanticsAgree": true,
+      "status": "RECONCILED"
+    },
+    {
+      "partId": "PART-30-031",
+      "r16QtyPerCorner": 1,
+      "r16Distribution": "ALL4",
+      "r16Divisor": 4,
+      "r16QtyVehicleTotalInherited": 4,
+      "r16QtyVariantMismatch": false,
+      "r16ConflictRecorded": false,
+      "r17BomQtyPerAssembly": 1,
+      "r17BomInstanceCount": 1,
+      "r17QuantityFact": null,
+      "r17InstanceCountInFixtures": 1,
+      "perParentSemanticsAgree": true,
+      "status": "RECONCILED"
+    },
+    {
+      "partId": "PART-40-034",
+      "r16QtyPerCorner": 1,
+      "r16Distribution": "FRONT2",
+      "r16Divisor": 4,
+      "r16QtyVehicleTotalInherited": 4,
+      "r16QtyVariantMismatch": true,
+      "r16ConflictRecorded": true,
+      "r17BomQtyPerAssembly": null,
+      "r17BomInstanceCount": null,
+      "r17QuantityFact": null,
+      "r17InstanceCountInFixtures": 1,
+      "perParentSemanticsAgree": null,
+      "status": "R16_ONLY_NO_R17_BOM_LINE"
+    }
+  ],
+  "r16QtyConflictsPreserved": [
+    {
+      "definitionId": "PART-40-034",
+      "name": "卡钳体",
+      "qtyVehicleTotalInherited": 4,
+      "instantiatedTotalInThisVariant": 2,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-035",
+      "name": "卡钳活塞",
+      "qtyVehicleTotalInherited": 4,
+      "instantiatedTotalInThisVariant": 2,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-036",
+      "name": "活塞矩形密封圈",
+      "qtyVehicleTotalInherited": 4,
+      "instantiatedTotalInThisVariant": 2,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-037",
+      "name": "活塞防尘罩",
+      "qtyVehicleTotalInherited": 4,
+      "instantiatedTotalInThisVariant": 2,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-038",
+      "name": "卡钳导向销（浮动式）",
+      "qtyVehicleTotalInherited": 8,
+      "instantiatedTotalInThisVariant": 4,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-039",
+      "name": "导向销防尘套",
+      "qtyVehicleTotalInherited": 8,
+      "instantiatedTotalInThisVariant": 4,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-040",
+      "name": "放气螺钉",
+      "qtyVehicleTotalInherited": 4,
+      "instantiatedTotalInThisVariant": 2,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-041",
+      "name": "卡钳安装螺栓",
+      "qtyVehicleTotalInherited": 8,
+      "instantiatedTotalInThisVariant": 4,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-042",
+      "name": "摩擦片总成（背板+摩擦材料）",
+      "qtyVehicleTotalInherited": 8,
+      "instantiatedTotalInThisVariant": 4,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-043",
+      "name": "消音片（shims）",
+      "qtyVehicleTotalInherited": 8,
+      "instantiatedTotalInThisVariant": 4,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-044",
+      "name": "防响夹/固定销/弹簧",
+      "qtyVehicleTotalInherited": 8,
+      "instantiatedTotalInThisVariant": 4,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    },
+    {
+      "definitionId": "PART-40-046",
+      "name": "通风制动盘（摩擦环+筋+盘帽）",
+      "qtyVehicleTotalInherited": 4,
+      "instantiatedTotalInThisVariant": 2,
+      "distribution": "FRONT2",
+      "divisor": 4,
+      "reason": "RP-01 的整车级 qty 按另一种配置标注（如四轮盘式），与本变型选择（后轴鼓式）不一致",
+      "resolution": "保留继承原值可见，按每角物理件数实例化；差额记为冲突，交总控在 qty 口径迁移时裁决",
+      "status": "OPEN"
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "CF-01",
+      "kind": "SAME_ID_DIFFERENT_SEMANTICS",
+      "title": "6 个占位总成复用 RP-01 真实 ID 但语义被放宽",
+      "detail": [
+        {
+          "assemblyId": "ASSY-50-001",
+          "rp01Name": "发动机总成（直列四缸火花点火，深钻样例）",
+          "r17Name": "动力源总成（占位）"
+        },
+        {
+          "assemblyId": "ASSY-60-001",
+          "rp01Name": "手动变速箱 MT",
+          "r17Name": "动力传递总成（占位）"
+        },
+        {
+          "assemblyId": "ASSY-70-001",
+          "rp01Name": "燃油箱总成",
+          "r17Name": "能源供给总成（占位）"
+        },
+        {
+          "assemblyId": "ASSY-80-001",
+          "rp01Name": "散热器与风扇模块",
+          "r17Name": "热管理总成（占位）"
+        },
+        {
+          "assemblyId": "ASSY-90-001",
+          "rp01Name": "控制器组",
+          "r17Name": "电气总成（占位）"
+        },
+        {
+          "assemblyId": "ASSY-10-001",
+          "rp01Name": "梯形车架总成",
+          "r17Name": "车身结构总成（占位）"
+        }
+      ],
+      "resolution": "保留双方名称并列，标 semanticBroadening=true。**禁止按 assemblyId 直接 join 后当作同一实体**；占位是 R-17 演示夹具的合法简化，但不得回写为 RP-01 的规范名。需总控裁决是否给占位另立 ID 前缀。",
+      "severity": "P0",
+      "status": "OPEN",
+      "affectedCount": 6
+    },
+    {
+      "id": "CF-03",
+      "kind": "PART_NAME_DRIFT",
+      "title": "4 个零件定义名称与 RP-01 不一致",
+      "detail": [
+        {
+          "partId": "PART-30-010",
+          "rp01Name": "带车轮/制动盘法兰的内圈（整体）",
+          "r17Name": "Gen3 带法兰内圈（整体）"
+        },
+        {
+          "partId": "PART-30-017",
+          "rp01Name": "法兰螺柱（压装）",
+          "r17Name": "法兰螺柱（Gen3）"
+        },
+        {
+          "partId": "PART-30-019",
+          "rp01Name": "轮辋（轮圈）",
+          "r17Name": "轮辋（轮圈）占位"
+        },
+        {
+          "partId": "PART-40-046",
+          "rp01Name": "通风制动盘（摩擦环+筋+盘帽）",
+          "r17Name": "通风制动盘"
+        }
+      ],
+      "resolution": "以 RP-01 名为规范，R-17 名并列保留为 alias。不得因名称不同就判为不同零件，也不得用 R-17 名覆盖规范名。",
+      "severity": "P2",
+      "status": "OPEN",
+      "affectedCount": 4
+    },
+    {
+      "id": "CF-04",
+      "kind": "EVIDENCE_ENUM_MISMATCH",
+      "title": "2 个零件的 evidenceInherited 与 RP-01 规范等级不一致（R-17 降级 2 项 / 升级 0 项）",
+      "detail": [
+        {
+          "partId": "PART-30-019",
+          "rp01Evidence": "EVIDENCE",
+          "rp01Sources": [
+            "S16",
+            "S20",
+            "M05"
+          ],
+          "r17": "ASSUMPTION",
+          "mapped": "ASSUMPTION",
+          "r16": "SOURCED_SECONDARY",
+          "direction": "R17_DOWNGRADE"
+        },
+        {
+          "partId": "PART-40-034",
+          "rp01Evidence": "EVIDENCE",
+          "rp01Sources": [
+            "S07",
+            "S11"
+          ],
+          "r17": "ASSUMPTION",
+          "mapped": "ASSUMPTION",
+          "r16": "SOURCED_SECONDARY",
+          "direction": "R17_DOWNGRADE"
+        }
+      ],
+      "resolution": "RP-01 是规范权威：这些零件 evidence=EVIDENCE 且带 sources，R-16 忠实映射为 SOURCED_SECONDARY。R-17 标 ASSUMPTION 属**保守降级**，不违反『不得升级』纪律，但与规范权威不一致。保留双方值并列，需总控裁决：要么 R-17 补 sources 后升回 SOURCED_SECONDARY，要么总控确认降级理由并回写 RP-01。**本轮不自行改任何一方，也不取两者平均。**若出现 R17_UPGRADE 方向则必须拒绝，因为那会把未核实数据升格。",
+      "severity": "P1",
+      "status": "OPEN",
+      "affectedCount": 2,
+      "upgradeCount": 0,
+      "downgradeCount": 2
+    },
+    {
+      "id": "CF-06",
+      "kind": "PARENT_LEVEL_FLATTENING",
+      "title": "5 个已映射 + 1 个未映射实例的父总成层级与 RP-01 不一致",
+      "detail": [
+        {
+          "r17InstanceId": "INST-KNUCKLE-FL",
+          "partId": "PART-20-016",
+          "rp01Parent": "ASSY-20-004",
+          "r17Parent": "ASSY-20-001",
+          "r16Parent": "ASSY-20-004",
+          "mapped": true
+        },
+        {
+          "r17InstanceId": "INST-WHEEL-FL",
+          "partId": "PART-30-019",
+          "rp01Parent": "ASSY-30-004",
+          "r17Parent": "ASSY-30-001",
+          "r16Parent": "ASSY-30-004",
+          "mapped": true
+        },
+        {
+          "r17InstanceId": "INST-WHEEL-FR",
+          "partId": "PART-30-019",
+          "rp01Parent": "ASSY-30-004",
+          "r17Parent": "ASSY-30-001",
+          "r16Parent": "ASSY-30-004",
+          "mapped": true
+        },
+        {
+          "r17InstanceId": "INST-WHEEL-RL",
+          "partId": "PART-30-019",
+          "rp01Parent": "ASSY-30-004",
+          "r17Parent": "ASSY-30-001",
+          "r16Parent": "ASSY-30-004",
+          "mapped": true
+        },
+        {
+          "r17InstanceId": "INST-WHEEL-RR",
+          "partId": "PART-30-019",
+          "rp01Parent": "ASSY-30-004",
+          "r17Parent": "ASSY-30-001",
+          "r16Parent": "ASSY-30-004",
+          "mapped": true
+        },
+        {
+          "r17InstanceId": "INST-CALIPER-BRACKET-FL",
+          "partId": "PART-40-048",
+          "rp01Parent": "ASSY-40-007",
+          "r17Parent": "ASSY-40-008",
+          "r16Parent": null,
+          "mapped": false
+        }
+      ],
+      "resolution": "R-17 为演示夹具把轮辋/转向节直接挂到轮端或悬架总成，跳过了车轮总成/转向节总成；卡钳支架则从盘式制动器模块移到卡钳总成。**保留差异，不强行改父级**；按父装配计算 qty 时必须声明用哪一侧层级，否则同一零件会算出不同数量。需总控裁决规范层级。",
+      "severity": "P0",
+      "status": "OPEN",
+      "affectedCount": 6
+    },
+    {
+      "id": "CF-07",
+      "kind": "NUMERIC_FRAME_ORIGIN_WITHOUT_BASIS",
+      "title": "14 个 R-17 Frame 带非零数值原点但没有 valueBasis 字段",
+      "detail": [
+        {
+          "r17FrameId": "FR-WHEEL-END-FL",
+          "origin": [
+            0.84,
+            0.32,
+            1.23
+          ],
+          "space": "VEHICLE_LOCAL"
+        },
+        {
+          "r17FrameId": "FR-WHEEL-END-FR",
+          "origin": [
+            -0.84,
+            0.32,
+            1.23
+          ],
+          "space": "VEHICLE_LOCAL"
+        },
+        {
+          "r17FrameId": "FR-WHEEL-END-RL",
+          "origin": [
+            0.84,
+            0.32,
+            -1.23
+          ],
+          "space": "VEHICLE_LOCAL"
+        },
+        {
+          "r17FrameId": "FR-WHEEL-END-RR",
+          "origin": [
+            -0.84,
+            0.32,
+            -1.23
+          ],
+          "space": "VEHICLE_LOCAL"
+        },
+        {
+          "r17FrameId": "FR-STUD-FL-1",
+          "origin": [
+            0,
+            0.05715,
+            0
+          ],
+          "space": "INSTANCE"
+        },
+        {
+          "r17FrameId": "FR-STUD-FL-2",
+          "origin": [
+            0,
+            0.01766,
+            0.054353
+          ],
+          "space": "INSTANCE"
+        },
+        {
+          "r17FrameId": "FR-STUD-FL-3",
+          "origin": [
+            0,
+            -0.046235,
+            0.033592
+          ],
+          "space": "INSTANCE"
+        },
+        {
+          "r17FrameId": "FR-STUD-FL-4",
+          "origin": [
+            0,
+            -0.046235,
+            -0.033592
+          ],
+          "space": "INSTANCE"
+        }
+      ],
+      "resolution": "这些原点与既有演示代码的 halfTrack 0.84 / halfWB 1.23 同源，属 DEMO 值。R-16 禁止世界绝对坐标且 worldFrame 未冻结；R-17 用 VEHICLE_LOCAL 空间是合法的，但**数值原点必须标 DEMO_ASSUMPTION**，否则会被下游当已核实安装位置。建议 R-17 补 valueBasis 字段。",
+      "severity": "P0",
+      "status": "OPEN",
+      "affectedCount": 14
+    },
+    {
+      "id": "CF-08",
+      "kind": "VARIANT_CONDITIONAL_PART_INSTANTIATED",
+      "title": "1 个 R-17 实例对应的零件在 R-16 因变型条件未裁决而 DEFERRED",
+      "detail": [
+        {
+          "r17InstanceId": "INST-CALIPER-BRACKET-FL",
+          "partId": "PART-40-048",
+          "r16InstancePolicy": "DEFERRED",
+          "r16VariantFlag": "caliperFixedOrFloating",
+          "r16Optionality": "required",
+          "rp01GeomNote": "浮动式必有支架；固定式常直接螺接转向节 → 变型属性"
+        }
+      ],
+      "resolution": "PART-40-048 卡钳支架的 variantFlag=caliperFixedOrFloating 未裁决：浮动式必有支架，固定式常直接螺接转向节。R-16 因此 DEFERRED，R-17 的 INST-CALIPER-BRACKET-FL 隐含选择了浮动式但未声明该假设。**保留 UNMAPPED，不得据此声称本变型必有支架**；需总控先裁决卡钳型式再决定实例去留。",
+      "severity": "P1",
+      "status": "OPEN",
+      "affectedCount": 1
+    },
+    {
+      "id": "CF-09",
+      "kind": "VARIANT_IDENTITY_NOT_ALIGNED",
+      "title": "两侧夹具声明的是不同整车变型，且 R-16 没有 Project 层",
+      "detail": {
+        "r16VariantId": "VAR-R16-BOF-ICE",
+        "r16BasedOn": "CFG-BOF-ICE",
+        "r17VariantId": "VV-A-SWB-STD",
+        "r17PlatformFamilyRef": "PF-DEMO-BOF-01",
+        "r17ProjectId": "PROJECT-CARLAB-DEMO",
+        "r16ProjectId": null,
+        "generationAgrees": true,
+        "r16ChoiceGroups": [
+          "CG-BOOST",
+          "CG-FASTENER",
+          "CG-FSUSP",
+          "CG-HUB",
+          "CG-PARK",
+          "CG-POWER",
+          "CG-RBRK",
+          "CG-RSUSP",
+          "CG-STEER",
+          "CG-TRANS"
+        ],
+        "r17ChoiceGroups": [
+          "CG-HUB"
+        ],
+        "implicitlyAssumingSameVariantInstances": 13
+      },
+      "resolution": "R-16 声明 VAR-R16-BOF-ICE（basedOn CFG-BOF-ICE，PROPOSED_NOT_APPROVED），R-17 声明 VV-A-SWB-STD（platformFamilyRef PF-DEMO-BOF-01）。代际一致（True），但**变型 ID 不相等且未声明对齐关系**；R-16 还缺 Project 层，R-17 只设了 1/10 个选择组。本对照表的 13 个已映射实例都隐含假设两侧是同一变型。**不得默认相等**：需总控裁决变型对齐关系，或双方显式声明映射；在此之前跨夹具 join 只能视为候选对应，不是同一装车实例。",
+      "severity": "P0",
+      "status": "OPEN",
+      "affectedCount": 13
+    },
+    {
+      "id": "CF-02",
+      "kind": "FIELD_NAME_OVERLOADED",
+      "title": "R-17 用 assemblyId 同时承载总成定义与总成实例两个命名空间",
+      "detail": {
+        "assemblyDefinitions[].assemblyId": "ASSY-30-001（定义）",
+        "assemblies[].assemblyId": "ASM-WHEEL-END-FL（实例）",
+        "partInstances[].assemblyId": "指向实例命名空间 ASM-*"
+      },
+      "resolution": "跨数组按 assemblyId 直接 join 会产生错误结果。对照表一律经 definitionRef + corner 解析，不做裸 join。建议 R-17 改名（P-21-03）。",
+      "severity": "P1",
+      "status": "OPEN"
+    },
+    {
+      "id": "CF-05",
+      "kind": "FRAME_GRANULARITY_MISMATCH",
+      "title": "R-16 每总成实例一个 Frame，R-17 每零件实例也有 Frame",
+      "detail": {
+        "r16Frames": 37,
+        "r17Frames": 27,
+        "r16Granularity": "ASSEMBLY_INSTANCE_LEVEL",
+        "r17Granularity": "PART_INSTANCE_LEVEL"
+      },
+      "resolution": "粒度不同不是错误：R-17 需要零件级 Frame 才能表达 Joint。对照表按总成实例级对齐，零件级 Frame 标 R17_ONLY 保留，**不强行合并也不丢弃**。需总控裁决规范粒度。",
+      "severity": "P1",
+      "status": "OPEN"
+    }
+  ],
+  "preservedDifferences": [
+    {
+      "id": "PD-01",
+      "topic": "镜像表达方式",
+      "r16": "handednessPolicy + mirrorPolicy=REGENERATE_MIRRORED_GEOMETRY，禁止任何 scale 字段",
+      "r17": "Frame 级 mirror={axis,handednessFlip,mirrorOfFrameId}，位置取负",
+      "reconciliation": "两者兼容：Frame 级 handednessFlip 是坐标变换，不是网格缩放。**但下游不得把 handednessFlip 实现为全局负 mesh scale**（R-16 V11 禁止）。",
+      "status": "COMPATIBLE_WITH_CONDITION"
+    },
+    {
+      "id": "PD-02",
+      "topic": "R-16 已发现的 12 项数量冲突",
+      "r16": "qtyConflicts 12 条（前盘式件整车 qty 按四轮盘式标注 vs 本变型后轴鼓式）",
+      "r17": "quantityFacts 只有 PART-30-009 一条；未表达这 12 项冲突",
+      "reconciliation": "**全部 12 项原样保留在本对照表 r16QtyConflictsPreserved，不静默消掉**。R-17 夹具只覆盖 FL 单角，未涉及后轴鼓式，因此不冲突但也未裁决。",
+      "status": "PRESERVED_NOT_RESOLVED"
+    }
+  ],
+  "unmapped": {
+    "r16OnlySystems": [
+      "SYS-100",
+      "SYS-110",
+      "SYS-130"
+    ],
+    "r16OnlyPartDefinitionsCount": 482,
+    "r16OnlyPartInstancesCount": 265,
+    "r16OnlyAssemblyInstancesCount": 29,
+    "r17OnlyPartInstances": [
+      "INST-CALIPER-BRACKET-FL"
+    ],
+    "r17OnlyAssemblyInstances": [
+      "ASM-SUSP-FL",
+      "ASM-POWERTRAIN",
+      "ASM-DRIVETRAIN",
+      "ASM-ENERGY",
+      "ASM-THERMAL",
+      "ASM-ELECTRICAL",
+      "ASM-BODY"
+    ],
+    "r17OnlyFramesCount": 19,
+    "policy": "未映射节点一律保留并列出，**不为强行统一而丢弃真实节点**；R-16 的 493 定义/278 实例是详细树，R-17 是简化夹具，覆盖差是预期而非缺陷。"
+  },
+  "coverage": {
+    "systemsMapped": 10,
+    "systemsR16Only": 3,
+    "systemsR17Only": 0,
+    "assemblyDefinitionsMapped": 12,
+    "assemblyDefinitionsWithDrift": 9,
+    "assemblyInstancesMapped": 8,
+    "assemblyInstancesUnmapped": 7,
+    "partDefinitionsMapped": 11,
+    "partDefinitionsUnmapped": 0,
+    "partInstancesMapped": 13,
+    "partInstancesUnmapped": 1,
+    "partInstancesParentLevelMismatch": 5,
+    "partInstancesParentLevelMismatchUnmapped": 1,
+    "framesMappedAssemblyLevel": 8,
+    "framesUnmapped": 19,
+    "r18RoleMappings": 5,
+    "r17IntraFixtureDuplicateInstanceIds": 0,
+    "r17CrossFixtureSharedInstanceIds": 11,
+    "qtyRowsReconciled": 4,
+    "r16QtyConflictsPreserved": 12
+  },
+  "patchProposals": [
+    {
+      "id": "P-21-01",
+      "target": "R-17（DeepSeek）",
+      "proposal": "给占位总成另立 ID 前缀（如 PH-50-001），或加 isPlaceholder=true + canonicalName 字段，避免与 RP-01 真实 ID 同值异义",
+      "evidence": "CF-01：6 个占位总成复用真实 ID",
+      "executed": false
+    },
+    {
+      "id": "P-21-02",
+      "target": "R-17（DeepSeek）",
+      "proposal": "frames[] 增加 valueBasis 字段；凡数值原点来自演示代码一律 DEMO_ASSUMPTION",
+      "evidence": "CF-07：非零数值原点无 valueBasis",
+      "executed": false
+    },
+    {
+      "id": "P-21-03",
+      "target": "R-17（DeepSeek）",
+      "proposal": "assemblies[] 的实例主键改名 assemblyInstanceId，与 assemblyDefinitions[].assemblyId 分离，避免同名字段承载两个命名空间",
+      "evidence": "CF-02",
+      "executed": false
+    },
+    {
+      "id": "P-21-04",
+      "target": "总控 RP-07",
+      "proposal": "裁决规范父级层级：轮辋归车轮总成还是轮端总成；转向节归转向节总成还是悬架总成；卡钳支架归制动模块还是卡钳总成",
+      "evidence": "CF-06：3 类父级不一致",
+      "executed": false
+    },
+    {
+      "id": "P-21-05",
+      "target": "R-16（本人，需总控批准）",
+      "proposal": "补 fidelityTarget 字段与 U-* ↔ PR-* 未知登记对照；把 CG-FASTENER 候选提交 R-17 采纳",
+      "evidence": "enumMapping.fidelityTarget / unknowns 两处 R17_ONLY_GAP",
+      "executed": false
+    },
+    {
+      "id": "P-21-06",
+      "target": "总控 RP-07",
+      "proposal": "R-16 的 12 项数量冲突与 R-17 的 quantityFacts 合并为统一 qty 事实表，按每父装配实例口径",
+      "evidence": "PD-02",
+      "executed": false
+    },
+    {
+      "id": "P-21-07",
+      "target": "R-16（本人，需总控批准）",
+      "proposal": "把 qtyPerCorner 改名为 instancesPerCorner 并给每个实例加 quantity:1，或在文档明确「qtyPerCorner 属零件/角位层级，不属单个实例」；整车总数 = 实例计数，不是 Σ qtyPerCorner",
+      "evidence": "DeepSeek R-22 MSG-20261115-2240：按实例累加 qtyPerCorner 会把螺柱 20 算成 100；已核实与 R-16 V03 一致",
+      "executed": false
+    },
+    {
+      "id": "P-21-08",
+      "target": "R-16 + R-17（需总控裁决）",
+      "proposal": "双方显式声明变型对齐关系：或统一 variantId，或声明「不同变型，跨夹具仅候选对应」；R-16 补 Project 层，R-17 补齐其余 9 个选择组",
+      "evidence": "CF-09：VAR-R16-BOF-ICE vs VV-A-SWB-STD，13 个已映射实例隐含假设同一变型",
+      "executed": false
+    }
+  ],
+  "invariants": {
+    "noSourceFileModified": true,
+    "noGeometryFabricated": true,
+    "dormanNotInstalled": true,
+    "unknownPreserved": true,
+    "noNewPersistentPort": true,
+    "r16QtyConflictsNotSilentlyDropped": true
+  },
+  "summary": {
+    "conflicts": 9,
+    "conflictsP0": 4,
+    "preservedDifferences": 2,
+    "patchProposals": 8,
+    "patchProposalsExecuted": 0,
+    "systemsMapped": 10,
+    "systemsR16Only": 3,
+    "systemsR17Only": 0,
+    "assemblyDefinitionsMapped": 12,
+    "assemblyDefinitionsWithDrift": 9,
+    "assemblyInstancesMapped": 8,
+    "assemblyInstancesUnmapped": 7,
+    "partDefinitionsMapped": 11,
+    "partDefinitionsUnmapped": 0,
+    "partInstancesMapped": 13,
+    "partInstancesUnmapped": 1,
+    "partInstancesParentLevelMismatch": 5,
+    "partInstancesParentLevelMismatchUnmapped": 1,
+    "framesMappedAssemblyLevel": 8,
+    "framesUnmapped": 19,
+    "r18RoleMappings": 5,
+    "r17IntraFixtureDuplicateInstanceIds": 0,
+    "r17CrossFixtureSharedInstanceIds": 11,
+    "qtyRowsReconciled": 4,
+    "r16QtyConflictsPreserved": 12
+  }
+}

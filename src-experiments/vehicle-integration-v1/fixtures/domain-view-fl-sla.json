@@ -1,0 +1,966 @@
+{
+  "schemaVersion": "carlab.domain-contract/0.1.0-proposal",
+  "projectId": "PROJECT-R22-DS-FL-SLA",
+  "name": "FL 双叉臂纵切·R-16 身份 + R-18 虚构位姿（候选投影）",
+  "revision": 1,
+  "variant": {
+    "variantId": "VAR-R16-BOF-ICE",
+    "name": "非承载式越野·燃油（首发基型候选）",
+    "generation": "GEN1",
+    "platformFamilyRef": "PF-R16-CANDIDATE",
+    "parameters": {},
+    "moduleSelections": {
+      "CG-HUB": "ASSY-30-002"
+    },
+    "evidenceInherited": "ASSUMPTION"
+  },
+  "systems": [
+    {
+      "systemId": "VEH-001",
+      "name": "整车根（RP-01）",
+      "parentSystemId": null,
+      "evidenceInherited": "ASSUMPTION"
+    },
+    {
+      "systemId": "SYS-20",
+      "name": "悬架、转向与车轴定位",
+      "parentSystemId": "VEH-001",
+      "evidenceInherited": "ASSUMPTION"
+    },
+    {
+      "systemId": "SYS-30",
+      "name": "车轮、轮胎与轮端",
+      "parentSystemId": "VEH-001",
+      "evidenceInherited": "ASSUMPTION"
+    }
+  ],
+  "assemblyDefinitions": [
+    {
+      "assemblyId": "ASSY-20-001",
+      "name": "双叉臂前悬架总成",
+      "evidenceInherited": "ASSUMPTION",
+      "geometryStatus": "NO_GEOMETRY"
+    },
+    {
+      "assemblyId": "ASSY-20-002",
+      "name": "上摆臂总成",
+      "evidenceInherited": "SOURCED_SECONDARY",
+      "geometryStatus": "NO_GEOMETRY"
+    },
+    {
+      "assemblyId": "ASSY-20-003",
+      "name": "下摆臂总成",
+      "evidenceInherited": "SOURCED_SECONDARY",
+      "geometryStatus": "NO_GEOMETRY"
+    },
+    {
+      "assemblyId": "ASSY-20-004",
+      "name": "前转向节（双叉臂）",
+      "evidenceInherited": "ASSUMPTION",
+      "geometryStatus": "NO_GEOMETRY"
+    },
+    {
+      "assemblyId": "ASSY-20-005",
+      "name": "前弹簧与减振器",
+      "evidenceInherited": "ASSUMPTION",
+      "geometryStatus": "NO_GEOMETRY"
+    },
+    {
+      "assemblyId": "ASSY-30-001",
+      "name": "轮端总成（双叉臂前轮端深钻样例）",
+      "evidenceInherited": "SOURCED_SECONDARY",
+      "geometryStatus": "NO_GEOMETRY"
+    },
+    {
+      "assemblyId": "ASSY-30-002",
+      "name": "轮毂轴承 Gen1（双列角接触球轴承+独立轮毂）",
+      "evidenceInherited": "SOURCED_SECONDARY",
+      "geometryStatus": "NO_GEOMETRY"
+    }
+  ],
+  "assemblies": [
+    {
+      "assemblyId": "AI-20-002-FL",
+      "definitionRef": "ASSY-20-002",
+      "systemId": "SYS-20",
+      "parentAssemblyId": null,
+      "frameId": "FR-DS-UPPER-ARM-FL",
+      "name": "上摆臂总成 FL（R-16 实例）"
+    },
+    {
+      "assemblyId": "AI-20-003-FL",
+      "definitionRef": "ASSY-20-003",
+      "systemId": "SYS-20",
+      "parentAssemblyId": null,
+      "frameId": "FR-DS-LOWER-ARM-FL",
+      "name": "下摆臂总成 FL（R-16 实例）"
+    },
+    {
+      "assemblyId": "AI-20-004-FL",
+      "definitionRef": "ASSY-20-004",
+      "systemId": "SYS-20",
+      "parentAssemblyId": null,
+      "frameId": "FR-DS-KNUCKLE-FL",
+      "name": "前转向节 FL（R-16 实例）"
+    },
+    {
+      "assemblyId": "AI-20-005-FL",
+      "definitionRef": "ASSY-20-005",
+      "systemId": "SYS-20",
+      "parentAssemblyId": null,
+      "frameId": "FR-DS-SHOCK-FL",
+      "name": "前弹簧与减振器 FL（R-16 实例，只有 OUTPUT）"
+    },
+    {
+      "assemblyId": "AI-30-001-FL",
+      "definitionRef": "ASSY-30-001",
+      "systemId": "SYS-30",
+      "parentAssemblyId": null,
+      "frameId": "FR-DS-WHEEL-END-FL",
+      "name": "前轮端总成 FL（R-16 实例）"
+    },
+    {
+      "assemblyId": "AI-30-002-FL",
+      "definitionRef": "ASSY-30-002",
+      "systemId": "SYS-30",
+      "parentAssemblyId": null,
+      "frameId": "FR-DS-HUB-FL",
+      "name": "轮毂轴承 Gen1 FL（R-16 实例）"
+    }
+  ],
+  "partDefinitions": [
+    {
+      "partId": "PART-20-001",
+      "name": "上摆臂本体",
+      "parentAssemblyDefinitionId": "ASSY-20-002",
+      "evidenceInherited": "SOURCED_SECONDARY",
+      "sourceEvidenceIds": [
+        "SRC-R16-REF-S01"
+      ],
+      "geometryBasis": "UNKNOWN",
+      "geometryValue": null,
+      "geometryStatus": "NO_GEOMETRY",
+      "massStatus": "UNKNOWN",
+      "mountStatus": "UNKNOWN",
+      "modelBlocked": true,
+      "note": "R-16 candidate definition; geometry and mass remain UNKNOWN."
+    },
+    {
+      "partId": "PART-20-008",
+      "name": "下摆臂本体",
+      "parentAssemblyDefinitionId": "ASSY-20-003",
+      "evidenceInherited": "SOURCED_SECONDARY",
+      "sourceEvidenceIds": [
+        "SRC-R16-REF-S01"
+      ],
+      "geometryBasis": "UNKNOWN",
+      "geometryValue": null,
+      "geometryStatus": "NO_GEOMETRY",
+      "massStatus": "UNKNOWN",
+      "mountStatus": "UNKNOWN",
+      "modelBlocked": true,
+      "note": "R-16 candidate definition; geometry and mass remain UNKNOWN."
+    },
+    {
+      "partId": "PART-20-016",
+      "name": "转向节本体",
+      "parentAssemblyDefinitionId": "ASSY-20-004",
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [],
+      "geometryBasis": "UNKNOWN",
+      "geometryValue": null,
+      "geometryStatus": "NO_GEOMETRY",
+      "massStatus": "UNKNOWN",
+      "mountStatus": "UNKNOWN",
+      "modelBlocked": true,
+      "note": "R-16 candidate definition; geometry and mass remain UNKNOWN."
+    },
+    {
+      "partId": "PART-30-006",
+      "name": "独立轮毂法兰",
+      "parentAssemblyDefinitionId": "ASSY-30-002",
+      "evidenceInherited": "SOURCED_SECONDARY",
+      "sourceEvidenceIds": [
+        "SRC-R16-REF-S04",
+        "SRC-R16-REF-S05"
+      ],
+      "geometryBasis": "UNKNOWN",
+      "geometryValue": null,
+      "geometryStatus": "NO_GEOMETRY",
+      "massStatus": "UNKNOWN",
+      "mountStatus": "UNKNOWN",
+      "modelBlocked": true,
+      "note": "R-16 candidate definition; geometry and mass remain UNKNOWN."
+    }
+  ],
+  "partInstances": [
+    {
+      "instanceId": "INST-SLA-UPPER-ARM-FL",
+      "engineeringInstanceId": "PI-20-001-FL",
+      "partId": "PART-20-001",
+      "assemblyId": "AI-20-002-FL",
+      "frameId": "FR-DS-UPPER-ARM-FL",
+      "sourceEvidenceIds": [
+        "SRC-R16-REF-S01"
+      ],
+      "aliasStatus": "VIEW_LOCAL_NOT_CANONICAL",
+      "variantId": "VAR-R16-BOF-ICE",
+      "visible": true,
+      "evidenceInherited": "UNKNOWN",
+      "claimedEvidence": null,
+      "quantity": {
+        "perAssembly": 1
+      },
+      "geometryStatus": "NO_GEOMETRY",
+      "inspectable": false
+    },
+    {
+      "instanceId": "INST-SLA-LOWER-ARM-FL",
+      "engineeringInstanceId": "PI-20-008-FL",
+      "partId": "PART-20-008",
+      "assemblyId": "AI-20-003-FL",
+      "frameId": "FR-DS-LOWER-ARM-FL",
+      "sourceEvidenceIds": [
+        "SRC-R16-REF-S01"
+      ],
+      "aliasStatus": "VIEW_LOCAL_NOT_CANONICAL",
+      "variantId": "VAR-R16-BOF-ICE",
+      "visible": true,
+      "evidenceInherited": "UNKNOWN",
+      "claimedEvidence": null,
+      "quantity": {
+        "perAssembly": 1
+      },
+      "geometryStatus": "NO_GEOMETRY",
+      "inspectable": false
+    },
+    {
+      "instanceId": "INST-SLA-UPRIGHT-FL",
+      "engineeringInstanceId": "PI-20-016-FL",
+      "partId": "PART-20-016",
+      "assemblyId": "AI-20-004-FL",
+      "frameId": "FR-DS-KNUCKLE-FL",
+      "sourceEvidenceIds": [],
+      "aliasStatus": "VIEW_LOCAL_NOT_CANONICAL",
+      "variantId": "VAR-R16-BOF-ICE",
+      "visible": true,
+      "evidenceInherited": "UNKNOWN",
+      "claimedEvidence": null,
+      "quantity": {
+        "perAssembly": 1
+      },
+      "geometryStatus": "NO_GEOMETRY",
+      "inspectable": false
+    },
+    {
+      "instanceId": "INST-SLA-HUB-FL",
+      "engineeringInstanceId": "PI-30-006-FL",
+      "partId": "PART-30-006",
+      "assemblyId": "AI-30-002-FL",
+      "frameId": "FR-DS-HUB-FL",
+      "sourceEvidenceIds": [
+        "SRC-R16-REF-S04",
+        "SRC-R16-REF-S05"
+      ],
+      "aliasStatus": "VIEW_LOCAL_NOT_CANONICAL",
+      "variantId": "VAR-R16-BOF-ICE",
+      "visible": true,
+      "evidenceInherited": "UNKNOWN",
+      "claimedEvidence": null,
+      "quantity": {
+        "perAssembly": 1
+      },
+      "geometryStatus": "NO_GEOMETRY",
+      "inspectable": false
+    }
+  ],
+  "frames": [
+    {
+      "frameId": "FR-VEHICLE",
+      "parentFrameId": null,
+      "space": "VEHICLE_DEMO",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "scale": null,
+      "originBasis": "DEMO_ASSUMPTION",
+      "source": "R-18 demo frame",
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-DS-CHASSIS-UPPER-FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_DEMO",
+      "units": "m",
+      "origin": [
+        0.28,
+        0.22,
+        0.13
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "scale": null,
+      "originBasis": "DEMO_ASSUMPTION",
+      "source": "R-18 upper pose position",
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-DS-CHASSIS-LOWER-FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_DEMO",
+      "units": "m",
+      "origin": [
+        0.32,
+        -0.04,
+        0.16
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "scale": null,
+      "originBasis": "DEMO_ASSUMPTION",
+      "source": "R-18 lower pose position",
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-DS-UPPER-ARM-FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_DEMO",
+      "units": "m",
+      "origin": [
+        0.28,
+        0.22,
+        0.13
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "scale": null,
+      "originBasis": "DEMO_ASSUMPTION",
+      "source": "R-18 upper pose position",
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-DS-LOWER-ARM-FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_DEMO",
+      "units": "m",
+      "origin": [
+        0.32,
+        -0.04,
+        0.16
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "scale": null,
+      "originBasis": "DEMO_ASSUMPTION",
+      "source": "R-18 lower pose position",
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-DS-KNUCKLE-FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_DEMO",
+      "units": "m",
+      "origin": [
+        0.62,
+        -0.05999999999999991,
+        3.4175639091876038e-18
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "scale": null,
+      "originBasis": "DEMO_ASSUMPTION",
+      "source": "R-18 upright pose position",
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-DS-HUB-FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_DEMO",
+      "units": "m",
+      "origin": [
+        0.72,
+        -2.0816681711721685e-17,
+        -1.8675149714476987e-16
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "scale": null,
+      "originBasis": "DEMO_ASSUMPTION",
+      "source": "R-18 hub pose position",
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-DS-WHEEL-END-FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_DEMO",
+      "units": "m",
+      "origin": [
+        0.72,
+        -2.0816681711721685e-17,
+        -1.8675149714476987e-16
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "scale": null,
+      "originBasis": "DEMO_ASSUMPTION",
+      "source": "R-18 hub pose position",
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-DS-SHOCK-FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_DEMO",
+      "units": "m",
+      "origin": [
+        0.36,
+        0.34,
+        0.02
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "scale": null,
+      "originBasis": "DEMO_ASSUMPTION",
+      "source": "R-04/R-18 fictional fixture",
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    }
+  ],
+  "joints": [
+    {
+      "jointId": "J-UPPER-ARM-FL",
+      "type": "REVOLUTE",
+      "frameA": "FR-DS-CHASSIS-UPPER-FL",
+      "frameB": "FR-DS-UPPER-ARM-FL",
+      "axisA": [
+        -0.1516196087157808,
+        -0.0758098043578903,
+        -0.9855274566525745
+      ],
+      "axisB": [
+        -0.1516196087157808,
+        -0.0758098043578903,
+        -0.9855274566525745
+      ],
+      "limits": null,
+      "driver": null,
+      "hardpoint": {
+        "axisA": [
+          0.28,
+          0.22,
+          0.13
+        ],
+        "axisB": [
+          0.24,
+          0.2,
+          -0.13
+        ]
+      },
+      "hardpointBasis": "DEMO_ASSUMPTION",
+      "solverEligible": true,
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-R18-DEMO",
+        "SRC-KIN-FIXTURE"
+      ]
+    },
+    {
+      "jointId": "J-LOWER-ARM-FL",
+      "type": "REVOLUTE",
+      "frameA": "FR-DS-CHASSIS-LOWER-FL",
+      "frameB": "FR-DS-LOWER-ARM-FL",
+      "axisA": [
+        -0.1835111250619848,
+        -0.09175556253099242,
+        -0.9787260003305857
+      ],
+      "axisB": [
+        -0.1835111250619848,
+        -0.09175556253099242,
+        -0.9787260003305857
+      ],
+      "limits": null,
+      "driver": null,
+      "hardpoint": {
+        "axisA": [
+          0.32,
+          -0.04,
+          0.16
+        ],
+        "axisB": [
+          0.26,
+          -0.07,
+          -0.16
+        ]
+      },
+      "hardpointBasis": "DEMO_ASSUMPTION",
+      "solverEligible": true,
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-R18-DEMO",
+        "SRC-KIN-FIXTURE"
+      ]
+    },
+    {
+      "jointId": "J-UPPER-BALL-FL",
+      "type": "SPHERICAL",
+      "frameA": "FR-DS-UPPER-ARM-FL",
+      "frameB": "FR-DS-KNUCKLE-FL",
+      "axisA": null,
+      "axisB": null,
+      "limits": null,
+      "driver": null,
+      "hardpoint": {
+        "center": [
+          0.55,
+          0.18,
+          0.01
+        ]
+      },
+      "hardpointBasis": "DEMO_ASSUMPTION",
+      "solverEligible": true,
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-R18-DEMO",
+        "SRC-KIN-FIXTURE"
+      ]
+    },
+    {
+      "jointId": "J-LOWER-BALL-FL",
+      "type": "SPHERICAL",
+      "frameA": "FR-DS-LOWER-ARM-FL",
+      "frameB": "FR-DS-KNUCKLE-FL",
+      "axisA": null,
+      "axisB": null,
+      "limits": null,
+      "driver": null,
+      "hardpoint": {
+        "center": [
+          0.62,
+          -0.06,
+          0
+        ]
+      },
+      "hardpointBasis": "DEMO_ASSUMPTION",
+      "solverEligible": true,
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-R18-DEMO",
+        "SRC-KIN-FIXTURE"
+      ]
+    },
+    {
+      "jointId": "J-DS-HUB-FL",
+      "type": "REVOLUTE",
+      "frameA": "FR-DS-KNUCKLE-FL",
+      "frameB": "FR-DS-HUB-FL",
+      "axisA": [
+        0.9990887470879062,
+        -0.03996354988351625,
+        0.014986331206318593
+      ],
+      "axisB": [
+        0.9990887470879062,
+        -0.03996354988351625,
+        0.014986331206318593
+      ],
+      "limits": null,
+      "driver": null,
+      "hardpoint": {
+        "center": [
+          0.72,
+          0,
+          0
+        ],
+        "axis": [
+          0.9990887470879062,
+          -0.03996354988351625,
+          0.014986331206318593
+        ]
+      },
+      "hardpointBasis": "DEMO_ASSUMPTION",
+      "solverEligible": true,
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-R18-DEMO",
+        "SRC-KIN-FIXTURE"
+      ],
+      "r17Template": "J-HUB-FL"
+    }
+  ],
+  "constraints": [
+    {
+      "constraintId": "CON-SUSP-UPPER-CIRCLE",
+      "type": "POINT_ON_CIRCLE",
+      "jointOrConstraint": "CONSTRAINT",
+      "status": "DEMO",
+      "source": "R-17 template CON-SUSP-UPPER-CIRCLE",
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "boundInstanceIds": [
+        "INST-SLA-UPPER-ARM-FL"
+      ],
+      "output": null
+    },
+    {
+      "constraintId": "CON-SUSP-LOWER-CIRCLE",
+      "type": "POINT_ON_CIRCLE",
+      "jointOrConstraint": "CONSTRAINT",
+      "status": "DEMO",
+      "source": "R-17 template CON-SUSP-LOWER-CIRCLE",
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "boundInstanceIds": [
+        "INST-SLA-LOWER-ARM-FL"
+      ],
+      "output": null
+    },
+    {
+      "constraintId": "CON-KINGPIN-LENGTH",
+      "type": "DISTANCE",
+      "jointOrConstraint": "CONSTRAINT",
+      "status": "DEMO",
+      "source": "R-17 template CON-KINGPIN-LENGTH",
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "boundInstanceIds": [
+        "INST-SLA-UPRIGHT-FL"
+      ],
+      "output": null
+    },
+    {
+      "constraintId": "CON-TIE-ROD-LENGTH",
+      "type": "DISTANCE",
+      "jointOrConstraint": "CONSTRAINT",
+      "status": "DEMO_ONLY_UNBOUND_BODY",
+      "source": "R-17 template CON-TIE-ROD-LENGTH",
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "boundInstanceIds": [],
+      "output": null
+    },
+    {
+      "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+      "type": "PRESCRIBED_POSITION",
+      "jointOrConstraint": "CONSTRAINT",
+      "status": "DEMO",
+      "source": "R-17 template CON-WHEEL-CENTER-HEIGHT",
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "boundInstanceIds": [
+        "INST-SLA-HUB-FL"
+      ],
+      "output": null
+    },
+    {
+      "constraintId": "CON-SHOCK-OUTPUT",
+      "type": "OUTPUT",
+      "jointOrConstraint": "OUTPUT",
+      "status": "DEMO",
+      "source": "R-17 template CON-SHOCK-OUTPUT",
+      "evidenceInherited": "DEMO_ASSUMPTION",
+      "boundInstanceIds": [],
+      "output": {
+        "outputId": "OUT-SHOCK-LENGTH-FL",
+        "valueM": 0.43025951471176094,
+        "unit": "m",
+        "valueBasis": "DEMO_ASSUMPTION"
+      }
+    }
+  ],
+  "references": [],
+  "bomLines": [
+    {
+      "bomLineId": "BOM-AI-20-002-FL-PART-20-001",
+      "assemblyId": "AI-20-002-FL",
+      "partRef": "PART-20-001",
+      "qtyPerAssembly": 1,
+      "instanceIds": [
+        "INST-SLA-UPPER-ARM-FL"
+      ]
+    },
+    {
+      "bomLineId": "BOM-AI-20-003-FL-PART-20-008",
+      "assemblyId": "AI-20-003-FL",
+      "partRef": "PART-20-008",
+      "qtyPerAssembly": 1,
+      "instanceIds": [
+        "INST-SLA-LOWER-ARM-FL"
+      ]
+    },
+    {
+      "bomLineId": "BOM-AI-20-004-FL-PART-20-016",
+      "assemblyId": "AI-20-004-FL",
+      "partRef": "PART-20-016",
+      "qtyPerAssembly": 1,
+      "instanceIds": [
+        "INST-SLA-UPRIGHT-FL"
+      ]
+    },
+    {
+      "bomLineId": "BOM-AI-30-002-FL-PART-30-006",
+      "assemblyId": "AI-30-002-FL",
+      "partRef": "PART-30-006",
+      "qtyPerAssembly": 1,
+      "instanceIds": [
+        "INST-SLA-HUB-FL"
+      ]
+    }
+  ],
+  "quantityFacts": [],
+  "assets": [],
+  "sourceEvidence": [
+    {
+      "sourceId": "SRC-R16-TREE",
+      "kind": "PROJECT_ARTIFACT",
+      "grade": "PROJECT_RESEARCH",
+      "path": "docs/research/R-16-vehicle-skeleton.fixture.json",
+      "supports": "13 systems / 53 subsystems / 108 assembly definitions / 493 part definitions / 278 part instances / 37 mount frames",
+      "limitations": "candidate tree; zero sourced geometry; 278 instances valueBasis UNKNOWN"
+    },
+    {
+      "sourceId": "SRC-R17-CONTRACT",
+      "kind": "PROJECT_ARTIFACT",
+      "grade": "PROPOSAL",
+      "path": "src-experiments/domain-contract-v1/domain.mjs",
+      "supports": "ProjectStore / validateProject / Frame / Joint / Constraint / SimulationRun semantics",
+      "limitations": "proposal, not a frozen production schema; instanceId prefix currently INST-*"
+    },
+    {
+      "sourceId": "SRC-R17-FIXTURE",
+      "kind": "PROJECT_ARTIFACT",
+      "grade": "PROPOSAL",
+      "path": "src-experiments/domain-contract-v1/fixtures/fl-wheel-end.json",
+      "supports": "FL wheel-end fixture, 11 instances, 3 Joint, 6 Constraint/Output",
+      "limitations": "fixture-local identity and frame origins; not an OEM assembly"
+    },
+    {
+      "sourceId": "SRC-R18-DEMO",
+      "kind": "FICTIONAL_FIXTURE",
+      "grade": "DEMO_ASSUMPTION",
+      "path": "src-experiments/mechanism-vertical-slice-v1/R-18-results.json",
+      "supports": "FL double-wishbone rigid poses, 9 travel samples, 11 checks",
+      "limitations": "fictional hardpoints; no forces; CANDIDATE_NOT_FROZEN; not production kinematics"
+    },
+    {
+      "sourceId": "SRC-KIN-FIXTURE",
+      "kind": "FICTIONAL_FIXTURE",
+      "grade": "DEMO_ASSUMPTION",
+      "path": "src-experiments/kinematics/fixture-demo.json",
+      "supports": "DEMO hardpoint values used by the R-18 slice",
+      "limitations": "explicitly fictional; must not be presented as vehicle hardpoints"
+    },
+    {
+      "sourceId": "SRC-R16-REF-S01",
+      "kind": "INHERITED_REFERENCE",
+      "grade": "UNVERIFIED_REFERENCE",
+      "path": "docs/research/R-16-vehicle-skeleton.fixture.json#sources[S01]",
+      "supports": "R-16 identity basis for PART-20-001 / PART-20-008",
+      "limitations": "R-22 did not re-open the original source; no OEM drawing was verified"
+    },
+    {
+      "sourceId": "SRC-R16-REF-S04",
+      "kind": "INHERITED_REFERENCE",
+      "grade": "UNVERIFIED_REFERENCE",
+      "path": "docs/research/R-16-vehicle-skeleton.fixture.json#sources[S04]",
+      "supports": "R-16 identity basis for PART-30-006",
+      "limitations": "R-22 did not re-open the original source; no OEM drawing was verified"
+    },
+    {
+      "sourceId": "SRC-R16-REF-S05",
+      "kind": "INHERITED_REFERENCE",
+      "grade": "UNVERIFIED_REFERENCE",
+      "path": "docs/research/R-16-vehicle-skeleton.fixture.json#sources[S05]",
+      "supports": "R-16 identity basis for PART-30-006",
+      "limitations": "R-22 did not re-open the original source; no OEM drawing was verified"
+    }
+  ],
+  "simulationRuns": [
+    {
+      "runId": "RUN-R22-FL-SLA-DEMO-001",
+      "inputRevision": 1,
+      "solver": "mechanism-vertical-slice-v1/pose.mjs + kinematics/solve.mjs (fictional fixture)",
+      "status": "PASS",
+      "resultHash": "sha256:8414e45d09fa75f93a16bae4a9d83b55d25a573010abf993721c68d8020da316",
+      "producedAt": "2026-11-15",
+      "source": "R-18 demo; not production kinematics"
+    }
+  ],
+  "selectedId": "INST-SLA-UPPER-ARM-FL",
+  "identityPolicy": {
+    "canonicalInstanceId": "PI-* from R-16",
+    "viewInstanceId": "INST-* required by carlab.domain-contract/0.1.0-proposal",
+    "aliasStatus": "VIEW_LOCAL_NOT_CANONICAL",
+    "rule": "engineeringInstanceId is the only canonical engineering identity; the INST-* key exists only because the current R-17 validator requires it."
+  },
+  "valueBasis": "DEMO_ASSUMPTION"
+}
