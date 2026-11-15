@@ -1,0 +1,1832 @@
+{
+  "schemaVersion": "carlab.domain-contract/0.1.0-proposal",
+  "projectId": "PROJECT-CARLAB-DEMO",
+  "name": "CARLAB 演示整车骨架（GEN1，非实车）",
+  "revision": 3,
+  "variant": {
+    "variantId": "VV-A-SWB-STD",
+    "name": "短轴标准轮距越野版（R-01 演示变体）",
+    "generation": "GEN1",
+    "platformFamilyRef": "PF-DEMO-BOF-01",
+    "parameters": {
+      "PD-WB": {
+        "value": 2460,
+        "unit": "mm",
+        "valueBasis": "DEMO_ASSUMPTION"
+      },
+      "PD-FT": {
+        "value": 1680,
+        "unit": "mm",
+        "valueBasis": "DEMO_ASSUMPTION"
+      }
+    },
+    "moduleSelections": {
+      "CG-HUB": "GEN1"
+    },
+    "evidenceInherited": "DEMO_ASSUMPTION"
+  },
+  "systems": [
+    {
+      "systemId": "SYS-00",
+      "name": "平台架构与整车布置",
+      "parentSystemId": null
+    },
+    {
+      "systemId": "SYS-10",
+      "name": "车身结构与车架",
+      "parentSystemId": null
+    },
+    {
+      "systemId": "SYS-20",
+      "name": "悬架、转向与车轴定位",
+      "parentSystemId": null
+    },
+    {
+      "systemId": "SYS-30",
+      "name": "车轮、轮胎与轮端",
+      "parentSystemId": null
+    },
+    {
+      "systemId": "SYS-40",
+      "name": "制动与驻车",
+      "parentSystemId": null
+    },
+    {
+      "systemId": "SYS-50",
+      "name": "动力源",
+      "parentSystemId": null
+    },
+    {
+      "systemId": "SYS-60",
+      "name": "动力传递",
+      "parentSystemId": null
+    },
+    {
+      "systemId": "SYS-70",
+      "name": "能源供给与储存",
+      "parentSystemId": null
+    },
+    {
+      "systemId": "SYS-80",
+      "name": "热管理、润滑与流体",
+      "parentSystemId": null
+    },
+    {
+      "systemId": "SYS-90",
+      "name": "电气电子、通信和控制",
+      "parentSystemId": null
+    }
+  ],
+  "assemblyDefinitions": [
+    {
+      "assemblyId": "ASSY-30-001",
+      "name": "轮端总成（双叉臂前轮端）",
+      "systemId": "SYS-30"
+    },
+    {
+      "assemblyId": "ASSY-30-002",
+      "name": "轮毂轴承 Gen1（外购不可拆）",
+      "systemId": "SYS-30"
+    },
+    {
+      "assemblyId": "ASSY-40-009",
+      "name": "制动盘总成",
+      "systemId": "SYS-40"
+    },
+    {
+      "assemblyId": "ASSY-40-008",
+      "name": "卡钳总成",
+      "systemId": "SYS-40"
+    },
+    {
+      "assemblyId": "ASSY-20-001",
+      "name": "双叉臂前悬架总成",
+      "systemId": "SYS-20"
+    },
+    {
+      "assemblyId": "ASSY-20-014",
+      "name": "转向拉杆组（轮端侧）",
+      "systemId": "SYS-20"
+    },
+    {
+      "assemblyId": "ASSY-50-001",
+      "name": "动力源总成（占位）",
+      "systemId": "SYS-50"
+    },
+    {
+      "assemblyId": "ASSY-60-001",
+      "name": "动力传递总成（占位）",
+      "systemId": "SYS-60"
+    },
+    {
+      "assemblyId": "ASSY-70-001",
+      "name": "能源供给总成（占位）",
+      "systemId": "SYS-70"
+    },
+    {
+      "assemblyId": "ASSY-80-001",
+      "name": "热管理总成（占位）",
+      "systemId": "SYS-80"
+    },
+    {
+      "assemblyId": "ASSY-90-001",
+      "name": "电气总成（占位）",
+      "systemId": "SYS-90"
+    },
+    {
+      "assemblyId": "ASSY-10-001",
+      "name": "车身结构总成（占位）",
+      "systemId": "SYS-10"
+    }
+  ],
+  "assemblies": [
+    {
+      "assemblyId": "ASM-WHEEL-END-FL",
+      "name": "FL 轮端总成",
+      "definitionRef": "ASSY-30-001",
+      "systemId": "SYS-30",
+      "parentAssemblyId": null,
+      "frameId": "FR-WHEEL-END-FL"
+    },
+    {
+      "assemblyId": "ASM-WHEEL-END-FR",
+      "name": "FR 轮端总成（占位）",
+      "definitionRef": "ASSY-30-001",
+      "systemId": "SYS-30",
+      "parentAssemblyId": null,
+      "frameId": "FR-WHEEL-END-FR"
+    },
+    {
+      "assemblyId": "ASM-WHEEL-END-RL",
+      "name": "RL 轮端总成（占位）",
+      "definitionRef": "ASSY-30-001",
+      "systemId": "SYS-30",
+      "parentAssemblyId": null,
+      "frameId": "FR-WHEEL-END-RL"
+    },
+    {
+      "assemblyId": "ASM-WHEEL-END-RR",
+      "name": "RR 轮端总成（占位）",
+      "definitionRef": "ASSY-30-001",
+      "systemId": "SYS-30",
+      "parentAssemblyId": null,
+      "frameId": "FR-WHEEL-END-RR"
+    },
+    {
+      "assemblyId": "ASM-HUB-BRG-FL",
+      "name": "FL 轮毂轴承 Gen1",
+      "definitionRef": "ASSY-30-002",
+      "systemId": "SYS-30",
+      "parentAssemblyId": "ASM-WHEEL-END-FL",
+      "frameId": "FR-HUB-BRG-FL"
+    },
+    {
+      "assemblyId": "ASM-DISC-FL",
+      "name": "FL 制动盘总成（REF 目标）",
+      "definitionRef": "ASSY-40-009",
+      "systemId": "SYS-40",
+      "parentAssemblyId": "ASM-WHEEL-END-FL",
+      "frameId": "FR-DISC-ASM-FL"
+    },
+    {
+      "assemblyId": "ASM-CALIPER-FL",
+      "name": "FL 卡钳总成",
+      "definitionRef": "ASSY-40-008",
+      "systemId": "SYS-40",
+      "parentAssemblyId": "ASM-WHEEL-END-FL",
+      "frameId": "FR-CALIPER-ASM-FL"
+    },
+    {
+      "assemblyId": "ASM-SUSP-FL",
+      "name": "FL 双叉臂悬架",
+      "definitionRef": "ASSY-20-001",
+      "systemId": "SYS-20",
+      "parentAssemblyId": null,
+      "frameId": "FR-SUSP-FL"
+    },
+    {
+      "assemblyId": "ASM-STEER",
+      "name": "转向拉杆（占位）",
+      "definitionRef": "ASSY-20-014",
+      "systemId": "SYS-20",
+      "parentAssemblyId": null,
+      "frameId": "FR-VEHICLE"
+    },
+    {
+      "assemblyId": "ASM-POWERTRAIN",
+      "name": "动力源（占位）",
+      "definitionRef": "ASSY-50-001",
+      "systemId": "SYS-50",
+      "parentAssemblyId": null,
+      "frameId": "FR-VEHICLE"
+    },
+    {
+      "assemblyId": "ASM-DRIVETRAIN",
+      "name": "动力传递（占位）",
+      "definitionRef": "ASSY-60-001",
+      "systemId": "SYS-60",
+      "parentAssemblyId": null,
+      "frameId": "FR-VEHICLE"
+    },
+    {
+      "assemblyId": "ASM-ENERGY",
+      "name": "能源供给（占位）",
+      "definitionRef": "ASSY-70-001",
+      "systemId": "SYS-70",
+      "parentAssemblyId": null,
+      "frameId": "FR-VEHICLE"
+    },
+    {
+      "assemblyId": "ASM-THERMAL",
+      "name": "热管理（占位）",
+      "definitionRef": "ASSY-80-001",
+      "systemId": "SYS-80",
+      "parentAssemblyId": null,
+      "frameId": "FR-VEHICLE"
+    },
+    {
+      "assemblyId": "ASM-ELECTRICAL",
+      "name": "电气（占位）",
+      "definitionRef": "ASSY-90-001",
+      "systemId": "SYS-90",
+      "parentAssemblyId": null,
+      "frameId": "FR-VEHICLE"
+    },
+    {
+      "assemblyId": "ASM-BODY",
+      "name": "车身结构（占位）",
+      "definitionRef": "ASSY-10-001",
+      "systemId": "SYS-10",
+      "parentAssemblyId": null,
+      "frameId": "FR-VEHICLE"
+    }
+  ],
+  "partDefinitions": [
+    {
+      "partId": "PART-30-006",
+      "name": "独立轮毂法兰",
+      "familyRef": null,
+      "partClass": "rotating",
+      "geometryBasis": "NEEDS_MEASUREMENT",
+      "evidenceInherited": "EVIDENCE",
+      "fidelityTarget": "FID-G",
+      "applicableWhen": {
+        "CG-HUB": [
+          "GEN1"
+        ]
+      },
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "unknowns": [
+        "U-HUB-GEOMETRY"
+      ]
+    },
+    {
+      "partId": "PART-30-009",
+      "name": "车轮螺柱（压装于轮毂）",
+      "familyRef": "FAM-130-007",
+      "partClass": "fastener",
+      "geometryBasis": "NEEDS_MEASUREMENT",
+      "evidenceInherited": "ASSUMPTION",
+      "fidelityTarget": "FID-G",
+      "applicableWhen": {
+        "CG-HUB": [
+          "GEN1"
+        ]
+      },
+      "sourceEvidenceIds": [
+        "SRC-R06",
+        "SRC-R11"
+      ],
+      "unknowns": [
+        "U-STUD-THREAD",
+        "U-STUD-GEOMETRY"
+      ],
+      "nameCaveat": "M14 is only R-03 naming; not verified by RP-01/R-06/R-11."
+    },
+    {
+      "partId": "PART-30-017",
+      "name": "法兰螺柱（Gen3）",
+      "familyRef": "FAM-130-007",
+      "partClass": "fastener",
+      "geometryBasis": "NEEDS_MEASUREMENT",
+      "evidenceInherited": "ASSUMPTION",
+      "fidelityTarget": "FID-G",
+      "applicableWhen": {
+        "CG-HUB": [
+          "GEN3"
+        ]
+      },
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "unknowns": [
+        "U-GEN3-STUD-THREAD"
+      ]
+    },
+    {
+      "partId": "PART-30-029",
+      "name": "车轮螺栓/螺母（按座型）",
+      "familyRef": "FAM-130-007",
+      "partClass": "fastener",
+      "geometryBasis": "NEEDS_MEASUREMENT",
+      "evidenceInherited": "EVIDENCE",
+      "fidelityTarget": "FID-G",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "unknowns": [
+        "U-WHEEL-NUT-SEAT"
+      ]
+    },
+    {
+      "partId": "PART-30-010",
+      "name": "Gen3 带法兰内圈（整体）",
+      "familyRef": null,
+      "partClass": "rotating",
+      "geometryBasis": "NEEDS_MEASUREMENT",
+      "evidenceInherited": "EVIDENCE",
+      "fidelityTarget": "FID-G",
+      "applicableWhen": {
+        "CG-HUB": [
+          "GEN3"
+        ]
+      },
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ]
+    },
+    {
+      "partId": "PART-40-046",
+      "name": "通风制动盘",
+      "familyRef": null,
+      "partClass": "friction",
+      "geometryBasis": "NEEDS_MEASUREMENT",
+      "evidenceInherited": "ASSUMPTION",
+      "fidelityTarget": "FID-G",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "unknowns": [
+        "U-DISC-GEOMETRY"
+      ]
+    },
+    {
+      "partId": "PART-40-034",
+      "name": "卡钳体",
+      "familyRef": "FAM-130-036",
+      "partClass": "housing",
+      "geometryBasis": "NEEDS_MEASUREMENT",
+      "evidenceInherited": "ASSUMPTION",
+      "fidelityTarget": "FID-G",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ]
+    },
+    {
+      "partId": "PART-40-048",
+      "name": "卡钳支架",
+      "familyRef": null,
+      "partClass": "structure",
+      "geometryBasis": "NEEDS_MEASUREMENT",
+      "evidenceInherited": "ASSUMPTION",
+      "fidelityTarget": "FID-G",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ]
+    },
+    {
+      "partId": "PART-20-016",
+      "name": "转向节本体",
+      "familyRef": null,
+      "partClass": "structure",
+      "geometryBasis": "NEEDS_MEASUREMENT",
+      "evidenceInherited": "ASSUMPTION",
+      "fidelityTarget": "FID-G",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ]
+    },
+    {
+      "partId": "PART-30-031",
+      "name": "制动盘定位螺钉",
+      "familyRef": "FAM-130-002",
+      "partClass": "fastener",
+      "geometryBasis": "DEMO_ASSUMPTION",
+      "evidenceInherited": "ASSUMPTION",
+      "fidelityTarget": "FID-V",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ]
+    },
+    {
+      "partId": "PART-30-019",
+      "name": "轮辋（轮圈）占位",
+      "familyRef": null,
+      "partClass": "rotating",
+      "geometryBasis": "NEEDS_MEASUREMENT",
+      "evidenceInherited": "ASSUMPTION",
+      "fidelityTarget": "FID-V",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ]
+    }
+  ],
+  "partInstances": [
+    {
+      "instanceId": "INST-HUB-FL",
+      "partId": "PART-30-006",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-HUB-BRG-FL",
+      "frameId": "FR-HUB-INST-FL",
+      "visible": true,
+      "evidenceInherited": "EVIDENCE",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-STUD-FL-1",
+      "partId": "PART-30-009",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-HUB-BRG-FL",
+      "frameId": "FR-STUD-FL-1",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-R06",
+        "SRC-R11"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-STUD-FL-2",
+      "partId": "PART-30-009",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-HUB-BRG-FL",
+      "frameId": "FR-STUD-FL-2",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-R06",
+        "SRC-R11"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-STUD-FL-3",
+      "partId": "PART-30-009",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-HUB-BRG-FL",
+      "frameId": "FR-STUD-FL-3",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-R06",
+        "SRC-R11"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-STUD-FL-4",
+      "partId": "PART-30-009",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-HUB-BRG-FL",
+      "frameId": "FR-STUD-FL-4",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-R06",
+        "SRC-R11"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-STUD-FL-5",
+      "partId": "PART-30-009",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-HUB-BRG-FL",
+      "frameId": "FR-STUD-FL-5",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-R06",
+        "SRC-R11"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-CALIPER-FL",
+      "partId": "PART-40-034",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-CALIPER-FL",
+      "frameId": "FR-CALIPER-INST-FL",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-CALIPER-BRACKET-FL",
+      "partId": "PART-40-048",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-CALIPER-FL",
+      "frameId": "FR-CALIPER-BRACKET-INST-FL",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-KNUCKLE-FL",
+      "partId": "PART-20-016",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-SUSP-FL",
+      "frameId": "FR-KNUCKLE-INST-FL",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-DISC-SCREW-FL",
+      "partId": "PART-30-031",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-WHEEL-END-FL",
+      "frameId": "FR-DISC-SCREW-INST-FL",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-WHEEL-FL",
+      "partId": "PART-30-019",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-WHEEL-END-FL",
+      "frameId": "FR-WHEEL-INST-FL",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-WHEEL-FR",
+      "partId": "PART-30-019",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-WHEEL-END-FR",
+      "frameId": "FR-WHEEL-INST-FR",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-WHEEL-RL",
+      "partId": "PART-30-019",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-WHEEL-END-RL",
+      "frameId": "FR-WHEEL-INST-RL",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    },
+    {
+      "instanceId": "INST-WHEEL-RR",
+      "partId": "PART-30-019",
+      "variantId": "VV-A-SWB-STD",
+      "assemblyId": "ASM-WHEEL-END-RR",
+      "frameId": "FR-WHEEL-INST-RR",
+      "visible": true,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ],
+      "quantity": {
+        "perAssembly": 1
+      }
+    }
+  ],
+  "frames": [
+    {
+      "frameId": "FR-VEHICLE",
+      "parentFrameId": null,
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      },
+      "source": "runtime +X left/+Y up/+Z forward"
+    },
+    {
+      "frameId": "FR-WHEEL-END-FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0.84,
+        0.32,
+        1.23
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-WHEEL-END-FR",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        -0.84,
+        0.32,
+        1.23
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": {
+        "axis": "x",
+        "handednessFlip": true,
+        "mirrorOfFrameId": "FR-WHEEL-END-FL"
+      },
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-WHEEL-END-RL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0.84,
+        0.32,
+        -1.23
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-WHEEL-END-RR",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        -0.84,
+        0.32,
+        -1.23
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": {
+        "axis": "x",
+        "handednessFlip": true,
+        "mirrorOfFrameId": "FR-WHEEL-END-RL"
+      },
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-HUB-BRG-FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-HUB-INST-FL",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      },
+      "source": "local z axle -> runtime x left"
+    },
+    {
+      "frameId": "FR-STUD-FL-1",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0.05715,
+        0
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-STUD-FL-2",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0.01766,
+        0.054353
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-STUD-FL-3",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        -0.046235,
+        0.033592
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-STUD-FL-4",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        -0.046235,
+        -0.033592
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-STUD-FL-5",
+      "parentFrameId": "FR-HUB-BRG-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0.01766,
+        -0.054353
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-DISC-ASM-FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-CALIPER-ASM-FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0.13,
+        -0.18
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-CALIPER-INST-FL",
+      "parentFrameId": "FR-CALIPER-ASM-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-CALIPER-BRACKET-INST-FL",
+      "parentFrameId": "FR-CALIPER-ASM-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        -0.03,
+        0.02
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-SUSP-FL",
+      "parentFrameId": "FR-VEHICLE",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0.55,
+        0.45,
+        1.23
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-KNUCKLE-INST-FL",
+      "parentFrameId": "FR-SUSP-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-DISC-SCREW-INST-FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0.05715,
+        0
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-WHEEL-INST-FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-WHEEL-INST-FR",
+      "parentFrameId": "FR-WHEEL-END-FR",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-WHEEL-INST-RL",
+      "parentFrameId": "FR-WHEEL-END-RL",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-WHEEL-INST-RR",
+      "parentFrameId": "FR-WHEEL-END-RR",
+      "space": "INSTANCE",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-HUB-AXIS-FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-KNUCKLE-AXIS-FL",
+      "parentFrameId": "FR-WHEEL-END-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-CALIPER-GUIDE-A-FL",
+      "parentFrameId": "FR-CALIPER-ASM-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    },
+    {
+      "frameId": "FR-CALIPER-GUIDE-B-FL",
+      "parentFrameId": "FR-CALIPER-ASM-FL",
+      "space": "VEHICLE_LOCAL",
+      "units": "m",
+      "origin": [
+        0,
+        -0.03,
+        0.02
+      ],
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mirror": null,
+      "tolerance": {
+        "positionM": 0.0005,
+        "angleDeg": 0.1
+      }
+    }
+  ],
+  "joints": [
+    {
+      "jointId": "J-HUB-FL",
+      "type": "REVOLUTE",
+      "frameA": "FR-HUB-AXIS-FL",
+      "frameB": "FR-KNUCKLE-AXIS-FL",
+      "axisA": [
+        1,
+        0,
+        0
+      ],
+      "axisB": [
+        1,
+        0,
+        0
+      ],
+      "limits": null,
+      "driver": null,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ]
+    },
+    {
+      "jointId": "J-CALIPER-BRACKET-FL",
+      "type": "FIXED",
+      "frameA": "FR-CALIPER-BRACKET-INST-FL",
+      "frameB": "FR-KNUCKLE-INST-FL",
+      "axisA": null,
+      "axisB": null,
+      "limits": null,
+      "driver": null,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ]
+    },
+    {
+      "jointId": "J-CALIPER-GUIDE-FL",
+      "type": "PRISMATIC",
+      "frameA": "FR-CALIPER-GUIDE-A-FL",
+      "frameB": "FR-CALIPER-GUIDE-B-FL",
+      "axisA": [
+        1,
+        0,
+        0
+      ],
+      "axisB": [
+        1,
+        0,
+        0
+      ],
+      "limits": null,
+      "driver": null,
+      "evidenceInherited": "ASSUMPTION",
+      "sourceEvidenceIds": [
+        "SRC-RP01"
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "constraintId": "CON-SUSP-UPPER-CIRCLE",
+      "type": "POINT_ON_CIRCLE",
+      "jointOrConstraint": "CONSTRAINT",
+      "status": "PROPOSED",
+      "source": "R-04/R-09",
+      "evidenceInherited": "DEMO_ASSUMPTION"
+    },
+    {
+      "constraintId": "CON-SUSP-LOWER-CIRCLE",
+      "type": "POINT_ON_CIRCLE",
+      "jointOrConstraint": "CONSTRAINT",
+      "status": "PROPOSED",
+      "source": "R-04/R-09",
+      "evidenceInherited": "DEMO_ASSUMPTION"
+    },
+    {
+      "constraintId": "CON-KINGPIN-LENGTH",
+      "type": "DISTANCE",
+      "jointOrConstraint": "CONSTRAINT",
+      "status": "PROPOSED",
+      "source": "R-04/R-09",
+      "evidenceInherited": "DEMO_ASSUMPTION"
+    },
+    {
+      "constraintId": "CON-TIE-ROD-LENGTH",
+      "type": "DISTANCE",
+      "jointOrConstraint": "CONSTRAINT",
+      "status": "PROPOSED",
+      "source": "R-04/R-09",
+      "evidenceInherited": "DEMO_ASSUMPTION"
+    },
+    {
+      "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+      "type": "PRESCRIBED_POSITION",
+      "jointOrConstraint": "CONSTRAINT",
+      "status": "PROPOSED",
+      "source": "R-04/R-09",
+      "evidenceInherited": "DEMO_ASSUMPTION"
+    },
+    {
+      "constraintId": "CON-SHOCK-OUTPUT",
+      "type": "OUTPUT",
+      "jointOrConstraint": "OUTPUT",
+      "status": "PROPOSED",
+      "source": "R-04/R-09",
+      "evidenceInherited": "DEMO_ASSUMPTION"
+    }
+  ],
+  "references": [
+    {
+      "refId": "REF-30-001",
+      "canonicalRef": "ASSY-40-009",
+      "kind": "REF",
+      "bom": false,
+      "assemblyId": "ASM-WHEEL-END-FL",
+      "targetSystem": "SYS-40",
+      "note": "制动盘经 REF 引用，不计入轮端 BOM",
+      "containedPartIds": [
+        "PART-40-046"
+      ]
+    },
+    {
+      "refId": "REF-30-002",
+      "canonicalRef": "ASSY-40-008",
+      "kind": "REF",
+      "bom": false,
+      "assemblyId": "ASM-WHEEL-END-FL",
+      "targetSystem": "SYS-40",
+      "note": "卡钳经 REF 引用",
+      "containedPartIds": [
+        "PART-40-034"
+      ]
+    },
+    {
+      "refId": "REF-30-003",
+      "canonicalRef": "PART-20-016",
+      "kind": "REF",
+      "bom": false,
+      "assemblyId": "ASM-WHEEL-END-FL",
+      "targetSystem": "SYS-20",
+      "note": "转向节规范实体归 SYS-20",
+      "containedPartIds": []
+    }
+  ],
+  "bomLines": [
+    {
+      "bomLineId": "BL-FL-HUB",
+      "assemblyId": "ASM-HUB-BRG-FL",
+      "partRef": "PART-30-006",
+      "qtyPerAssembly": 1,
+      "instanceIds": [
+        "INST-HUB-FL"
+      ]
+    },
+    {
+      "bomLineId": "BL-FL-STUD",
+      "assemblyId": "ASM-HUB-BRG-FL",
+      "partRef": "PART-30-009",
+      "qtyPerAssembly": 5,
+      "instanceIds": [
+        "INST-STUD-FL-1",
+        "INST-STUD-FL-2",
+        "INST-STUD-FL-3",
+        "INST-STUD-FL-4",
+        "INST-STUD-FL-5"
+      ]
+    },
+    {
+      "bomLineId": "BL-FL-SCREW",
+      "assemblyId": "ASM-WHEEL-END-FL",
+      "partRef": "PART-30-031",
+      "qtyPerAssembly": 1,
+      "instanceIds": [
+        "INST-DISC-SCREW-FL"
+      ]
+    },
+    {
+      "bomLineId": "BL-FL-WHEEL",
+      "assemblyId": "ASM-WHEEL-END-FL",
+      "partRef": "PART-30-019",
+      "qtyPerAssembly": 1,
+      "instanceIds": [
+        "INST-WHEEL-FL"
+      ]
+    }
+  ],
+  "quantityFacts": [
+    {
+      "partId": "PART-30-009",
+      "qtyPerCorner": 5,
+      "vehicleTotal": 20,
+      "cornerCount": 4,
+      "valueBasis": "ASSUMPTION"
+    }
+  ],
+  "assets": [
+    {
+      "assetId": "ASSET-HUB-DEMO",
+      "partId": "PART-30-006",
+      "revision": "r001",
+      "contentFingerprint": "4656a3d39589d4dc",
+      "mappingStatus": "DEMO_SUBSTITUTE",
+      "sourceUnits": "mm",
+      "glb": null,
+      "fidelityClaim": "FID-V",
+      "note": "演示替代件，不是 PART-30-006 真实几何"
+    },
+    {
+      "assetId": "ASSET-STUD-PLACEHOLDER",
+      "partId": "PART-30-009",
+      "revision": null,
+      "contentFingerprint": null,
+      "mappingStatus": "PLACEHOLDER",
+      "sourceUnits": "mm",
+      "glb": null,
+      "fidelityClaim": "FID-V"
+    },
+    {
+      "assetId": "ASSET-ROTOR-PLACEHOLDER",
+      "partId": "PART-40-046",
+      "revision": null,
+      "contentFingerprint": null,
+      "mappingStatus": "PLACEHOLDER",
+      "sourceUnits": "mm",
+      "glb": null,
+      "fidelityClaim": "FID-V"
+    }
+  ],
+  "sourceEvidence": [
+    {
+      "sourceId": "SRC-RP01",
+      "kind": "PROJECT_RESEARCH",
+      "grade": "EVIDENCE",
+      "path": "docs/planning/evidence/RP-01-tree-chassis.json",
+      "supports": "PART/ASSY/REF IDs, Gen1/Gen3, qty",
+      "limitations": "IDs and tree relationships, not production geometry"
+    },
+    {
+      "sourceId": "SRC-R06",
+      "kind": "PROJECT_RESEARCH",
+      "grade": "ASSUMPTION",
+      "path": "docs/research/R-06-minimal-assembly-bom.json",
+      "supports": "BOM qty, 12 blocked interfaces, UNKNOWN discipline",
+      "limitations": "No PCD/CB/fit/torque values"
+    },
+    {
+      "sourceId": "SRC-R11",
+      "kind": "PROJECT_RESEARCH",
+      "grade": "EVIDENCE",
+      "path": "docs/research/R-11-geometry-anchor-study.md",
+      "supports": "M12 sourced sample, M14 not confirmed, fastener family",
+      "limitations": "Sample part is not this project vehicle"
+    },
+    {
+      "sourceId": "SRC-R12",
+      "kind": "PROJECT_RESEARCH",
+      "grade": "ENGINEERING_DERIVATION",
+      "path": "docs/research/R-12-conditional-adapter-report.md",
+      "supports": "applicableWhen/evidenceInherited/REF/qty rules",
+      "limitations": "Rules are a proposal, not frozen schema"
+    }
+  ],
+  "simulationRuns": [
+    {
+      "runId": "RUN-FL-001",
+      "inputRevision": 3,
+      "solver": "fixture-kinematics",
+      "status": "PASS",
+      "resultHash": "sha256:demo-run-fl-001",
+      "producedAt": "2026-11-15T00:00:00+08:00",
+      "source": "R-04/R-09 fixture, not production"
+    }
+  ],
+  "selectedId": "INST-HUB-FL"
+}

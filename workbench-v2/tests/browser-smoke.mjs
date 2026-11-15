@@ -111,12 +111,14 @@ try {
   await evaluate("document.querySelector('[data-select=inst-bearing-001]').click()");
   check('tree selection drives inspector', await evaluate("document.querySelector('.selected-name')?.textContent"),'轴承包络');
   await shot('02-selected-bearing.png');
+  check('measure tools hidden in model view',await evaluate("document.getElementById('inspectTools').hidden"),true);
   await evaluate("document.querySelector('.module-tab[data-workview=inspect]').click()");
   check('inspection shares the same selected engineering object',await evaluate("document.querySelector('.selected-name')?.textContent"),'轴承包络');
   check('inspection hides editing part library',await evaluate("getComputedStyle(document.querySelector('.catalog-block')).display"),'none');
   check('inspection hides the editing operations menu',await evaluate("getComputedStyle(document.getElementById('projectMenu')).display"),'none');
   check('inspection hides remove-part button',await evaluate("getComputedStyle(document.querySelector('[data-action=remove]')).display"),'none');
   check('inspection keeps explode controls',await evaluate("getComputedStyle(document.querySelector('.workspace-actions')).display !== 'none'"),true);
+  check('inspection shows measure/clip tools',await evaluate("!document.getElementById('inspectTools').hidden"),true);
   await shot('02b-inspection-workspace.png');
   await evaluate("document.querySelector('.module-tab[data-workview=model]').click()");
   check('engineering model restores editing library',await evaluate("getComputedStyle(document.querySelector('.catalog-block')).display !== 'none'"),true);

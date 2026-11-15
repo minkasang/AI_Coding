@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.mjs",
     "dashboard": "node command-center/server.mjs",
-    "viewer:engineering": "node viewer/experiments/engineering-viewer/server.mjs"
+    "viewer:engineering": "node -e \"console.log('历史路径：http://localhost:5173/?view=inspect — 请使用 npm start，不再常驻 5175');\""
   },
   "keywords": [
     "three.js",

@@ -1,0 +1,33 @@
+{
+  "measuredAt": "2026-11-15T08:52:37.654Z",
+  "cases": [
+    {
+      "id": "bad-l",
+      "query": "l=9&m=0",
+      "expect": "非法 l",
+      "rejected": true,
+      "error": "非法 l=9（只允许 0/1），拒绝静默回退到基线"
+    },
+    {
+      "id": "bad-m",
+      "query": "l=0&m=2",
+      "expect": "非法 m",
+      "rejected": true,
+      "error": "非法 m=2（只允许 0/1），拒绝静默回退到基线"
+    },
+    {
+      "id": "bad-unit",
+      "query": "l=0&m=0&unit=mm",
+      "expect": "必须以米为单位",
+      "rejected": true,
+      "error": "RUNTIME: Error: GLB 必须以米为单位，当前 mm（V2 viewport.js:124 同样拒绝）\n    at main (http://127.0.0.1:5173/viewer/experiments/render-quality-v2/main.js:100:35)"
+    },
+    {
+      "id": "missing-glb",
+      "query": "l=0&m=0&asset=/viewer/experiments/engineering-viewer/assets/__missing__.glb",
+      "expect": "GLB",
+      "rejected": true,
+      "error": "RUNTIME: Error: fetch for \"http://127.0.0.1:5173/viewer/experiments/engineering-viewer/assets/__missing__.glb\" responded with 404: Not Found\n    at http://127.0.0.1:5173/node_modules/three/build/three.module.js:44921:12"
+    }
+  ]
+}

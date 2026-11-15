@@ -1,0 +1,80 @@
+{
+  "taskId": "R-16",
+  "verdict": "PASS",
+  "cases": [
+    {
+      "combination": "GEN1 x STUD_AND_NUT",
+      "verdict": "PASS",
+      "violations": 0,
+      "partInstances": 278,
+      "studsPresent": [
+        "PART-30-009"
+      ],
+      "wheelFastenerRoles": [
+        "WHEEL_NUT"
+      ],
+      "gen1FlangePresent": true,
+      "codes": []
+    },
+    {
+      "combination": "GEN1 x LUG_BOLT",
+      "verdict": "PASS",
+      "violations": 0,
+      "partInstances": 258,
+      "studsPresent": [],
+      "wheelFastenerRoles": [
+        "LUG_BOLT"
+      ],
+      "gen1FlangePresent": true,
+      "codes": []
+    },
+    {
+      "combination": "GEN3 x STUD_AND_NUT",
+      "verdict": "PASS",
+      "violations": 0,
+      "partInstances": 286,
+      "studsPresent": [
+        "PART-30-017"
+      ],
+      "wheelFastenerRoles": [
+        "WHEEL_NUT"
+      ],
+      "gen1FlangePresent": false,
+      "codes": []
+    },
+    {
+      "combination": "GEN3 x LUG_BOLT",
+      "verdict": "PASS",
+      "violations": 0,
+      "partInstances": 266,
+      "studsPresent": [],
+      "wheelFastenerRoles": [
+        "LUG_BOLT"
+      ],
+      "gen1FlangePresent": false,
+      "codes": []
+    },
+    {
+      "combination": "ILLEGAL Gen1 + Gen3 flange part",
+      "verdict": "REJECTED",
+      "violations": 3,
+      "codes": [
+        "GEN3_PART_UNDER_GEN1",
+        "SUMMARY_COUNT_MISMATCH",
+        "VALUE_BASIS_HISTOGRAM_MISMATCH"
+      ]
+    },
+    {
+      "combination": "ILLEGAL LUG_BOLT + stud",
+      "verdict": "REJECTED",
+      "violations": 5,
+      "codes": [
+        "INSTANCE_COUNT_SWALLOWED",
+        "STUD_PRESENT_UNDER_LUG_BOLT",
+        "FASTENER_ARCH_MIXED",
+        "SUMMARY_COUNT_MISMATCH",
+        "VALUE_BASIS_HISTOGRAM_MISMATCH"
+      ]
+    }
+  ]
+}

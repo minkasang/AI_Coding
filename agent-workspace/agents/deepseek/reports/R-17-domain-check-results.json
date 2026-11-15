@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "carlab.domain-contract-check/0.1.0",
+  "ok": true,
+  "fixtures": [
+    {
+      "fixture": "vehicle-skeleton.json",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "counts": {
+        "systems": 10,
+        "assemblyDefinitions": 12,
+        "assemblies": 15,
+        "partDefinitions": 11,
+        "partInstances": 14,
+        "studInstances": 5,
+        "wheelEnds": 4,
+        "references": 3,
+        "bomLines": 4,
+        "joints": 3,
+        "constraints": 6,
+        "sourceEvidence": 4
+      },
+      "familyFam130007": [
+        "PART-30-009",
+        "PART-30-017",
+        "PART-30-029"
+      ],
+      "selectedId": "INST-HUB-FL",
+      "run": {
+        "runId": "RUN-FL-001",
+        "status": "CURRENT",
+        "inputRevision": 3,
+        "projectRevision": 3
+      },
+      "firstDisplayTransform": {
+        "instanceId": "INST-HUB-FL",
+        "units": "m",
+        "up": "Y",
+        "origin": [
+          0.84,
+          0.32,
+          1.23
+        ]
+      }
+    },
+    {
+      "fixture": "fl-wheel-end.json",
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "counts": {
+        "systems": 3,
+        "assemblyDefinitions": 5,
+        "assemblies": 5,
+        "partDefinitions": 8,
+        "partInstances": 11,
+        "studInstances": 5,
+        "wheelEnds": 1,
+        "references": 3,
+        "bomLines": 4,
+        "joints": 3,
+        "constraints": 6,
+        "sourceEvidence": 4
+      },
+      "familyFam130007": [
+        "PART-30-009"
+      ],
+      "selectedId": "INST-HUB-FL",
+      "run": {
+        "runId": "RUN-FL-001",
+        "status": "CURRENT",
+        "inputRevision": 3,
+        "projectRevision": 3
+      },
+      "firstDisplayTransform": {
+        "instanceId": "INST-HUB-FL",
+        "units": "m",
+        "up": "Y",
+        "origin": [
+          0.84,
+          0.32,
+          1.23
+        ]
+      }
+    }
+  ]
+}

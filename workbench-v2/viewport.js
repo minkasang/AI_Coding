@@ -24,6 +24,7 @@ export class EngineeringViewport {
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.18;
+    this.renderer.localClippingEnabled = true;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     const env = new THREE.PMREMGenerator(this.renderer);
@@ -64,7 +65,10 @@ export class EngineeringViewport {
     this.controls.target.set(0, 0, 0);
     this.controls.update();
     this.modelLayer = new THREE.Group();
-    this.scene.add(this.modelLayer);
+    this.measureGroup = new THREE.Group();
+    this.measureGroup.name = 'inspection_measure_overlay';
+    this.scene.add(this.modelLayer, this.measureGroup);
+    this._clipBounds = null;
     this.templates = new Map();
     this.objects = new Map();
     this.metadata = null;
@@ -186,6 +190,7 @@ export class EngineeringViewport {
         }
       });
     }
+    this._updateClipBounds();
   }
   focus(instanceId = null) {
     const box = new THREE.Box3();
@@ -212,5 +217,38 @@ export class EngineeringViewport {
   }
   counts() {
     return { triangles: this.renderer.info.render.triangles, calls: this.renderer.info.render.calls };
+  }
+  getClipBounds() {
+    return this._clipBounds;
+  }
+  intersectPointer(event) {
+    const canvas = this.canvas;
+    const bounds = canvas.getBoundingClientRect();
+    if (!bounds.width || !bounds.height) return null;
+    this.pointer.set(
+      ((event.clientX - bounds.left) / bounds.width) * 2 - 1,
+      -((event.clientY - bounds.top) / bounds.height) * 2 + 1
+    );
+    this.ray.setFromCamera(this.pointer, this.camera);
+    const hits = this.ray.intersectObjects([...this.objects.values()], true);
+    return hits[0] || null;
+  }
+  _updateClipBounds() {
+    const box = new THREE.Box3();
+    let valid = false;
+    for (const object of this.objects.values()) {
+      if (!object.visible) continue;
+      box.expandByObject(object);
+      valid = true;
+    }
+    if (!valid || box.isEmpty()) {
+      this._clipBounds = null;
+      return;
+    }
+    this._clipBounds = {
+      x: { min: box.min.x, max: box.max.x },
+      y: { min: box.min.y, max: box.max.y },
+      z: { min: box.min.z, max: box.max.z },
+    };
   }
 }

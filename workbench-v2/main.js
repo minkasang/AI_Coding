@@ -2,6 +2,7 @@ import {
   ProjectStore, createDemoProject, createEmptyProject, getInstances, assertProject
 } from './project-store.mjs';
 import { EngineeringViewport } from './viewport.js';
+import { InspectionBridge } from './experiments/inspection-bridge/inspection-bridge.mjs';
 import './shell-router.js';
 
 const el = (id) => document.getElementById(id);
@@ -164,6 +165,20 @@ async function boot() {
     el('loadingStatus').hidden = true;
     refresh(store.snapshot());
     if (['model', 'inspect'].includes(window.CARLAB_SHELL?.mode)) viewport.focus();
+    new InspectionBridge({
+      viewport,
+      ui: {
+        measureBtn: el('measureToggle'),
+        clipBtn: el('clipToggle'),
+        clipAxis: el('clipAxis'),
+        clipPos: el('clipPos'),
+        clipInline: el('clipInline'),
+        readout: el('measureReadout'),
+        toolsRoot: el('inspectTools'),
+      },
+      getMode: () => window.CARLAB_SHELL?.mode || 'model',
+      onToast: toast,
+    });
     window.__CARLAB_V2_READY__ = true;
   } catch (error) {
     el('loadingStatus').textContent = '模型未能载入：' + error.message;

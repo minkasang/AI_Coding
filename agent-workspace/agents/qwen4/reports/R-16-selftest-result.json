@@ -1,0 +1,395 @@
+{
+  "taskId": "R-16",
+  "verdict": "PASS",
+  "caught": 37,
+  "missed": 0,
+  "total": 37,
+  "rulesCovered": [
+    "V01",
+    "V02",
+    "V03",
+    "V04",
+    "V05",
+    "V06",
+    "V07",
+    "V08",
+    "V09",
+    "V10",
+    "V11",
+    "V12",
+    "V13",
+    "V14",
+    "V15",
+    "V16",
+    "V17",
+    "V18",
+    "V19"
+  ],
+  "rulesUncovered": [],
+  "cases": [
+    {
+      "rule": "V01",
+      "mutation": "duplicate part instance id",
+      "caught": true,
+      "codes": [
+        "DUPLICATE_INSTANCE_ID"
+      ]
+    },
+    {
+      "rule": "V01",
+      "mutation": "duplicate frame id",
+      "caught": true,
+      "codes": [
+        "DUPLICATE_FRAME_ID"
+      ]
+    },
+    {
+      "rule": "V02",
+      "mutation": "instance points at nonexistent definition",
+      "caught": true,
+      "codes": [
+        "DEFINITION_NOT_FOUND"
+      ]
+    },
+    {
+      "rule": "V02",
+      "mutation": "instance points at nonexistent frame",
+      "caught": true,
+      "codes": [
+        "FRAME_NOT_FOUND"
+      ]
+    },
+    {
+      "rule": "V03",
+      "mutation": "familyRef dedup swallows stud instances",
+      "caught": true,
+      "codes": [
+        "INSTANCE_COUNT_SWALLOWED",
+        "INSTANCE_COUNT_SWALLOWED",
+        "INSTANCE_COUNT_SWALLOWED",
+        "INSTANCE_COUNT_SWALLOWED"
+      ]
+    },
+    {
+      "rule": "V04",
+      "mutation": "required choice group unset",
+      "caught": true,
+      "codes": [
+        "REQUIRED_CHOICE_GROUP_UNSET"
+      ]
+    },
+    {
+      "rule": "V04",
+      "mutation": "two hub generations selected at once",
+      "caught": true,
+      "codes": [
+        "CHOICE_GROUP_NOT_EXACTLY_ONE",
+        "HUB_GENERATION_INVALID"
+      ]
+    },
+    {
+      "rule": "V05",
+      "mutation": "Gen3 flange part instantiated under Gen1",
+      "caught": true,
+      "codes": [
+        "GEN3_PART_UNDER_GEN1"
+      ]
+    },
+    {
+      "rule": "V05",
+      "mutation": "switch to Gen3 but keep Gen1 separate hub flange",
+      "caught": true,
+      "codes": [
+        "GEN1_PART_UNDER_GEN3",
+        "GEN1_PART_UNDER_GEN3",
+        "GENERATION_REQUIRED_PART_MISSING",
+        "GENERATION_REQUIRED_PART_MISSING",
+        "GENERATION_REQUIRED_PART_MISSING"
+      ]
+    },
+    {
+      "rule": "V06",
+      "mutation": "lug bolt architecture keeps studs",
+      "caught": true,
+      "codes": [
+        "STUD_PRESENT_UNDER_LUG_BOLT",
+        "FASTENER_ARCH_MIXED",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG",
+        "WHEEL_FASTENER_ROLE_WRONG"
+      ]
+    },
+    {
+      "rule": "V06",
+      "mutation": "wheel fastener role wrong for architecture",
+      "caught": true,
+      "codes": [
+        "WHEEL_FASTENER_ROLE_WRONG"
+      ]
+    },
+    {
+      "rule": "V07",
+      "mutation": "vehicle total used as per-corner qty",
+      "caught": true,
+      "codes": [
+        "QTY_LEVEL_INCONSISTENT"
+      ]
+    },
+    {
+      "rule": "V07",
+      "mutation": "qty mismatch flagged but not recorded",
+      "caught": true,
+      "codes": [
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED",
+        "QTY_MISMATCH_NOT_RECORDED"
+      ]
+    },
+    {
+      "rule": "V08",
+      "mutation": "ASSUMPTION definition upgraded to SOURCED by instantiation",
+      "caught": true,
+      "codes": [
+        "IDENTITY_UPGRADED_BY_INSTANTIATION"
+      ]
+    },
+    {
+      "rule": "V08",
+      "mutation": "valueBasis stronger than identity",
+      "caught": true,
+      "codes": [
+        "VALUE_BASIS_STRONGER_THAN_IDENTITY",
+        "VALUE_BASIS_IGNORES_WEAKER_FIELD",
+        "VALUE_BASIS_IGNORES_WEAKER_FIELD",
+        "VALUE_BASIS_IGNORES_WEAKER_FIELD"
+      ]
+    },
+    {
+      "rule": "V09",
+      "mutation": "UNKNOWN geometry claimed SOURCED",
+      "caught": true,
+      "codes": [
+        "SOURCED_GEOMETRY_FABRICATED"
+      ]
+    },
+    {
+      "rule": "V09",
+      "mutation": "pending geometry given a CAD asset",
+      "caught": true,
+      "codes": [
+        "PENDING_GEOMETRY_HAS_ASSET"
+      ]
+    },
+    {
+      "rule": "V10",
+      "mutation": "UNKNOWN mass status with a value basis",
+      "caught": true,
+      "codes": [
+        "UNKNOWN_STATUS_WITH_VALUE"
+      ]
+    },
+    {
+      "rule": "V11",
+      "mutation": "mirrored knuckle handled by global scale",
+      "caught": true,
+      "codes": [
+        "INSTANCE_CARRIES_SCALE"
+      ]
+    },
+    {
+      "rule": "V11",
+      "mutation": "mirrored part not regenerated",
+      "caught": true,
+      "codes": [
+        "MIRRORED_PART_NOT_REGENERATED"
+      ]
+    },
+    {
+      "rule": "V11",
+      "mutation": "frame mirror policy replaced by negative scale",
+      "caught": true,
+      "codes": [
+        "FRAME_MIRROR_POLICY_WRONG"
+      ]
+    },
+    {
+      "rule": "V12",
+      "mutation": "rear corner station deleted",
+      "caught": true,
+      "codes": [
+        "CORNER_STATION_MISSING"
+      ]
+    },
+    {
+      "rule": "V12",
+      "mutation": "solid axle rear given a steering knuckle",
+      "caught": true,
+      "codes": [
+        "REAR_KNUCKLE_ON_SOLID_AXLE"
+      ]
+    },
+    {
+      "rule": "V13",
+      "mutation": "world frame unilaterally frozen",
+      "caught": true,
+      "codes": [
+        "WORLD_FRAME_FROZEN"
+      ]
+    },
+    {
+      "rule": "V13",
+      "mutation": "frame carries world absolute position",
+      "caught": true,
+      "codes": [
+        "WORLD_ABSOLUTE_COORDINATE"
+      ]
+    },
+    {
+      "rule": "V14",
+      "mutation": "cross-system REF counted in BOM",
+      "caught": true,
+      "codes": [
+        "REF_COUNTED_IN_BOM"
+      ]
+    },
+    {
+      "rule": "V15",
+      "mutation": "Dorman reference specimen installed into vehicle",
+      "caught": true,
+      "codes": [
+        "REFERENCE_SPECIMEN_INSTALLED"
+      ]
+    },
+    {
+      "rule": "V15",
+      "mutation": "specimen part number leaked into BOM instances",
+      "caught": true,
+      "codes": [
+        "SPECIMEN_PART_NUMBER_IN_BOM"
+      ]
+    },
+    {
+      "rule": "V16",
+      "mutation": "MODEL_BLOCKED item without reason",
+      "caught": true,
+      "codes": [
+        "MODEL_BLOCKED_WITHOUT_REASON"
+      ]
+    },
+    {
+      "rule": "V16",
+      "mutation": "required blocked item removed",
+      "caught": true,
+      "codes": [
+        "BLOCKED_FLAG_WITHOUT_ITEM",
+        "REQUIRED_BLOCKED_ITEM_MISSING"
+      ]
+    },
+    {
+      "rule": "V17",
+      "mutation": "second deep slice added",
+      "caught": true,
+      "codes": [
+        "DEEP_SLICE_NOT_EXACTLY_ONE"
+      ]
+    },
+    {
+      "rule": "V17",
+      "mutation": "deep slice missing lower arm",
+      "caught": true,
+      "codes": [
+        "MOVABLE_CHAIN_INCOMPLETE"
+      ]
+    },
+    {
+      "rule": "V18",
+      "mutation": "summary instance count falsified",
+      "caught": true,
+      "codes": [
+        "SUMMARY_COUNT_MISMATCH"
+      ]
+    },
+    {
+      "rule": "V18",
+      "mutation": "source modification flag flipped",
+      "caught": true,
+      "codes": [
+        "SOURCE_MODIFICATION_FLAG_WRONG"
+      ]
+    },
+    {
+      "rule": "V19",
+      "mutation": "candidate schema claimed frozen",
+      "caught": true,
+      "codes": [
+        "SCHEMA_CLAIMED_FROZEN"
+      ]
+    },
+    {
+      "rule": "V19",
+      "mutation": "unapproved variant claimed approved",
+      "caught": true,
+      "codes": [
+        "VARIANT_CLAIMED_APPROVED"
+      ]
+    },
+    {
+      "rule": "V19",
+      "mutation": "new choice group claimed inherited from RP-01",
+      "caught": true,
+      "codes": [
+        "NEW_CHOICE_GROUP_CLAIMED_INHERITED"
+      ]
+    }
+  ]
+}

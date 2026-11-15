@@ -1,0 +1,234 @@
+{
+  "schema": "carlab.r18.mechanismSlice.v1",
+  "date": "2026-11-15",
+  "command": "node src-experiments/mechanism-vertical-slice-v1/run-checks.mjs",
+  "valueBasis": "DEMO_ASSUMPTION",
+  "provenance": "FICTIONAL_FIXTURE",
+  "instanceIdStatus": "CANDIDATE_NOT_FROZEN",
+  "passCount": 11,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "M01_three_named_poses",
+      "pass": true,
+      "count": 9
+    },
+    {
+      "id": "M02_arm_and_tierod_lengths_constant",
+      "pass": true,
+      "upperRangeM": 4.2609304973240114e-11,
+      "lowerRangeM": 2.9564128922743294e-12,
+      "tieRangeM": 6.694855780864373e-11
+    },
+    {
+      "id": "M03_ball_closure_within_limit",
+      "pass": true,
+      "maxClosureM": 6.694852425581005e-11
+    },
+    {
+      "id": "M04_no_scale_and_no_force",
+      "pass": true
+    },
+    {
+      "id": "N01_underconstrained_not_legal",
+      "pass": true,
+      "category": "UNDERCONSTRAINED"
+    },
+    {
+      "id": "N02_length_conflict_not_legal",
+      "pass": true,
+      "code": "KIN-E-LENGTH"
+    },
+    {
+      "id": "N03_nonconvergence_not_legal",
+      "pass": true,
+      "code": "KIN-E-CONVERGE",
+      "residual": 0.012378234634415036
+    },
+    {
+      "id": "M05_right_side_is_explicit_mirror",
+      "pass": true,
+      "leftX": 0.72,
+      "rightX": -0.72
+    },
+    {
+      "id": "M06_engineering_millimetres_match_vehicle_pose",
+      "pass": true,
+      "vehicle": [
+        0.72,
+        -2.0816681711721685e-17,
+        -1.8675149714476987e-16
+      ],
+      "engineering": [
+        0.72,
+        -3.469446951953614e-17,
+        3.2526065174565133e-18
+      ]
+    },
+    {
+      "id": "N04_variant_span_does_not_publish_poses",
+      "pass": true,
+      "code": "P09"
+    },
+    {
+      "id": "N05_proxy_interference_is_not_legal_assembly",
+      "pass": true,
+      "status": "INTERFERENCE"
+    }
+  ],
+  "designSample": {
+    "legalAssembly": true,
+    "category": "MECHANISM_OK",
+    "code": "KIN-OK",
+    "travelM": 0,
+    "residualM": 2.220446049250313e-16,
+    "camberRad": -0.03997419506900204,
+    "toeRad": -0.014998875151848829,
+    "shockLengthM": 0.43025951471176094,
+    "halfshaftLengthM": 0.6003332407921453,
+    "instances": [
+      {
+        "instanceId": "INST-SLA-UPPER-ARM-FL",
+        "position": [
+          0.28,
+          0.22,
+          0.13
+        ],
+        "quaternion": [
+          7.2799130884492e-17,
+          3.6399565442245945e-17,
+          4.731943507491976e-16,
+          1
+        ],
+        "rigidLengthsM": {
+          "axisAToBall": 0.2981610303175117,
+          "axisBToBall": 0.34073450074801664
+        },
+        "closureErrorM": 2.242025235105681e-16,
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "instanceId": "INST-SLA-LOWER-ARM-FL",
+        "position": [
+          0.32,
+          -0.04,
+          0.16
+        ],
+        "quaternion": [
+          2.5257050278740412e-17,
+          1.2628525139370207e-17,
+          1.3470426815328219e-16,
+          1
+        ],
+        "rigidLengthsM": {
+          "axisAToBall": 0.340587727318528,
+          "axisBToBall": 0.3940812099047606
+        },
+        "closureErrorM": 3.4175639091876038e-18,
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "instanceId": "INST-SLA-UPRIGHT-FL",
+        "position": [
+          0.62,
+          -0.05999999999999991,
+          3.4175639091876038e-18
+        ],
+        "quaternion": [
+          0.3561804631881524,
+          0.4475792352366598,
+          0.6629939384383665,
+          0.48295687532327697
+        ],
+        "closureErrorM": 1.298611723169814e-16,
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "instanceId": "INST-SLA-TIEROD-FL",
+        "position": [
+          0.26,
+          0.06,
+          0.15
+        ],
+        "quaternion": [
+          0.526648535607575,
+          0.5081754250924003,
+          0.47319337704151426,
+          0.49039482582772265
+        ],
+        "rigidLengthsM": {
+          "length": 0.280891438103763
+        },
+        "closureErrorM": 2.242025235105681e-16,
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "instanceId": "INST-SLA-HUB-FL",
+        "position": [
+          0.72,
+          -2.0816681711721685e-17,
+          -1.8675149714476987e-16
+        ],
+        "quaternion": [
+          0.0001498806056437427,
+          -0.0074978693904317545,
+          -0.019985204793819943,
+          0.9997721495819721
+        ],
+        "wheelSpinRad": null,
+        "wheelSpinBasis": "UNKNOWN",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "clearance": {
+      "method": "DECLARED_SPHERE_PROXY",
+      "notCadCollision": true,
+      "pairs": [
+        {
+          "a": "upper-ball",
+          "b": "rail",
+          "clearanceM": 0.4654997502496879,
+          "interference": false
+        }
+      ],
+      "status": "CLEAR"
+    },
+    "solverCalled": true,
+    "forces": null,
+    "forceBasis": "UNKNOWN",
+    "valueBasis": "DEMO_ASSUMPTION",
+    "frameId": "FR-VEHICLE"
+  },
+  "travelSamplesM": [
+    -0.04,
+    -0.03,
+    -0.02,
+    -0.01,
+    0,
+    0.01,
+    0.02,
+    0.03,
+    0.04
+  ]
+}

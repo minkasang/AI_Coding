@@ -1,0 +1,2091 @@
+{
+  "schemaVersion": "carlab.r19.ab/1.0",
+  "measuredAt": "2026-11-15T08:52:37.657Z",
+  "environment": {
+    "chrome": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "service": "http://127.0.0.1:5173 (5173 同源；未新增常驻端口)",
+    "page": "/viewer/experiments/render-quality-v2/index.html",
+    "viewport": [
+      1280,
+      800
+    ],
+    "virtualTimeBudgetMs": 20000,
+    "rasterizer": "Chrome headless --use-angle=swiftshader (SOFTWARE) — 不是真实 GPU",
+    "userDataDir": "F:/tmp/r19-chrome/<case>",
+    "externalAssets": "none — 仅项目自身 GLB + 程序化 RoomEnvironment",
+    "productionFilesTouched": false
+  },
+  "variables": {
+    "M": "m0 = V2 统一覆盖 metalness/roughness；m1 = 恢复 GLB 自带 pbrMetallicRoughness（严格单变量）",
+    "L": "l0 = 逐参数复刻 viewport.js；l1 = 光/接地参数配置包（多参数，非单变量）",
+    "views": [
+      "iso",
+      "top",
+      "side"
+    ]
+  },
+  "cases": [
+    {
+      "case": "l0m0",
+      "l": 0,
+      "m": 0,
+      "glb": {
+        "asset": "/viewer/experiments/engineering-viewer/assets/wheel_hub_assembly.glb",
+        "glbUnit": "m",
+        "assetBasis": "DEMONSTRATION_PROTOTYPE",
+        "meshNodes": 1,
+        "parts": 3,
+        "meshCount": 3,
+        "triangles": 11588,
+        "bbox": {
+          "min": [
+            -0.076,
+            -0.042,
+            -0.076
+          ],
+          "max": [
+            0.076,
+            0.045,
+            0.076
+          ],
+          "size": [
+            0.152,
+            0.087,
+            0.152
+          ]
+        },
+        "gapToV2GroundM": 0.054
+      },
+      "appliedConfig": {
+        "exposure": 1.18,
+        "hemiIntensity": 0.9,
+        "sunIntensity": 2,
+        "fillIntensity": 0.9,
+        "groundColor": "#1b3f68",
+        "groundOpacity": 0.14,
+        "groundY": -0.096,
+        "gridY": -0.095,
+        "materialMode": "V2_UNIFORM_OVERRIDE"
+      },
+      "parts": [
+        {
+          "partKey": "hub",
+          "nodeMatch": "Part_Hub",
+          "color": "#8e9fb3",
+          "meshCount": 1,
+          "triangles": 4052,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_Hub",
+              "metalness": 0.85,
+              "roughness": 0.25
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.7,
+              "roughness": 0.34,
+              "envMapIntensity": 1.05
+            }
+          ]
+        },
+        {
+          "partKey": "bearing",
+          "nodeMatch": "Part_Bearing",
+          "color": "#607891",
+          "meshCount": 1,
+          "triangles": 2516,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_Bearing",
+              "metalness": 0.95,
+              "roughness": 0.12
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.7,
+              "roughness": 0.34,
+              "envMapIntensity": 1.05
+            }
+          ]
+        },
+        {
+          "partKey": "studs",
+          "nodeMatch": "Part_WheelStuds",
+          "color": "#8194af",
+          "meshCount": 1,
+          "triangles": 5020,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_WheelStuds",
+              "metalness": 0.8,
+              "roughness": 0.5
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.7,
+              "roughness": 0.34,
+              "envMapIntensity": 1.05
+            }
+          ]
+        }
+      ],
+      "fixed": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "pixelRatio": 1,
+        "background": "#eef3f8",
+        "toneMapping": "ACESFilmicToneMapping",
+        "outputColorSpace": "SRGBColorSpace",
+        "shadowMap": "PCFSoftShadowMap",
+        "pmremSigma": 0.03,
+        "envSource": "RoomEnvironment (procedural, no external asset)",
+        "sunMapSize": 1024,
+        "sunFrustum": 0.6,
+        "autoSpin": false,
+        "geometryNormalsModified": false
+      },
+      "views": [
+        {
+          "name": "iso",
+          "camera": {
+            "dir": [
+              0.92,
+              0.78,
+              1.12
+            ],
+            "dist": 0.485,
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 218.968,
+            "lumaStdDev": 29.054,
+            "highlightRatio": 0.730048,
+            "nearWhiteRatio": 0.505788,
+            "clippedRatio": 0,
+            "edgeGradient": 2.7949,
+            "pixels": 170004
+          },
+          "contact": {
+            "profile": [
+              242.3,
+              242.3,
+              242.3,
+              242.13,
+              241.65,
+              240.79,
+              240.88,
+              239.79,
+              216.57,
+              215.43,
+              200.35,
+              169.74,
+              152.25,
+              148.13,
+              149.16,
+              149.37,
+              148.3,
+              145.92,
+              143.78,
+              147.68,
+              168.2,
+              202.75,
+              214.63,
+              214.92,
+              222.11,
+              242.27,
+              242.12,
+              241.97,
+              241.55,
+              241.95,
+              242.3,
+              242.3
+            ],
+            "asymmetry": 1.802,
+            "centerEdgeRatio": 0.6814,
+            "edgeMean": 235.51,
+            "centerMean": 160.47,
+            "minLuma": 143.78,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 366,
+              "y": 487,
+              "w": 548,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 203.59,
+              "lumaStdDev": 26.604,
+              "highlightRatio": 0.511002,
+              "nearWhiteRatio": 0.172642,
+              "clippedRatio": 0,
+              "edgeGradient": 4.2658,
+              "pixels": 81620
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 193.659,
+              "lumaStdDev": 31.805,
+              "highlightRatio": 0.512598,
+              "nearWhiteRatio": 0.025093,
+              "clippedRatio": 0,
+              "edgeGradient": 3.5705,
+              "pixels": 29450
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 203.387,
+              "lumaStdDev": 24.697,
+              "highlightRatio": 0.509702,
+              "nearWhiteRatio": 0.138492,
+              "clippedRatio": 0,
+              "edgeGradient": 4.2146,
+              "pixels": 70914
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 406.8170509391713,
+              "y": 244.64154222094666,
+              "w": 455.7068251089956,
+              "h": 370.6106473282172
+            },
+            "contact": {
+              "x": 366,
+              "y": 487,
+              "w": 548,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l0m0-iso.png"
+        },
+        {
+          "name": "top",
+          "camera": {
+            "dir": [
+              0.12,
+              1,
+              0.18
+            ],
+            "dist": 0.38,
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 211.037,
+            "lumaStdDev": 35.184,
+            "highlightRatio": 0.626385,
+            "nearWhiteRatio": 0.457843,
+            "clippedRatio": 0,
+            "edgeGradient": 2.5943,
+            "pixels": 375100
+          },
+          "contact": {
+            "profile": [
+              241.95,
+              242.18,
+              242.3,
+              242.3,
+              242.3,
+              223.22,
+              201.91,
+              182.69,
+              170.14,
+              182.05,
+              184.81,
+              192.5,
+              171.33,
+              122.49,
+              112.97,
+              123.6,
+              150.6,
+              120.46,
+              130.73,
+              173.8,
+              195.92,
+              189.26,
+              219.69,
+              217.27,
+              209.38,
+              180.89,
+              222.01,
+              242.3,
+              242.3,
+              242.25,
+              241.93,
+              241.91
+            ],
+            "asymmetry": -8.889,
+            "centerEdgeRatio": 0.7028,
+            "edgeMean": 221.55,
+            "centerMean": 155.71,
+            "minLuma": 112.97,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 268,
+              "y": 426,
+              "w": 744,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 195.3,
+              "lumaStdDev": 35.095,
+              "highlightRatio": 0.409011,
+              "nearWhiteRatio": 0.233169,
+              "clippedRatio": 0,
+              "edgeGradient": 3.842,
+              "pixels": 237133
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 178.729,
+              "lumaStdDev": 34.036,
+              "highlightRatio": 0.230266,
+              "nearWhiteRatio": 0.035424,
+              "clippedRatio": 0,
+              "edgeGradient": 5.7121,
+              "pixels": 56882
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 186.653,
+              "lumaStdDev": 32.339,
+              "highlightRatio": 0.293727,
+              "nearWhiteRatio": 0.113228,
+              "clippedRatio": 0,
+              "edgeGradient": 4.2676,
+              "pixels": 181890
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 325.44403077404576,
+              "y": 88.54651023095613,
+              "w": 619.454616649759,
+              "h": 604.2538403325224
+            },
+            "contact": {
+              "x": 268,
+              "y": 426,
+              "w": 744,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l0m0-top.png"
+        },
+        {
+          "name": "side",
+          "camera": {
+            "dir": [
+              0.18,
+              0.3,
+              1
+            ],
+            "dist": 0.42,
+            "target": [
+              0,
+              -0.01,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 205.222,
+            "lumaStdDev": 36.789,
+            "highlightRatio": 0.620288,
+            "nearWhiteRatio": 0.301098,
+            "clippedRatio": 0,
+            "edgeGradient": 2.8289,
+            "pixels": 140114
+          },
+          "contact": {
+            "profile": [
+              241.3,
+              231.19,
+              221.58,
+              215.87,
+              215.32,
+              215.37,
+              215.57,
+              215.6,
+              215.6,
+              197.06,
+              160.85,
+              133.44,
+              124.14,
+              121.31,
+              120.38,
+              119.83,
+              119.23,
+              118.83,
+              119.42,
+              122.62,
+              133.46,
+              163.55,
+              218.07,
+              241.98,
+              241.99,
+              242.2,
+              242.3,
+              242.3,
+              242.3,
+              242.3,
+              242.3,
+              242.3
+            ],
+            "asymmetry": -21.358,
+            "centerEdgeRatio": 0.5663,
+            "edgeMean": 229.13,
+            "centerMean": 129.76,
+            "minLuma": 118.83,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 375,
+              "y": 485,
+              "w": 530,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 205.313,
+              "lumaStdDev": 21.72,
+              "highlightRatio": 0.507589,
+              "nearWhiteRatio": 0.127633,
+              "clippedRatio": 0,
+              "edgeGradient": 3.8282,
+              "pixels": 52706
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 161.811,
+              "lumaStdDev": 41.09,
+              "highlightRatio": 0.196475,
+              "nearWhiteRatio": 0.042237,
+              "clippedRatio": 0,
+              "edgeGradient": 2.8886,
+              "pixels": 24339
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 206.621,
+              "lumaStdDev": 20.929,
+              "highlightRatio": 0.532683,
+              "nearWhiteRatio": 0.134452,
+              "clippedRatio": 0,
+              "edgeGradient": 3.7736,
+              "pixels": 50531
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 382.3156407980688,
+              "y": 243.28174682420888,
+              "w": 441.53985361582437,
+              "h": 316.568050144141
+            },
+            "contact": {
+              "x": 375,
+              "y": 485,
+              "w": 530,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l0m0-side.png"
+        }
+      ]
+    },
+    {
+      "case": "l1m0",
+      "l": 1,
+      "m": 0,
+      "glb": {
+        "asset": "/viewer/experiments/engineering-viewer/assets/wheel_hub_assembly.glb",
+        "glbUnit": "m",
+        "assetBasis": "DEMONSTRATION_PROTOTYPE",
+        "meshNodes": 1,
+        "parts": 3,
+        "meshCount": 3,
+        "triangles": 11588,
+        "bbox": {
+          "min": [
+            -0.076,
+            -0.042,
+            -0.076
+          ],
+          "max": [
+            0.076,
+            0.045,
+            0.076
+          ],
+          "size": [
+            0.152,
+            0.087,
+            0.152
+          ]
+        },
+        "gapToV2GroundM": 0.054
+      },
+      "appliedConfig": {
+        "exposure": 1,
+        "hemiIntensity": 0.45,
+        "sunIntensity": 2.4,
+        "fillIntensity": 0.55,
+        "groundColor": "#2b3644",
+        "groundOpacity": 0.34,
+        "groundY": -0.043,
+        "gridY": -0.042,
+        "materialMode": "V2_UNIFORM_OVERRIDE"
+      },
+      "parts": [
+        {
+          "partKey": "hub",
+          "nodeMatch": "Part_Hub",
+          "color": "#8e9fb3",
+          "meshCount": 1,
+          "triangles": 4052,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_Hub",
+              "metalness": 0.85,
+              "roughness": 0.25
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.7,
+              "roughness": 0.34,
+              "envMapIntensity": 1.05
+            }
+          ]
+        },
+        {
+          "partKey": "bearing",
+          "nodeMatch": "Part_Bearing",
+          "color": "#607891",
+          "meshCount": 1,
+          "triangles": 2516,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_Bearing",
+              "metalness": 0.95,
+              "roughness": 0.12
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.7,
+              "roughness": 0.34,
+              "envMapIntensity": 1.05
+            }
+          ]
+        },
+        {
+          "partKey": "studs",
+          "nodeMatch": "Part_WheelStuds",
+          "color": "#8194af",
+          "meshCount": 1,
+          "triangles": 5020,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_WheelStuds",
+              "metalness": 0.8,
+              "roughness": 0.5
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.7,
+              "roughness": 0.34,
+              "envMapIntensity": 1.05
+            }
+          ]
+        }
+      ],
+      "fixed": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "pixelRatio": 1,
+        "background": "#eef3f8",
+        "toneMapping": "ACESFilmicToneMapping",
+        "outputColorSpace": "SRGBColorSpace",
+        "shadowMap": "PCFSoftShadowMap",
+        "pmremSigma": 0.03,
+        "envSource": "RoomEnvironment (procedural, no external asset)",
+        "sunMapSize": 1024,
+        "sunFrustum": 0.6,
+        "autoSpin": false,
+        "geometryNormalsModified": false
+      },
+      "views": [
+        {
+          "name": "iso",
+          "camera": {
+            "dir": [
+              0.92,
+              0.78,
+              1.12
+            ],
+            "dist": 0.485,
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 214.82,
+            "lumaStdDev": 35.236,
+            "highlightRatio": 0.662702,
+            "nearWhiteRatio": 0.545575,
+            "clippedRatio": 0,
+            "edgeGradient": 3.1017,
+            "pixels": 170004
+          },
+          "contact": {
+            "profile": [
+              241.61,
+              241.99,
+              242.3,
+              242.3,
+              242.3,
+              242.3,
+              242.18,
+              235.65,
+              200.88,
+              175.7,
+              166.23,
+              156.9,
+              138.57,
+              134.43,
+              135.55,
+              135.8,
+              134.7,
+              132.28,
+              130.02,
+              133.9,
+              155.2,
+              167.93,
+              173.83,
+              186.5,
+              224.19,
+              241.97,
+              241.95,
+              242.01,
+              242.08,
+              241.91,
+              242.3,
+              242.3
+            ],
+            "asymmetry": 2.817,
+            "centerEdgeRatio": 0.6256,
+            "edgeMean": 229.31,
+            "centerMean": 143.46,
+            "minLuma": 130.02,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 366,
+              "y": 487,
+              "w": 548,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 193.854,
+              "lumaStdDev": 31.092,
+              "highlightRatio": 0.385604,
+              "nearWhiteRatio": 0.16012,
+              "clippedRatio": 0,
+              "edgeGradient": 4.846,
+              "pixels": 81620
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 184.52,
+              "lumaStdDev": 35.783,
+              "highlightRatio": 0.394737,
+              "nearWhiteRatio": 0.028795,
+              "clippedRatio": 0,
+              "edgeGradient": 4.1327,
+              "pixels": 29450
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 193.644,
+              "lumaStdDev": 28.887,
+              "highlightRatio": 0.379065,
+              "nearWhiteRatio": 0.125166,
+              "clippedRatio": 0,
+              "edgeGradient": 4.7897,
+              "pixels": 70914
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 406.8170509391713,
+              "y": 244.64154222094666,
+              "w": 455.7068251089956,
+              "h": 370.6106473282172
+            },
+            "contact": {
+              "x": 366,
+              "y": 487,
+              "w": 548,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l1m0-iso.png"
+        },
+        {
+          "name": "top",
+          "camera": {
+            "dir": [
+              0.12,
+              1,
+              0.18
+            ],
+            "dist": 0.38,
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 202.346,
+            "lumaStdDev": 42.898,
+            "highlightRatio": 0.533458,
+            "nearWhiteRatio": 0.463775,
+            "clippedRatio": 0,
+            "edgeGradient": 2.9769,
+            "pixels": 375100
+          },
+          "contact": {
+            "profile": [
+              242.29,
+              242.3,
+              242.3,
+              242.14,
+              242.11,
+              219.3,
+              188.73,
+              159.94,
+              148.49,
+              166.56,
+              172.26,
+              181.04,
+              157.63,
+              106,
+              95.48,
+              104.37,
+              123.07,
+              97.07,
+              110.78,
+              159.05,
+              182.81,
+              178.43,
+              213.46,
+              210.81,
+              201.53,
+              169.41,
+              219.07,
+              241.98,
+              242.3,
+              242.3,
+              242.3,
+              242.3
+            ],
+            "asymmetry": -13.13,
+            "centerEdgeRatio": 0.6436,
+            "edgeMean": 215.98,
+            "centerMean": 139,
+            "minLuma": 95.48,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 268,
+              "y": 426,
+              "w": 744,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 183.366,
+              "lumaStdDev": 41.031,
+              "highlightRatio": 0.321343,
+              "nearWhiteRatio": 0.219548,
+              "clippedRatio": 0,
+              "edgeGradient": 4.3218,
+              "pixels": 237133
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 166.171,
+              "lumaStdDev": 38.199,
+              "highlightRatio": 0.160947,
+              "nearWhiteRatio": 0.026441,
+              "clippedRatio": 0,
+              "edgeGradient": 6.3341,
+              "pixels": 56882
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 173.496,
+              "lumaStdDev": 36.97,
+              "highlightRatio": 0.216125,
+              "nearWhiteRatio": 0.09818,
+              "clippedRatio": 0,
+              "edgeGradient": 4.773,
+              "pixels": 181890
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 325.44403077404576,
+              "y": 88.54651023095613,
+              "w": 619.454616649759,
+              "h": 604.2538403325224
+            },
+            "contact": {
+              "x": 268,
+              "y": 426,
+              "w": 744,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l1m0-top.png"
+        },
+        {
+          "name": "side",
+          "camera": {
+            "dir": [
+              0.18,
+              0.3,
+              1
+            ],
+            "dist": 0.42,
+            "target": [
+              0,
+              -0.01,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 195.262,
+            "lumaStdDev": 42.641,
+            "highlightRatio": 0.43703,
+            "nearWhiteRatio": 0.314794,
+            "clippedRatio": 0,
+            "edgeGradient": 3.3935,
+            "pixels": 140114
+          },
+          "contact": {
+            "profile": [
+              242.3,
+              242.13,
+              224.44,
+              192.56,
+              174.05,
+              172.16,
+              172.16,
+              172.16,
+              172.16,
+              164.44,
+              146.88,
+              119.44,
+              110.06,
+              107.24,
+              106.27,
+              105.73,
+              105.1,
+              104.79,
+              105.25,
+              108.55,
+              119.48,
+              149.89,
+              186.45,
+              221.45,
+              240.6,
+              241.14,
+              241.14,
+              241.14,
+              241.14,
+              241.14,
+              241.14,
+              241.14
+            ],
+            "asymmetry": -40.792,
+            "centerEdgeRatio": 0.5427,
+            "edgeMean": 213.25,
+            "centerMean": 115.72,
+            "minLuma": 104.79,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 375,
+              "y": 485,
+              "w": 530,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 195.266,
+              "lumaStdDev": 24.713,
+              "highlightRatio": 0.328103,
+              "nearWhiteRatio": 0.085626,
+              "clippedRatio": 0,
+              "edgeGradient": 4.3483,
+              "pixels": 52706
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 149.91,
+              "lumaStdDev": 44.395,
+              "highlightRatio": 0.149595,
+              "nearWhiteRatio": 0.035293,
+              "clippedRatio": 0,
+              "edgeGradient": 3.1751,
+              "pixels": 24339
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 197.534,
+              "lumaStdDev": 23.987,
+              "highlightRatio": 0.349647,
+              "nearWhiteRatio": 0.099266,
+              "clippedRatio": 0,
+              "edgeGradient": 4.4063,
+              "pixels": 50531
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 382.3156407980688,
+              "y": 243.28174682420888,
+              "w": 441.53985361582437,
+              "h": 316.568050144141
+            },
+            "contact": {
+              "x": 375,
+              "y": 485,
+              "w": 530,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l1m0-side.png"
+        }
+      ]
+    },
+    {
+      "case": "l0m1",
+      "l": 0,
+      "m": 1,
+      "glb": {
+        "asset": "/viewer/experiments/engineering-viewer/assets/wheel_hub_assembly.glb",
+        "glbUnit": "m",
+        "assetBasis": "DEMONSTRATION_PROTOTYPE",
+        "meshNodes": 1,
+        "parts": 3,
+        "meshCount": 3,
+        "triangles": 11588,
+        "bbox": {
+          "min": [
+            -0.076,
+            -0.042,
+            -0.076
+          ],
+          "max": [
+            0.076,
+            0.045,
+            0.076
+          ],
+          "size": [
+            0.152,
+            0.087,
+            0.152
+          ]
+        },
+        "gapToV2GroundM": 0.054
+      },
+      "appliedConfig": {
+        "exposure": 1.18,
+        "hemiIntensity": 0.9,
+        "sunIntensity": 2,
+        "fillIntensity": 0.9,
+        "groundColor": "#1b3f68",
+        "groundOpacity": 0.14,
+        "groundY": -0.096,
+        "gridY": -0.095,
+        "materialMode": "GLB_NATIVE_PBR"
+      },
+      "parts": [
+        {
+          "partKey": "hub",
+          "nodeMatch": "Part_Hub",
+          "color": "#8e9fb3",
+          "meshCount": 1,
+          "triangles": 4052,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_Hub",
+              "metalness": 0.85,
+              "roughness": 0.25
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.85,
+              "roughness": 0.25,
+              "envMapIntensity": 1.05
+            }
+          ]
+        },
+        {
+          "partKey": "bearing",
+          "nodeMatch": "Part_Bearing",
+          "color": "#607891",
+          "meshCount": 1,
+          "triangles": 2516,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_Bearing",
+              "metalness": 0.95,
+              "roughness": 0.12
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.95,
+              "roughness": 0.12,
+              "envMapIntensity": 1.05
+            }
+          ]
+        },
+        {
+          "partKey": "studs",
+          "nodeMatch": "Part_WheelStuds",
+          "color": "#8194af",
+          "meshCount": 1,
+          "triangles": 5020,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_WheelStuds",
+              "metalness": 0.8,
+              "roughness": 0.5
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.8,
+              "roughness": 0.5,
+              "envMapIntensity": 1.05
+            }
+          ]
+        }
+      ],
+      "fixed": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "pixelRatio": 1,
+        "background": "#eef3f8",
+        "toneMapping": "ACESFilmicToneMapping",
+        "outputColorSpace": "SRGBColorSpace",
+        "shadowMap": "PCFSoftShadowMap",
+        "pmremSigma": 0.03,
+        "envSource": "RoomEnvironment (procedural, no external asset)",
+        "sunMapSize": 1024,
+        "sunFrustum": 0.6,
+        "autoSpin": false,
+        "geometryNormalsModified": false
+      },
+      "views": [
+        {
+          "name": "iso",
+          "camera": {
+            "dir": [
+              0.92,
+              0.78,
+              1.12
+            ],
+            "dist": 0.485,
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 215.075,
+            "lumaStdDev": 33.992,
+            "highlightRatio": 0.681149,
+            "nearWhiteRatio": 0.510964,
+            "clippedRatio": 0.001506,
+            "edgeGradient": 3.7242,
+            "pixels": 170004
+          },
+          "contact": {
+            "profile": [
+              242.3,
+              242.3,
+              242.3,
+              242.13,
+              241.65,
+              240.79,
+              240.88,
+              239.79,
+              216.57,
+              215.43,
+              208.77,
+              185.21,
+              152.92,
+              146.25,
+              146.85,
+              147.45,
+              147.2,
+              145.88,
+              145.28,
+              152.26,
+              186.89,
+              210.28,
+              214.63,
+              214.92,
+              222.11,
+              242.27,
+              242.12,
+              241.97,
+              241.55,
+              241.95,
+              242.3,
+              242.3
+            ],
+            "asymmetry": 1.802,
+            "centerEdgeRatio": 0.6989,
+            "edgeMean": 235.51,
+            "centerMean": 164.6,
+            "minLuma": 145.28,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 366,
+              "y": 487,
+              "w": 548,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 195.04,
+              "lumaStdDev": 33.025,
+              "highlightRatio": 0.402965,
+              "nearWhiteRatio": 0.183435,
+              "clippedRatio": 0.003136,
+              "edgeGradient": 6.2245,
+              "pixels": 81620
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 185.878,
+              "lumaStdDev": 30.601,
+              "highlightRatio": 0.313888,
+              "nearWhiteRatio": 0.037114,
+              "clippedRatio": 0.004788,
+              "edgeGradient": 5.2341,
+              "pixels": 29450
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 194.489,
+              "lumaStdDev": 31.323,
+              "highlightRatio": 0.38864,
+              "nearWhiteRatio": 0.150774,
+              "clippedRatio": 0.003596,
+              "edgeGradient": 6.2217,
+              "pixels": 70914
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 406.8170509391713,
+              "y": 244.64154222094666,
+              "w": 455.7068251089956,
+              "h": 370.6106473282172
+            },
+            "contact": {
+              "x": 366,
+              "y": 487,
+              "w": 548,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l0m1-iso.png"
+        },
+        {
+          "name": "top",
+          "camera": {
+            "dir": [
+              0.12,
+              1,
+              0.18
+            ],
+            "dist": 0.38,
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 198.758,
+            "lumaStdDev": 51.374,
+            "highlightRatio": 0.593383,
+            "nearWhiteRatio": 0.457678,
+            "clippedRatio": 0.00385,
+            "edgeGradient": 4.3886,
+            "pixels": 375100
+          },
+          "contact": {
+            "profile": [
+              241.95,
+              242.18,
+              242.3,
+              242.3,
+              242.3,
+              213.89,
+              180.71,
+              151.17,
+              133.43,
+              150.15,
+              144.7,
+              171.8,
+              147.3,
+              79.33,
+              67.63,
+              83.41,
+              69.05,
+              45.82,
+              65.02,
+              124.48,
+              174.77,
+              158.92,
+              211.15,
+              205.24,
+              191.82,
+              145.56,
+              214.43,
+              242.3,
+              242.3,
+              242.25,
+              241.93,
+              241.91
+            ],
+            "asymmetry": -13.851,
+            "centerEdgeRatio": 0.5262,
+            "edgeMean": 210.96,
+            "centerMean": 111.02,
+            "minLuma": 45.82,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 268,
+              "y": 426,
+              "w": 744,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 175.876,
+              "lumaStdDev": 51.944,
+              "highlightRatio": 0.356808,
+              "nearWhiteRatio": 0.232907,
+              "clippedRatio": 0.006089,
+              "edgeGradient": 6.6801,
+              "pixels": 237133
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 143.042,
+              "lumaStdDev": 55.574,
+              "highlightRatio": 0.140695,
+              "nearWhiteRatio": 0.051897,
+              "clippedRatio": 0.00828,
+              "edgeGradient": 12.754,
+              "pixels": 56882
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 163.176,
+              "lumaStdDev": 48.706,
+              "highlightRatio": 0.232652,
+              "nearWhiteRatio": 0.113684,
+              "clippedRatio": 0.006685,
+              "edgeGradient": 7.6226,
+              "pixels": 181890
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 325.44403077404576,
+              "y": 88.54651023095613,
+              "w": 619.454616649759,
+              "h": 604.2538403325224
+            },
+            "contact": {
+              "x": 268,
+              "y": 426,
+              "w": 744,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l0m1-top.png"
+        },
+        {
+          "name": "side",
+          "camera": {
+            "dir": [
+              0.18,
+              0.3,
+              1
+            ],
+            "dist": 0.42,
+            "target": [
+              0,
+              -0.01,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 199.652,
+            "lumaStdDev": 42.262,
+            "highlightRatio": 0.571556,
+            "nearWhiteRatio": 0.300184,
+            "clippedRatio": 0.002505,
+            "edgeGradient": 3.7502,
+            "pixels": 140114
+          },
+          "contact": {
+            "profile": [
+              241.3,
+              231.19,
+              221.58,
+              215.87,
+              215.32,
+              215.37,
+              215.57,
+              215.6,
+              215.6,
+              209.19,
+              174.06,
+              138.61,
+              125.49,
+              120.53,
+              118.57,
+              117.82,
+              117.79,
+              118.5,
+              120.56,
+              125.91,
+              140.08,
+              178.29,
+              228.26,
+              241.98,
+              241.99,
+              242.2,
+              242.3,
+              242.3,
+              242.3,
+              242.3,
+              242.3,
+              242.3
+            ],
+            "asymmetry": -21.164,
+            "centerEdgeRatio": 0.5777,
+            "edgeMean": 230.24,
+            "centerMean": 133.02,
+            "minLuma": 117.79,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 375,
+              "y": 485,
+              "w": 530,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 194.434,
+              "lumaStdDev": 28.763,
+              "highlightRatio": 0.374492,
+              "nearWhiteRatio": 0.12915,
+              "clippedRatio": 0.006451,
+              "edgeGradient": 5.7456,
+              "pixels": 52706
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 148.254,
+              "lumaStdDev": 47.019,
+              "highlightRatio": 0.133695,
+              "nearWhiteRatio": 0.045031,
+              "clippedRatio": 0.008505,
+              "edgeGradient": 5.2948,
+              "pixels": 24339
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 195.945,
+              "lumaStdDev": 28.032,
+              "highlightRatio": 0.385625,
+              "nearWhiteRatio": 0.134413,
+              "clippedRatio": 0.006729,
+              "edgeGradient": 5.6221,
+              "pixels": 50531
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 382.3156407980688,
+              "y": 243.28174682420888,
+              "w": 441.53985361582437,
+              "h": 316.568050144141
+            },
+            "contact": {
+              "x": 375,
+              "y": 485,
+              "w": 530,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l0m1-side.png"
+        }
+      ]
+    },
+    {
+      "case": "l1m1",
+      "l": 1,
+      "m": 1,
+      "glb": {
+        "asset": "/viewer/experiments/engineering-viewer/assets/wheel_hub_assembly.glb",
+        "glbUnit": "m",
+        "assetBasis": "DEMONSTRATION_PROTOTYPE",
+        "meshNodes": 1,
+        "parts": 3,
+        "meshCount": 3,
+        "triangles": 11588,
+        "bbox": {
+          "min": [
+            -0.076,
+            -0.042,
+            -0.076
+          ],
+          "max": [
+            0.076,
+            0.045,
+            0.076
+          ],
+          "size": [
+            0.152,
+            0.087,
+            0.152
+          ]
+        },
+        "gapToV2GroundM": 0.054
+      },
+      "appliedConfig": {
+        "exposure": 1,
+        "hemiIntensity": 0.45,
+        "sunIntensity": 2.4,
+        "fillIntensity": 0.55,
+        "groundColor": "#2b3644",
+        "groundOpacity": 0.34,
+        "groundY": -0.043,
+        "gridY": -0.042,
+        "materialMode": "GLB_NATIVE_PBR"
+      },
+      "parts": [
+        {
+          "partKey": "hub",
+          "nodeMatch": "Part_Hub",
+          "color": "#8e9fb3",
+          "meshCount": 1,
+          "triangles": 4052,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_Hub",
+              "metalness": 0.85,
+              "roughness": 0.25
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.85,
+              "roughness": 0.25,
+              "envMapIntensity": 1.05
+            }
+          ]
+        },
+        {
+          "partKey": "bearing",
+          "nodeMatch": "Part_Bearing",
+          "color": "#607891",
+          "meshCount": 1,
+          "triangles": 2516,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_Bearing",
+              "metalness": 0.95,
+              "roughness": 0.12
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.95,
+              "roughness": 0.12,
+              "envMapIntensity": 1.05
+            }
+          ]
+        },
+        {
+          "partKey": "studs",
+          "nodeMatch": "Part_WheelStuds",
+          "color": "#8194af",
+          "meshCount": 1,
+          "triangles": 5020,
+          "glbMaterials": [
+            {
+              "name": "Mat_Part_WheelStuds",
+              "metalness": 0.8,
+              "roughness": 0.5
+            }
+          ],
+          "appliedMaterials": [
+            {
+              "metalness": 0.8,
+              "roughness": 0.5,
+              "envMapIntensity": 1.05
+            }
+          ]
+        }
+      ],
+      "fixed": {
+        "viewport": [
+          1280,
+          800
+        ],
+        "pixelRatio": 1,
+        "background": "#eef3f8",
+        "toneMapping": "ACESFilmicToneMapping",
+        "outputColorSpace": "SRGBColorSpace",
+        "shadowMap": "PCFSoftShadowMap",
+        "pmremSigma": 0.03,
+        "envSource": "RoomEnvironment (procedural, no external asset)",
+        "sunMapSize": 1024,
+        "sunFrustum": 0.6,
+        "autoSpin": false,
+        "geometryNormalsModified": false
+      },
+      "views": [
+        {
+          "name": "iso",
+          "camera": {
+            "dir": [
+              0.92,
+              0.78,
+              1.12
+            ],
+            "dist": 0.485,
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 210.871,
+            "lumaStdDev": 40.105,
+            "highlightRatio": 0.625432,
+            "nearWhiteRatio": 0.549322,
+            "clippedRatio": 0.001194,
+            "edgeGradient": 4.1053,
+            "pixels": 170004
+          },
+          "contact": {
+            "profile": [
+              241.61,
+              241.99,
+              242.3,
+              242.3,
+              242.3,
+              242.3,
+              242.18,
+              235.65,
+              200.88,
+              175.7,
+              175.66,
+              174.54,
+              140.47,
+              133.89,
+              134.5,
+              135.13,
+              134.8,
+              133.51,
+              132.89,
+              139.88,
+              176.38,
+              176.35,
+              173.83,
+              186.5,
+              224.19,
+              241.97,
+              241.95,
+              242.01,
+              242.08,
+              241.91,
+              242.3,
+              242.3
+            ],
+            "asymmetry": 2.817,
+            "centerEdgeRatio": 0.6498,
+            "edgeMean": 229.31,
+            "centerMean": 149,
+            "minLuma": 132.89,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 366,
+              "y": 487,
+              "w": 548,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 185.072,
+              "lumaStdDev": 37.123,
+              "highlightRatio": 0.306212,
+              "nearWhiteRatio": 0.167925,
+              "clippedRatio": 0.002487,
+              "edgeGradient": 6.9247,
+              "pixels": 81620
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 176.485,
+              "lumaStdDev": 33.897,
+              "highlightRatio": 0.203701,
+              "nearWhiteRatio": 0.038778,
+              "clippedRatio": 0.003803,
+              "edgeGradient": 6.0325,
+              "pixels": 29450
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 184.456,
+              "lumaStdDev": 35.118,
+              "highlightRatio": 0.289576,
+              "nearWhiteRatio": 0.133979,
+              "clippedRatio": 0.002863,
+              "edgeGradient": 6.9215,
+              "pixels": 70914
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 406.8170509391713,
+              "y": 244.64154222094666,
+              "w": 455.7068251089956,
+              "h": 370.6106473282172
+            },
+            "contact": {
+              "x": 366,
+              "y": 487,
+              "w": 548,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l1m1-iso.png"
+        },
+        {
+          "name": "top",
+          "camera": {
+            "dir": [
+              0.12,
+              1,
+              0.18
+            ],
+            "dist": 0.38,
+            "target": [
+              0,
+              0,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 190.413,
+            "lumaStdDev": 57.28,
+            "highlightRatio": 0.513284,
+            "nearWhiteRatio": 0.464148,
+            "clippedRatio": 0.002861,
+            "edgeGradient": 4.774,
+            "pixels": 375100
+          },
+          "contact": {
+            "profile": [
+              242.29,
+              242.3,
+              242.3,
+              242.14,
+              242.11,
+              209.9,
+              166.46,
+              127.5,
+              113.21,
+              134.19,
+              130.86,
+              160.87,
+              135.73,
+              69.52,
+              57.88,
+              72.38,
+              55.55,
+              37.25,
+              55.34,
+              112.1,
+              161.92,
+              147,
+              204.16,
+              197.67,
+              182.89,
+              133.17,
+              211.62,
+              241.98,
+              242.3,
+              242.3,
+              242.3,
+              242.3
+            ],
+            "asymmetry": -17.829,
+            "centerEdgeRatio": 0.486,
+            "edgeMean": 205.15,
+            "centerMean": 99.7,
+            "minLuma": 37.25,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 268,
+              "y": 426,
+              "w": 744,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 164.49,
+              "lumaStdDev": 55.811,
+              "highlightRatio": 0.289433,
+              "nearWhiteRatio": 0.220138,
+              "clippedRatio": 0.004525,
+              "edgeGradient": 7.1645,
+              "pixels": 237133
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 132.252,
+              "lumaStdDev": 56.591,
+              "highlightRatio": 0.115362,
+              "nearWhiteRatio": 0.042755,
+              "clippedRatio": 0.00545,
+              "edgeGradient": 13.3537,
+              "pixels": 56882
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 150.748,
+              "lumaStdDev": 51.06,
+              "highlightRatio": 0.178179,
+              "nearWhiteRatio": 0.099522,
+              "clippedRatio": 0.005009,
+              "edgeGradient": 8.1265,
+              "pixels": 181890
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 325.44403077404576,
+              "y": 88.54651023095613,
+              "w": 619.454616649759,
+              "h": 604.2538403325224
+            },
+            "contact": {
+              "x": 268,
+              "y": 426,
+              "w": 744,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l1m1-top.png"
+        },
+        {
+          "name": "side",
+          "camera": {
+            "dir": [
+              0.18,
+              0.3,
+              1
+            ],
+            "dist": 0.42,
+            "target": [
+              0,
+              -0.01,
+              0
+            ],
+            "fov": 38
+          },
+          "renderInfo": {
+            "calls": 5,
+            "triangles": 11590,
+            "geometries": 6,
+            "textures": 2
+          },
+          "model": {
+            "meanLuma": 189.8,
+            "lumaStdDev": 47.135,
+            "highlightRatio": 0.400345,
+            "nearWhiteRatio": 0.321139,
+            "clippedRatio": 0.001427,
+            "edgeGradient": 4.3357,
+            "pixels": 140114
+          },
+          "contact": {
+            "profile": [
+              242.3,
+              242.13,
+              224.44,
+              192.56,
+              174.05,
+              172.16,
+              172.16,
+              172.16,
+              172.16,
+              177.92,
+              161.89,
+              126.15,
+              113.14,
+              108.29,
+              106.4,
+              105.71,
+              105.68,
+              106.34,
+              108.33,
+              113.57,
+              127.67,
+              166.56,
+              197.8,
+              221.45,
+              240.6,
+              241.14,
+              241.14,
+              241.14,
+              241.14,
+              241.14,
+              241.14,
+              241.14
+            ],
+            "asymmetry": -40.579,
+            "centerEdgeRatio": 0.5632,
+            "edgeMean": 214.49,
+            "centerMean": 120.81,
+            "minLuma": 105.68,
+            "maxLuma": 242.3,
+            "rect": {
+              "x": 375,
+              "y": 485,
+              "w": 530,
+              "h": 21
+            }
+          },
+          "partRois": [
+            {
+              "partKey": "hub",
+              "meanLuma": 183.75,
+              "lumaStdDev": 31.934,
+              "highlightRatio": 0.243236,
+              "nearWhiteRatio": 0.099932,
+              "clippedRatio": 0.003738,
+              "edgeGradient": 6.3597,
+              "pixels": 52706
+            },
+            {
+              "partKey": "bearing",
+              "meanLuma": 137.467,
+              "lumaStdDev": 48.319,
+              "highlightRatio": 0.106372,
+              "nearWhiteRatio": 0.037265,
+              "clippedRatio": 0.00604,
+              "edgeGradient": 5.5502,
+              "pixels": 24339
+            },
+            {
+              "partKey": "studs",
+              "meanLuma": 186.19,
+              "lumaStdDev": 31.488,
+              "highlightRatio": 0.266589,
+              "nearWhiteRatio": 0.113237,
+              "clippedRatio": 0.003899,
+              "edgeGradient": 6.3472,
+              "pixels": 50531
+            }
+          ],
+          "roi": {
+            "model": {
+              "x": 382.3156407980688,
+              "y": 243.28174682420888,
+              "w": 441.53985361582437,
+              "h": 316.568050144141
+            },
+            "contact": {
+              "x": 375,
+              "y": 485,
+              "w": 530,
+              "h": 21
+            }
+          },
+          "shot": "results/shot-l1m1-side.png"
+        }
+      ]
+    }
+  ],
+  "negativeCases": [
+    {
+      "id": "bad-l",
+      "query": "l=9&m=0",
+      "expect": "非法 l",
+      "rejected": true,
+      "error": "非法 l=9（只允许 0/1），拒绝静默回退到基线"
+    },
+    {
+      "id": "bad-m",
+      "query": "l=0&m=2",
+      "expect": "非法 m",
+      "rejected": true,
+      "error": "非法 m=2（只允许 0/1），拒绝静默回退到基线"
+    },
+    {
+      "id": "bad-unit",
+      "query": "l=0&m=0&unit=mm",
+      "expect": "必须以米为单位",
+      "rejected": true,
+      "error": "RUNTIME: Error: GLB 必须以米为单位，当前 mm（V2 viewport.js:124 同样拒绝）\n    at main (http://127.0.0.1:5173/viewer/experiments/render-quality-v2/main.js:100:35)"
+    },
+    {
+      "id": "missing-glb",
+      "query": "l=0&m=0&asset=/viewer/experiments/engineering-viewer/assets/__missing__.glb",
+      "expect": "GLB",
+      "rejected": true,
+      "error": "RUNTIME: Error: fetch for \"http://127.0.0.1:5173/viewer/experiments/engineering-viewer/assets/__missing__.glb\" responded with 404: Not Found\n    at http://127.0.0.1:5173/node_modules/three/build/three.module.js:44921:12"
+    }
+  ]
+}

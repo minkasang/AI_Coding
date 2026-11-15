@@ -1,0 +1,61 @@
+{
+  "taskId": "R-16",
+  "verdict": "PASS",
+  "violationCount": 0,
+  "violations": [],
+  "rulesChecked": [
+    "V01",
+    "V02",
+    "V03",
+    "V04",
+    "V05",
+    "V06",
+    "V07",
+    "V08",
+    "V09",
+    "V10",
+    "V11",
+    "V12",
+    "V13",
+    "V14",
+    "V15",
+    "V16",
+    "V17",
+    "V18",
+    "V19"
+  ],
+  "summary": {
+    "systems": 13,
+    "subsystems": 53,
+    "assemblies": 108,
+    "partDefinitions": 493,
+    "partFamilies": 37,
+    "datums": 40,
+    "references": 35,
+    "assemblyInstances": 37,
+    "partInstances": 278,
+    "mountFrames": 37,
+    "cornerStations": 4,
+    "deepSliceCorners": 1,
+    "definitionsInstantiated": 83,
+    "definitionsDeferred": 410,
+    "geometryPending": 493,
+    "modelBlockedItems": 10,
+    "qtyConflicts": 12,
+    "instancesSourced": 0,
+    "instancesIdentitySourcedSecondary": 124,
+    "instancesValueBasis": {
+      "UNKNOWN": 278
+    },
+    "instancesIdentityBasis": {
+      "ASSUMPTION": 152,
+      "SOURCED_SECONDARY": 124,
+      "UNKNOWN": 2
+    },
+    "referenceSpecimensInstalled": 0,
+    "rp01FilesModified": false,
+    "r06Modified": false,
+    "r11Modified": false,
+    "srcModified": false
+  }
+}

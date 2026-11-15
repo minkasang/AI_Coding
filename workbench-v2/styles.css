@@ -288,6 +288,12 @@ body:not([data-workview="model"]) #projectRevision { display: none; }
 body[data-workview="model"] .workspace-actions { display: none; }
 body[data-workview="inspect"] .catalog-block,
 body[data-workview="inspect"] .selection-actions [data-action="remove"] { display: none !important; }
+.inspect-tool-cluster{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-left:8px;padding-left:12px;border-left:1px solid #d9e2ec}
+.inspect-tool-cluster .btn.on{background:#2a5fb8;color:#fff;border-color:#2a5fb8}
+.clip-inline{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#5a708c}
+.measure-readout{margin:12px 16px 0;padding:12px 14px;border-radius:10px;border:1px solid #c8d8ec;background:#eef4fc;font-size:12px}
+.measure-readout strong{font-size:15px;color:#1f4f9c}
+.measure-readout .measure-label{margin:0 0 6px;color:#6b819c;font-size:11px}
 body[data-workview="model"] .right-panel .inspector-bottom { margin-top: auto; }
 body[data-workview="inspect"] .right-panel .inspector-bottom { margin-top: auto; }
 .vehicle-workspace {

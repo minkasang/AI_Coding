@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "carlab.r19.patchCandidate/1.0",
+  "status": "PROPOSAL_NOT_APPLIED",
+  "target": "workbench-v2/viewport.js",
+  "generatedAt": "2026-11-15T08:52:37.657Z",
+  "requiresApproval": [
+    "gpt-6",
+    "composer-2-5"
+  ],
+  "measuredOn": "SwiftShader 软件光栅化；无真实 GPU FPS/显存数据",
+  "metricBasis": {
+    "isoNearWhiteRatio": {
+      "baseline": 0.505788,
+      "proposed": 0.549322
+    },
+    "isoLumaStdDev": {
+      "baseline": 29.054,
+      "proposed": 40.105
+    },
+    "isoEdgeGradient": {
+      "baseline": 2.7949,
+      "proposed": 4.1053
+    },
+    "isoHighlightRatio": {
+      "baseline": 0.730048,
+      "proposed": 0.625432
+    },
+    "sideCenterEdgeRatio": {
+      "baseline": 0.5663,
+      "proposed": 0.5632
+    },
+    "sideContactMin": {
+      "baseline": 118.83,
+      "proposed": 105.68
+    }
+  },
+  "adverseFindings": [
+    {
+      "metric": "iso nearWhiteRatio (luma>=235)",
+      "baseline": 0.505788,
+      "proposed": 0.549322,
+      "worse": true,
+      "interpretation": "该值上升，不能声称「过曝被消除」。同期 highlightRatio(>=205) 下降、lumaStdDev 上升，表明亮度分布两极化（高光更集中、中间调变暗），而非整片更白；且模型 ROI 含大面积浅色背景(#eef3f8 约 luma 242)，近白像素有相当部分来自背景，此指标不可单独作为过曝判据。"
+    },
+    {
+      "metric": "side centerEdgeRatio (20px 固定条带)",
+      "baseline": 0.5663,
+      "proposed": 0.5632,
+      "improvementSmall": true,
+      "interpretation": "固定条带口径下改善很小；阴影加深主要由 minLuma 下降与目视截图反映。条带按模型最低点投影推导，在 iso/top 视角不一定覆盖阴影核心，接地读数应主要看 side 视角。"
+    }
+  ],
+  "recommendation": "不建议无条件全量合入：先按 M（严格单变量）在 V2 真实 UI 状态复核材质层次，再按 L 配置包小步复核曝光/接地；所有数值仍为 VISUAL_ASSUMPTION，须真实 GPU 与真实工作台复测。",
+  "changes": [
+    {
+      "parameter": "exposure",
+      "source": "workbench-v2/viewport.js:26",
+      "baseline": 1.18,
+      "proposed": 1,
+      "evidenceLevel": "VISUAL_ASSUMPTION",
+      "note": "视觉参数候选，非厂商光照/材料标准；需真实 GPU 复核"
+    },
+    {
+      "parameter": "hemiIntensity",
+      "source": "workbench-v2/viewport.js:33",
+      "baseline": 0.9,
+      "proposed": 0.45,
+      "evidenceLevel": "VISUAL_ASSUMPTION",
+      "note": "视觉参数候选，非厂商光照/材料标准；需真实 GPU 复核"
+    },
+    {
+      "parameter": "sunIntensity",
+      "source": "workbench-v2/viewport.js:34",
+      "baseline": 2,
+      "proposed": 2.4,
+      "evidenceLevel": "VISUAL_ASSUMPTION",
+      "note": "视觉参数候选，非厂商光照/材料标准；需真实 GPU 复核"
+    },
+    {
+      "parameter": "fillIntensity",
+      "source": "workbench-v2/viewport.js:42",
+      "baseline": 0.9,
+      "proposed": 0.55,
+      "evidenceLevel": "VISUAL_ASSUMPTION",
+      "note": "视觉参数候选，非厂商光照/材料标准；需真实 GPU 复核"
+    },
+    {
+      "parameter": "groundColor",
+      "source": "workbench-v2/viewport.js:53",
+      "baseline": "#1b3f68",
+      "proposed": "#2b3644",
+      "evidenceLevel": "VISUAL_ASSUMPTION",
+      "note": "视觉参数候选，非厂商光照/材料标准；需真实 GPU 复核"
+    },
+    {
+      "parameter": "groundOpacity",
+      "source": "workbench-v2/viewport.js:53",
+      "baseline": 0.14,
+      "proposed": 0.34,
+      "evidenceLevel": "VISUAL_ASSUMPTION",
+      "note": "视觉参数候选，非厂商光照/材料标准；需真实 GPU 复核"
+    },
+    {
+      "parameter": "groundY",
+      "source": "workbench-v2/viewport.js:56",
+      "baseline": -0.096,
+      "proposed": -0.043,
+      "evidenceLevel": "VISUAL_ASSUMPTION",
+      "note": "视觉参数候选，非厂商光照/材料标准；需真实 GPU 复核"
+    },
+    {
+      "parameter": "gridY",
+      "source": "workbench-v2/viewport.js:46",
+      "baseline": -0.095,
+      "proposed": -0.042,
+      "evidenceLevel": "VISUAL_ASSUMPTION",
+      "note": "视觉参数候选，非厂商光照/材料标准；需真实 GPU 复核"
+    },
+    {
+      "parameter": "materialOverride",
+      "source": "workbench-v2/viewport.js:163-170",
+      "baseline": {
+        "mode": "V2_UNIFORM_OVERRIDE",
+        "metalness": 0.7,
+        "roughness": 0.34,
+        "envMapIntensity": 1.05
+      },
+      "proposed": {
+        "mode": "GLB_NATIVE_PBR",
+        "action": "不再用统一数值覆盖 mat.metalness / mat.roughness；保留 GLB 自带分档",
+        "perPart": [
+          {
+            "partKey": "hub",
+            "nodeMatch": "Part_Hub",
+            "metalness": 0.85,
+            "roughness": 0.25
+          },
+          {
+            "partKey": "bearing",
+            "nodeMatch": "Part_Bearing",
+            "metalness": 0.95,
+            "roughness": 0.12
+          },
+          {
+            "partKey": "studs",
+            "nodeMatch": "Part_WheelStuds",
+            "metalness": 0.8,
+            "roughness": 0.5
+          }
+        ]
+      },
+      "evidenceLevel": "GLB_BINARY_EVIDENCE + VISUAL_ASSUMPTION",
+      "note": "数值取自项目自身 GLB 的 pbrMetallicRoughness，不是厂商认证材料；颜色仍沿用 fixture DEMO 色"
+    }
+  ],
+  "caveats": [
+    "L 是多参数配置包，不是单变量；内部各参数贡献本轮未分离",
+    "未改几何法线（R-14 已记录 toCreasedNormals 1 cm 量化与几何释放成本）",
+    "GLB 中 DEMO 材质的 metalness/roughness 不是厂商材料证据",
+    "groundY/gridY 对齐是按当前 GLB 包围盒推导；换资产后须重新计算，不能写死"
+  ]
+}

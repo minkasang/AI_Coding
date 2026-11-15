@@ -106,6 +106,15 @@
           <output id="explodeOut">0%</output>
           <button id="isolateBtn" class="btn btn-secondary">隔离选中零件</button>
           <button id="showAllBtn" class="btn btn-ghost">显示全部</button>
+          <div class="inspect-tool-cluster" id="inspectTools" hidden>
+            <button id="measureToggle" class="btn btn-secondary" type="button" aria-pressed="false">两点测距</button>
+            <button id="clipToggle" class="btn btn-secondary" type="button" aria-pressed="false">剖切</button>
+            <label class="clip-inline" id="clipInline" hidden>
+              <span>轴</span>
+              <select id="clipAxis"><option value="y">Y</option><option value="x">X</option><option value="z">Z</option></select>
+              <input id="clipPos" type="range" min="0" max="100" value="35" aria-label="剖切位置"/>
+            </label>
+          </div>
         </div>
       </section>
       <aside class="right-panel">
@@ -114,7 +123,8 @@
         <div id="inspector" class="inspector-detail">
           <div class="inspector-placeholder">点击视窗或左侧对象树中的零件，查看其工程属性。</div>
         </div>
-        <div class="truth-panel">
+        <div id="measureReadout" class="measure-readout" hidden></div>
+    <div class="truth-panel">
           <div class="truth-heading"><span class="truth-dot">!</span><strong>真实性说明</strong></div>
           <p>当前零件基于可重复生成的演示 CAD，真实 OEM 配合公差、运动副、材料和强度尚未认证。</p>
           <div class="truth-level"><span class="dot-demo"></span><span>DEMO ASSUMPTION</span><span class="truth-lock">不升级为工程事实</span></div>
