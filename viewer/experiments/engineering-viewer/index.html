@@ -45,6 +45,19 @@
         <span>爆炸</span>
         <input type="range" id="explode" min="0" max="100" value="0"/>
       </label>
+      <button type="button" id="btnMeasure" aria-pressed="false">两点测距</button>
+      <button type="button" id="btnClearMeasure" hidden>清除测量</button>
+      <button type="button" id="btnClip" aria-pressed="false">剖切</button>
+      <label class="clip" id="clipControls" hidden>
+        <span>轴</span>
+        <select id="clipAxis">
+          <option value="y">Y（水平）</option>
+          <option value="x">X</option>
+          <option value="z">Z</option>
+        </select>
+        <span>位置</span>
+        <input type="range" id="clipPos" min="-20" max="80" value="35"/>
+      </label>
     </div>
   </main>
 
@@ -55,6 +68,8 @@
       <h3 id="partName">—</h3>
       <p class="meta" id="partNode">—</p>
       <dl id="partMeta"></dl>
+      <div id="partRelations" class="relations" hidden></div>
+      <div id="measureReadout" class="measure-readout" hidden></div>
       <p class="disclaimer" id="partDisclaimer"></p>
     </div>
   </aside>

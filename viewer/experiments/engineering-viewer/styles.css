@@ -112,6 +112,14 @@ body {
   font-size: 12px;
 }
 .toolbar button:hover { border-color: var(--accent); }
+.toolbar button.on { background: #2a4a8f; color: #fff; border-color: #3d62b8; }
+.clip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.clip select { font-size: 12px; border-radius: 6px; padding: 4px 6px; border: 1px solid var(--line); background: #243040; color: var(--text); }
+.measure-readout { margin-top: 12px; padding: 10px; border-radius: 8px; border: 1px solid #3d62b8; background: #1a2840; }
+.measure-readout strong { font-size: 16px; color: #a8c4ff; }
+.relations ul { margin: 6px 0 0; padding-left: 18px; font-size: 12px; line-height: 1.5; color: var(--text); }
+.relations em { color: var(--warn); font-style: normal; }
+#canvas.measure-active { cursor: crosshair; }
 .explode { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
 .explode input { width: 120px; }
 

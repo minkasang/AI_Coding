@@ -1,0 +1,279 @@
+{
+  "taskId": "R-11",
+  "verdict": "PASS",
+  "caught": 30,
+  "missed": 0,
+  "total": 30,
+  "rulesCovered": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12"
+  ],
+  "rulesUncovered": [],
+  "cases": [
+    {
+      "rule": "A01",
+      "mutation": "sourced param points at nonexistent source",
+      "caught": true,
+      "codes": [
+        "SOURCE_ID_NOT_FOUND"
+      ]
+    },
+    {
+      "rule": "A01",
+      "mutation": "claimed source has no locator",
+      "caught": true,
+      "codes": [
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING",
+        "SOURCE_LOCATOR_MISSING"
+      ]
+    },
+    {
+      "rule": "A02",
+      "mutation": "aggregator promoted to SOURCED",
+      "caught": true,
+      "codes": [
+        "SECONDARY_SOURCE_PROMOTED_TO_SOURCED",
+        "AGGREGATOR_CEILING_EXCEEDED"
+      ]
+    },
+    {
+      "rule": "A02",
+      "mutation": "SOURCED without actual fetch",
+      "caught": true,
+      "codes": [
+        "SOURCED_WITHOUT_ACTUAL_FETCH"
+      ]
+    },
+    {
+      "rule": "A02",
+      "mutation": "forum used as fact",
+      "caught": true,
+      "codes": [
+        "FORUM_USED_AS_FACT"
+      ]
+    },
+    {
+      "rule": "A03",
+      "mutation": "demo sample silently upgraded",
+      "caught": true,
+      "codes": [
+        "DEMO_UPGRADE_WITHOUT_APPLICABILITY",
+        "VERDICT_CONTRADICTS_DEMO_GRADE",
+        "DEMO_UPGRADE_COUNT_MISMATCH"
+      ]
+    },
+    {
+      "rule": "A03",
+      "mutation": "demo upgrade count misreported",
+      "caught": true,
+      "codes": [
+        "DEMO_UPGRADE_COUNT_MISMATCH"
+      ]
+    },
+    {
+      "rule": "A04",
+      "mutation": "inch value read as mm (25.4x error)",
+      "caught": true,
+      "codes": [
+        "INCH_CONVERSION_WRONG"
+      ]
+    },
+    {
+      "rule": "A04",
+      "mutation": "inch conversion factor dropped",
+      "caught": true,
+      "codes": [
+        "INCH_FACTOR_MISSING_OR_WRONG"
+      ]
+    },
+    {
+      "rule": "A04",
+      "mutation": "mm source value altered",
+      "caught": true,
+      "codes": [
+        "MM_VALUE_ALTERED"
+      ]
+    },
+    {
+      "rule": "A05",
+      "mutation": "reference specimen claimed as demo part",
+      "caught": true,
+      "codes": [
+        "SPECIMEN_CLAIMED_AS_DEMO_PART"
+      ]
+    },
+    {
+      "rule": "A05",
+      "mutation": "specimen promoted above FID-V",
+      "caught": true,
+      "codes": [
+        "SPECIMEN_LEVEL_TOO_HIGH"
+      ]
+    },
+    {
+      "rule": "A05",
+      "mutation": "adoption decision removed",
+      "caught": true,
+      "codes": [
+        "SPECIMEN_ADOPTION_DECISION_MISSING"
+      ]
+    },
+    {
+      "rule": "A06",
+      "mutation": "unresolved generation used for fit level",
+      "caught": true,
+      "codes": [
+        "UNRESOLVED_GENERATION_USED_ABOVE_VISUAL"
+      ]
+    },
+    {
+      "rule": "A06",
+      "mutation": "vehicle value SOURCED without generation",
+      "caught": true,
+      "codes": [
+        "VEHICLE_VALUE_SOURCED_WITHOUT_GENERATION"
+      ]
+    },
+    {
+      "rule": "A07",
+      "mutation": "mustRemainUnknown param filled",
+      "caught": true,
+      "codes": [
+        "MUST_REMAIN_UNKNOWN_FILLED",
+        "MUST_REMAIN_UNKNOWN_FILLED"
+      ]
+    },
+    {
+      "rule": "A07",
+      "mutation": "guarded param verdict deleted",
+      "caught": true,
+      "codes": [
+        "GUARDED_PARAM_HAS_NO_VERDICT"
+      ]
+    },
+    {
+      "rule": "A08",
+      "mutation": "unparseable PDF used as fact",
+      "caught": true,
+      "codes": [
+        "NO_DATA_SOURCE_USED_AS_FACT"
+      ]
+    },
+    {
+      "rule": "A08",
+      "mutation": "unparseable PDF given fabricated verbatim",
+      "caught": true,
+      "codes": [
+        "NO_DATA_SOURCE_HAS_VERBATIM"
+      ]
+    },
+    {
+      "rule": "A08",
+      "mutation": "JS shell used as fact",
+      "caught": true,
+      "codes": [
+        "NO_DATA_SOURCE_USED_AS_FACT"
+      ]
+    },
+    {
+      "rule": "A08",
+      "mutation": "403 page graded as secondary evidence",
+      "caught": true,
+      "codes": [
+        "NO_DATA_SOURCE_USED_AS_FACT"
+      ]
+    },
+    {
+      "rule": "A09",
+      "mutation": "total length fabricated by addition",
+      "caught": true,
+      "codes": [
+        "DERIVED_TOTAL_FABRICATED"
+      ]
+    },
+    {
+      "rule": "A09",
+      "mutation": "conflict discrepancy arithmetic falsified",
+      "caught": true,
+      "codes": [
+        "CONFLICT_DISCREPANCY_WRONG"
+      ]
+    },
+    {
+      "rule": "A10",
+      "mutation": "R-06 interface unblock claimed",
+      "caught": true,
+      "codes": [
+        "R06_INTERFACE_COUNT_MISREPORTED"
+      ]
+    },
+    {
+      "rule": "A10",
+      "mutation": "R-06 modification flag flipped",
+      "caught": true,
+      "codes": [
+        "R06_MODIFIED_FLAG_WRONG"
+      ]
+    },
+    {
+      "rule": "A11",
+      "mutation": "geometry used without license",
+      "caught": true,
+      "codes": [
+        "GEOMETRY_WITHOUT_LICENSE"
+      ]
+    },
+    {
+      "rule": "A11",
+      "mutation": "OEM_SPEC claimed without drawing number",
+      "caught": true,
+      "codes": [
+        "OEM_SPEC_WITHOUT_DRAWING_NUMBER"
+      ]
+    },
+    {
+      "rule": "A12",
+      "mutation": "summary source count falsified",
+      "caught": true,
+      "codes": [
+        "SUMMARY_COUNT_MISMATCH"
+      ]
+    },
+    {
+      "rule": "A12",
+      "mutation": "fit level claimed while fits unknown",
+      "caught": true,
+      "codes": [
+        "FIT_LEVEL_CLAIMED_WITH_UNKNOWN_FITS"
+      ]
+    },
+    {
+      "rule": "A12",
+      "mutation": "commander decision marked as own call",
+      "caught": true,
+      "codes": [
+        "DECISION_NOT_MARKED_AS_COMMANDERS"
+      ]
+    }
+  ]
+}

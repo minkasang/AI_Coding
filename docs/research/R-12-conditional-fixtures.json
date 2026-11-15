@@ -1,0 +1,237 @@
+{
+  "schemaVersion": "carlab.conditional-fixtures/0.1.0-proposal",
+  "status": "PROPOSAL",
+  "date": "2026-11-14",
+  "sourceRefs": {
+    "rp01": "docs/planning/evidence/RP-01-tree-chassis.json",
+    "r06": "docs/research/R-06-minimal-assembly-bom.json",
+    "r03": "docs/research/R-03-asset-manifest.example.json",
+    "r08": "docs/research/R-08-quality-gates.json",
+    "r09": "docs/research/R-09-kinematics-prototype.md",
+    "qwen4Message": "agent-workspace/shared/messages/MSG-20261114-2330-qwen4-to-all-alias-evidence.md"
+  },
+  "generationSets": {
+    "GEN1": {
+      "hubAssembly": "ASSY-30-002",
+      "parts": ["PART-30-001", "PART-30-002", "PART-30-003", "PART-30-004", "PART-30-005", "PART-30-006", "PART-30-007", "PART-30-008", "PART-30-009"],
+      "studPart": "PART-30-009",
+      "studQtyPerCorner": 5,
+      "studVehicleTotal": 20,
+      "evidence": "EVIDENCE",
+      "note": "Gen1 has separate hub flange PART-30-006; R-03 SYS-30-HUB-001 belongs to this generation."
+    },
+    "GEN3": {
+      "hubAssembly": "ASSY-30-003",
+      "parts": ["PART-30-010", "PART-30-011", "PART-30-012", "PART-30-013", "PART-30-014", "PART-30-015", "PART-30-016", "PART-30-017", "PART-30-018"],
+      "studPart": "PART-30-017",
+      "studQtyPerCorner": 5,
+      "studVehicleTotal": 20,
+      "evidence": "EVIDENCE",
+      "note": "Gen3 integrates the wheel/rotor flange; PART-30-006 must not appear. Inner ball row still has a separate inner ring."
+    }
+  },
+  "aliases": [
+    {
+      "aliasId": "AL-01-WHEEL-END",
+      "externalId": "SYS-30-WHEEL-END-ASSY",
+      "canonicalRef": "ASSY-30-001",
+      "kind": "ASSY",
+      "applicableWhen": { "choiceGroup": "CG-HUB", "allowed": ["GEN1", "GEN3"], "exactlyOne": true },
+      "evidenceInherited": "EVIDENCE",
+      "source": "RP-01 ASSY-30-001; R-03 assembly_id",
+      "status": "PROPOSED_NEEDS_CONFIRMATION"
+    },
+    {
+      "aliasId": "AL-02-GEN1-BRG",
+      "externalId": "SYS-30-BRG-DAC4280",
+      "canonicalRef": "ASSY-30-002",
+      "kind": "ASSY",
+      "applicableWhen": { "choiceGroup": "CG-HUB", "allowed": ["GEN1"] },
+      "evidenceInherited": "EVIDENCE",
+      "source": "RP-01 ASSY-30-002; R-03 SYS-30-BRG-DAC4280",
+      "status": "PROPOSED_NEEDS_CONFIRMATION"
+    },
+    {
+      "aliasId": "AL-03-GEN1-HUB",
+      "externalId": "SYS-30-HUB-001",
+      "canonicalRef": "PART-30-006",
+      "kind": "PART",
+      "applicableWhen": { "choiceGroup": "CG-HUB", "allowed": ["GEN1"] },
+      "parent": "ASSY-30-002",
+      "evidenceInherited": "EVIDENCE",
+      "source": "RP-01 PART-30-006; R-03 SYS-30-HUB-001",
+      "status": "PROPOSED_NEEDS_CONFIRMATION"
+    },
+    {
+      "aliasId": "AL-04-GEN1-STUD",
+      "externalId": "SYS-30-STUD-M14",
+      "canonicalRef": "PART-30-009",
+      "kind": "PART",
+      "applicableWhen": { "choiceGroup": "CG-HUB", "allowed": ["GEN1"] },
+      "parent": "ASSY-30-002",
+      "evidenceInherited": "ASSUMPTION",
+      "source": "RP-01 PART-30-009 evidence=ASSUMPTION; R-03 SYS-30-STUD-M14",
+      "nameCaveat": "M14 comes only from R-03 naming; RP-01/R-06 do not verify thread or seat.",
+      "status": "PROPOSED_NEEDS_CONFIRMATION"
+    },
+    {
+      "aliasId": "AL-05-ROTOR",
+      "externalId": "SYS-40-ROTOR-001",
+      "canonicalRef": "PART-40-046",
+      "kind": "PART",
+      "applicableWhen": null,
+      "viaRef": "REF-30-001",
+      "refTarget": "ASSY-40-009",
+      "bomInclusion": "REF_NOT_BOM",
+      "evidenceInherited": "ASSUMPTION",
+      "source": "RP-01 PART-40-046 evidence=ASSUMPTION; REF-30-001",
+      "status": "PROPOSED_NEEDS_CONFIRMATION"
+    }
+  ],
+  "variants": [
+    {
+      "configId": "CFG-GEN1",
+      "selectedGeneration": "GEN1",
+      "hubAssembly": "ASSY-30-002",
+      "parts": ["PART-30-001", "PART-30-002", "PART-30-003", "PART-30-004", "PART-30-005", "PART-30-006", "PART-30-007", "PART-30-008", "PART-30-009"],
+      "activeAliases": ["AL-01-WHEEL-END", "AL-02-GEN1-BRG", "AL-03-GEN1-HUB", "AL-04-GEN1-STUD", "AL-05-ROTOR"],
+      "note": "Normal Gen1; R-03 Gen1 assets are applicable; no Gen3 parts."
+    },
+    {
+      "configId": "CFG-GEN3",
+      "selectedGeneration": "GEN3",
+      "hubAssembly": "ASSY-30-003",
+      "parts": ["PART-30-010", "PART-30-011", "PART-30-012", "PART-30-013", "PART-30-014", "PART-30-015", "PART-30-016", "PART-30-017", "PART-30-018"],
+      "activeAliases": ["AL-01-WHEEL-END", "AL-05-ROTOR"],
+      "note": "Normal Gen3; R-03 Gen1-only aliases are not applicable; no PART-30-006."
+    },
+    {
+      "configId": "CFG-BOTH",
+      "selectedGeneration": ["GEN1", "GEN3"],
+      "hubAssembly": null,
+      "parts": [],
+      "activeAliases": [],
+      "note": "Illegal: both generations selected."
+    },
+    {
+      "configId": "CFG-GEN3-WITH-HUB",
+      "selectedGeneration": "GEN3",
+      "hubAssembly": "ASSY-30-003",
+      "parts": ["PART-30-010", "PART-30-011", "PART-30-012", "PART-30-013", "PART-30-014", "PART-30-015", "PART-30-016", "PART-30-017", "PART-30-018", "PART-30-006"],
+      "activeAliases": ["AL-01-WHEEL-END", "AL-05-ROTOR"],
+      "note": "Illegal: Gen1-only independent hub flange under Gen3."
+    },
+    {
+      "configId": "CFG-GEN1-WITH-GEN3-PART",
+      "selectedGeneration": "GEN1",
+      "hubAssembly": "ASSY-30-002",
+      "parts": ["PART-30-001", "PART-30-002", "PART-30-003", "PART-30-004", "PART-30-005", "PART-30-006", "PART-30-007", "PART-30-008", "PART-30-009", "PART-30-010"],
+      "activeAliases": ["AL-01-WHEEL-END", "AL-02-GEN1-BRG", "AL-03-GEN1-HUB", "AL-04-GEN1-STUD", "AL-05-ROTOR"],
+      "note": "Illegal: Gen3 integrated inner ring under Gen1."
+    }
+  ],
+  "bom": {
+    "GEN1_PURCHASED": {
+      "mode": "PURCHASED_ASSEMBLY",
+      "lines": [
+        { "lineId": "L-01", "ref": "ASSY-30-002", "refKind": "ASSY", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "EVIDENCE", "note": "Gen1 bearing purchased non-serviceable; do not expand its 9 internals." },
+        { "lineId": "L-02", "ref": "REF-30-001", "refKind": "REF", "canonicalRef": "ASSY-40-009", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "EVIDENCE", "refNotBom": true },
+        { "lineId": "L-03", "ref": "REF-30-002", "refKind": "REF", "canonicalRef": "ASSY-40-008", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION", "refNotBom": true },
+        { "lineId": "L-04", "ref": "REF-30-003", "refKind": "REF", "canonicalRef": "PART-20-016", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION", "refNotBom": true },
+        { "lineId": "L-05", "ref": "REF-30-005", "refKind": "REF", "canonicalRef": "PART-90-020", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "EVIDENCE", "refNotBom": true },
+        { "lineId": "L-06", "ref": "PART-30-031", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-07", "ref": "ASSY-30-004", "refKind": "ASSY", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION" }
+      ]
+    },
+    "GEN1_EXPANDED": {
+      "mode": "FULLY_EXPANDED",
+      "lines": [
+        { "lineId": "L-01", "ref": "PART-30-001", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-002", "evidenceInherited": "EVIDENCE" },
+        { "lineId": "L-02", "ref": "PART-30-002", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-002", "evidenceInherited": "EVIDENCE" },
+        { "lineId": "L-03", "ref": "PART-30-003", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-002", "evidenceInherited": "EVIDENCE" },
+        { "lineId": "L-04", "ref": "PART-30-004", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-002", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-05", "ref": "PART-30-005", "refKind": "PART", "qtyPerCorner": 2, "parent": "ASSY-30-002", "evidenceInherited": "EVIDENCE" },
+        { "lineId": "L-06", "ref": "PART-30-006", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-002", "evidenceInherited": "EVIDENCE" },
+        { "lineId": "L-07", "ref": "PART-30-007", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-002", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-08", "ref": "PART-30-008", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-002", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-09", "ref": "PART-30-009", "refKind": "PART", "qtyPerCorner": 5, "vehicleTotal": 20, "parent": "ASSY-30-002", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-10", "ref": "REF-30-001", "refKind": "REF", "canonicalRef": "ASSY-40-009", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "EVIDENCE", "refNotBom": true },
+        { "lineId": "L-11", "ref": "REF-30-002", "refKind": "REF", "canonicalRef": "ASSY-40-008", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION", "refNotBom": true },
+        { "lineId": "L-12", "ref": "REF-30-003", "refKind": "REF", "canonicalRef": "PART-20-016", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION", "refNotBom": true },
+        { "lineId": "L-13", "ref": "REF-30-005", "refKind": "REF", "canonicalRef": "PART-90-020", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "EVIDENCE", "refNotBom": true },
+        { "lineId": "L-14", "ref": "PART-30-031", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-15", "ref": "ASSY-30-004", "refKind": "ASSY", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION" }
+      ]
+    },
+    "GEN3_PURCHASED": {
+      "mode": "PURCHASED_ASSEMBLY",
+      "lines": [
+        { "lineId": "L-01", "ref": "ASSY-30-003", "refKind": "ASSY", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "EVIDENCE", "note": "Gen3 bearing unit purchased non-serviceable; do not expand its 9 internals." },
+        { "lineId": "L-02", "ref": "REF-30-001", "refKind": "REF", "canonicalRef": "ASSY-40-009", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "EVIDENCE", "refNotBom": true },
+        { "lineId": "L-03", "ref": "REF-30-002", "refKind": "REF", "canonicalRef": "ASSY-40-008", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION", "refNotBom": true },
+        { "lineId": "L-04", "ref": "REF-30-003", "refKind": "REF", "canonicalRef": "PART-20-016", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION", "refNotBom": true },
+        { "lineId": "L-05", "ref": "REF-30-005", "refKind": "REF", "canonicalRef": "PART-90-020", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "EVIDENCE", "refNotBom": true },
+        { "lineId": "L-06", "ref": "PART-30-031", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-07", "ref": "ASSY-30-004", "refKind": "ASSY", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION" }
+      ]
+    },
+    "GEN3_EXPANDED": {
+      "mode": "FULLY_EXPANDED",
+      "lines": [
+        { "lineId": "L-01", "ref": "PART-30-010", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-003", "evidenceInherited": "EVIDENCE" },
+        { "lineId": "L-02", "ref": "PART-30-011", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-003", "evidenceInherited": "EVIDENCE" },
+        { "lineId": "L-03", "ref": "PART-30-012", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-003", "evidenceInherited": "EVIDENCE" },
+        { "lineId": "L-04", "ref": "PART-30-013", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-003", "evidenceInherited": "EVIDENCE" },
+        { "lineId": "L-05", "ref": "PART-30-014", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-003", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-06", "ref": "PART-30-015", "refKind": "PART", "qtyPerCorner": 2, "parent": "ASSY-30-003", "evidenceInherited": "EVIDENCE" },
+        { "lineId": "L-07", "ref": "PART-30-016", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-003", "evidenceInherited": "ASSUMPTION", "optional": true },
+        { "lineId": "L-08", "ref": "PART-30-017", "refKind": "PART", "qtyPerCorner": 5, "vehicleTotal": 20, "parent": "ASSY-30-003", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-09", "ref": "PART-30-018", "refKind": "PART", "qtyPerCorner": 3, "parent": "ASSY-30-003", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-10", "ref": "REF-30-001", "refKind": "REF", "canonicalRef": "ASSY-40-009", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "EVIDENCE", "refNotBom": true },
+        { "lineId": "L-11", "ref": "REF-30-002", "refKind": "REF", "canonicalRef": "ASSY-40-008", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION", "refNotBom": true },
+        { "lineId": "L-12", "ref": "REF-30-003", "refKind": "REF", "canonicalRef": "PART-20-016", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION", "refNotBom": true },
+        { "lineId": "L-13", "ref": "REF-30-005", "refKind": "REF", "canonicalRef": "PART-90-020", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "EVIDENCE", "refNotBom": true },
+        { "lineId": "L-14", "ref": "PART-30-031", "refKind": "PART", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION" },
+        { "lineId": "L-15", "ref": "ASSY-30-004", "refKind": "ASSY", "qtyPerCorner": 1, "parent": "ASSY-30-001", "evidenceInherited": "ASSUMPTION" }
+      ]
+    }
+  },
+  "quantityFacts": {
+    "PART-30-009": { "generation": "GEN1", "qtyPerCorner": 5, "vehicleTotal": 20, "cornerCount": 4 },
+    "PART-30-017": { "generation": "GEN3", "qtyPerCorner": 5, "vehicleTotal": 20, "cornerCount": 4 }
+  },
+  "errorMappings": [
+    { "source": "R-01", "code": "KIN-E-SCALE", "cause": "GLOBAL_SCALE", "parent": "P14", "note": "P14 only checks top-level scale/globalScale/meshScale; nested scale coverage is limited." },
+    { "source": "R-01", "code": "KIN-E-LENGTH", "cause": "MODULE_LENGTH_INSUFFICIENT", "parent": "P08", "note": "Module length cannot cover requirement; remedy is reselect/change ranges." },
+    { "source": "R-01", "code": "KIN-E-LENGTH", "cause": "KINEMATIC_UNRESOLVABLE", "parent": "P09", "note": "Derived span exceeds module max span; physically unresolvable within current family." },
+    { "source": "R-01", "code": "KIN-E-CONVERGE", "cause": "SOLVER_CONVERGENCE", "parent": "P17_SOLVER_CONVERGENCE_PROPOSED", "note": "R-01 has no convergence rule; do not map to static P09." },
+    { "source": "R-08", "code": "ERR_TRANSFORM_CHIRALITY", "cause": "MIRROR_OR_NEGATIVE_SCALE", "parent": "GATE_04_TRANSFORM_PARITY", "note": "R-08 transform gate; separate from P14 variant scale." },
+    { "source": "R-08", "code": "ERR_ASSEMBLY_CLEARANCE_VIOLATION", "cause": "ISO273_OR_INTERFERENCE", "parent": "GATE_03_ASSEMBLY_CLEARANCE", "note": "Asset/assembly clearance gate; not a KIN-E solver code." }
+  ],
+  "cases": [
+    { "caseId": "CASE-GEN1-RESOLVE", "op": "resolve", "variant": "CFG-GEN1", "expect": { "ok": true, "selectedParts": 9, "activeAliases": 5 } },
+    { "caseId": "CASE-GEN3-RESOLVE", "op": "resolve", "variant": "CFG-GEN3", "expect": { "ok": true, "selectedParts": 9, "activeAliases": 2 } },
+    { "caseId": "CASE-BOTH-GENERATIONS", "op": "resolve", "variant": "CFG-BOTH", "expect": { "ok": false, "code": "ERR_GEN_AMBIGUOUS" } },
+    { "caseId": "CASE-GEN3-WITH-GEN1-HUB", "op": "resolve", "variant": "CFG-GEN3-WITH-HUB", "expect": { "ok": false, "code": "ERR_GEN_CROSS_MIX" } },
+    { "caseId": "CASE-GEN1-WITH-GEN3-PART", "op": "resolve", "variant": "CFG-GEN1-WITH-GEN3-PART", "expect": { "ok": false, "code": "ERR_GEN_CROSS_MIX" } },
+    { "caseId": "CASE-ALIAS-GEN3", "op": "alias", "aliasId": "AL-03-GEN1-HUB", "variant": "CFG-GEN3", "expect": { "ok": false, "code": "ERR_ALIAS_NOT_APPLICABLE" } },
+    { "caseId": "CASE-ALIAS-UNCONFIRMED", "op": "alias", "aliasId": "AL-03-GEN1-HUB", "variant": "CFG-GEN1", "requireConfirmed": true, "expect": { "ok": false, "code": "ERR_ALIAS_UNCONFIRMED" } },
+    { "caseId": "CASE-ALIAS-NO-EVIDENCE", "op": "alias", "aliasId": "AL-03-GEN1-HUB", "variant": "CFG-GEN1", "stripEvidence": true, "expect": { "ok": false, "code": "ERR_EVIDENCE_INHERITANCE_MISSING" } },
+    { "caseId": "CASE-EVIDENCE-UPGRADE", "op": "evidence", "inherited": "ASSUMPTION", "claim": "SOURCED", "sourceId": "S-x", "expect": { "ok": false, "code": "ERR_EVIDENCE_UPGRADE" } },
+    { "caseId": "CASE-SOURCE-MISSING", "op": "evidence", "inherited": "EVIDENCE", "claim": "SOURCED", "sourceId": null, "expect": { "ok": false, "code": "ERR_SOURCE_MISSING" } },
+    { "caseId": "CASE-UNKNOWN-VALUE", "op": "evidence", "inherited": "UNKNOWN", "claim": "UNKNOWN", "value": 1, "expect": { "ok": false, "code": "ERR_UNKNOWN_VALUE" } },
+    { "caseId": "CASE-QTY-LEVEL", "op": "quantity", "line": { "ref": "PART-30-009", "qtyPerCorner": 20, "vehicleTotal": 20 }, "expect": { "ok": false, "code": "ERR_QTY_LEVEL_CONFUSION" } },
+    { "caseId": "CASE-QTY-DOUBLE", "op": "quantity", "line": { "ref": "PART-30-009", "qtyPerCorner": 5, "vehicleTotal": 20, "combinedTotal": 25 }, "expect": { "ok": false, "code": "ERR_QTY_DOUBLE_COUNT" } },
+    { "caseId": "CASE-REF-DOUBLE", "op": "ref", "refs": ["REF-30-001"], "directParts": ["PART-40-046"], "expect": { "ok": false, "code": "ERR_REF_DOUBLE_COUNT" } },
+    { "caseId": "CASE-REF-AS-BOM", "op": "ref", "refs": ["REF-30-001"], "countedAsBom": true, "expect": { "ok": false, "code": "ERR_REF_AS_BOM" } },
+    { "caseId": "CASE-PROC-PURCHASED", "op": "procurement", "mode": "PURCHASED_ASSEMBLY", "bom": "GEN1_PURCHASED", "expect": { "ok": true, "lineCount": 7, "componentLines": 3 } },
+    { "caseId": "CASE-PROC-EXPANDED", "op": "procurement", "mode": "FULLY_EXPANDED", "bom": "GEN1_EXPANDED", "expect": { "ok": true, "lineCount": 15, "componentLines": 11 } },
+    { "caseId": "CASE-PROC-DOUBLE", "op": "procurement", "mode": "PURCHASED_ASSEMBLY", "bom": "GEN1_PURCHASED", "injectChild": "PART-30-006", "expect": { "ok": false, "code": "ERR_PROCUREMENT_DOUBLE_COUNT" } },
+    { "caseId": "CASE-PROC-GEN3-PURCHASED", "op": "procurement", "mode": "PURCHASED_ASSEMBLY", "bom": "GEN3_PURCHASED", "expect": { "ok": true, "lineCount": 7, "componentLines": 3 } },
+    { "caseId": "CASE-KIN-SCALE", "op": "mapping", "kinCode": "KIN-E-SCALE", "cause": "GLOBAL_SCALE", "expect": { "parent": "P14" } },
+    { "caseId": "CASE-KIN-LENGTH-P08", "op": "mapping", "kinCode": "KIN-E-LENGTH", "cause": "MODULE_LENGTH_INSUFFICIENT", "expect": { "parent": "P08" } },
+    { "caseId": "CASE-KIN-LENGTH-P09", "op": "mapping", "kinCode": "KIN-E-LENGTH", "cause": "KINEMATIC_UNRESOLVABLE", "expect": { "parent": "P09" } },
+    { "caseId": "CASE-KIN-CONVERGE", "op": "mapping", "kinCode": "KIN-E-CONVERGE", "cause": "SOLVER_CONVERGENCE", "expect": { "parent": "P17_SOLVER_CONVERGENCE_PROPOSED" } },
+    { "caseId": "CASE-R08-CHIRALITY", "op": "mapping", "kinCode": "ERR_TRANSFORM_CHIRALITY", "cause": "MIRROR_OR_NEGATIVE_SCALE", "expect": { "parent": "GATE_04_TRANSFORM_PARITY" } }
+  ]
+}

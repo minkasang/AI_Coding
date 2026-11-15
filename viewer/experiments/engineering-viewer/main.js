@@ -15,11 +15,17 @@ const state = {
   xray: false,
   explode: 0,
   parts: [],
+  measure: { enabled: false, points: [] },
+  clip: { enabled: false, axis: 'y', t: 0.35 },
 };
 
 let scene, camera, renderer, controls, raycaster, pointer;
 let assemblyRoot, grid;
 let metadata = null;
+let manifest = null;
+let clipPlane = null;
+let measureGroup = null;
+let clipBounds = null;
 
 function setStatus(msg) {
   statusEl.textContent = msg;
@@ -119,6 +125,111 @@ function applyExplode(factor) {
   }
 }
 
+function formatDistance(m) {
+  if (!Number.isFinite(m)) return 'UNKNOWN';
+  return `${(m * 1000).toFixed(2)} mm（${m.toFixed(4)} m）`;
+}
+
+function renderRelations(partId) {
+  const box = $('#partRelations');
+  const rels = (manifest?.relations || []).filter((r) => r.from === partId || r.to === partId);
+  if (!rels.length) {
+    box.hidden = true;
+    return;
+  }
+  const names = Object.fromEntries(state.parts.map((p) => [p.id, p.displayName]));
+  box.hidden = false;
+  box.innerHTML = `<p class="hint">装配关系（示意，未验证工艺）</p><ul>${rels
+    .map((r) => {
+      const other = r.from === partId ? r.to : r.from;
+      const flag = r.verified ? '' : ' · <em>待验证</em>';
+      return `<li>${names[partId]} ↔ ${names[other] || other}：${r.label}${flag}</li>`;
+    })
+    .join('')}</ul>`;
+}
+
+function syncClipping() {
+  if (!clipPlane || !renderer) return;
+  const axis = state.clip.axis;
+  const normal = new THREE.Vector3(
+    axis === 'x' ? 1 : 0,
+    axis === 'y' ? 1 : 0,
+    axis === 'z' ? 1 : 0
+  );
+  clipPlane.normal.copy(normal);
+  if (clipBounds) {
+    const { min, max } = clipBounds[axis];
+    const constant = min + (max - min) * state.clip.t;
+    clipPlane.constant = -constant;
+  }
+  const planes = state.clip.enabled ? [clipPlane] : [];
+  renderer.clippingPlanes = planes;
+  renderer.localClippingEnabled = true;
+  scene.traverse((o) => {
+    if (!o.isMesh) return;
+    const mats = [].concat(o.material);
+    for (const m of mats) {
+      if (!m) continue;
+      m.clippingPlanes = planes;
+      m.clipIntersection = false;
+      m.needsUpdate = true;
+    }
+  });
+}
+
+function clearMeasure() {
+  state.measure.points = [];
+  measureGroup.clear();
+  $('#measureReadout').hidden = true;
+  $('#btnClearMeasure').hidden = true;
+  canvas.classList.remove('measure-active');
+}
+
+function setMeasureMode(on) {
+  state.measure.enabled = on;
+  $('#btnMeasure').classList.toggle('on', on);
+  $('#btnMeasure').setAttribute('aria-pressed', String(on));
+  if (!on) clearMeasure();
+  else {
+    canvas.classList.add('measure-active');
+    setStatus('测距：在模型表面点击两个点（视觉距离，非计量认证）');
+  }
+}
+
+function updateMeasureVisual() {
+  measureGroup.clear();
+  const pts = state.measure.points;
+  if (!pts.length) return;
+  const markerGeo = new THREE.SphereGeometry(0.004, 16, 16);
+  const markerMat = new THREE.MeshBasicMaterial({ color: 0x1d5fd6 });
+  for (const p of pts) {
+    const m = new THREE.Mesh(markerGeo, markerMat);
+    m.position.copy(p);
+    measureGroup.add(m);
+  }
+  if (pts.length === 2) {
+    const geom = new THREE.BufferGeometry().setFromPoints(pts);
+    const line = new THREE.Line(
+      geom,
+      new THREE.LineBasicMaterial({ color: 0x1d5fd6, depthTest: false })
+    );
+    measureGroup.add(line);
+    const d = pts[0].distanceTo(pts[1]);
+    const readout = $('#measureReadout');
+    readout.hidden = false;
+    readout.innerHTML = `<p class="hint">两点测距（场景几何，ASSUMED）</p><p><strong>${formatDistance(d)}</strong></p>
+      <p class="hint">非 CMM/三坐标结果；仅用于学习观察。</p>`;
+    $('#btnClearMeasure').hidden = false;
+    setStatus(`测距：${formatDistance(d)}`);
+  }
+}
+
+function addMeasurePoint(point) {
+  if (state.measure.points.length >= 2) state.measure.points = [];
+  state.measure.points.push(point.clone());
+  updateMeasureVisual();
+}
+
 function selectPart(id) {
   state.selectedId = id;
   const part = state.parts.find((p) => p.id === id);
@@ -145,6 +256,7 @@ function selectPart(id) {
     hub: '当前法兰是参数化展示样例；具体车型尺寸、材料性能和强度尚未获得工程认证。'
   };
   $('#partDisclaimer').textContent = readerNotes[part.id] || '当前仅供结构观察，不代表真实车辆工程认证。';
+  renderRelations(part.id);
   highlightSelection();
   updateVisibility();
   setStatus(`已选：${part.displayName}`);
@@ -204,6 +316,24 @@ function bindUI() {
     state.explode = Number(e.target.value);
     applyExplode(state.explode);
   });
+  $('#btnMeasure').addEventListener('click', () => setMeasureMode(!state.measure.enabled));
+  $('#btnClearMeasure').addEventListener('click', clearMeasure);
+  $('#btnClip').addEventListener('click', () => {
+    state.clip.enabled = !state.clip.enabled;
+    $('#btnClip').classList.toggle('on', state.clip.enabled);
+    $('#btnClip').setAttribute('aria-pressed', String(state.clip.enabled));
+    $('#clipControls').hidden = !state.clip.enabled;
+    syncClipping();
+    setStatus(state.clip.enabled ? '剖切：视觉截面，不代表真实加工' : '已关闭剖切');
+  });
+  $('#clipAxis').addEventListener('change', (e) => {
+    state.clip.axis = e.target.value;
+    syncClipping();
+  });
+  $('#clipPos').addEventListener('input', (e) => {
+    state.clip.t = Number(e.target.value) / 100;
+    syncClipping();
+  });
 }
 
 function onPointerDown(event) {
@@ -216,8 +346,12 @@ function onPointerDown(event) {
     false
   );
   if (!hits.length) return;
-  const hit = hits[0].object;
-  const part = state.parts.find((p) => p.meshes.includes(hit));
+  const hit = hits[0];
+  if (state.measure.enabled) {
+    addMeasurePoint(hit.point);
+    return;
+  }
+  const part = state.parts.find((p) => p.meshes.includes(hit.object));
   if (part) selectPart(part.id);
 }
 
@@ -235,7 +369,10 @@ function initScene() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, state.mode === 'engineering' ? 1.5 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.localClippingEnabled = true;
+  clipPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
   scene = new THREE.Scene();
+  measureGroup = new THREE.Group();
   camera = new THREE.PerspectiveCamera(42, 1, 0.01, 50);
   camera.position.set(0.35, 0.22, 0.42);
   controls = new OrbitControls(camera, canvas);
@@ -255,14 +392,14 @@ function initScene() {
   scene.add(fill);
   grid = new THREE.GridHelper(0.6, 12, 0xc8d6e7, 0xe1e9f2);
   grid.position.y = -0.06;
-  scene.add(grid);
+  scene.add(grid, measureGroup);
   window.addEventListener('resize', resize);
   canvas.addEventListener('pointerdown', onPointerDown);
   resize();
 }
 
 async function loadAssembly() {
-  const manifest = await (await fetch('./assembly.manifest.json')).json();
+  manifest = await (await fetch('./assembly.manifest.json')).json();
   renderTruthBadges(manifest);
   // Prefer the latest locally generated CAD output. A tiny curated fixture
   // makes the viewer useful after git clone, before running Blender/build123d.
@@ -299,6 +436,11 @@ async function loadAssembly() {
   scene.add(assemblyRoot);
 
   const bounds = assertAssemblyBounds(assemblyRoot);
+  clipBounds = {
+    x: { min: bounds.box.min.x, max: bounds.box.max.x },
+    y: { min: bounds.box.min.y, max: bounds.box.max.y },
+    z: { min: bounds.box.min.z, max: bounds.box.max.z },
+  };
   const unitRoot = assemblyRoot.getObjectByName('Assembly_WheelHub');
   const glbUnit = unitRoot?.userData?.carlab_unit || 'meter (inferred)';
 
@@ -361,6 +503,7 @@ async function loadAssembly() {
 
   buildTree();
   applyMode();
+  syncClipping();
   selectPart(state.parts[0].id);
 
   const box = new THREE.Box3().setFromObject(assemblyRoot);

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>R-14 · 金属机械质感 A/B 实验（加载中）</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+  }
+}
+</script>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #f2f0ec; overflow: hidden;
+    font: 13px/1.5 "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; color: #23262b; }
+  #canvas { display: block; width: 1280px; height: 800px; }
+  .hud { position: fixed; left: 14px; top: 12px; padding: 8px 12px; border-radius: 8px;
+    background: rgba(255,255,255,.88); border: 1px solid #d9d6cf; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+  .hud b { letter-spacing: .04em; }
+  .hud .vars { margin-top: 2px; color: #59616b; font-variant-numeric: tabular-nums; }
+  #metrics { position: fixed; left: -99999px; top: 0; }
+  body.clean .hud { display: none; }
+  #err { position: fixed; left: 14px; bottom: 14px; max-width: 900px; padding: 10px 14px;
+    background: #fff2f0; border: 1px solid #e5b4ad; border-radius: 8px; color: #7a2318; white-space: pre-wrap; }
+  #err[hidden] { display: none; }
+</style>
+</head>
+<body>
+  <canvas id="canvas" width="1280" height="800" aria-label="R-14 固定机位渲染对照"></canvas>
+  <div class="hud" id="hud">
+    <b>CARLAB · R-14 A/B</b>
+    <div class="vars" id="vars">loading…</div>
+  </div>
+  <pre id="metrics"></pre>
+  <div id="err" hidden></div>
+  <script type="module">
+    const q = new URLSearchParams(location.search);
+    if (q.get('clean') === '1') document.body.classList.add('clean');
+    document.getElementById('vars').textContent =
+      `N=${q.get('n') || '0'} (法线) · G=${q.get('g') || '0'} (接地) · 1280×800 · 固定机位`;
+    window.addEventListener('error', (e) => {
+      const el = document.getElementById('err');
+      el.hidden = false;
+      el.textContent = '模块加载/运行错误：' + (e.message || e.error || 'unknown');
+    });
+  </script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

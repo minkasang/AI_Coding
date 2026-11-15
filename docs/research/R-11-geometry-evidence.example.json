@@ -1,0 +1,963 @@
+{
+  "schemaVersion": "R11-GEOM-ANCHOR-0.1",
+  "artifact": "geometry-anchor-evidence",
+  "owner": "qwen4",
+  "taskId": "R-11",
+  "date": "2026-11-14",
+  "status": "SUBMITTED_PENDING_REVIEW",
+  "purpose": "为轮端样板建立可核验的真实几何证据链：区分制造商官方正文、二手聚合站与不可达来源；裁定哪些参数可升级、哪些必须保持 UNKNOWN；不修改 R-06 已验收 BOM。",
+  "passCriterion": "可追溯与诚实处理未知，不是找到多少个数（任务书原文）。",
+  "unitPolicy": {
+    "cad": "mm",
+    "sim": "m / kg / s / N",
+    "sourceNative": "来源原值一律保留 raw + nativeUnit，另给 mm 换算值与换算因子",
+    "inchToMm": 25.4,
+    "rule": "禁止把来源原值直接当 mm 使用；同一页面混用英寸与毫米时必须逐字段标注（见 UH-01）"
+  },
+  "gradeEnum": [
+    "SOURCED",
+    "SOURCED_SECONDARY",
+    "ENGINEERING_INFERENCE",
+    "DEMO_ASSUMPTION",
+    "UNKNOWN",
+    "OUT_OF_SCOPE"
+  ],
+  "sourceKindEnum": [
+    "MANUFACTURER_OFFICIAL_HTML",
+    "MANUFACTURER_OFFICIAL_PDF",
+    "AGGREGATOR_HTML",
+    "DISTRIBUTOR_HTML",
+    "FORUM",
+    "PROJECT_CODE_READONLY",
+    "STANDARD_CATALOG_RECORD"
+  ],
+  "retrievalEnum": [
+    "FETCHED_THIS_ROUND",
+    "PDF_BINARY_UNPARSEABLE",
+    "JS_SHELL_NO_DATA",
+    "SEARCH_SHELL_NO_DATA",
+    "HTTP_403",
+    "SNIPPET_ONLY",
+    "REUSED_NOT_REFETCHED"
+  ],
+  "scope": {
+    "relationToR06": "R-06 已 approved。本任务只读引用其 PR-* 编号与结论，不修改 R-06 任何文件。",
+    "r06SampleStill": "左前单角 / DOUBLE_WISHBONE / GEN1 / FLOATING_CALIPER_DISC / 通用演示样板（非任何真实车型）",
+    "whatThisRoundAdds": "一个完整可核验的真实参考件（车轮螺柱）+ 两份制造商官方轴承正文 + 一份制造商球铰工程陈述 + 真实车型世代差异证据",
+    "whatThisRoundDoesNotDo": [
+      "不把参考件当成演示样板的零件",
+      "不擅自把样板改型为某个真实车型",
+      "不修改 src/、CAD、MASTER_PLAN.md、共享 Schema",
+      "不冻结世界 Frame",
+      "不声称取得任何 OEM 图纸或标准条款原文"
+    ]
+  },
+  "sources": [
+    {
+      "id": "T01",
+      "title": "Koyo / JTEKT — Chassis (Automotive) Product Information（官方 HTML）",
+      "url": "https://www.jtekt.co.jp/products/bearing/en/p/field/automotive/chassis/",
+      "originalUrl": "https://koyo.jtekt.co.jp/en/products/field/automotive/chassis/",
+      "redirect": "301 → www.jtekt.co.jp（已按重定向实际抓取）",
+      "publisher": "JTEKT Corporation / Koyo（制造商）",
+      "kind": "MANUFACTURER_OFFICIAL_HTML",
+      "vehicleClass": "UNIVERSAL",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "SOURCED",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION",
+      "usedForClaim": true,
+      "usedForGeometry": false,
+      "locator": "Chassis (Automotive) 页正文 wheel bearing 段落",
+      "verbatim": [
+        "DAC-type double-row bearing for wheels",
+        "high moment rigidity and excellent sealing performance",
+        "No preload adjustments are required at the time of assembly.",
+        "unit bearing (hub unit) combining a wheel hub and bearing",
+        "a sufficient sealing function with countermeasures against muddy water"
+      ],
+      "supports": "制造商官方确认 DAC 型车轮轴承是**双列**（double-row）；该系列装配时**不需要调整预紧**；密封性能为其设计特征。",
+      "doesNotSupport": "**页面无任何数值尺寸**（已明确核实）。未说明 DAC 是球轴承还是滚子轴承、未说明外圈是否一体/内圈是否可分离、未给任何具体型号或 d/D/B。不得据此填 PR-14 内部几何或 PR-15 配合公差。",
+      "linkedCatalog": {
+        "url": "https://www.jtekt.co.jp/products/bearing/en/support/catalog-download/uploads/catba009en.pdf",
+        "title": "The 3rd generation BALL HUB UNITS",
+        "status": "见 T07，正文不可解析"
+      }
+    },
+    {
+      "id": "T02",
+      "title": "NSK — Hub Unit Bearings（官方 HTML）",
+      "url": "https://www.nsk.com/products/automotive/hub-unit-bearings/",
+      "publisher": "NSK Ltd.（制造商）",
+      "kind": "MANUFACTURER_OFFICIAL_HTML",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "SOURCED",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION",
+      "usedForClaim": true,
+      "usedForGeometry": false,
+      "locator": "Hub Unit Bearings 页 HUB I / HUB II / HUB III 产品列表与特征说明",
+      "verbatim": [
+        "Double-Row Angular Contact Ball Bearings (HUBI)",
+        "Double-Row Tapered Roller Bearings (HUBI)",
+        "No spacer required",
+        "Integral high performance seal",
+        "Easy and reliable preload setting",
+        "Difficult to set preload",
+        "No need to press fit into knuckle",
+        "Outer Mounting Flange",
+        "Inner and Outer Mounting Flange",
+        "preset optimum preload",
+        "hub unit bearings with a built-in sensor",
+        "Angular Passive Sensor",
+        "Integral Sensor Located between the Rows",
+        "Multipole Magnetic Encoder",
+        "End-Cap Type Active Sensor"
+      ],
+      "supports": "制造商官方确认 HUB I 世代包含**双列角接触球轴承**与**双列圆锥滚子轴承**两类；HUB I 需要设置预紧（相对传统型式『容易且可靠』）；HUB II 带外安装法兰、无需压入转向节；HUB III 带内外双法兰且预紧已预设。",
+      "doesNotSupport": "**页面无任何数值尺寸**（已明确核实）。未使用 BWD/KWD 缩写（该缩写只出现在不可解析的 PDF 检索摘要中，不作为已核实事实）。未给法兰 PCD/CB/厚度、未给配合公差、未给具体型号。不得据此填 PR-14/15/16。",
+      "note": "本页与 T01 在预紧要求上**实质矛盾**，见 CC-05。"
+    },
+    {
+      "id": "T03",
+      "title": "Dorman Products — Wheel Lug Stud 610-460, M12-1.50 Serrated（官方产品页 HTML）",
+      "url": "https://www.dormanproducts.com/p-11945-610-460.aspx",
+      "publisher": "Dorman Products（制造商/售后件品牌方）",
+      "kind": "MANUFACTURER_OFFICIAL_HTML",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "SOURCED",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION",
+      "copyrightNotice": "© 2026 Dorman Products. All rights reserved.",
+      "usedForClaim": true,
+      "usedForGeometry": true,
+      "locator": "610-460 产品页 Specifications 表与 Applications 段",
+      "verbatim": [
+        "Thread Diameter: M12",
+        "Thread Pitch: 1.5 mm",
+        "Thread Direction: Clockwise (Right)",
+        "Thread Length (In): 1.24 in",
+        "Under Head Length: 1.817 in",
+        "Shoulder Length (In): 0.597 in",
+        "Knurl Diameter (In): 0.565 in",
+        "Head Diameter: 18 mm",
+        "Style: Serrated Stud",
+        "Silver",
+        "Steel",
+        "10 Studs",
+        "Volvo S40 2004-00, Volvo V40 2004-00"
+      ],
+      "supports": "一个**具体型号**车轮螺柱的完整公开数值规格：螺纹 M12×1.5 右旋、螺纹长/头下长/肩长/花键外径/头径、型式、材料、包装数量与装车应用。这是本项目首个由制造商官方页面给出数值的车轮端紧固件。",
+      "doesNotSupport": "**无尺寸图**（只有产品照片）、**无安装扭矩**、**无公差/配合等级**、**无材料强度等级（Grade 字段缺失）**、**无总长字段**。不得据此声称配合级或强度级验证。",
+      "absentFields": ["overallLength", "installationTorque", "toleranceClass", "materialGrade", "dimensionDrawing", "seatType"]
+    },
+    {
+      "id": "T04",
+      "title": "ZF Aftermarket — Steering and Chassis Parts, Passenger Cars（官方技术页 HTML）",
+      "url": "https://aftermarket.zf.com/sg/aftermarket-portal/our-portfolio/passenger-cars/products/steering-and-chassis-parts/",
+      "publisher": "ZF Aftermarket（TRW / LEMFÖRDER 品牌方，制造商）",
+      "kind": "MANUFACTURER_OFFICIAL_HTML",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "SOURCED",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION",
+      "usedForClaim": true,
+      "usedForGeometry": false,
+      "locator": "Supporting joints / ball joint 技术说明段与材料质量段",
+      "verbatim": [
+        "ball joint housing is usually attached in the control arm and the ball stud is usually attached on the inside of the steering knuckle via its conical taper or a cylindrical dog point",
+        "maintenance-free",
+        "free-moving in three directions",
+        "Traction forces, compressive forces and radial forces are transferred",
+        "High grade material ball pin – with tensile strength of up to 1100N/mm2 following ISO standards of 6892-1",
+        "Heat treated forged housing – with hardness of up to HV 380",
+        "acoustic measurements",
+        "strength tests",
+        "wear tests"
+      ],
+      "supports": "制造商官方确认球铰安装语义：**壳体在摆臂侧、球头销通过锥面或圆柱定位端进入转向节内侧**；免维护；三向自由转动；传递拉/压/径向力。并给出材料能力上限与试验类别。",
+      "doesNotSupport": "**无任何几何尺寸、无锥度角度、无螺纹规格、无安装高度、无扭矩**。『up to 1100 N/mm²』『up to HV 380』是**材料能力上限**，不是某个具体零件的认证值；ISO 6892-1 是**拉伸试验方法标准**，不是产品尺寸标准。不得据此把 PR-17 升级为 SOURCED，也不得据此声称任何零件已通过强度验证。",
+      "keyEngineeringFinding": "接口可以是**锥面**或**圆柱定位端**两种，因此单一 taperAngle 字段不足以描述球铰接口（见 DEC-04）。"
+    },
+    {
+      "id": "T05",
+      "title": "Wheel Fitment — Volvo S40 (2004-2012)（聚合站 HTML）",
+      "url": "https://www.wheelfitment.eu/car/volvo/S40/s40%20%282004%20-%202012%29/",
+      "publisher": "wheelfitment.eu（聚合站，非制造商）",
+      "kind": "AGGREGATOR_HTML",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "SOURCED_SECONDARY",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION",
+      "copyrightNotice": "© 2026 Wheel Fitment.",
+      "usedForClaim": true,
+      "usedForGeometry": false,
+      "locator": "Volvo S40 (2004-2012) 规格表",
+      "verbatim": [
+        "5x108",
+        "63.4 mm",
+        "52.5",
+        "Nut — 12x1,50",
+        "195/65R15 205/55R16 205/50R17 225/45R17 225/40R18 235/35R19 235/30R20",
+        "Wheel specifications are indicative — always consult your vehicle handbook."
+      ],
+      "supports": "第二代 S40 的 PCD 5×108、中心孔 63.4 mm、ET 52.5、紧固件为**螺母 M12×1.5**。其中 M12×1.5 与 T03 制造商页面**独立一致**（见 XC-01）。",
+      "doesNotSupport": "**未引用任何制造商文件或 OEM 来源**；对 2004-2012 整个区间只给单一值、不区分发动机/配置变体；自带『indicative』免责声明。因此最高只能 SOURCED_SECONDARY，**不得升级为 SOURCED**，不得用于配合级建模。ET 与 T12 冲突（见 CC-08）。",
+      "primarySourceCited": false
+    },
+    {
+      "id": "T06",
+      "title": "Wheel Fitment — Volvo S40 (1996-2004)（聚合站 HTML）",
+      "url": "https://www.wheelfitment.eu/car/volvo/S40/s40%20%281996%20-%202004%29/",
+      "publisher": "wheelfitment.eu（聚合站，非制造商）",
+      "kind": "AGGREGATOR_HTML",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "SOURCED_SECONDARY",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION",
+      "usedForClaim": true,
+      "usedForGeometry": false,
+      "locator": "Volvo S40 (1996-2004) 规格表",
+      "verbatim": [
+        "4x114.3",
+        "67.1 mm",
+        "44",
+        "Bolt — 12x1,50",
+        "185/65R15 195/60R15 205/45R17 205/50R16 215/35R19 215/40R18 225/35R18",
+        "Wheel specifications are indicative — always consult your vehicle handbook."
+      ],
+      "supports": "第一代 S40 的 PCD 为 **4×114.3（4 孔）**、中心孔 67.1 mm、ET 44、紧固件为**螺栓 M12×1.5**（不是螺母+螺柱）。与第二代在孔数、PCD、中心孔、紧固方式上**全部不同**。",
+      "doesNotSupport": "同 T05：无一手来源引用、整区间单值、自带免责声明。最高 SOURCED_SECONDARY。",
+      "primarySourceCited": false
+    },
+    {
+      "id": "T07",
+      "title": "JTEKT / Koyo — The 3rd generation BALL HUB UNITS（catba009en.pdf）",
+      "url": "https://www.jtekt.co.jp/products/bearing/en/support/catalog-download/uploads/catba009en.pdf",
+      "publisher": "JTEKT Corporation（制造商）",
+      "kind": "MANUFACTURER_OFFICIAL_PDF",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "PDF_BINARY_UNPARSEABLE",
+      "grade": "UNKNOWN",
+      "license": "PUBLIC_MANUFACTURER_CATALOG",
+      "usedForClaim": false,
+      "usedForGeometry": false,
+      "locator": null,
+      "verbatim": [],
+      "supports": "无。本轮实际抓取返回加密二进制/压缩流，无可读文本或表格。",
+      "doesNotSupport": "不得引用任何检索摘要作为已核实事实。这是取得第三代轮毂单元法兰几何与尺寸表的**最有价值待取来源之一**。",
+      "blockedReason": "PDF 正文不可解析；工作区外下载在 R-06 已被权限策略拦截，本轮未绕过。需总控授权在工作区内保存并解析（见 DEC-03）。"
+    },
+    {
+      "id": "T08",
+      "title": "ZF Aftermarket — Ball Joint JBJ7562 产品页",
+      "url": "https://aftermarket.zf.com/en/catalog/products/JBJ7562",
+      "publisher": "ZF Aftermarket",
+      "kind": "MANUFACTURER_OFFICIAL_HTML",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "JS_SHELL_NO_DATA",
+      "grade": "UNKNOWN",
+      "license": "UNKNOWN",
+      "usedForClaim": false,
+      "usedForGeometry": false,
+      "locator": null,
+      "verbatim": [],
+      "supports": "无。页面返回 JavaScript 基础设施代码，不含任何产品数据。",
+      "doesNotSupport": "尺寸/螺纹/锥度/装车应用/品牌归属全部 ABSENT。不得因 URL 存在就认为已取得该型号证据。"
+    },
+    {
+      "id": "T09",
+      "title": "NSK Europe — Automotive Aftermarket Catalogue Parts（在线目录入口）",
+      "url": "https://www.nsk.com/eu-en/products/automotive/automotive-aftermarket/catalogue-parts/",
+      "originalUrl": "https://www.nskeurope.com/en/Automotive-Aftermarket/catalogue-parts.html",
+      "redirect": "301 → nsk.com/eu-en（已按重定向实际抓取）",
+      "publisher": "NSK Ltd.",
+      "kind": "MANUFACTURER_OFFICIAL_HTML",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "SEARCH_SHELL_NO_DATA",
+      "grade": "UNKNOWN",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION",
+      "copyrightNotice": "© NSK Ltd. 2026",
+      "usedForClaim": false,
+      "usedForGeometry": false,
+      "locator": "目录入口页（检索壳 + PDF 目录链接）",
+      "verbatim": [
+        "enter your desired product’s vehicle or part number",
+        "exact specifications"
+      ],
+      "supports": "仅证明存在按车型/零件号检索的官方入口，以及 wheel bearings / kits 两个类别。",
+      "doesNotSupport": "**本页无任何产品数据表、无 d/D/B 数值**。『exact specifications』是对数据表的描述而非数据本身。不得据此声称已取得任何尺寸。",
+      "discoveredCatalogUrl": "https://www.nsk.com/content/dam/nsk/eu/en_gb/documents/aam-europe/CAT_ProKIT_Wheel-Bearing-Kit_EN.pdf",
+      "discoveredCatalogStatus": "本轮未抓取；列为下一份来源方向 NS-02"
+    },
+    {
+      "id": "T10",
+      "title": "wheel-size.com — Volvo S40 by generation",
+      "url": "https://www.wheel-size.com/size/volvo/s40/",
+      "publisher": "wheel-size.com（聚合站）",
+      "kind": "AGGREGATOR_HTML",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "HTTP_403",
+      "grade": "UNKNOWN",
+      "license": "UNKNOWN",
+      "usedForClaim": false,
+      "usedForGeometry": false,
+      "locator": null,
+      "verbatim": [],
+      "supports": "无（403 Forbidden，未重试）。",
+      "doesNotSupport": "不得引用其检索摘要。"
+    },
+    {
+      "id": "T11",
+      "title": "Oponeo — Volvo S40 wheel configurator（仅检索摘要）",
+      "url": "https://www.oponeo.ie/wheel-configurator/volvo/s40",
+      "publisher": "Oponeo（零售商）",
+      "kind": "AGGREGATOR_HTML",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "SNIPPET_ONLY",
+      "grade": "UNKNOWN",
+      "license": "UNKNOWN",
+      "usedForClaim": false,
+      "usedForGeometry": false,
+      "locator": null,
+      "verbatim": [],
+      "supports": "无（未实际抓取正文）。",
+      "doesNotSupport": "摘要称第一代 4x114.3、第二代 5x108，方向与 T06/T05 一致，但**摘要不作为已核实事实**，仅记录为待复核旁证。"
+    },
+    {
+      "id": "T12",
+      "title": "ozvolvo.org — Volvo Wheel Fitment Guide（论坛，仅检索摘要）",
+      "url": "https://ozvolvo.org/d/1105-volvo-wheel-fitment-guide?page=2",
+      "publisher": "ozvolvo.org（车主论坛）",
+      "kind": "FORUM",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "SNIPPET_ONLY",
+      "grade": "UNKNOWN",
+      "license": "UNKNOWN",
+      "usedForClaim": false,
+      "usedForGeometry": false,
+      "locator": null,
+      "verbatim": [],
+      "supports": "无（未实际抓取正文）。",
+      "doesNotSupport": "摘要称 2004 起 S40/V50/C30 为 5x108、中心孔 63.4、**ET 35 到 50 mm**。ET 区间与 T05 的 52.5 冲突（CC-08）。论坛摘要不得作为事实。"
+    },
+    {
+      "id": "N02",
+      "title": "123bearing — DAC42800042 产品页（R-06 复用，未重抓）",
+      "url": "https://www.123bearing.com/bearing-housing/deep-groove-bearing/single-row/dac42800042",
+      "publisher": "123bearing（分销商）",
+      "kind": "DISTRIBUTOR_HTML",
+      "vehicleClass": "UNIVERSAL",
+      "accessedAt": "2026-11-14",
+      "retrieval": "REUSED_NOT_REFETCHED",
+      "grade": "SOURCED_SECONDARY",
+      "license": "PUBLIC_WEB_QUOTE_WITH_ATTRIBUTION",
+      "usedForClaim": true,
+      "usedForGeometry": true,
+      "locator": "R-06 sources N02 原文记录",
+      "verbatim": ["42x80x42 mm", "Deep groove ball bearing", "SINGLE ROW"],
+      "supports": "分销商陈述该代号外形 42×80×42 mm。",
+      "doesNotSupport": "其『SINGLE ROW / Deep groove』分类**与制造商 T01 的 double-row 陈述矛盾**，本轮判定为分销商误分类（见 CC-01）。外形尺寸仍只到 SOURCED_SECONDARY。"
+    },
+    {
+      "id": "N04",
+      "title": "NSK — Wheel Bearings HUB I For Automotive Aftermarket（e4803a.pdf，R-06 复用）",
+      "url": "https://www.nsk.com/content/dam/nsk/common/catalogs/ctrgPdf/automotive/e4803a.pdf",
+      "publisher": "NSK Ltd.",
+      "kind": "MANUFACTURER_OFFICIAL_PDF",
+      "vehicleClass": "PASSENGER",
+      "accessedAt": "2026-11-14",
+      "retrieval": "REUSED_NOT_REFETCHED",
+      "grade": "UNKNOWN",
+      "license": "PUBLIC_MANUFACTURER_CATALOG",
+      "usedForClaim": false,
+      "usedForGeometry": false,
+      "locator": null,
+      "verbatim": [],
+      "supports": "无（R-06 已记录 PDF 正文不可解析）。",
+      "doesNotSupport": "本轮 T02 官方 HTML 已取得 HUB I 类型与预紧陈述，**部分替代**了该 PDF 的定性作用；但尺寸表与公差仍缺，PDF 仍是待取来源（NS-01）。"
+    },
+    {
+      "id": "M10",
+      "title": "src/specs.js — 既有演示轮辋参数与兜底值（项目自有代码，只读实测）",
+      "url": null,
+      "publisher": "CARLAB 项目自有代码",
+      "kind": "PROJECT_CODE_READONLY",
+      "vehicleClass": "DEMO",
+      "accessedAt": "2026-11-14",
+      "retrieval": "FETCHED_THIS_ROUND",
+      "grade": "SOURCED",
+      "license": "PROJECT_OWN_CODE",
+      "usedForClaim": true,
+      "usedForGeometry": false,
+      "locator": "src/specs.js:37-39, :90-92, :143-145, :195-197, :228-232",
+      "verbatim": [
+        "bolts: 5, pcdMm: 114.3, centerBoreMm: 67.1",
+        "bolts: 5, pcdMm: 112.0, centerBoreMm: 66.6",
+        "bolts: 6, pcdMm: 139.7, centerBoreMm: 106.1",
+        "const pcdRadius = ((spec.rimStyle.pcdMm || 114.3) / 1000) / 2;",
+        "const centerBoreRadius = ((spec.rimStyle.centerBoreMm || 67.1) / 1000) / 2;"
+      ],
+      "supports": "代码**事实**：存在 (5 孔, 114.3, 67.1) 与 (5 孔, 112.0, 66.6) 与 (6 孔, 139.7, 106.1) 三组参数，兜底为 114.3 / 67.1。这是对代码行为的已核实陈述。",
+      "doesNotSupport": "**代码里有某个数字不等于该数字是实车数据**。不得把兜底值当 OEM 参数（任务书明文禁止）。本轮不改 src/。"
+    }
+  ],
+  "referenceSpecimens": [
+    {
+      "id": "SPEC-STUD-DORMAN-610-460",
+      "name": "Dorman 610-460  serrated wheel stud（真实售后件参考样本）",
+      "kind": "WHEEL_STUD",
+      "isDemoSamplePart": false,
+      "isDemoSamplePartReason": "R-06 样板是通用演示双叉臂左前角，不属任何真实车型。本件是 Volvo S40/V40 的真实售后件，**不是样板的零件**。把它当样板零件会构成任务书禁止的『凑不同车辆零件假装属于同一总成』。",
+      "adoptionRequires": "DEC-01（总控决定是否把首个样板改型为真实车型应用）",
+      "manufacturer": "Dorman Products",
+      "partNumber": "610-460",
+      "sourceId": "T03",
+      "allowedModelingLevel": "FID-V",
+      "allowedModelingLevelReason": "有完整外形数值可建视觉包络；但无公差/配合等级、无扭矩、无尺寸图、无座型，**不得升级到配合级或运动学级**。",
+      "vehicleApplication": {
+        "asPublished": "Volvo S40 2004-00, Volvo V40 2004-00",
+        "generationResolved": false,
+        "generationNote": "2004 是 S40 换代年。T06 第一代（1996-2004）为 4 孔 + **螺栓**；T05 第二代（2004-2012）为 5 孔 + **螺母**。本件是螺柱（配螺母），方向指向第二代，但 Dorman 的『2004-00』记法未明确世代，且 V40 属第一代平台却用螺栓——见 CC-09，保持 OPEN。",
+        "inference": {
+          "statement": "包装 10 支 = 2 轮 × 5 孔，与第二代 5 孔一致",
+          "grade": "ENGINEERING_INFERENCE",
+          "notSourcedBecause": "10 也可能只是通用包装数量；页面未声明每轮用量。"
+        }
+      },
+      "parameters": [
+        {"id": "SP-01", "name": "螺纹公称直径", "raw": "M12", "value_mm": 12.0, "nativeUnit": "thread-designation", "grade": "SOURCED", "sourceId": "T03", "locator": "Thread Diameter"},
+        {"id": "SP-02", "name": "螺距", "raw": 1.5, "value_mm": 1.5, "nativeUnit": "mm", "grade": "SOURCED", "sourceId": "T03", "locator": "Thread Pitch"},
+        {"id": "SP-03", "name": "螺纹方向", "raw": "Clockwise (Right)", "value_mm": null, "nativeUnit": "enum", "grade": "SOURCED", "sourceId": "T03", "locator": "Thread Direction"},
+        {"id": "SP-04", "name": "螺纹长度", "raw": 1.24, "value_mm": 31.496, "nativeUnit": "in", "conversionFactor": 25.4, "grade": "SOURCED", "sourceId": "T03", "locator": "Thread Length (In)"},
+        {"id": "SP-05", "name": "头下长度", "raw": 1.817, "value_mm": 46.1518, "nativeUnit": "in", "conversionFactor": 25.4, "grade": "SOURCED", "sourceId": "T03", "locator": "Under Head Length", "note": "与 SP-04+SP-06 不相加，见 CC-07"},
+        {"id": "SP-06", "name": "肩部长度", "raw": 0.597, "value_mm": 15.1638, "nativeUnit": "in", "conversionFactor": 25.4, "grade": "SOURCED", "sourceId": "T03", "locator": "Shoulder Length (In)"},
+        {"id": "SP-07", "name": "花键（滚花）外径", "raw": 0.565, "value_mm": 14.351, "nativeUnit": "in", "conversionFactor": 25.4, "grade": "SOURCED", "sourceId": "T03", "locator": "Knurl Diameter (In)"},
+        {"id": "SP-08", "name": "头部直径", "raw": 18, "value_mm": 18.0, "nativeUnit": "mm", "grade": "SOURCED", "sourceId": "T03", "locator": "Head Diameter"},
+        {"id": "SP-09", "name": "型式", "raw": "Serrated Stud", "value_mm": null, "nativeUnit": "enum", "grade": "SOURCED", "sourceId": "T03", "locator": "Style"},
+        {"id": "SP-10", "name": "材料", "raw": "Steel", "value_mm": null, "nativeUnit": "enum", "grade": "SOURCED", "sourceId": "T03", "locator": "Material"},
+        {"id": "SP-11", "name": "表面处理", "raw": "Silver", "value_mm": null, "nativeUnit": "enum", "grade": "SOURCED", "sourceId": "T03", "locator": "Finish"},
+        {"id": "SP-12", "name": "包装数量", "raw": 10, "value_mm": null, "nativeUnit": "count", "grade": "SOURCED", "sourceId": "T03", "locator": "10 Studs"},
+        {"id": "SP-13", "name": "总长", "raw": null, "value_mm": null, "nativeUnit": "mm", "grade": "UNKNOWN", "sourceId": "T03", "locator": "ABSENT", "mustNotDerive": true, "mustNotDeriveReason": "页面未给总长；且 SP-05 ≠ SP-04 + SP-06（差 0.508 mm），相加会得到错误总长。见 CC-07。"},
+        {"id": "SP-14", "name": "安装扭矩", "raw": null, "value_mm": null, "nativeUnit": "N·m", "grade": "UNKNOWN", "sourceId": "T03", "locator": "ABSENT"},
+        {"id": "SP-15", "name": "公差/配合等级", "raw": null, "value_mm": null, "nativeUnit": "tolerance", "grade": "UNKNOWN", "sourceId": "T03", "locator": "ABSENT"},
+        {"id": "SP-16", "name": "材料强度等级", "raw": null, "value_mm": null, "nativeUnit": "grade", "grade": "UNKNOWN", "sourceId": "T03", "locator": "ABSENT"},
+        {"id": "SP-17", "name": "螺母座型（锥座/球座/平座）", "raw": null, "value_mm": null, "nativeUnit": "enum", "grade": "UNKNOWN", "sourceId": "T03", "locator": "ABSENT", "note": "R-06 PR-10 名为『螺纹与座型』；本轮只取得螺纹，**座型仍未知**，故 PR-10 只能部分升级。"}
+      ],
+      "derivedEngineeringFacts": [
+        {
+          "id": "DF-01",
+          "statement": "花键外径 14.351 mm 比 M12 螺纹公称 12 mm 大 2.351 mm（19.6%），因此轮毂孔必须按花键过盈设计，而不是按螺纹通孔设计。",
+          "grade": "SOURCED",
+          "basis": "SP-07 与 SP-01 均来自 T03 制造商页面；差值为可复算算术。",
+          "upgrades": "RP-01 PART-30-009 的 geomNote『压装螺柱用花键过盈，不是 ISO 273 通孔』原为工程推断，现有制造商数值支撑。",
+          "doesNotEstablish": "具体过盈量、孔径公差、压装力仍 UNKNOWN（SP-15 缺失）。不得据此生成配合面。"
+        },
+        {
+          "id": "DF-02",
+          "statement": "同一制造商页面混用英寸与毫米：4 个长度字段为 in，2 个字段为 mm。把 0.565 当 mm 读会得到 0.565 mm 而非 14.351 mm，误差 25.4 倍、绝对偏差 13.786 mm。",
+          "grade": "SOURCED",
+          "basis": "T03 字段名显式带 (In) 与 mm；换算可复算。",
+          "seeAlso": "UH-01"
+        }
+      ]
+    }
+  ],
+  "crossChecks": [
+    {
+      "id": "XC-01",
+      "kind": "INDEPENDENT_AGREEMENT",
+      "statement": "紧固件螺纹 M12×1.5 由**制造商官方产品页**（T03，Dorman 610-460）与**独立聚合站**（T05，Volvo S40 2004-2012 'Nut — 12x1,50'）分别给出且一致。",
+      "significance": "这是本项目首个由两类互相独立来源一致确认的车轮端紧固参数。",
+      "limit": "一致只覆盖**螺纹**。PCD/CB/ET 仍只有聚合站单一来源（T05），无制造商确认；且 T05 自带 indicative 免责声明。因此不能把整个轮端接口升级为 SOURCED。",
+      "grade": "SOURCED for thread; SOURCED_SECONDARY for the rest"
+    },
+    {
+      "id": "XC-02",
+      "kind": "GENERATION_DISCRIMINATION",
+      "statement": "第一代 S40（T06）= 4×114.3 / CB 67.1 / ET 44 / **螺栓** M12×1.5；第二代（T05）= 5×108 / CB 63.4 / ET 52.5 / **螺母** M12×1.5。两代在孔数、PCD、中心孔、紧固方式上全部不同，只有螺纹相同。",
+      "significance": "证明『螺纹一致』绝不能推出『轮端接口一致』。仅凭 M12×1.5 就把两代零件混用会同时错孔数与中心孔。",
+      "grade": "SOURCED_SECONDARY",
+      "limit": "两代数值均来自同一聚合站、无一手引用；世代差异的**方向**可信，**具体数值**仍只到二手级。"
+    }
+  ],
+  "parameterVerdicts": [
+    {
+      "r06ParamId": "PR-06",
+      "name": "车轮螺栓孔节圆 PCD",
+      "r06Grade": "UNKNOWN",
+      "r11Verdict": "REMAINS_UNKNOWN_FOR_DEMO",
+      "referenceSpecimenGrade": null,
+      "realVehicleGrade": "SOURCED_SECONDARY",
+      "realVehicleValue": "Volvo S40 第二代 5×108；第一代 4×114.3",
+      "reason": "螺柱制造商页面不含 PCD；只有聚合站给出，且无一手引用、整区间单值、自带免责声明。演示样板不属任何真实车型，故对样板仍 UNKNOWN。",
+      "whatWouldUnlock": "车轮制造商对该车型的公开 homologation/ABE 配合文件，或 Volvo 官方技术规格（NS-03/NS-04）",
+      "mustNotInfer": ["不得由螺纹 M12 推 PCD", "不得把两代 PCD 混用", "不得把聚合站值升级为 SOURCED"]
+    },
+    {
+      "r06ParamId": "PR-07",
+      "name": "中心孔直径 CB",
+      "r06Grade": "UNKNOWN",
+      "r11Verdict": "REMAINS_UNKNOWN_FOR_DEMO",
+      "referenceSpecimenGrade": null,
+      "realVehicleGrade": "SOURCED_SECONDARY",
+      "realVehicleValue": "第二代 63.4 mm；第一代 67.1 mm",
+      "reason": "同 PR-06。中心孔是轮毂/轮辋侧参数，任何螺柱或轴承目录都不会提供。",
+      "whatWouldUnlock": "同 PR-06",
+      "mustNotInfer": ["不得由轴承外径推中心孔", "不得把 67.1 与 5 孔组合（见 CF-01）"]
+    },
+    {
+      "r06ParamId": "PR-08",
+      "name": "车轮偏距 ET",
+      "r06Grade": "UNKNOWN",
+      "r11Verdict": "REMAINS_UNKNOWN_EVEN_AT_SECONDARY",
+      "referenceSpecimenGrade": null,
+      "realVehicleGrade": "UNKNOWN",
+      "realVehicleValue": null,
+      "reason": "二手来源之间**互相冲突**：T05 给 52.5，T12 论坛摘要给 35–50 区间。冲突未裁决前不得取任一值。",
+      "whatWouldUnlock": "一手配合文件；且必须按具体轮辋型号而非车型区间给值",
+      "conflictRef": "CC-08",
+      "mustNotInfer": ["不得取两来源平均", "不得用 src/specs.js 的 etMm 兜底 35 当实车值"]
+    },
+    {
+      "r06ParamId": "PR-10",
+      "name": "车轮螺栓/螺母螺纹与座型",
+      "r06Grade": "UNKNOWN",
+      "r11Verdict": "PARTIAL_UPGRADE_REFERENCE_SPECIMEN_ONLY",
+      "referenceSpecimenGrade": "SOURCED",
+      "referenceSpecimenValue": "M12×1.5 右旋（Dorman 610-460）",
+      "demoSampleGrade": "UNKNOWN",
+      "reason": "**螺纹**对参考件可升级 SOURCED（T03 制造商页 + T05 独立一致）；但**座型**页面 ABSENT（SP-17），故 PR-10 作为『螺纹与座型』整体仍不完整。对演示样板仍 UNKNOWN，因为参考件不是样板零件。",
+      "whatWouldUnlock": "座型需螺母/轮辋制造商规格；样板螺纹需先决定样板是否改型为真实车型（DEC-01）",
+      "mustNotInfer": ["不得把 M12 当成 R-03 SYS-30-STUD-M14 的确认", "不得由螺纹推座型", "不得把参考件螺纹赋给演示样板"]
+    },
+    {
+      "r06ParamId": "PR-14",
+      "name": "轴承内部几何（滚道/接触角/球数/保持架）",
+      "r06Grade": "UNKNOWN",
+      "r11Verdict": "REMAINS_UNKNOWN",
+      "reason": "T01/T02 两份制造商官方 HTML 均**明确无数值尺寸**；两份官方 PDF（T07/N04）正文不可解析。列数已由 T01 确认为双列，但**球轴承还是滚子轴承仍未绑定到 DAC42800042 具体代号**。",
+      "whatWouldUnlock": "Koyo DAC 系列或 NSK HUB I 目录正文尺寸与结构表（NS-01/NS-02）",
+      "conflictRef": "CC-01",
+      "mustNotInfer": ["不得按分销商标签建内部结构", "不得由『双列』推出接触角或球数", "不得把 NSK HUB I 等同于 Koyo DAC（CC-05）"]
+    },
+    {
+      "r06ParamId": "PR-15",
+      "name": "轴承配合公差（转向节孔/轮毂颈）",
+      "r06Grade": "UNKNOWN",
+      "r11Verdict": "REMAINS_UNKNOWN",
+      "reason": "T03 制造商产品页**无公差/配合等级字段**；T01/T02 无公差；ISO 286/ISO 492 仅有目录记录、无条款原文。这正面印证总控对 R-08 的返工要求：真实制造商页面也不给配合等级。",
+      "whatWouldUnlock": "制造商目录中的配合推荐表，或取得 ISO 286/492 条款原文（需授权）",
+      "mustNotInfer": ["不得由外形尺寸推公差", "不得用通用标准声称某实车采用该配合"]
+    },
+    {
+      "r06ParamId": "PR-16",
+      "name": "轮毂法兰几何（PCD/安装凸台/螺栓外径/厚）",
+      "r06Grade": "UNKNOWN",
+      "r11Verdict": "REMAINS_UNKNOWN",
+      "reason": "本轮所有来源都不含真实轮毂法兰几何。T02 只定性说明 HUB II/III 有法兰，无数值；T07 第三代目录不可解析。",
+      "whatWouldUnlock": "Koyo 第三代 BALL HUB UNITS 目录正文（T07）或 NSK ProKIT 目录（NS-02）",
+      "mustNotInfer": ["不得把 RP-04 params.json 的 OD152/thk14/pilot84 当实车值（R-06 已标 DEMO_ASSUMPTION）"]
+    },
+    {
+      "r06ParamId": "PR-17",
+      "name": "球铰锥度/螺纹/安装高度",
+      "r06Grade": "UNKNOWN",
+      "r11Verdict": "REMAINS_UNKNOWN_BUT_INTERFACE_SEMANTICS_UPGRADED",
+      "reason": "T04 制造商技术页**无任何几何数值**，ZF 具体型号页 T08 是 JS 空壳。但取得两条重要工程语义：(1) 接口可以是**锥面或圆柱定位端**两种；(2) 球铰**免维护、三向自由转动、传递拉/压/径向力**。",
+      "whatWouldUnlock": "能真实渲染数据的球铰制造商产品页（NS-05），或带尺寸图的公开目录",
+      "semanticUpgrades": [
+        "单一 taperAngle 字段不足以描述球铰接口，需 interfaceKind ∈ {CONICAL_TAPER, CYLINDRICAL_DOG_POINT}（DEC-04）",
+        "免维护密封 → 支持 R-06 把球铰当外购不可拆总成，与 Grok 的 SPHERICAL 运动副分类一致"
+      ],
+      "mustNotInfer": [
+        "不得把『up to 1100 N/mm²』『up to HV 380』当某零件认证值",
+        "不得把 ISO 6892-1（拉伸试验方法）当产品尺寸标准",
+        "不得据 T04 声称任何球铰已通过强度/磨损验证"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "id": "CC-01",
+      "origin": "R-06 已记录",
+      "kind": "CATALOG_TOPOLOGY_MISMATCH",
+      "title": "DAC42800042 的列数与类型分类矛盾",
+      "r11Status": "PARTIALLY_RESOLVED",
+      "resolvedPart": "**列数已裁决**：T01 制造商官方称 DAC-type 为 double-row，故 N02 分销商的『SINGLE ROW / Deep groove』判定为**分销商误分类**。",
+      "unresolvedPart": "**接触类型仍未绑定到具体代号**：T01 只说 double-row，未说球或滚子；T02 说 HUB I 可为双列角接触球或双列圆锥滚子。因此 DAC42800042 究竟是球还是滚子仍 UNKNOWN。",
+      "mustRemainUnknown": ["PR-14", "PR-15"],
+      "resolution": "外形 42×80×42 仍只到 SOURCED_SECONDARY；内部几何一律 UNKNOWN；首轮按外购不可拆总成只建包络。",
+      "doNotClaim": "不得声称 CC-01 已完全解决。"
+    },
+    {
+      "id": "CC-05",
+      "origin": "R-11 新发现",
+      "kind": "MANUFACTURER_STATEMENT_CONTRADICTION",
+      "title": "Koyo DAC 与 NSK HUB I 的预紧要求相反",
+      "r11Status": "OPEN",
+      "evidenceA": {"sourceId": "T01", "verbatim": "No preload adjustments are required at the time of assembly."},
+      "evidenceB": {"sourceId": "T02", "verbatim": "Easy and reliable preload setting"},
+      "whyItMatters": "两者都是制造商官方陈述，但一个说装配时不需调预紧、一个说需要设置预紧。说明 **Koyo『DAC 型』与 NSK『HUB I 世代』不是可以互换的同一产品族**。R-06/RP-01 此前把 DAC42800042 与 HBU1 并列叙述，存在把两族混为一谈的风险。",
+      "downstreamImpact": "直接影响 BOM-30-007 / PART-30-007『轮毂锁紧螺母/铆压边』：若是需设预紧的型式，锁紧螺母有扭矩/预紧要求；若是出厂预设预紧的密封型式，则可能是铆压边而非可调螺母。两种结构的装配工艺与验证门槛不同。",
+      "mustRemainUnknown": ["PR-15"],
+      "resolution": "保持 OPEN。不得把两族合并，不得据任一单独陈述给 BOM-30-007 定扭矩。需取得各自目录正文（NS-01/NS-02）。",
+      "decisionRef": "DEC-05"
+    },
+    {
+      "id": "CC-06",
+      "origin": "R-11 新发现",
+      "kind": "VEHICLE_GENERATION_MIXING",
+      "title": "S40 换代同时改变孔数、PCD、中心孔与紧固方式",
+      "r11Status": "DOCUMENTED",
+      "evidence": [
+        {"sourceId": "T06", "generation": "1996-2004", "pcd": "4x114.3", "cb_mm": 67.1, "et": 44, "fastener": "Bolt — 12x1,50"},
+        {"sourceId": "T05", "generation": "2004-2012", "pcd": "5x108", "cb_mm": 63.4, "et": 52.5, "fastener": "Nut — 12x1,50"}
+      ],
+      "whyItMatters": "只有螺纹 M12×1.5 两代相同。若按『螺纹一致』就把两代轮端零件混用，会同时错孔数（4 vs 5）、PCD（114.3 vs 108）与中心孔（67.1 vs 63.4），并把螺栓式当成螺柱式。这是任务书『不能凑不同车辆零件假装属于同一总成』的一个具体可复现形态。",
+      "resolution": "任何真实车型证据必须携带 generation 与 fastenerKind 两个条件字段；缺任一不得用于装配。",
+      "grade": "SOURCED_SECONDARY"
+    },
+    {
+      "id": "CC-07",
+      "origin": "R-11 新发现",
+      "kind": "NON_ADDITIVE_MANUFACTURER_FIELDS",
+      "title": "制造商长度字段不可相加",
+      "r11Status": "OPEN",
+      "arithmetic": {
+        "underHeadLength_mm": 46.1518,
+        "threadLength_mm": 31.496,
+        "shoulderLength_mm": 15.1638,
+        "sum_thread_plus_shoulder_mm": 46.6598,
+        "discrepancy_mm": 0.508,
+        "discrepancy_in": 0.020
+      },
+      "whyItMatters": "1.24 + 0.597 = 1.837 in ≠ 页面给的 1.817 in。差 0.508 mm。可能原因：字段定义有重叠、或各值独立圆整。**本轮不猜测原因**。",
+      "resolution": "SP-13 总长标 UNKNOWN 且 mustNotDerive=true。禁止用相加派生总长；禁止为消除差值而擅自改动任一来源原值。",
+      "guardRef": "A09"
+    },
+    {
+      "id": "CC-08",
+      "origin": "R-11 新发现",
+      "kind": "SECONDARY_SOURCE_DISAGREEMENT",
+      "title": "ET 在二手来源之间冲突",
+      "r11Status": "OPEN",
+      "evidenceA": {"sourceId": "T05", "value": 52.5, "retrieval": "FETCHED_THIS_ROUND"},
+      "evidenceB": {"sourceId": "T12", "value": "35–50", "retrieval": "SNIPPET_ONLY"},
+      "resolution": "PR-08 保持 UNKNOWN。注意 B 只是论坛摘要、未实际抓取，本身就不具备事实资格；但即便如此，A 的单一二手值也不足以升级。不得取平均、不得取区间端点。",
+      "mustRemainUnknown": ["PR-08"]
+    },
+    {
+      "id": "CC-09",
+      "origin": "R-11 新发现",
+      "kind": "FITMENT_APPLICATION_CONFLICT",
+      "title": "Dorman 把 V40 2004 列为螺柱应用，但第一代平台用螺栓",
+      "r11Status": "OPEN",
+      "evidenceA": {"sourceId": "T03", "verbatim": "Volvo S40 2004-00, Volvo V40 2004-00", "partKind": "Serrated Stud（配螺母）"},
+      "evidenceB": {"sourceId": "T06", "verbatim": "Bolt — 12x1,50", "note": "第一代 S40/V40 同平台，紧固件为螺栓而非螺母+螺柱"},
+      "whyItMatters": "螺柱与螺栓是**不同的紧固结构**（螺柱压入轮毂、螺母拧紧；螺栓直接穿过轮辋拧入轮毂螺纹孔）。若装车应用有误，参考件的适用条件就不可靠。",
+      "possibleExplanations": [
+        "Dorman『2004-00』记法可能指第二代而非第一代",
+        "V40 在某些市场/年款可能有不同轮毂结构",
+        "聚合站 T06 的整车区间单值可能掩盖了年款差异",
+        "任一方存在数据错误"
+      ],
+      "resolution": "保持 OPEN，**不猜测哪个对**。参考件的 vehicleApplication.generationResolved=false，禁止在世代未定前用于任何装配主张。",
+      "decisionRef": "DEC-01"
+    },
+    {
+      "id": "CC-10",
+      "origin": "R-11 新发现",
+      "kind": "MIXED_UNITS_ON_SINGLE_PAGE",
+      "title": "同一制造商页面混用英寸与毫米",
+      "r11Status": "DOCUMENTED",
+      "evidence": {"sourceId": "T03", "inchFields": ["Thread Length", "Under Head Length", "Shoulder Length", "Knurl Diameter"], "mmFields": ["Thread Pitch", "Head Diameter"]},
+      "resolution": "所有参数强制 raw + nativeUnit + value_mm + conversionFactor 四元组；校验器 A04 逐字段复核换算。见 UH-01。",
+      "guardRef": "A04"
+    }
+  ],
+  "unitHazards": [
+    {
+      "id": "UH-01",
+      "sourceId": "T03",
+      "hazard": "把英寸字段当毫米读",
+      "counterexamples": [
+        {"field": "Knurl Diameter", "raw": 0.565, "correct_mm": 14.351, "wrong_mm": 0.565, "errorFactor": 25.4, "absoluteError_mm": 13.786, "consequence": "花键外径小于螺纹公称 12 mm，过盈配合变成不可能装配的间隙"},
+        {"field": "Under Head Length", "raw": 1.817, "correct_mm": 46.1518, "wrong_mm": 1.817, "errorFactor": 25.4, "consequence": "螺柱长度不足以穿过轮毂与轮辋"},
+        {"field": "Shoulder Length", "raw": 0.597, "correct_mm": 15.164, "wrong_mm": 0.597, "errorFactor": 25.4, "consequence": "压装肩长几乎为零，无法定位"}
+      ],
+      "rule": "来源原值必须与 nativeUnit 一起保存；任何进入 CAD 的数值必须是显式换算后的 mm。",
+      "guardRef": "A04"
+    }
+  ],
+  "codeFindings": [
+    {
+      "id": "CF-01",
+      "file": "src/specs.js",
+      "lines": "37-39, 143-145, 231-232",
+      "kind": "INCOHERENT_REAL_WORLD_FITMENT",
+      "observed": "两处规格与兜底值均为 (bolts=5, pcdMm=114.3, centerBoreMm=67.1)。",
+      "realWorldAnchor": "T06：第一代 Volvo S40 为 **4×114.3 / CB 67.1**；T05：第二代为 **5×108 / CB 63.4**。",
+      "finding": "(114.3, 67.1) 这对数值与已发表的第一代 S40 值**重合**，但代码配的孔数是 **5**，而该代为 **4**；第二代虽是 5 孔但 PCD/CB 完全不同。因此 **(5 孔, 114.3, 67.1) 这个组合在两代 S40 上都不存在**。",
+      "significance": "R-06 CC-03 只指出代码内部 PCD/CB 自相矛盾；R-11 进一步给出**真实世界锚**：该组合不只是无来源，而且与唯一与其 PCD/CB 重合的真实车型世代也不自洽。",
+      "grade": "SOURCED for code fact; SOURCED_SECONDARY for vehicle values",
+      "mustNotClaim": [
+        "不得声称代码作者抄了 Volvo 数值——**意图未知**，本轮只记录数值重合",
+        "不得据此修改 src/（AGENTS.md §3 与本任务边界均禁止）"
+      ],
+      "provenanceOfIntent": "UNKNOWN",
+      "action": "作为缺陷证据提交总控，建议纳入 A-00 旧汽车基线核查；本轮不改代码。",
+      "decisionRef": "DEC-06"
+    },
+    {
+      "id": "CF-02",
+      "file": "src/specs.js",
+      "lines": "90-92",
+      "kind": "FICTIONAL_SPEC_WITH_REAL_SIZE",
+      "observed": "touring 规格为 (bolts=5, pcdMm=112.0, centerBoreMm=66.6)，轮胎 '205/55 R16'，品牌 'AURA' / 型号 'QUIET CRUISE'（R-06 已判定为虚构）。",
+      "finding": "轮胎尺寸 205/55R16 **确实出现在** T05 第二代 S40 的公开轮胎尺寸列表中；但 PCD 112.0 / CB 66.6 与两代 S40 均不符。",
+      "significance": "说明演示规格是**真实轮胎尺寸 + 虚构品牌 + 无来源轮毂接口**的混合体。轮胎尺寸碰巧真实，不能用来推断轮毂接口真实。",
+      "grade": "SOURCED for code fact; SOURCED_SECONDARY for tyre list",
+      "mustNotClaim": ["不得因轮胎尺寸真实就声称该规格对应某实车"]
+    },
+    {
+      "id": "CF-03",
+      "file": "src/specs.js",
+      "lines": "195-197",
+      "kind": "BOLT_COUNT_OUTLIER",
+      "observed": "存在 (bolts=6, pcdMm=139.7, centerBoreMm=106.1) 一组。",
+      "finding": "6 孔与乘用车样板的 5 孔不同，属另一类接口。本轮**未取得**该组合的来源。",
+      "grade": "UNKNOWN",
+      "relationToR06": "与 R-06 CC-02『商用车零件混入乘用车』方向一致，但本轮不声称已确认它是商用车参数。",
+      "mustNotClaim": ["不得凭记忆断言 6×139.7/106.1 属某具体车型"]
+    },
+    {
+      "id": "CF-04",
+      "file": "docs/planning/evidence/RP-01-tree-chassis.json",
+      "lines": "PART-30-009 / PART-30-017 / PART-30-029；ASSY-30-002 / ASSY-30-003 / ASSY-30-004",
+      "kind": "MISSING_FASTENER_ARCHITECTURE_CHOICE_GROUP",
+      "observed": "三个车轮紧固节点全部 optionality=required；全树 9 个 choiceGroup（CG-BOOST/CG-FSUSP/CG-HUB/CG-PARK/CG-POWER/CG-RBRK/CG-RSUSP/CG-STEER/CG-TRANS）中没有任何一个覆盖『螺柱+螺母 vs 螺栓式』紧固架构。",
+      "realWorldAnchor": "T06：第一代 Volvo S40 用**螺栓** M12×1.5（直接拧入轮毂螺纹孔，无螺柱）；T05：第二代用**螺母** M12×1.5 + 螺柱。",
+      "finding": "本人已批准的 RP-01 树**隐含假设了螺柱+螺母架构，无法表达纯螺栓式车型**——后者螺柱数应为 0、只有螺栓。这是本轮外部真实证据暴露的自有产物缺口。",
+      "significance": "R-12 若要覆盖螺栓式车型，会把螺柱 qty 悄悄设 0 或误判为缺件。需要显式的架构选择组。",
+      "grade": "SOURCED for tree fact; SOURCED_SECONDARY for vehicle values",
+      "selfCritical": true,
+      "mustNotClaim": ["不得声称 RP-01 已覆盖全部紧固架构"],
+      "action": "**不修改已批准的 RP-01**；报总控裁决是否新增 CG-FASTENER ∈ {STUD_AND_NUT, LUG_BOLT}，或把螺柱改为条件必需。",
+      "decisionRef": "DEC-07"
+    },
+    {
+      "id": "CF-05",
+      "file": "docs/planning/evidence/RP-01-tree-chassis.json",
+      "lines": "FAM-130-007 下三个节点",
+      "kind": "FAMILY_REF_DEDUP_HAZARD",
+      "observed": "PART-30-009（Gen1 螺柱）、PART-30-017（Gen3 法兰螺柱）、PART-30-029（车轮螺栓/螺母，parent=ASSY-30-004）共用 familyRef=FAM-130-007，且三者 qty 均为 20。",
+      "finding": "前两者由 CG-HUB 互斥；第三者是**配对紧固件**（螺柱配螺母），不是重复项。20 螺柱 + 20 螺母对 5 孔×4 角正确。",
+      "significance": "下游若按 familyRef 去重，会把螺母当螺柱的重复项删掉。去重必须按 canonical partId + 装配位置。",
+      "grade": "SOURCED",
+      "action": "已在给 DeepSeek R-12 的回复中明确要求不按 familyRef 去重。"
+    }
+  ],
+  "modelingLevelVerdict": {
+    "fidVVisualEnvelope": {
+      "allowed": true,
+      "forWhat": "仅 SPEC-STUD-DORMAN-610-460 参考样本，以及 R-06 EX-01/EX-02 已有的名义包络",
+      "conditions": [
+        "必须显式标注为真实售后件参考样本，不是演示样板零件",
+        "必须携带 vehicleApplication 与 generationResolved=false",
+        "必须标注 allowedModelingLevel=FID-V",
+        "不得生成配合面、螺纹牙型、公差带或压装过盈量"
+      ]
+    },
+    "fitLevel": {
+      "allowed": false,
+      "reason": "无公差/配合等级（SP-15、PR-15）、无扭矩（SP-14）、无尺寸图、无轮毂法兰几何（PR-16）、无座型（SP-17）。",
+      "conclusion": "**暂时无法升级到配合级**（任务书允许的诚实结论）。"
+    },
+    "kinematicLevel": {
+      "allowed": false,
+      "reason": "球铰硬点与锥度/安装高度仍全 UNKNOWN（PR-17/18/19/20/21/26）；本轮只取得接口语义，未取得数值。"
+    },
+    "r06Interfaces": {
+      "stillBlocked": 12,
+      "total": 12,
+      "changed": false,
+      "note": "R-06 的 12 个阻塞界面**一个都没有因本轮解锁**。本轮新增的是证据与守卫，不是装配许可。"
+    },
+    "r06BomModified": false
+  },
+  "decisionsRequested": [
+    {
+      "id": "DEC-01",
+      "to": "gpt-6",
+      "question": "是否把首个轮端样板从『通用演示双叉臂角』改型为**某个真实车型应用**（例如 Volvo S40 第二代）？",
+      "why": "只有改型后，真实公开零件才能合法地成为『样板的零件』，否则永远只能是参考样本。改型会同时影响 R-01 变体定义与 R-06 BOM 身份，且第二代 S40 的前悬架型式本轮**未核实**是否与 DOUBLE_WISHBONE 相容。",
+      "myRecommendation": "先不改型。保留通用演示样板 + 显式参考样本两类，等取得一手配合文件后再决定。",
+      "notMyCall": true
+    },
+    {
+      "id": "DEC-02",
+      "to": "gpt-6",
+      "question": "是否正式承认『参考样本（reference specimen）』为独立交付类别，与『样板零件』区分，且只允许 FID-V？",
+      "why": "本轮证明可以取得完整真实数值，但这些数值属于别的车。需要一个正式类别防止下游把参考件当样板件。",
+      "myRecommendation": "承认，并强制 isDemoSamplePart=false + adoptionRequires 字段（守卫 A05）。",
+      "notMyCall": true
+    },
+    {
+      "id": "DEC-03",
+      "to": "gpt-6",
+      "question": "是否授权在**工作区内**保存并解析制造商官方目录 PDF（Koyo catba009en、NSK e4803a、NSK ProKIT）？",
+      "why": "这是单个动作就能解锁最多下游工作的一项：轴承内部几何（PR-14）、配合公差（PR-15）、第三代法兰几何（PR-16）都只在 PDF 正文里。R-06 已记录工作区外下载被权限策略拦截，本轮未绕过。",
+      "myRecommendation": "授权，限定为制造商官方公开目录、只存 F 盘工作区内、逐条记录 URL 与访问日期、不复制图纸图像只引用事实数据。",
+      "notMyCall": true
+    },
+    {
+      "id": "DEC-04",
+      "to": "gpt-6 / deepseek",
+      "question": "球铰接口字段是否从单一 taperAngle 改为 interfaceKind ∈ {CONICAL_TAPER, CYLINDRICAL_DOG_POINT} + 条件几何？",
+      "why": "T04 制造商官方明确两种接口都存在。单一锥度字段会把圆柱定位端型式错误建模。",
+      "myRecommendation": "改。属共享 Schema 候选，由 R-12/RP-07 统一，不自行冻结。",
+      "notMyCall": true
+    },
+    {
+      "id": "DEC-05",
+      "to": "gpt-6 / deepseek",
+      "question": "CC-05（Koyo DAC 免调预紧 vs NSK HUB I 需设预紧）如何裁决？是否禁止把 DAC 代号与 HBU1 世代标签互换使用？",
+      "why": "直接影响 BOM-30-007 轮毂锁紧螺母/铆压边的结构与装配工艺。",
+      "myRecommendation": "在取得目录正文前禁止互换；两者作为不同产品族分别记录。",
+      "notMyCall": true
+    },
+    {
+      "id": "DEC-06",
+      "to": "gpt-6",
+      "question": "CF-01（代码 (5 孔,114.3,67.1) 组合在两代 S40 上都不存在）是否作为缺陷纳入 A-00 旧汽车基线核查？",
+      "why": "这是只读实测 + 公开来源可复算的缺陷证据，但修改 src/ 超出本任务边界。",
+      "myRecommendation": "纳入基线核查清单；本轮不改代码。",
+      "notMyCall": true
+    },
+    {
+      "id": "DEC-07",
+      "to": "gpt-6",
+      "question": "RP-01 是否新增 CG-FASTENER ∈ {STUD_AND_NUT, LUG_BOLT}（或把螺柱改为条件必需），以表达纯螺栓式车型？",
+      "why": "CF-04：本人已批准树隐含假设螺柱+螺母架构，9 个选择组无一覆盖紧固架构；而真实公开证据显示第一代 Volvo S40 是纯螺栓式、无螺柱。R-12 覆盖螺栓式车型时会误判。",
+      "myRecommendation": "新增选择组。这是本人自有产物的缺口，**本轮不自行修改已批准的 RP-01**，请总控决定是否开返工或纳入 RP-07 统一迁移。",
+      "notMyCall": true,
+      "selfCritical": true
+    }
+  ],
+  "nextSourceDirections": [
+    {
+      "id": "NS-01",
+      "priority": 1,
+      "target": "Koyo / JTEKT 目录下载索引 → DAC 型车轮轴承目录正文（含 d/D/B 尺寸表与结构图）",
+      "entryUrl": "https://www.jtekt.co.jp/products/bearing/en/support/catalog-download/",
+      "unlocks": ["PR-14 列数/接触类型绑定到具体代号", "PR-15 配合推荐"],
+      "blocker": "PDF 正文解析需 DEC-03 授权",
+      "whyFirst": "T01 已证明该制造商 HTML 可达且官方；索引页是 HTML，可先定位正确目录再申请解析。"
+    },
+    {
+      "id": "NS-02",
+      "priority": 2,
+      "target": "NSK ProKIT Wheel Bearing Kit 目录正文（URL 本轮已从 T09 取得）",
+      "entryUrl": "https://www.nsk.com/content/dam/nsk/eu/en_gb/documents/aam-europe/CAT_ProKIT_Wheel-Bearing-Kit_EN.pdf",
+      "unlocks": ["套件组成与边界尺寸", "PR-16 法兰几何（若含 HBU2/3）"],
+      "blocker": "同 DEC-03"
+    },
+    {
+      "id": "NS-03",
+      "priority": 3,
+      "target": "车轮制造商对 Volvo S40 第二代的公开 homologation / ABE / TÜV 配合文件",
+      "unlocks": ["PR-06 PCD", "PR-07 CB", "PR-08 ET 升级到一手级"],
+      "why": "这类文件是法规要求公开的技术文件，比聚合站可信；且按具体轮辋型号给值，能解决 CC-08 的区间冲突。",
+      "blocker": "需定位具体车轮制造商与文件号；本轮未开始"
+    },
+    {
+      "id": "NS-04",
+      "priority": 4,
+      "target": "Volvo 官方 S40 第二代技术规格：前悬架型式 + 轮毂法兰接口",
+      "unlocks": ["DEC-01 所需的悬架拓扑相容性判定", "PR-16"],
+      "why": "改型为真实车型前必须先确认前悬架是否双叉臂；本轮未核实，不做断言。"
+    },
+    {
+      "id": "NS-05",
+      "priority": 5,
+      "target": "能真实渲染数据的球铰制造商产品页（ZF 是 JS 空壳，改试 Dorman / MOOG / Mevotech 等 HTML 页）",
+      "unlocks": ["PR-17 锥度/螺纹/安装高度"],
+      "why": "T03 已证明 Dorman 的 HTML 产品页能给出完整数值，同一站点可能有球铰产品页。",
+      "note": "这是本轮方法论的可复用发现：优先选**服务端渲染数值表**的制造商站点，避开 JS 目录壳。"
+    }
+  ],
+  "methodFindings": [
+    {
+      "id": "MF-01",
+      "finding": "制造商官方**HTML 技术页**可稳定取得定性工程陈述（类型、列数、预紧、安装语义、材料能力），但**几乎从不含数值尺寸**；数值尺寸在 PDF 目录里。",
+      "evidence": "T01/T02/T04 三份官方 HTML 全部明确无数值；T03 是例外（售后件产品页有数值表）。",
+      "implication": "要数值就走售后件产品页或 PDF 目录；要机理就走官方技术页。两类来源不可互相替代。"
+    },
+    {
+      "id": "MF-02",
+      "finding": "大型制造商的**在线目录产品页常是 JS 空壳**，URL 存在不等于取得证据。",
+      "evidence": "T08（ZF JBJ7562）返回 JS 基础设施代码；T09（NSK 目录）是检索壳。",
+      "implication": "必须逐条记录 retrieval 状态；不得因 URL 存在就把来源标为已核实（与总控对 R-08 的返工要求一致）。"
+    },
+    {
+      "id": "MF-03",
+      "finding": "**检索式里预设答案会制造确认偏误**。本轮一次检索把 '5x108 / 63.4' 写进了查询词。",
+      "evidence": "后续针对第一代的检索预设 '5x114.3'，而来源实际返回 **4x114.3**，纠正了预设。",
+      "implication": "记录该偏误；凡预设值被来源纠正的，以来源为准；凡未被独立纠正的预设值，不得单独作为事实。"
+    },
+    {
+      "id": "MF-04",
+      "finding": "同一制造商页面的字段**可能不满足朴素算术关系**，且**混用单位**。",
+      "evidence": "CC-07（差 0.508 mm）、CC-10（in 与 mm 混用）。",
+      "implication": "不得为消除差值而改来源原值；不得相加派生未声明的总量；换算必须逐字段显式。"
+    }
+  ],
+  "openIssues": [
+    {"id": "O01", "issue": "DAC42800042 具体是球轴承还是滚子轴承仍未绑定", "blockedBy": "NS-01 / DEC-03"},
+    {"id": "O02", "issue": "CC-05 预紧矛盾未裁决，BOM-30-007 结构待定", "blockedBy": "NS-01 / NS-02 / DEC-05"},
+    {"id": "O03", "issue": "CC-09 Dorman V40 装车应用与第一代螺栓式冲突", "blockedBy": "NS-04 / DEC-01"},
+    {"id": "O04", "issue": "SP-13 总长不可派生，SP-14/15/16/17 缺失", "blockedBy": "制造商尺寸图或目录正文"},
+    {"id": "O05", "issue": "Volvo S40 第二代前悬架型式未核实，无法判定与 DOUBLE_WISHBONE 相容", "blockedBy": "NS-04"},
+    {"id": "O06", "issue": "PR-08 ET 二手来源冲突", "blockedBy": "NS-03"},
+    {"id": "O07", "issue": "CF-03 的 6 孔 139.7/106.1 组合无来源", "blockedBy": "未开始检索"},
+    {"id": "O08", "issue": "世界 Frame 仍未冻结", "blockedBy": "RP-07（R-06 framePolicy 保持 UNFROZEN_PENDING_RP07）"},
+    {"id": "O09", "issue": "RP-01 缺紧固架构选择组，无法表达纯螺栓式车型（自有产物缺口）", "blockedBy": "DEC-07"},
+    {"id": "O10", "issue": "Gen1 与 Gen3 螺柱是否同一物理件未确立（同 familyRef，不同 partId）", "blockedBy": "制造商尺寸图或目录正文"}
+  ],
+  "summary": {
+    "sourcesTotal": 15,
+    "sourcesNewThisRound": 12,
+    "sourcesFetchedThisRound": 7,
+    "sourcesManufacturerOfficialHtmlFetched": 4,
+    "sourcesUnreachableOrNoData": 6,
+    "sourcesReusedNotRefetched": 2,
+    "sourcesLocalCodeRead": 1,
+    "referenceSpecimens": 1,
+    "specimenParametersSourced": 12,
+    "specimenParametersUnknown": 5,
+    "r06ParamsReviewed": 8,
+    "r06ParamsUpgradedForDemo": 0,
+    "r06ParamsPartiallyUpgradedForReferenceSpecimen": 1,
+    "r06InterfacesUnblocked": 0,
+    "conflictsResolvedPartially": 1,
+    "conflictsNew": 6,
+    "codeFindings": 5,
+    "decisionsRequested": 7,
+    "nextSourceDirections": 5,
+    "fitLevelReached": false,
+    "r06BomModified": false,
+    "srcModified": false
+  }
+}

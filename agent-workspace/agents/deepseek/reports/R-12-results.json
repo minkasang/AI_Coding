@@ -1,0 +1,398 @@
+{
+  "fixture": "docs/research/R-12-conditional-fixtures.json",
+  "ok": true,
+  "totals": {
+    "cases": 24,
+    "passed": 24,
+    "failed": 0
+  },
+  "results": [
+    {
+      "caseId": "CASE-GEN1-RESOLVE",
+      "op": "resolve",
+      "expected": {
+        "ok": true,
+        "selectedParts": 9,
+        "activeAliases": 5
+      },
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "ok",
+        "selectedParts": 9,
+        "activeAliases": 5,
+        "generation": "GEN1",
+        "hubAssembly": "ASSY-30-002"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-GEN3-RESOLVE",
+      "op": "resolve",
+      "expected": {
+        "ok": true,
+        "selectedParts": 9,
+        "activeAliases": 2
+      },
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "ok",
+        "selectedParts": 9,
+        "activeAliases": 2,
+        "generation": "GEN3",
+        "hubAssembly": "ASSY-30-003"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-BOTH-GENERATIONS",
+      "op": "resolve",
+      "expected": {
+        "ok": false,
+        "code": "ERR_GEN_AMBIGUOUS"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_GEN_AMBIGUOUS",
+        "message": "selectedGeneration=[\"GEN1\",\"GEN3\"] must be exactly one of GEN1/GEN3"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-GEN3-WITH-GEN1-HUB",
+      "op": "resolve",
+      "expected": {
+        "ok": false,
+        "code": "ERR_GEN_CROSS_MIX"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_GEN_CROSS_MIX",
+        "message": "GEN3 variant contains GEN1 parts: PART-30-006"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-GEN1-WITH-GEN3-PART",
+      "op": "resolve",
+      "expected": {
+        "ok": false,
+        "code": "ERR_GEN_CROSS_MIX"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_GEN_CROSS_MIX",
+        "message": "GEN1 variant contains GEN3 parts: PART-30-010"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-ALIAS-GEN3",
+      "op": "alias",
+      "expected": {
+        "ok": false,
+        "code": "ERR_ALIAS_NOT_APPLICABLE"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_ALIAS_NOT_APPLICABLE",
+        "message": "alias AL-03-GEN1-HUB applicableWhen={\"choiceGroup\":\"CG-HUB\",\"allowed\":[\"GEN1\"]} does not allow GEN3"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-ALIAS-UNCONFIRMED",
+      "op": "alias",
+      "expected": {
+        "ok": false,
+        "code": "ERR_ALIAS_UNCONFIRMED"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_ALIAS_UNCONFIRMED",
+        "message": "alias AL-03-GEN1-HUB status=PROPOSED_NEEDS_CONFIRMATION; D-02 not confirmed"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-ALIAS-NO-EVIDENCE",
+      "op": "alias",
+      "expected": {
+        "ok": false,
+        "code": "ERR_EVIDENCE_INHERITANCE_MISSING"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_EVIDENCE_INHERITANCE_MISSING",
+        "message": "alias AL-03-GEN1-HUB lacks evidenceInherited"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-EVIDENCE-UPGRADE",
+      "op": "evidence",
+      "expected": {
+        "ok": false,
+        "code": "ERR_EVIDENCE_UPGRADE"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_EVIDENCE_UPGRADE",
+        "message": "claim SOURCED exceeds inherited ASSUMPTION"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-SOURCE-MISSING",
+      "op": "evidence",
+      "expected": {
+        "ok": false,
+        "code": "ERR_SOURCE_MISSING"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_SOURCE_MISSING",
+        "message": "SOURCED claim without sourceId"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-UNKNOWN-VALUE",
+      "op": "evidence",
+      "expected": {
+        "ok": false,
+        "code": "ERR_UNKNOWN_VALUE"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_UNKNOWN_VALUE",
+        "message": "UNKNOWN inherited value must be null, got 1"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-QTY-LEVEL",
+      "op": "quantity",
+      "expected": {
+        "ok": false,
+        "code": "ERR_QTY_LEVEL_CONFUSION"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_QTY_LEVEL_CONFUSION",
+        "message": "vehicle total 20 used as qtyPerCorner; expected 5"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-QTY-DOUBLE",
+      "op": "quantity",
+      "expected": {
+        "ok": false,
+        "code": "ERR_QTY_DOUBLE_COUNT"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_QTY_DOUBLE_COUNT",
+        "message": "per-corner 5 and vehicle total 20 were summed into 25"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-REF-DOUBLE",
+      "op": "ref",
+      "expected": {
+        "ok": false,
+        "code": "ERR_REF_DOUBLE_COUNT"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_REF_DOUBLE_COUNT",
+        "message": "rotor counted once via REF-30-001 and once as direct PART-40-046"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-REF-AS-BOM",
+      "op": "ref",
+      "expected": {
+        "ok": false,
+        "code": "ERR_REF_AS_BOM"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_REF_AS_BOM",
+        "message": "REF line counted as a BOM component"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-PROC-PURCHASED",
+      "op": "procurement",
+      "expected": {
+        "ok": true,
+        "lineCount": 7,
+        "componentLines": 3
+      },
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "ok",
+        "lineCount": 7,
+        "componentLines": 3,
+        "mode": "PURCHASED_ASSEMBLY"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-PROC-EXPANDED",
+      "op": "procurement",
+      "expected": {
+        "ok": true,
+        "lineCount": 15,
+        "componentLines": 11
+      },
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "ok",
+        "lineCount": 15,
+        "componentLines": 11,
+        "mode": "FULLY_EXPANDED"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-PROC-DOUBLE",
+      "op": "procurement",
+      "expected": {
+        "ok": false,
+        "code": "ERR_PROCUREMENT_DOUBLE_COUNT"
+      },
+      "actual": {
+        "ok": false,
+        "code": "ERR_PROCUREMENT_DOUBLE_COUNT",
+        "message": "purchased assembly mode contains child parts of the hub assembly"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-PROC-GEN3-PURCHASED",
+      "op": "procurement",
+      "expected": {
+        "ok": true,
+        "lineCount": 7,
+        "componentLines": 3
+      },
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "ok",
+        "lineCount": 7,
+        "componentLines": 3,
+        "mode": "PURCHASED_ASSEMBLY"
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-KIN-SCALE",
+      "op": "mapping",
+      "expected": {
+        "parent": "P14"
+      },
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "ok",
+        "parent": "P14",
+        "note": "P14 only checks top-level scale/globalScale/meshScale; nested scale coverage is limited."
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-KIN-LENGTH-P08",
+      "op": "mapping",
+      "expected": {
+        "parent": "P08"
+      },
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "ok",
+        "parent": "P08",
+        "note": "Module length cannot cover requirement; remedy is reselect/change ranges."
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-KIN-LENGTH-P09",
+      "op": "mapping",
+      "expected": {
+        "parent": "P09"
+      },
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "ok",
+        "parent": "P09",
+        "note": "Derived span exceeds module max span; physically unresolvable within current family."
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-KIN-CONVERGE",
+      "op": "mapping",
+      "expected": {
+        "parent": "P17_SOLVER_CONVERGENCE_PROPOSED"
+      },
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "ok",
+        "parent": "P17_SOLVER_CONVERGENCE_PROPOSED",
+        "note": "R-01 has no convergence rule; do not map to static P09."
+      },
+      "pass": true,
+      "problems": []
+    },
+    {
+      "caseId": "CASE-R08-CHIRALITY",
+      "op": "mapping",
+      "expected": {
+        "parent": "GATE_04_TRANSFORM_PARITY"
+      },
+      "actual": {
+        "ok": true,
+        "code": null,
+        "message": "ok",
+        "parent": "GATE_04_TRANSFORM_PARITY",
+        "note": "R-08 transform gate; separate from P14 variant scale."
+      },
+      "pass": true,
+      "problems": []
+    }
+  ]
+}

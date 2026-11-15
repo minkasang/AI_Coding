@@ -33,5 +33,10 @@
       "explodeAxis": [0, -1, 0],
       "explodeMm": 40
     }
+  ],
+  "assemblyNote": "轮端演示样例：法兰承力，轴承与螺柱为同总成子件；间隙与标准号见 metadata，未验证实车。",
+  "relations": [
+    { "from": "hub", "to": "bearing", "label": "轴承压装入轮毂中心（示意）", "verified": false },
+    { "from": "hub", "to": "studs", "label": "螺柱按 PCD 安装于法兰（示意）", "verified": false }
   ]
 }

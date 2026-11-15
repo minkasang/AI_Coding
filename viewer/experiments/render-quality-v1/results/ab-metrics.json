@@ -1,0 +1,590 @@
+{
+  "schemaVersion": "carlab.r14.ab/1.0",
+  "measuredAt": "2026-11-14T17:50:57.456Z",
+  "environment": {
+    "chrome": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "viewport": [
+      1280,
+      800
+    ],
+    "virtualTimeBudgetMs": 12000,
+    "rasterizer": "Chrome headless --use-angle=swiftshader (SOFTWARE) — 不是真实 GPU",
+    "userDataDir": "F:/tmp/r14-chrome/<case>-{dom,shot}",
+    "externalAssets": "none — 无 HDRI / 纹理 / CC0 下载，环境光为程序化 RoomEnvironment",
+    "productionPageTouched": false
+  },
+  "variables": {
+    "N": "0 = 生产 computeVertexNormals() 全硬面法线；1 = toCreasedNormals(35°)，仅改法线",
+    "G": "0 = 程序化径向渐变假 AO 贴片、地面不接收阴影；1 = 无贴片、地面接收真实 PCF 软阴影"
+  },
+  "cases": [
+    {
+      "case": "n0g0",
+      "n": 0,
+      "g": 0,
+      "url": "http://127.0.0.1:5181/?n=0&g=0&clean=1",
+      "shot": "results/shot-n0g0.png",
+      "metrics": {
+        "case": "n0g0",
+        "n": 0,
+        "g": 0,
+        "fixed": {
+          "cameraPosition": [
+            0.38,
+            0.52,
+            1.55
+          ],
+          "cameraFov": 36,
+          "cameraTargetY": 0.31257,
+          "exposure": 1.08,
+          "environmentIntensity": 1,
+          "hemisphere": 0.58,
+          "keyIntensity": 2.15,
+          "fillIntensity": 0.85,
+          "stripIntensity": 3.2,
+          "shadowMap": "PCFSoftShadowMap",
+          "toneMapping": "ACESFilmicToneMapping",
+          "outputColorSpace": "SRGBColorSpace",
+          "envSource": "RoomEnvironment / PMREM (procedural, no external asset)",
+          "autoSpin": false,
+          "pixelRatio": 1,
+          "viewport": [
+            1280,
+            800
+          ],
+          "specId": "uhp",
+          "creaseAngleDeg": 35
+        },
+        "geometry": {
+          "specId": "uhp",
+          "outerRadius": 0.33975,
+          "rimRadius": 0.254,
+          "metalMeshes": 27,
+          "creasedMeshes": 0,
+          "aoMeshPresent": true,
+          "groundReceiveShadow": false
+        },
+        "renderInfo": {
+          "calls": 66,
+          "triangles": 56024,
+          "points": 0,
+          "lines": 0,
+          "frame": 38,
+          "geometries": 38,
+          "textures": 10
+        },
+        "normalsBefore": {
+          "meshes": 27,
+          "vertices": 37597,
+          "triangles": 21364,
+          "normalsSampled": 37597,
+          "uniqueNormals": 5010,
+          "normalEntropy": 9.9144
+        },
+        "normalsAfter": {
+          "meshes": 27,
+          "vertices": 37597,
+          "triangles": 21364,
+          "normalsSampled": 37597,
+          "uniqueNormals": 5010,
+          "normalEntropy": 9.9144
+        },
+        "rim": {
+          "meanLuma": 78.492,
+          "highlightRatio": 0.037026,
+          "edgeGradient": 13.1087,
+          "pixels": 125670
+        },
+        "contact": {
+          "profile": [
+            243.93,
+            243.93,
+            243.89,
+            243.37,
+            243.21,
+            243.18,
+            241.1,
+            234.79,
+            227.28,
+            219.87,
+            212.55,
+            205.11,
+            172.2,
+            123.98,
+            92.74,
+            73.92,
+            75.54,
+            94.07,
+            127.26,
+            172.54,
+            193.27,
+            200.96,
+            208.05,
+            215.18,
+            222.49,
+            229.92,
+            237.37,
+            242.61,
+            243.21,
+            243.21,
+            243.21,
+            243.21
+          ],
+          "asymmetry": 5.609,
+          "centerEdgeRatio": 0.6168,
+          "edgeMean": 235.65,
+          "centerMean": 145.34,
+          "minLuma": 73.92,
+          "maxLuma": 243.93,
+          "rect": {
+            "x": 304,
+            "y": 634,
+            "w": 672,
+            "h": 23
+          }
+        },
+        "roi": {
+          "rim": {
+            "x": 463.2,
+            "y": 202.5,
+            "w": 353.6,
+            "h": 353.6
+          },
+          "contact": {
+            "x": 304,
+            "y": 634,
+            "w": 672,
+            "h": 23
+          }
+        },
+        "measuredAt": "2026-11-14T17:49:27.530Z"
+      }
+    },
+    {
+      "case": "n1g0",
+      "n": 1,
+      "g": 0,
+      "url": "http://127.0.0.1:5181/?n=1&g=0&clean=1",
+      "shot": "results/shot-n1g0.png",
+      "metrics": {
+        "case": "n1g0",
+        "n": 1,
+        "g": 0,
+        "fixed": {
+          "cameraPosition": [
+            0.38,
+            0.52,
+            1.55
+          ],
+          "cameraFov": 36,
+          "cameraTargetY": 0.31257,
+          "exposure": 1.08,
+          "environmentIntensity": 1,
+          "hemisphere": 0.58,
+          "keyIntensity": 2.15,
+          "fillIntensity": 0.85,
+          "stripIntensity": 3.2,
+          "shadowMap": "PCFSoftShadowMap",
+          "toneMapping": "ACESFilmicToneMapping",
+          "outputColorSpace": "SRGBColorSpace",
+          "envSource": "RoomEnvironment / PMREM (procedural, no external asset)",
+          "autoSpin": false,
+          "pixelRatio": 1,
+          "viewport": [
+            1280,
+            800
+          ],
+          "specId": "uhp",
+          "creaseAngleDeg": 35
+        },
+        "geometry": {
+          "specId": "uhp",
+          "outerRadius": 0.33975,
+          "rimRadius": 0.254,
+          "metalMeshes": 27,
+          "creasedMeshes": 27,
+          "aoMeshPresent": true,
+          "groundReceiveShadow": false
+        },
+        "renderInfo": {
+          "calls": 66,
+          "triangles": 56024,
+          "points": 0,
+          "lines": 0,
+          "frame": 38,
+          "geometries": 51,
+          "textures": 10
+        },
+        "normalsBefore": {
+          "meshes": 27,
+          "vertices": 37597,
+          "triangles": 21364,
+          "normalsSampled": 37597,
+          "uniqueNormals": 5010,
+          "normalEntropy": 9.9144
+        },
+        "normalsAfter": {
+          "meshes": 27,
+          "vertices": 64092,
+          "triangles": 21364,
+          "normalsSampled": 64092,
+          "uniqueNormals": 7128,
+          "normalEntropy": 11.7076
+        },
+        "rim": {
+          "meanLuma": 76.275,
+          "highlightRatio": 0.03432,
+          "edgeGradient": 11.8616,
+          "pixels": 125670
+        },
+        "contact": {
+          "profile": [
+            243.93,
+            243.93,
+            243.89,
+            243.37,
+            243.21,
+            243.18,
+            241.1,
+            234.79,
+            227.28,
+            219.87,
+            212.55,
+            205.11,
+            172.2,
+            123.98,
+            92.74,
+            73.92,
+            75.54,
+            94.07,
+            127.26,
+            172.54,
+            193.27,
+            200.96,
+            208.05,
+            215.18,
+            222.49,
+            229.92,
+            237.37,
+            242.61,
+            243.21,
+            243.21,
+            243.21,
+            243.21
+          ],
+          "asymmetry": 5.609,
+          "centerEdgeRatio": 0.6168,
+          "edgeMean": 235.65,
+          "centerMean": 145.34,
+          "minLuma": 73.92,
+          "maxLuma": 243.93,
+          "rect": {
+            "x": 304,
+            "y": 634,
+            "w": 672,
+            "h": 23
+          }
+        },
+        "roi": {
+          "rim": {
+            "x": 463.2,
+            "y": 202.5,
+            "w": 353.6,
+            "h": 353.6
+          },
+          "contact": {
+            "x": 304,
+            "y": 634,
+            "w": 672,
+            "h": 23
+          }
+        },
+        "measuredAt": "2026-11-14T17:49:45.676Z"
+      }
+    },
+    {
+      "case": "n0g1",
+      "n": 0,
+      "g": 1,
+      "url": "http://127.0.0.1:5181/?n=0&g=1&clean=1",
+      "shot": "results/shot-n0g1.png",
+      "metrics": {
+        "case": "n0g1",
+        "n": 0,
+        "g": 1,
+        "fixed": {
+          "cameraPosition": [
+            0.38,
+            0.52,
+            1.55
+          ],
+          "cameraFov": 36,
+          "cameraTargetY": 0.31257,
+          "exposure": 1.08,
+          "environmentIntensity": 1,
+          "hemisphere": 0.58,
+          "keyIntensity": 2.15,
+          "fillIntensity": 0.85,
+          "stripIntensity": 3.2,
+          "shadowMap": "PCFSoftShadowMap",
+          "toneMapping": "ACESFilmicToneMapping",
+          "outputColorSpace": "SRGBColorSpace",
+          "envSource": "RoomEnvironment / PMREM (procedural, no external asset)",
+          "autoSpin": false,
+          "pixelRatio": 1,
+          "viewport": [
+            1280,
+            800
+          ],
+          "specId": "uhp",
+          "creaseAngleDeg": 35
+        },
+        "geometry": {
+          "specId": "uhp",
+          "outerRadius": 0.33975,
+          "rimRadius": 0.254,
+          "metalMeshes": 27,
+          "creasedMeshes": 0,
+          "aoMeshPresent": false,
+          "groundReceiveShadow": true
+        },
+        "renderInfo": {
+          "calls": 65,
+          "triangles": 56022,
+          "points": 0,
+          "lines": 0,
+          "frame": 38,
+          "geometries": 37,
+          "textures": 9
+        },
+        "normalsBefore": {
+          "meshes": 27,
+          "vertices": 37597,
+          "triangles": 21364,
+          "normalsSampled": 37597,
+          "uniqueNormals": 5010,
+          "normalEntropy": 9.9144
+        },
+        "normalsAfter": {
+          "meshes": 27,
+          "vertices": 37597,
+          "triangles": 21364,
+          "normalsSampled": 37597,
+          "uniqueNormals": 5010,
+          "normalEntropy": 9.9144
+        },
+        "rim": {
+          "meanLuma": 78.523,
+          "highlightRatio": 0.037026,
+          "edgeGradient": 13.1525,
+          "pixels": 125670
+        },
+        "contact": {
+          "profile": [
+            243.93,
+            243.93,
+            243.89,
+            243.37,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            242.96,
+            241.87,
+            205.61,
+            146.59,
+            107.71,
+            84.1,
+            87.16,
+            113.09,
+            159.55,
+            220.01,
+            239.93,
+            240.17,
+            241.54,
+            242.98,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21
+          ],
+          "asymmetry": 0.418,
+          "centerEdgeRatio": 0.7156,
+          "edgeMean": 243.23,
+          "centerMean": 174.06,
+          "minLuma": 84.1,
+          "maxLuma": 243.93,
+          "rect": {
+            "x": 304,
+            "y": 634,
+            "w": 672,
+            "h": 23
+          }
+        },
+        "roi": {
+          "rim": {
+            "x": 463.2,
+            "y": 202.5,
+            "w": 353.6,
+            "h": 353.6
+          },
+          "contact": {
+            "x": 304,
+            "y": 634,
+            "w": 672,
+            "h": 23
+          }
+        },
+        "measuredAt": "2026-11-14T17:50:12.404Z"
+      }
+    },
+    {
+      "case": "n1g1",
+      "n": 1,
+      "g": 1,
+      "url": "http://127.0.0.1:5181/?n=1&g=1&clean=1",
+      "shot": "results/shot-n1g1.png",
+      "metrics": {
+        "case": "n1g1",
+        "n": 1,
+        "g": 1,
+        "fixed": {
+          "cameraPosition": [
+            0.38,
+            0.52,
+            1.55
+          ],
+          "cameraFov": 36,
+          "cameraTargetY": 0.31257,
+          "exposure": 1.08,
+          "environmentIntensity": 1,
+          "hemisphere": 0.58,
+          "keyIntensity": 2.15,
+          "fillIntensity": 0.85,
+          "stripIntensity": 3.2,
+          "shadowMap": "PCFSoftShadowMap",
+          "toneMapping": "ACESFilmicToneMapping",
+          "outputColorSpace": "SRGBColorSpace",
+          "envSource": "RoomEnvironment / PMREM (procedural, no external asset)",
+          "autoSpin": false,
+          "pixelRatio": 1,
+          "viewport": [
+            1280,
+            800
+          ],
+          "specId": "uhp",
+          "creaseAngleDeg": 35
+        },
+        "geometry": {
+          "specId": "uhp",
+          "outerRadius": 0.33975,
+          "rimRadius": 0.254,
+          "metalMeshes": 27,
+          "creasedMeshes": 27,
+          "aoMeshPresent": false,
+          "groundReceiveShadow": true
+        },
+        "renderInfo": {
+          "calls": 65,
+          "triangles": 56022,
+          "points": 0,
+          "lines": 0,
+          "frame": 38,
+          "geometries": 50,
+          "textures": 9
+        },
+        "normalsBefore": {
+          "meshes": 27,
+          "vertices": 37597,
+          "triangles": 21364,
+          "normalsSampled": 37597,
+          "uniqueNormals": 5010,
+          "normalEntropy": 9.9144
+        },
+        "normalsAfter": {
+          "meshes": 27,
+          "vertices": 64092,
+          "triangles": 21364,
+          "normalsSampled": 64092,
+          "uniqueNormals": 7128,
+          "normalEntropy": 11.7076
+        },
+        "rim": {
+          "meanLuma": 76.275,
+          "highlightRatio": 0.03432,
+          "edgeGradient": 11.8609,
+          "pixels": 125670
+        },
+        "contact": {
+          "profile": [
+            243.93,
+            243.93,
+            243.89,
+            243.37,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            242.96,
+            241.87,
+            205.61,
+            146.59,
+            107.71,
+            84.1,
+            87.16,
+            113.09,
+            159.55,
+            220.01,
+            239.93,
+            240.17,
+            241.54,
+            242.98,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21,
+            243.21
+          ],
+          "asymmetry": 0.418,
+          "centerEdgeRatio": 0.7156,
+          "edgeMean": 243.23,
+          "centerMean": 174.06,
+          "minLuma": 84.1,
+          "maxLuma": 243.93,
+          "rect": {
+            "x": 304,
+            "y": 634,
+            "w": 672,
+            "h": 23
+          }
+        },
+        "roi": {
+          "rim": {
+            "x": 463.2,
+            "y": 202.5,
+            "w": 353.6,
+            "h": 353.6
+          },
+          "contact": {
+            "x": 304,
+            "y": 634,
+            "w": 672,
+            "h": 23
+          }
+        },
+        "measuredAt": "2026-11-14T17:50:40.257Z"
+      }
+    }
+  ]
+}
