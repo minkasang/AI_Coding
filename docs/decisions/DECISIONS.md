@@ -13,6 +13,7 @@
 | ADR-004 | 物理分级：演示动画、运动学、车辆动力学分别验证 | 既有 Cannon RaycastVehicle 与 Chrono 官方能力边界不同 |
 | ADR-005 | 先研究再冻结跨模块 Schema；未经研究和审核的接口不能作为生产规范 | 总控质量门，`docs/command/COMMAND_CENTER.md` |
 | ADR-006 | 给 Flash/DeepSeek 的实现任务必须单任务、单边界、可复验、报告失败 | 降低跨文件/跨子系统的不确定性 |
+| ADR-007 | **用户已确认产品方向：CARLAB 以可从零搭建、装配、验证和仿真车辆的工程工作台为核心；实时驾驶、越野和城市场景是独立扩展**。悬架/转向/传动属于车辆对象树，不是永久平级的页面入口 | 用户 2026-11-15 确认；`docs/planning/VEHICLE_BLUEPRINT_V1.md`（DRAFT）。此项固定产品目标，不代表 Schema/求解器/工程真实性已冻结 |
 
 ## 研究中，尚未批准（PROPOSED）
 

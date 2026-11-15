@@ -5,7 +5,7 @@
 > **重要**：本任务书描述最终需要解决的问题、质量标准和交付边界；以下研究问题是覆盖要求/探索线索，不是总控预先安排的固定执行顺序。阅读项目 `AGENTS.md` 第 0 节和 `docs/command/PROMPT_AND_DELEGATION_STANDARD.md`。请先核实当前状态，**自己规划合理的技术路线，并在个人工作区按需创建带 parentId 的子任务卡**，自主调整步骤。不要为完成清单而牺牲发现新问题的机会。每项结论必须可证实、可落地，涉及跨模型接口或整体范围变化需提交总控审查。
 
 
-**状态**：BACKLOG，必须在 RP-01—04、RP-06 提交且 RP-05 独立审查完成后开始。
+**执行前置**：RP-01—04、RP-06 的研究与 RP-05 独立审查已形成可检查资料；**本任务的实时状态只以 `agent-workspace/agents/gpt-6/tasks/RP-07.md` 为准**。2026-11-15 用户进一步确认从零装车、真实机械运动、可扩展试验场景是产品核心，第一版草案见 `docs/planning/VEHICLE_BLUEPRINT_V1.md`。这不意味着接口和真实整车物理已经获批。
 **输入**：原 MASTER_PLAN、规划深化纲领、各专题原始研究、证据、所有高优先级 GAP 问题及 R-01/R-02 等既有研究。
 **允许写**：`docs/planning/VEHICLE_BLUEPRINT_V1.md`、`docs/planning/GAP_REGISTER.md`、`docs/decisions/DECISIONS.md`（带审核记录）、本任务卡与经过项目所有者允许的总计划更新。不得直接用研究结果大批量生产汽车模型。
 
