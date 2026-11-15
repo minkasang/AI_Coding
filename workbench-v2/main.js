@@ -29,7 +29,7 @@ function partByKey(key) {
 function refresh(snapshot) {
   const instances = getInstances(snapshot.project);
   window.CARLAB_ACTIVE_PROJECT_NAME = snapshot.project.name;
-  if (window.CARLAB_SHELL?.mode === 'assembly') {
+  if (['model', 'inspect'].includes(window.CARLAB_SHELL?.mode)) {
     el('projectName').textContent = snapshot.project.name;
   }
   el('projectRevision').textContent = 'REV ' + snapshot.project.revision;
@@ -160,10 +160,10 @@ async function boot() {
     store.subscribe(refresh);
     await viewport.load(seed);
     viewportReady = true;
-    viewport.setActive(window.CARLAB_SHELL?.mode === 'assembly');
+    viewport.setActive(['model', 'inspect'].includes(window.CARLAB_SHELL?.mode));
     el('loadingStatus').hidden = true;
     refresh(store.snapshot());
-    if (window.CARLAB_SHELL?.mode === 'assembly') viewport.focus();
+    if (['model', 'inspect'].includes(window.CARLAB_SHELL?.mode)) viewport.focus();
     window.__CARLAB_V2_READY__ = true;
   } catch (error) {
     el('loadingStatus').textContent = '模型未能载入：' + error.message;
@@ -187,6 +187,9 @@ document.addEventListener('click', (e) => {
     if (action === 'visibility') return store.toggleVisibility(store.selectedId);
     if (action === 'isolate') return store.isolate(store.selectedId);
     if (action === 'remove') {
+      if (window.CARLAB_SHELL?.mode !== 'model') {
+        throw new Error('删除零件需要进入工程模型的编辑模式');
+      }
       const id = store.selectedId;
       if (!id) return;
       store.remove(id);
@@ -209,13 +212,13 @@ el('showAllBtn').addEventListener('click', () => {
   toast('全部零件已恢复显示');
 });
 window.addEventListener('carlab:workview-changed', (event) => {
-  viewport?.setActive(event.detail.view === 'assembly');
+  viewport?.setActive(['model', 'inspect'].includes(event.detail.view));
 });
 el('blankBtn').addEventListener('click', () => {
   if (!store) return;
   if (!confirm('新建空白工程会替换当前工作区。需要保留请先导出工程。确定继续？')) return;
   store.replace(createEmptyProject(seed));
-  window.CARLAB_SHELL?.switchTo('assembly');
+  window.CARLAB_SHELL?.switchTo('model');
   viewport.focus();
   toast('空白工程已建立。请从左侧零件库添加第一个部件。');
 });
@@ -223,7 +226,7 @@ el('loadDemoBtn').addEventListener('click', () => {
   if (!store) return;
   if (!confirm('载入示例工程会替换当前工作区。确定继续？')) return;
   store.replace(createDemoProject(seed));
-  window.CARLAB_SHELL?.switchTo('assembly');
+  window.CARLAB_SHELL?.switchTo('model');
   viewport.focus();
   toast('已恢复原始轮端装配示例');
 });

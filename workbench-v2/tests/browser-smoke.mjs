@@ -8,7 +8,7 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 
 const CHROME = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-const BASE = 'http://127.0.0.1:5173/workbench-v2/index.html?view=assembly';
+const BASE = 'http://127.0.0.1:5173/workbench-v2/index.html?view=model';
 const PORT = 9231;
 const PROFILE = 'F:\\tmp\\carlab_v2_cdp_smoke';
 const OUT = 'F:\\tmp\\carlab_v2_test_images';
@@ -92,18 +92,34 @@ try {
     await sleep(150);
   }
   check('Three.js / GLB loaded', ready, true);
+  check('business navigation has only three categories',await evaluate("document.querySelectorAll('.module-tab').length"),3);
+  check('initial view is the engineering model',await evaluate("document.body.dataset.workview"),'model');
+  check('engineering project operations start collapsed',await evaluate("document.getElementById('projectMenu').open"),false);
+  await evaluate("document.querySelector('#projectMenu summary').click()");
+  check('engineering actions are available through one menu',await evaluate("document.getElementById('projectMenu').open"),true);
+  await evaluate("document.querySelector('#projectMenu summary').click()");
   check('initial demo has three parts',await evaluate("document.querySelectorAll('[data-select]').length"),3);
   check('canvas available',await evaluate("document.getElementById('viewCanvas').width>0"),true);
   await shot('01-project-loaded.png');
 
   // Exercise the real WebGL raycaster, not only DOM buttons.
-  await send('Input.dispatchMouseEvent',{type:'mousePressed',x:770,y:535,button:'left',clickCount:1});
-  await send('Input.dispatchMouseEvent',{type:'mouseReleased',x:770,y:535,button:'left',clickCount:1});
+  const canvasCenter = await evaluate("(() => {const b=document.getElementById('viewCanvas').getBoundingClientRect();return {x:Math.round(b.left+b.width/2),y:Math.round(b.top+b.height/2)}})()");
+  await send('Input.dispatchMouseEvent',{type:'mousePressed',x:canvasCenter.x,y:canvasCenter.y,button:'left',clickCount:1});
+  await send('Input.dispatchMouseEvent',{type:'mouseReleased',x:canvasCenter.x,y:canvasCenter.y,button:'left',clickCount:1});
   check('actual 3D canvas hit selects a part',await evaluate("Boolean(document.querySelector('.selected-name')?.textContent)"),true);
 
   await evaluate("document.querySelector('[data-select=inst-bearing-001]').click()");
   check('tree selection drives inspector', await evaluate("document.querySelector('.selected-name')?.textContent"),'轴承包络');
   await shot('02-selected-bearing.png');
+  await evaluate("document.querySelector('.module-tab[data-workview=inspect]').click()");
+  check('inspection shares the same selected engineering object',await evaluate("document.querySelector('.selected-name')?.textContent"),'轴承包络');
+  check('inspection hides editing part library',await evaluate("getComputedStyle(document.querySelector('.catalog-block')).display"),'none');
+  check('inspection hides the editing operations menu',await evaluate("getComputedStyle(document.getElementById('projectMenu')).display"),'none');
+  check('inspection hides remove-part button',await evaluate("getComputedStyle(document.querySelector('[data-action=remove]')).display"),'none');
+  check('inspection keeps explode controls',await evaluate("getComputedStyle(document.querySelector('.workspace-actions')).display !== 'none'"),true);
+  await shot('02b-inspection-workspace.png');
+  await evaluate("document.querySelector('.module-tab[data-workview=model]').click()");
+  check('engineering model restores editing library',await evaluate("getComputedStyle(document.querySelector('.catalog-block')).display !== 'none'"),true);
 
   await evaluate("document.querySelector('[data-add=hub]').click()");
   check('add creates independent part instance', await evaluate("document.querySelectorAll('[data-select]').length"),4);
@@ -155,8 +171,8 @@ try {
   check('workspace breadcrumb opens real projects',await evaluate("document.body.dataset.workview"),'projects');
   check('projects are clickable entries',await evaluate("document.querySelectorAll('#projectHub .project-card').length"),3);
   await shot('06-project-hub.png');
-  await evaluate("document.querySelector('#projectHub [data-workview=vehicle]').click()");
-  check('project entry opens whole-car experiment',await evaluate("document.body.dataset.workview"),'vehicle');
+  await evaluate("document.querySelector('#projectHub [data-workview=experiment]').click()");
+  check('project entry opens whole-car experiment',await evaluate("document.body.dataset.workview"),'experiment');
   let legacyReady=false;
   for(let i=0;i<120;i++){
     legacyReady=await evaluate("Boolean(document.getElementById('legacyVehicleFrame').contentWindow?.__CAR_LAB_READY__)").catch(()=>false);
@@ -165,17 +181,31 @@ try {
   }
   check('existing whole-car physics simulation really loads',legacyReady,true);
   check('duplicate legacy top navigation hidden',await evaluate("getComputedStyle(document.getElementById('legacyVehicleFrame').contentDocument.querySelector('.topbar')).display"),'none');
+  check('advanced vehicle parameter panel hidden by default',await evaluate("getComputedStyle(document.getElementById('legacyVehicleFrame').contentDocument.querySelector('.control-dock')).display"),'none');
+  await evaluate("document.getElementById('experimentSettings').click()");
+  check('experiment parameters open on demand',await evaluate("getComputedStyle(document.getElementById('legacyVehicleFrame').contentDocument.querySelector('.control-dock')).display !== 'none'"),true);
+  await evaluate("document.getElementById('experimentSettings').click()");
+  check('experiment parameters collapse again',await evaluate("getComputedStyle(document.getElementById('legacyVehicleFrame').contentDocument.querySelector('.control-dock')).display"),'none');
   await shot('07-vehicle-experiment.png');
-  await evaluate("document.querySelector('[data-legacy-mode=tire]').click()");
+  await evaluate("document.getElementById('legacyPreset').value='tire';document.getElementById('legacyPreset').dispatchEvent(new Event('change',{bubbles:true}))");
   check('local wheel subview routes into original car simulator',await evaluate("document.getElementById('legacyVehicleFrame').contentDocument.getElementById('tab-tire').getAttribute('aria-selected')"),'true');
-  await evaluate("document.querySelector('[data-legacy-mode=vehicle]').click()");
+  await evaluate("document.getElementById('legacyPreset').value='vehicle';document.getElementById('legacyPreset').dispatchEvent(new Event('change',{bubbles:true}))");
   check('return to driving view',await evaluate("document.getElementById('legacyVehicleFrame').contentDocument.getElementById('tab-vehicle').getAttribute('aria-selected')"),'true');
-  await evaluate("document.querySelector('.module-tab[data-workview=assembly]').click()");
-  check('new V2 tabs return to wheel assembly',await evaluate("document.body.dataset.workview"),'assembly');
+  await evaluate("document.querySelector('.module-tab[data-workview=model]').click()");
+  check('business navigation returns to the same engineering model',await evaluate("document.body.dataset.workview"),'model');
   check('wheel assembly state survived switching',await evaluate("document.querySelectorAll('[data-select]').length"),1);
   await evaluate("document.getElementById('projectsCrumb').click()");
   check('automotive projects breadcrumb is also functional',await evaluate("document.body.dataset.workview"),'projects');
   check('uncaught page exceptions',errors.length,0);
+  // The canonical entry is the site root, not a second website or a new port.
+  await send('Page.navigate', {url:'http://127.0.0.1:5173/'});
+  let rootReady=false;
+  for(let i=0;i<80;i++){
+    rootReady=await evaluate("location.pathname.endsWith('/workbench-v2/index.html') && document.body.dataset.workview==='experiment'").catch(()=>false);
+    if(rootReady)break;
+    await sleep(160);
+  }
+  check('site root opens the single canonical engineering workbench',rootReady,true);
   console.log('BROWSER_SMOKE_PASS, screenshots=' + OUT);
 } finally {
   try { await send('Browser.close'); } catch {}

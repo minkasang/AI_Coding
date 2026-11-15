@@ -1,8 +1,16 @@
-// 工程查看器样板静态服务 — 端口 5175，与 5173 演示 / 5174 看板隔离
+// 旧工程查看器测试服务：默认不再监听 5175；统一使用 5173 工作台。
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+// CARLAB has two permanent UI services: 5173 workbench and 5174 dashboard.
+// Standalone 5175 is retired to prevent separate user-facing entrypoints.
+// Explicit opt-in remains for isolated engineering debugging only.
+if (process.env.CARLAB_ALLOW_STANDALONE_VIEWER !== '1') {
+  console.log('CARLAB viewer is part of the 5173 workbench. Use http://localhost:5173/viewer/experiments/engineering-viewer/index.html');
+  process.exit(0);
+}
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT = path.resolve(HERE, '../../..');

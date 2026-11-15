@@ -1,7 +1,7 @@
 {
   "name": "car",
   "version": "1.0.0",
-  "description": "Three.js 轮胎工坊：四种规格、真实高宽比、程序化实体花纹",
+  "description": "CARLAB 车辆工程工作台与任务指挥中心（单网页入口、模型与试验研究）",
   "type": "module",
   "scripts": {
     "start": "node server.mjs",

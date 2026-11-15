@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f2f5f9">
-  <title>CARLAB / 工程工作台 V2</title>
+  <title>CARLAB · 车辆工程工作台</title>
   <link rel="stylesheet" href="./styles.css">
   <script type="importmap">
     {"imports":{
@@ -20,14 +20,19 @@
         <div><strong>CARLAB</strong><small>VEHICLE ENGINEERING</small></div></div>
       <span class="top-divider"></span>
       <div class="page-head"><span class="page-kicker">ENGINEERING STUDIO</span><span class="page-name">车辆工程工作台</span></div>
-      <div class="appbar-right"><span class="prototype-pill"><i></i> 可操作原型 · 非工程认证</span>
-        <a class="dash-link" href="../index.html" title="保留的旧版整车演示">旧版演示 <span>↗</span></a></div>
+      <div class="appbar-right">
+        <span class="prototype-pill"><i></i> 研发原型 · 机械工程能力逐步接入</span>
+        <a class="dash-link" href="http://localhost:5174/#dispatch" title="打开 CARLAB AI 任务指挥中心">AI 指挥中心 ↗</a>
+      </div>
     </header>
     <div class="projectbar">
       <div class="project-context"><div class="breadcrumbs"><button id="workspaceCrumb" class="crumb-link" type="button">工作空间</button> <span>/</span> <button id="projectsCrumb" class="crumb-link" type="button">汽车项目</button> <span>/</span></div>
         <button id="projectName" class="project-name-link" type="button" title="查看项目列表">正在载入工程…</button>
         <span class="revision-tag" id="projectRevision">v0.1</span></div>
-      <div class="project-actions">
+      <details class="project-menu" id="projectMenu">
+        <summary>工程操作 <span aria-hidden="true">⌄</span></summary>
+        <div class="project-menu-actions">
+
         <button id="undoBtn" class="btn btn-icon" title="撤销 Ctrl+Z" aria-label="撤销">↶</button>
         <button id="redoBtn" class="btn btn-icon" title="重做 Ctrl+Y" aria-label="重做">↷</button>
         <span class="action-divider"></span>
@@ -37,13 +42,14 @@
         <button id="importBtn" class="btn btn-ghost">导入 JSON</button>
         <input id="importFile" type="file" accept=".json,application/json" hidden>
         <button id="exportBtn" class="btn btn-primary">导出工程 <span>↗</span></button>
-      </div>
+              </div>
+      </details>
     </div>
-    <nav class="module-tabs" role="tablist" aria-label="工作台视图">
-      <button class="module-tab" type="button" data-workview="vehicle" role="tab" aria-selected="true">整车实验 <span class="tab-hint">已有车辆演示</span></button>
-      <button class="module-tab" type="button" data-workview="assembly" role="tab" aria-selected="false">零件装配 <span class="tab-hint">工程编辑</span></button>
-      <button class="module-tab" type="button" data-workview="projects" role="tab" aria-selected="false">工程项目</button>
-      <span class="module-status" id="viewContext">当前：整车低保真动力学演示 · 不是完整 CAD 工程</span>
+    <nav class="module-tabs" role="tablist" aria-label="核心业务">
+      <button class="module-tab" type="button" data-workview="model" role="tab" aria-selected="false">工程模型</button>
+      <button class="module-tab" type="button" data-workview="inspect" role="tab" aria-selected="false">展示与检查</button>
+      <button class="module-tab" type="button" data-workview="experiment" role="tab" aria-selected="true">试验仿真</button>
+      <span class="module-status" id="viewContext">已有四轮驾驶演示 · 简化物理模型</span>
     </nav>
     <main class="workbench" id="assemblyWorkbench" hidden>
       <aside class="left-panel">
@@ -67,8 +73,8 @@
       <section class="central">
         <div class="viewer-heading">
           <div><div class="eyebrow">LIVE 3D WORKSPACE <span class="eyebrow-sep">/</span> ASSEMBLY</div>
-            <h1>从零件开始，构建一辆车。</h1>
-            <p>选择零件、检查属性、添加实例、拆开观察。真实机械约束和动力学将在验证后接入。</p></div>
+            <h1 id="workbenchHeading">工程装配</h1>
+            <p id="workbenchDescription">按照工程对象组织零件。现有轮端零件属于 DEMO，完整整车装配正在构建。</p></div>
           <div class="scene-mark"><span class="scene-mark-dot"></span><span id="sceneStatus">载入中</span></div>
         </div>
         <div class="viewport-wrap" id="viewport">
@@ -122,65 +128,62 @@
     <section class="vehicle-workspace" id="vehicleWorkspace">
       <div class="vehicle-banner">
         <div class="vehicle-banner-info"><span class="banner-live"></span>
-          <div><strong>整车实验 · 已恢复</strong><p>这里保留原有可驾驶小车、减速带/跌落实验、轮胎/悬架/传动演示。它是简化物理模型，不是已经装配好的高精度零件车。</p></div>
+          <div><strong>车辆试验视窗</strong>
+            <p>当前使用已有简化四轮小车演示驾驶与接触效果，尚未与轮端 CAD 工程建立同一套机械模型。</p>
+          </div>
         </div>
-        <div class="vehicle-banner-actions">
-          <button type="button" class="btn btn-secondary" data-workview="assembly">进入零件装配</button>
-          <a class="btn btn-primary" href="../index.html" target="_blank" rel="noopener">全屏打开整车实验 ↗</a>
-        </div>
+        <span class="simulation-label">Cannon-es · 演示级</span>
       </div>
-      <div class="vehicle-subnav" role="tablist" aria-label="整车实验局部演示">
-        <span class="vehicle-subnav-label">实验视图</span>
-        <button type="button" class="vehicle-subtab" data-legacy-mode="vehicle" aria-selected="true">整车与驾驶</button>
-        <button type="button" class="vehicle-subtab" data-legacy-mode="tire" aria-selected="false">车轮与轮胎</button>
-        <button type="button" class="vehicle-subtab" data-legacy-mode="suspension" aria-selected="false">悬架观察</button>
-        <button type="button" class="vehicle-subtab" data-legacy-mode="drivetrain" aria-selected="false">机械传动</button>
-        <span class="subnav-truth">简化演示模型 · 不是实际零件约束求解</span>
+      <div class="vehicle-subnav">
+        <label class="presets-label" for="legacyPreset">当前试验</label>
+        <select id="legacyPreset" aria-label="选择历史试验样例">
+          <option value="vehicle">整车驾驶与路面</option>
+          <option value="tire">车轮外观样例</option>
+          <option value="suspension">悬架演示样例</option>
+          <option value="drivetrain">传动演示样例</option>
+        </select>
+        <span class="subnav-truth">后三项为历史独立演示，尚未接入整车装配</span>
+        <button id="experimentSettings" class="btn btn-secondary" type="button" aria-expanded="false">参数与控制 <span aria-hidden="true">⌄</span></button>
       </div>
       <div class="vehicle-stage">
         <iframe id="legacyVehicleFrame" title="整车与驾驶实验：旧版 Three.js Cannon-es 车辆演示"
-          data-src="../index.html#mode=vehicle" loading="eager"></iframe>
+          data-src="../legacy.html#mode=vehicle" loading="eager"></iframe>
       </div>
     </section>
     <section class="project-hub" id="projectHub" hidden>
       <div class="hub-heading">
-        <div class="eyebrow">PROJECT WORKSPACE / 实际可进入的项目</div>
-        <h1>汽车项目</h1>
-        <p>下面的入口可以直接进入已经存在的整车演示和轮端工程。正式完整车辆 CAD 项目尚未建立，不再用空导航冒充功能。</p>
+        <div class="eyebrow">WORKSPACE / 工程与实验资源</div>
+        <h1>当前工作空间</h1>
+        <p>目前只有一个可编辑的轮端工程和一个独立的四轮驾驶演示。它们尚未形成一辆拥有完整真实零件的汽车。</p>
       </div>
       <div class="project-cards">
         <article class="project-card">
-          <span class="card-overline">VEHICLE EXPERIMENT · 01</span>
-          <div class="card-art car-art">◈</div>
-          <h2>整车实验</h2>
-          <p>已有的四轮车辆与简化物理驾驶实验，包含转向、冲减速带、跌落测试等。可真实进入并操作。</p>
-          <div class="card-meta">Three.js + Cannon-es · 低保真演示</div>
-          <button class="btn btn-primary" type="button" data-workview="vehicle">进入整车实验</button>
-        </article>
-        <article class="project-card">
-          <span class="card-overline">ENGINEERING ASSEMBLY · 02</span>
+          <span class="card-overline">EDITABLE ENGINEERING MODEL</span>
           <div class="card-art parts-art">▣</div>
           <h2>轮端装配工程</h2>
-          <p>可编辑、拆解和保存的轮端 CAD 示例，法兰、轴承包络、螺柱三类零件。与整车演示尚未形成同一套机械装配。</p>
-          <div class="card-meta" id="savedProjectSummary">演示零件 3 类 · 工程结构可编辑</div>
-          <button class="btn btn-secondary" type="button" data-workview="assembly">进入零件装配</button>
+          <p>编辑、查看和保存已生成的零件实例，能够选择、隐藏、拆解和查看数据来源。</p>
+          <div class="card-meta" id="savedProjectSummary">3 类示例零件 · DEMO 结构</div>
+          <button type="button" class="btn btn-primary" data-workview="model">打开工程</button>
+        </article>
+        <article class="project-card">
+          <span class="card-overline">SIMULATION SAMPLE</span>
+          <div class="card-art car-art">◈</div>
+          <h2>四轮驾驶演示</h2>
+          <p>在原有简化物理汽车上进行驾驶及路面测试。它不是前一张卡里的轮端 CAD 实车装配。</p>
+          <div class="card-meta">Three.js + Cannon-es · 低保真</div>
+          <button type="button" class="btn btn-secondary" data-workview="experiment">进入试验</button>
         </article>
         <article class="project-card new-project-card">
-          <span class="card-overline">NEW ENGINEERING PROJECT · 03</span>
+          <span class="card-overline">NEW PROJECT</span>
           <div class="card-art blank-art">＋</div>
-          <h2>创建空白工程</h2>
-          <p>创建可添加零件、撤销和导出的空白工程。暂时只有三类演示零件，未来再接完整零件库与真实约束。</p>
-          <div class="card-meta">本机工作区 · 可导出 JSON</div>
-          <button id="newBlankHub" class="btn btn-secondary" type="button">新建并进入</button>
+          <h2>新建工程</h2>
+          <p>建立空白项目，并从目前有限的零件库逐步添加实例。未来接入完整车型模板。</p>
+          <div class="card-meta">浏览器本地工程 · JSON 可导出</div>
+          <button id="newBlankHub" class="btn btn-secondary" type="button">创建空白工程</button>
         </article>
       </div>
     </section>
-    <footer class="footer-dock">
-      <div class="footer-icon">≋</div>
-      <div class="footer-copy"><strong>实验与仿真</strong><small>运动学、动力学与场景工况接入后将在这里运行、记录与回放。</small></div>
-      <span class="disabled-cap">○ 尚未连接机械求解器</span>
-      <button class="btn simulation-locked" disabled title="尚未连接经验证的求解器">▶ 运行仿真</button>
-    </footer>
+    <!-- 模型求解器尚未接入：不展示无效的“运行仿真”按钮。 -->
   </div>
   <div class="toast" role="status" aria-live="polite" id="toast"></div>
   <script type="module" src="./main.js"></script>
