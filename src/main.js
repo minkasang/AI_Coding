@@ -8,6 +8,7 @@ import { createCoilover } from './parts/coilSpring.js';
 import { createDrivetrainRig } from './parts/drivetrain.js';
 import { createVehicleRig } from './parts/chassis.js';
 import { createProvingGroundWorld, createSuspensionBenchSim } from './physics/vehicleWorld.js';
+import { getVehicleYaw, updateVehicleFollowCamera } from './camera/followVehicle.js';
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
@@ -979,7 +980,11 @@ function updateDrivetrainBench(dt) {
 // ---------------------------------------------------------------- 主循环
 const clock = new THREE.Clock();
 const projected = new THREE.Vector3();
-const prevChassisPos = new THREE.Vector3().copy(physicsWorld.chassisBody.position);
+const followReference = {
+  initialized: true,
+  position: new THREE.Vector3().copy(physicsWorld.chassisBody.position),
+  yaw: getVehicleYaw(physicsWorld.chassisBody.quaternion)
+};
 
 function tick() {
   requestAnimationFrame(tick);
@@ -998,19 +1003,13 @@ function tick() {
     const snap = physicsWorld.step(dt, { throttle: fwd, steer, brake });
     vehicleRig.syncFromPhysics(snap);
 
-    // 随车跟拍（叠加车身位移增量，依然保留鼠标自由拖拽旋转与缩放）
-    if (state.followCamera && !state.anim) {
-      const dx = snap.chassisPosition.x - prevChassisPos.x;
-      const dy = snap.chassisPosition.y - prevChassisPos.y;
-      const dz = snap.chassisPosition.z - prevChassisPos.z;
-      camera.position.x += dx;
-      camera.position.y += dy;
-      camera.position.z += dz;
-      controls.target.x += dx;
-      controls.target.y += dy;
-      controls.target.z += dz;
-    }
-    prevChassisPos.copy(snap.chassisPosition);
+    // 追随完整底盘位姿：位置随动 + 水平航向跟转（保持鼠标 Orbit 的观察偏移）。
+    // 非追随状态也要更新参考位姿，避免重新开启时镜头发生突然旋转。
+    updateVehicleFollowCamera(
+      camera, controls, followReference,
+      snap.chassisPosition, snap.chassisQuaternion,
+      state.followCamera && !state.anim
+    );
 
     // 太阳阴影中心随车移动，保证开到场地任何位置都有锐利阴影
     key.target.position.set(snap.chassisPosition.x, 0, snap.chassisPosition.z);

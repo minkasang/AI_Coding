@@ -8,7 +8,7 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 
 const CHROME = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-const BASE = 'http://127.0.0.1:5173/workbench-v2/index.html';
+const BASE = 'http://127.0.0.1:5173/workbench-v2/index.html?view=assembly';
 const PORT = 9231;
 const PROFILE = 'F:\\tmp\\carlab_v2_cdp_smoke';
 const OUT = 'F:\\tmp\\carlab_v2_test_images';
@@ -151,6 +151,30 @@ try {
     await sleep(85);
   }
   check('exported project imports and replaces edited state',imported,true);
+  await evaluate("document.getElementById('workspaceCrumb').click()");
+  check('workspace breadcrumb opens real projects',await evaluate("document.body.dataset.workview"),'projects');
+  check('projects are clickable entries',await evaluate("document.querySelectorAll('#projectHub .project-card').length"),3);
+  await shot('06-project-hub.png');
+  await evaluate("document.querySelector('#projectHub [data-workview=vehicle]').click()");
+  check('project entry opens whole-car experiment',await evaluate("document.body.dataset.workview"),'vehicle');
+  let legacyReady=false;
+  for(let i=0;i<120;i++){
+    legacyReady=await evaluate("Boolean(document.getElementById('legacyVehicleFrame').contentWindow?.__CAR_LAB_READY__)").catch(()=>false);
+    if(legacyReady)break;
+    await sleep(150);
+  }
+  check('existing whole-car physics simulation really loads',legacyReady,true);
+  check('duplicate legacy top navigation hidden',await evaluate("getComputedStyle(document.getElementById('legacyVehicleFrame').contentDocument.querySelector('.topbar')).display"),'none');
+  await shot('07-vehicle-experiment.png');
+  await evaluate("document.querySelector('[data-legacy-mode=tire]').click()");
+  check('local wheel subview routes into original car simulator',await evaluate("document.getElementById('legacyVehicleFrame').contentDocument.getElementById('tab-tire').getAttribute('aria-selected')"),'true');
+  await evaluate("document.querySelector('[data-legacy-mode=vehicle]').click()");
+  check('return to driving view',await evaluate("document.getElementById('legacyVehicleFrame').contentDocument.getElementById('tab-vehicle').getAttribute('aria-selected')"),'true');
+  await evaluate("document.querySelector('.module-tab[data-workview=assembly]').click()");
+  check('new V2 tabs return to wheel assembly',await evaluate("document.body.dataset.workview"),'assembly');
+  check('wheel assembly state survived switching',await evaluate("document.querySelectorAll('[data-select]').length"),1);
+  await evaluate("document.getElementById('projectsCrumb').click()");
+  check('automotive projects breadcrumb is also functional',await evaluate("document.body.dataset.workview"),'projects');
   check('uncaught page exceptions',errors.length,0);
   console.log('BROWSER_SMOKE_PASS, screenshots=' + OUT);
 } finally {

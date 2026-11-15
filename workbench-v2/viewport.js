@@ -69,6 +69,7 @@ export class EngineeringViewport {
     this.objects = new Map();
     this.metadata = null;
     this.loaded = false;
+    this.active = false;
     this.pointer = new THREE.Vector2();
     this.ray = new THREE.Raycaster();
     this._down = null;
@@ -100,6 +101,13 @@ export class EngineeringViewport {
     this.resizeObserver.observe(container);
     this.resize();
     this.animate();
+  }
+  setActive(active) {
+    this.active = Boolean(active);
+    if (this.active) {
+      this.resize();
+      if (this.loaded) this.focus();
+    }
   }
   resize() {
     const { width, height } = this.container.getBoundingClientRect();
@@ -197,7 +205,7 @@ export class EngineeringViewport {
   }
   animate() {
     this.renderer.setAnimationLoop(() => {
-      if (document.visibilityState === 'hidden') return;
+      if (!this.active || document.visibilityState === 'hidden') return;
       this.controls.update();
       this.renderer.render(this.scene, this.camera);
     });

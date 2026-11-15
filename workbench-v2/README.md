@@ -62,3 +62,15 @@ workbench-v2/
 5. **版本、工作流与性能**：真正的编辑命令、导入校验、资产版本、原理图、检测结果版本失效与 GPU 基准；远景再扩展真实路面、越野、城市场景。
 
 本 README 避免模糊“完成度百分比”：只有测试实际覆盖的行为标完成，其余保持未实现。
+
+## 2026-11-15 补齐整车与项目入口（UX-04）
+
+用户指出 V2 只有左前轮，不应丢失整车实验和可用导航。现已将入口补齐：**默认页面展示原有可驾驶四轮小车（低保真物理演示）**，顶部可切换到 **零件装配**，另可点击 **工作空间 / 汽车项目** 进入真实可操作的项目卡片。进入整车后，局部子导航可以打开原有轮胎、悬架和机械传动实验；重复旧导航被隐藏。
+
+- 默认整车：`http://localhost:5173/workbench-v2/index.html`
+- 零件工程：`http://localhost:5173/workbench-v2/index.html?view=assembly`
+- 工程入口：`http://localhost:5173/workbench-v2/index.html?view=projects`
+
+**这不是完成了真实整车 CAD 装配。** 旧四轮车是简化 Cannon-es 行驶演示；编辑轮端的 3 类 CAD 示例是另一个工程模型，两者尚未按统一部件/关节/坐标契约合并。本阶段仅恢复、整理已有功能并纠正假入口。当前浏览器项目列表不支持多工程云同步。
+
+此外，原 `src/main.js` 中“跟随摄像机只跟平移不跟航向”的问题已通过独立 `src/camera/followVehicle.js` 修复；`tests/camera-follow.test.mjs` 有 6 项状态/数学测试通过，真实车辆长时间性能未验收。V2 工程数据单测 11/11、Chrome 真实交互断言 29/29 通过。详细证据见 `docs/research/UX-04-v2-vehicle-restoration.md`。截图：`preview.png` 整车、`assembly-preview.png` 装配、`projects-preview.png` 项目页。
