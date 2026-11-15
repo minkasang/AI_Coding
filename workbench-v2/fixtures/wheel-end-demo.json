@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "carlab.project-demo/0.1",
+  "projectId": "wheel-end-study",
+  "projectName": "轮端机械装配 · 示例工程",
+  "description": "从实际 CAD→Blender→GLB 工具链生成的三个演示零件；尚未建立生产级装配与机械运动约束。",
+  "asset": "/viewer/experiments/engineering-viewer/assets/wheel_hub_assembly.glb",
+  "metadata": "/viewer/experiments/engineering-viewer/assets/wheel_hub_assembly_metadata.json",
+  "glbUnit": "m",
+  "assetBasis": "DEMONSTRATION_PROTOTYPE",
+  "catalog": [
+    {
+      "partKey": "hub",
+      "displayName": "轮毂法兰",
+      "subtitle": "Wheel Hub",
+      "nodeMatch": "Part_Hub",
+      "category": "轮端 / 法兰",
+      "materialLabel": "演示金属材质",
+      "color": "#8e9fb3",
+      "evidence": "DEMO_ASSUMPTION",
+      "explodeAxis": [0, 1, 0],
+      "explodeMm": 28,
+      "detail": "示例参数化零件。PCD、孔位、强度和车型适用性尚未经过 OEM 资料验证。"
+    },
+    {
+      "partKey": "bearing",
+      "displayName": "轴承包络",
+      "subtitle": "Bearing Envelope",
+      "nodeMatch": "Part_Bearing",
+      "category": "轮端 / 轴承",
+      "materialLabel": "演示金属材质",
+      "color": "#607891",
+      "evidence": "DEMO_ASSUMPTION",
+      "explodeAxis": [0, 0, 1],
+      "explodeMm": 35,
+      "detail": "仅展示轴承外形包络；内部滚动体、压装公差、预紧和寿命尚未建模。"
+    },
+    {
+      "partKey": "studs",
+      "displayName": "车轮螺柱（组）",
+      "subtitle": "Wheel Stud Group",
+      "nodeMatch": "Part_WheelStuds",
+      "category": "轮端 / 紧固件",
+      "materialLabel": "演示金属材质",
+      "color": "#8194af",
+      "evidence": "DEMO_ASSUMPTION",
+      "explodeAxis": [0, -1, 0],
+      "explodeMm": 40,
+      "detail": "该模型是螺柱集合演示节点。未来每颗螺柱应获得独立工程实例身份及连接约束。"
+    }
+  ],
+  "assemblies": [
+    {
+      "assemblyId": "front-left-wheel-end",
+      "name": "左前轮端总成",
+      "source": "DEMO",
+      "instances": [
+        { "instanceId": "inst-hub-001", "partKey": "hub", "visible": true },
+        { "instanceId": "inst-bearing-001", "partKey": "bearing", "visible": true },
+        { "instanceId": "inst-studs-001", "partKey": "studs", "visible": true }
+      ]
+    }
+  ],
+  "relations": [
+    { "from": "inst-hub-001", "to": "inst-bearing-001", "label": "包络装配示意", "verified": false },
+    { "from": "inst-hub-001", "to": "inst-studs-001", "label": "PCD 孔位示意", "verified": false }
+  ]
+}
