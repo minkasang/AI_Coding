@@ -3,6 +3,10 @@ import {
 } from './project-store.mjs';
 import { EngineeringViewport } from './viewport.js';
 import { InspectionBridge } from './experiments/inspection-bridge/inspection-bridge.mjs';
+import {
+  loadVehicleSnapshot, createSnapshotContext, DEMO_VIEWPORT_BRIDGE
+} from './experiments/vehicle-snapshot-adapter/vehicle-snapshot-client.mjs';
+import { VehicleTreeUI } from './experiments/vehicle-snapshot-adapter/vehicle-tree-ui.mjs';
 import './shell-router.js';
 
 const el = (id) => document.getElementById(id);
@@ -16,6 +20,23 @@ let seed = null;
 let metadata = null;
 let toastHandle = null;
 let viewportReady = false;
+/** @type {ReturnType<createSnapshotContext>|null} */
+let vehicleCtx = null;
+/** @type {VehicleTreeUI|null} */
+let vehicleTreeUI = null;
+/** @type {'project'|'vehicle'} */
+let selectionSource = 'project';
+/** @type {string|null} */
+let vehicleSelectionId = null;
+/** @type {InspectionBridge|null} */
+let inspectionBridge = null;
+
+function canInspectGeometry() {
+  if (selectionSource === 'vehicle' && vehicleCtx && vehicleSelectionId) {
+    return vehicleCtx.isInspectable(vehicleSelectionId);
+  }
+  return Boolean(store?.selectedId);
+}
 
 function toast(message, duration = 3000) {
   const element = el('toast');
@@ -45,7 +66,12 @@ function refresh(snapshot) {
   el('isolateBtn').disabled = !snapshot.selectedId;
   el('isolateBtn').textContent = snapshot.isolatedId ? '退出隔离模式' : '隔离选中零件';
   renderTree(snapshot);
-  renderInspector(snapshot);
+  if (selectionSource === 'vehicle' && vehicleSelectionId && vehicleCtx) {
+    renderVehicleInspector(vehicleSelectionId);
+  } else {
+    renderInspector(snapshot);
+  }
+  inspectionBridge?.syncInspectability();
   if (viewportReady) {
     viewport.sync(snapshot, seed.catalog);
     const stats = viewport.counts();
@@ -91,6 +117,57 @@ function field(label, value) {
   return `<div class="property-row"><span>${escapeHTML(label)}</span>
     <strong>${escapeHTML(value)}</strong></div>`;
 }
+function renderVehicleBanner(snapshotMeta) {
+  const banner = el('vehicleSnapshotBanner');
+  if (!snapshotMeta) {
+    banner.hidden = true;
+    return;
+  }
+  const v = snapshotMeta.variant;
+  banner.hidden = false;
+  banner.innerHTML = `
+    <span class="vsnap-pill warn">整车快照 REV ${snapshotMeta.revision}</span>
+    <span class="vsnap-pill">${escapeHTML(v?.variantId || '—')}</span>
+    <span class="vsnap-pill warn">${escapeHTML(v?.alignmentStatus || 'VARIANT_NOT_ALIGNED')}</span>
+    <span class="vsnap-pill muted">278× NO_GEOMETRY · 演示 CAD×1</span>`;
+}
+
+function renderVehicleInspector(partInstanceId) {
+  if (!vehicleCtx) return;
+  const inst = vehicleCtx.getPartInstance(partInstanceId);
+  if (!inst) return;
+  const name = vehicleCtx.getPartName(inst.partId);
+  const demo = vehicleCtx.getDemoCad(partInstanceId);
+  const inspectable = vehicleCtx.isInspectable(partInstanceId);
+  const geom = inst.geometryStatus || 'NO_GEOMETRY';
+  el('inspector').innerHTML = `
+    <div class="selected-icon">◈</div>
+    <h3 class="selected-name vehicle-inspector-title">${escapeHTML(name)}</h3>
+    <p class="selected-sub">整车工程 · ${escapeHTML(inst.partId)}</p>
+    <span class="evidence-tag ${inspectable ? 'evidence-demo' : ''}">${escapeHTML(geom)}${demo ? ' · DEMO_SUBSTITUTE' : ''}</span>
+    <div class="inspector-table">
+      ${field('规范实例', partInstanceId)}
+      ${field('总成实例', inst.assemblyInstanceId)}
+      ${field('角位', inst.corner || '—')}
+      ${field('几何', geom)}
+      ${field('展示与检查', inspectable ? '可测距/剖切（演示 GLB）' : '无工程几何 — 禁用')}
+      ${field('CAD', demo?.cadUrl ? '演示替代（非 OEM）' : '未建立')}
+      ${field('证据', inst.evidenceInherited || inst.evidence?.evidenceInherited || '—')}
+    </div>
+    <p class="part-desc">选择键为 R-27 规范 <strong>partInstanceId</strong>（PI-*）。${demo ? '当前仅桥接至可编辑工程轮毂节点作视觉参考，不代表 PI 已获得真实几何。' : '不得生成占位网格。'}</p>
+    ${inspectable ? `<div class="selection-actions"><button class="btn btn-secondary" data-action="focus">◎ 聚焦演示件</button></div>` : ''}
+  `;
+}
+
+function onVehicleSelect(partInstanceId) {
+  selectionSource = 'vehicle';
+  vehicleSelectionId = partInstanceId;
+  const bridgeId = DEMO_VIEWPORT_BRIDGE[partInstanceId];
+  if (bridgeId && store) store.select(bridgeId);
+  else if (store) store.select(null);
+  else refresh(store?.snapshot());
+}
+
 function renderInspector(snapshot) {
   const id = snapshot.selectedId;
   const inst = id && getInstances(snapshot.project).find((x) => x.instanceId === id);
@@ -165,7 +242,7 @@ async function boot() {
     el('loadingStatus').hidden = true;
     refresh(store.snapshot());
     if (['model', 'inspect'].includes(window.CARLAB_SHELL?.mode)) viewport.focus();
-    new InspectionBridge({
+    inspectionBridge = new InspectionBridge({
       viewport,
       ui: {
         measureBtn: el('measureToggle'),
@@ -178,6 +255,22 @@ async function boot() {
       },
       getMode: () => window.CARLAB_SHELL?.mode || 'model',
       onToast: toast,
+      canInspectGeometry,
+    });
+  loadVehicleSnapshot()
+    .then(({ consumer, snapshot }) => {
+      vehicleCtx = createSnapshotContext(snapshot);
+      renderVehicleBanner(snapshot);
+      const help = el('vehicleTreeHelp');
+      if (help) {
+        help.textContent = `${consumer.counts.partInstances} 实例 · 选择键 ${consumer.canonicalSelectionKey} · 演示 CAD×${consumer.counts.demoCadBindings}`;
+      }
+      vehicleTreeUI = new VehicleTreeUI(el('vehicleTree'), vehicleCtx, onVehicleSelect);
+      window.__CARLAB_VEHICLE_SNAPSHOT__ = { consumer, revision: snapshot.revision };
+    })
+    .catch((e) => {
+      console.warn('整车快照未载入', e);
+      el('vehicleTreeHelp').textContent = '整车快照载入失败（可编辑工程仍可用）';
     });
     window.__CARLAB_V2_READY__ = true;
   } catch (error) {
@@ -190,7 +283,15 @@ document.addEventListener('click', (e) => {
   const button = e.target.closest('button');
   if (!button || !store || !seed) return;
   safeAction(() => {
-    if (button.dataset.select) return store.select(button.dataset.select);
+    if (button.dataset.select) {
+      selectionSource = 'project';
+      vehicleSelectionId = null;
+      if (vehicleTreeUI) {
+        vehicleTreeUI.selectedId = null;
+        vehicleTreeUI.render();
+      }
+      return store.select(button.dataset.select);
+    }
     if (button.dataset.visibility) return store.toggleVisibility(button.dataset.visibility);
     if (button.dataset.add) {
       const id = store.add(button.dataset.add);

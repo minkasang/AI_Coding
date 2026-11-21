@@ -98,6 +98,13 @@ try {
   await evaluate("document.querySelector('#projectMenu summary').click()");
   check('engineering actions are available through one menu',await evaluate("document.getElementById('projectMenu').open"),true);
   await evaluate("document.querySelector('#projectMenu summary').click()");
+  let vehicleSnap=false;
+  for(let i=0;i<60;i++){
+    vehicleSnap=await evaluate('Boolean(window.__CARLAB_VEHICLE_SNAPSHOT__)').catch(()=>false);
+    if(vehicleSnap) break;
+    await sleep(200);
+  }
+  check('R-27 vehicle snapshot on 5173 main page',vehicleSnap,true);
   check('initial demo has three parts',await evaluate("document.querySelectorAll('[data-select]').length"),3);
   check('canvas available',await evaluate("document.getElementById('viewCanvas').width>0"),true);
   await shot('01-project-loaded.png');
@@ -111,6 +118,16 @@ try {
   await evaluate("document.querySelector('[data-select=inst-bearing-001]').click()");
   check('tree selection drives inspector', await evaluate("document.querySelector('.selected-name')?.textContent"),'轴承包络');
   await shot('02-selected-bearing.png');
+  await evaluate(`(() => {
+    document.querySelector('[data-tree-toggle="SYS-20"]')?.click();
+    document.querySelector('[data-tree-toggle="AI-20-003-FL"]')?.click();
+    document.querySelector('[data-vehicle-select="PI-20-008-FL"]')?.click();
+  })()`);
+  check('vehicle lower-arm shows NO_GEOMETRY inspector',await evaluate("document.querySelector('.vehicle-inspector-title')?.textContent"),'下摆臂本体');
+  await evaluate("document.querySelector('.module-tab[data-workview=inspect]').click()");
+  check('inspect measure/clip locked without vehicle geometry',await evaluate("document.getElementById('inspectTools').dataset.geometryLocked"),'true');
+  await evaluate("document.querySelector('.module-tab[data-workview=model]').click()");
+  await evaluate("document.querySelector('[data-select=inst-bearing-001]').click()");
   check('measure tools hidden in model view',await evaluate("document.getElementById('inspectTools').hidden"),true);
   await evaluate("document.querySelector('.module-tab[data-workview=inspect]').click()");
   check('inspection shares the same selected engineering object',await evaluate("document.querySelector('.selected-name')?.textContent"),'轴承包络');

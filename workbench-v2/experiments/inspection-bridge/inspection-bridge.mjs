@@ -14,11 +14,12 @@ export class InspectionBridge {
    *   onToast: (msg: string) => void,
    * }} opts
    */
-  constructor({ viewport, ui, getMode, onToast }) {
+  constructor({ viewport, ui, getMode, onToast, canInspectGeometry = () => true }) {
     this.viewport = viewport;
     this.ui = ui;
     this.getMode = getMode;
     this.onToast = onToast;
+    this.canInspectGeometry = canInspectGeometry;
     this.clipPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
     this.measure = new MeasureTool(viewport.measureGroup);
     this.clip = { enabled: false, axis: 'y', t: 0.35 };
@@ -26,6 +27,23 @@ export class InspectionBridge {
     this._bindUi();
     window.addEventListener('carlab:workview-changed', () => this._syncMode());
     this._syncMode();
+  }
+  syncInspectability() {
+    const ok = this.canInspectGeometry();
+    this.ui.measureBtn.disabled = !ok;
+    this.ui.clipBtn.disabled = !ok;
+    if (this.ui.toolsRoot) {
+      this.ui.toolsRoot.dataset.geometryLocked = ok ? 'false' : 'true';
+    }
+    if (!ok) {
+      if (this.measure.enabled) {
+        this.measure.setEnabled(false);
+        this.ui.measureBtn.classList.remove('on');
+        this.ui.measureBtn.setAttribute('aria-pressed', 'false');
+      }
+      if (this.clip.enabled) this._setClip(false);
+      if (this.ui.readout) this.ui.readout.hidden = true;
+    }
   }
   _syncMode() {
     const inspect = this.getMode() === 'inspect';
@@ -43,10 +61,15 @@ export class InspectionBridge {
     if (inspect) {
       this.viewport.canvas.addEventListener('pointerdown', this._onPointer, true);
     }
+    this.syncInspectability();
   }
   _bindUi() {
     this.ui.measureBtn.addEventListener('click', () => {
       if (this.getMode() !== 'inspect') return;
+      if (!this.canInspectGeometry()) {
+        this.onToast('当前对象无工程几何，不能测距');
+        return;
+      }
       const on = !this.measure.enabled;
       this.measure.setEnabled(on);
       this.ui.measureBtn.classList.toggle('on', on);
@@ -56,6 +79,10 @@ export class InspectionBridge {
     });
     this.ui.clipBtn.addEventListener('click', () => {
       if (this.getMode() !== 'inspect') return;
+      if (!this.canInspectGeometry()) {
+        this.onToast('当前对象无工程几何，不能剖切');
+        return;
+      }
       this._setClip(!this.clip.enabled);
     });
     this.ui.clipAxis.addEventListener('change', () => {

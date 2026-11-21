@@ -1,22 +1,28 @@
 {
   "task_id": "RP-04",
   "display_code": "02.05",
+  "version": "v2_rework_audit_alignment",
   "prototype": "parametric_wheel_hub_bearing_assembly",
   "timestamp": "2026-11-14",
+  "audit_review_addressed": "docs/command/reviews/AUDIT_2026-11-14.md",
+  "fidelity_status": {
+    "bearing": "GEOMETRIC_ENVELOPE_ONLY (ASSUMPTION: contact stress, rolling elements, and preload are unsimulated)",
+    "studs": "NOMINAL_CYLINDER_PLUS_METADATA (ASSUMPTION: threads are schematic, not physical helical sweep)",
+    "assembly": "WebGL hierarchy verified; multi-mesh export != dynamic joint/stiffness verification (ASSUMPTION)"
+  },
   "tests": [
     {
-      "name": "valid_assembly_cad_build",
+      "name": "valid_assembly_cad_build_iso273_medium",
       "status": "PASS",
-      "clearance_check": {
-        "hole_diameter_mm": 15.0,
-        "stud_diameter_mm": 14.0,
-        "radial_clearance_mm": 0.5,
-        "status": "PASS"
-      },
+      "standard_reference": "ISO 273:1979 Fasteners - Clearance holes",
+      "hole_diameter_mm": 15.5,
+      "stud_diameter_mm": 14.0,
+      "radial_clearance_mm": 0.75,
+      "iso273_series_matched": "medium",
       "components": {
         "hub": {
           "solid_valid": true,
-          "volume_mm3": 228265.67,
+          "volume_mm3": 227427.26,
           "bbox_size_mm": [
             152.0,
             152.0,
@@ -61,28 +67,53 @@
       ]
     },
     {
-      "name": "blender_multi_node_glb_export",
+      "name": "valid_assembly_cad_build_iso273_fine",
+      "status": "PASS",
+      "hole_diameter_mm": 15.0,
+      "radial_clearance_mm": 0.5,
+      "iso273_series_matched": "fine",
+      "notes": "Verified that Ø15.0mm strictly maps to ISO 273 Fine series, not Medium."
+    },
+    {
+      "name": "blender_multi_node_glb_export_with_extras",
       "status": "PASS",
       "glb_path": "cad\\experiments\\planning_feasibility\\out\\wheel_hub_assembly.glb",
-      "file_size_bytes": 211592,
+      "file_size_bytes": 212460,
       "magic_header": "glTF",
       "unit_scaling": "0.001 (mm -> m)",
       "hierarchy_nodes": [
-        "Assembly_WheelHub",
-        "Part_Hub",
         "Part_Bearing",
-        "Part_WheelStuds"
-      ]
+        "Part_Hub",
+        "Part_WheelStuds",
+        "Assembly_WheelHub"
+      ],
+      "nodes_with_extras": [
+        "Part_Bearing",
+        "Part_Hub",
+        "Part_WheelStuds",
+        "Assembly_WheelHub"
+      ],
+      "extras_verification": "CONFIRMED: node.extras populated for Assembly and child parts."
     },
     {
-      "name": "poka_yoke_wall_thickness_rejection",
+      "name": "poka_yoke_iso273_fit_rejection",
+      "status": "PASS",
+      "input_override": {
+        "hub.bolt_hole_diameter_mm": 14.2
+      },
+      "expected_failure": "POKA-YOKE FIT REJECTED",
+      "actual_exit_code": 2,
+      "defense_outcome": "Intercepted hole diameter tighter than ISO 273 Fine standard (15.0mm)."
+    },
+    {
+      "name": "poka_yoke_inner_wall_rejection",
       "status": "PASS",
       "input_override": {
         "hub.pcd_mm": 75.0
       },
       "expected_failure": "POKA-YOKE STRUCTURAL REJECTED",
       "actual_exit_code": 2,
-      "defense_outcome": "Prevented kernel boolean collapse and geometric wall puncture."
+      "defense_outcome": "Prevented kernel boolean collapse and geometric wall puncture into center bore."
     },
     {
       "name": "poka_yoke_outer_margin_rejection",

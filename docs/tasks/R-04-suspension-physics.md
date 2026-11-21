@@ -4,6 +4,8 @@
 - 只读旧代码：`src/parts/chassis.js`、`src/parts/coilSpring.js`、`src/physics/vehicleWorld.js`、`src/specs.js`。
 - 禁止：修改 `src/`、替换 cannon-es、编造某量产车精确硬点；不要研究一大堆纯理论却没有可落地结构。
 
+> 接续 Grok 已验收的 RP-03 物理分级成果。自己规划硬点与运动学验证方案，不能将动画或游戏级车辆行为宣称为工程真实。
+
 ## 必须回答
 1. 双叉臂悬架的硬点和自由度是什么？从车身枢轴、上下球铰、转向节、拉杆、避震器到车轮主轴，哪些长度/方向约束必须同时满足？
 2. 麦弗逊/多连杆与双叉臂的拓扑不同在哪里？哪些 PartSpec 能共享，哪些 Joint/Assembly 拓扑必须变化？

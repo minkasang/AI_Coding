@@ -149,7 +149,6 @@ def main():
         export_apply=True,
         export_extras=True,
     )
-    )
 
     glb_size = os.path.getsize(out_glb)
     print(f"BLENDER_ASSEMBLY_GLB_OK: {out_glb}")

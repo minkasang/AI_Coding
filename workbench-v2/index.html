@@ -28,7 +28,8 @@
     <div class="projectbar">
       <div class="project-context"><div class="breadcrumbs"><button id="workspaceCrumb" class="crumb-link" type="button">工作空间</button> <span>/</span> <button id="projectsCrumb" class="crumb-link" type="button">汽车项目</button> <span>/</span></div>
         <button id="projectName" class="project-name-link" type="button" title="查看项目列表">正在载入工程…</button>
-        <span class="revision-tag" id="projectRevision">v0.1</span></div>
+        <span class="revision-tag" id="projectRevision">v0.1</span>
+        <div id="vehicleSnapshotBanner" class="vehicle-snapshot-banner" hidden></div></div>
       <details class="project-menu" id="projectMenu">
         <summary>工程操作 <span aria-hidden="true">⌄</span></summary>
         <div class="project-menu-actions">
@@ -53,14 +54,21 @@
     </nav>
     <main class="workbench" id="assemblyWorkbench" hidden>
       <aside class="left-panel">
-        <div class="panel-section-title"><span>PROJECT EXPLORER</span><span class="section-indicator">01</span></div>
-        <div class="tree-header"><h2>工程结构</h2><span class="tiny-info">对象树</span></div>
-        <div id="tree" class="tree" role="tree" aria-label="汽车工程对象树">
+        <div class="panel-section-title"><span>VEHICLE ENGINEERING</span><span class="section-indicator">01</span></div>
+        <div class="tree-header"><h2>整车工程骨架</h2><span class="tiny-info">R-27 只读</span></div>
+        <p class="section-help" id="vehicleTreeHelp">278 实例 · 选择键 PI-* · 仅 1 项演示 CAD</p>
+        <div id="vehicleTree" class="tree vehicle-tree" role="tree" aria-label="整车工程对象树">
+          <div class="skeleton-line"></div>
+        </div>
+        <div class="tree-divider" aria-hidden="true"></div>
+        <div class="panel-section-title"><span>PROJECT EXPLORER</span><span class="section-indicator">02</span></div>
+        <div class="tree-header"><h2>可编辑装配</h2><span class="tiny-info">当前工程</span></div>
+        <div id="tree" class="tree" role="tree" aria-label="当前工程对象树">
           <div class="skeleton-line"></div><div class="skeleton-line short"></div>
         </div>
         <div class="tree-footer"><span class="info-led"></span><span id="treeFoot">加载零件中</span></div>
         <div class="catalog-block">
-          <div class="panel-section-title"><span>COMPONENT LIBRARY</span><span class="section-indicator">02</span></div>
+          <div class="panel-section-title"><span>COMPONENT LIBRARY</span><span class="section-indicator">03</span></div>
           <div class="tree-header"><h2>可用零件</h2><span class="tiny-info">演示资产</span></div>
           <p class="section-help">这里可以真正添加零件实例。目前仅开放已经生成的 3 个轮端部件。</p>
           <div id="catalog" class="catalog-list"></div>

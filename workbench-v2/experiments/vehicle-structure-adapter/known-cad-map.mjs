@@ -3,6 +3,13 @@
  * Prevents cloning the hub demo GLB onto other corners or the whole vehicle.
  */
 export const KNOWN_CAD_BY_INSTANCE = Object.freeze({
+  'PI-30-006-FL': Object.freeze({
+    cadUrl: '/viewer/experiments/engineering-viewer/assets/wheel_hub_assembly.glb',
+    mappingStatus: 'DEMO_SUBSTITUTE',
+    units: 'm',
+    up: 'Y',
+    note: 'R-27 规范键 PI-30-006-FL；仅本品可挂演示 GLB'
+  }),
   'INST-HUB-FL': Object.freeze({
     cadUrl: '/viewer/experiments/engineering-viewer/assets/wheel_hub_assembly.glb',
     mappingStatus: 'DEMO_SUBSTITUTE',

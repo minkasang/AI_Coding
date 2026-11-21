@@ -1,0 +1,24 @@
+{
+  "units": "mm",
+  "sourceGrade": "DEMO_ASSUMPTION",
+  "source": "C-01 original demonstration sizing. See docs/research/C-01-wheel-end-pipeline.md.",
+  "bearing": {
+    "bore": 46, "innerOD": 60, "outerID": 69, "outerOD": 86, "width": 42,
+    "raceSpacing": 21, "grooveRadius": 2.2
+  },
+  "hub": {
+    "flangeOD": 154, "flangeThickness": 13, "standOff": 8,
+    "pilotOD": 66, "pilotLength": 8, "driveOpening": 29, "collarOD": 53,
+    "journalRadialGap": 0.025, "shaftEndChamfer": 1.1, "pilotChamfer": 1,
+    "lugPCD": 116, "scallopDepth": 6
+  },
+  "stud": {
+    "bodyOD": 14, "headOD": 21, "headThickness": 5,
+    "beyondFlange": 21, "radialGap": 0.055, "noseChamfer": 1.3
+  },
+  "knuckle": {
+    "housingOD": 106, "seatRadialGap": 0.035, "shoulderID": 65, "shoulderDepth": 7,
+    "upper": { "offsetX": 9, "offsetY": 110, "bossOD": 39, "bossDepth": 21, "seatSmallOD": 16, "seatLargeOD": 20 },
+    "lower": { "offsetX": -8, "offsetY": 100, "bossOD": 45, "bossDepth": 23, "seatSmallOD": 17, "seatLargeOD": 22 }
+  }
+}

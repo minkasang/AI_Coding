@@ -408,6 +408,7 @@ def main():
     parser.add_argument("--prefix", type=str, default="wheel_hub_assembly")
     parser.add_argument("--override-pcd", type=float, default=None)
     parser.add_argument("--override-outer-d", type=float, default=None)
+    parser.add_argument("--override-hole-d", type=float, default=None)
     args = parser.parse_args()
 
     overrides = {}
@@ -415,6 +416,8 @@ def main():
         overrides["hub.pcd_mm"] = args.override_pcd
     if args.override_outer_d is not None:
         overrides["hub.outer_diameter_mm"] = args.override_outer_d
+    if args.override_hole_d is not None:
+        overrides["hub.bolt_hole_diameter_mm"] = args.override_hole_d
 
     try:
         p = load_and_validate_params(args.params, overrides)

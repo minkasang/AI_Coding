@@ -5,6 +5,8 @@
 - 可写：`docs/research/R-02-data-contract-report.md`、`docs/research/R-02-example-assembly.json`、`docs/tasks/reports/R-02-report.md`；不得修改 `src/`、CAD、`MASTER_PLAN.md` 或建立未审定的 `schema/` 生产接口。
 - 目标：提供统一可序列化的数据契约草案，保证 AI 建立的每个零件以后都能跨车型装配、驱动和替换。
 
+> 接续 DeepSeek 已验收的 RP-02 跨系统接口研究。先核查既有报告和校验器，自主设计后续任务；坐标系与生产 Schema 仍需总控决策。
+
 ## 必须研究的问题
 1. `PartDefinition`、`PartVariant`、`PartInstance`、`Assembly`、`Joint`、`Material`、`VehicleVariant` 的身份、引用、版本、生命周期如何区分？
 2. mount hardpoint 应如何表示：局部坐标、朝向、轴向、单位、配对面/孔、接口类型、公差、来源？

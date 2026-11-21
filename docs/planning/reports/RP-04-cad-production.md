@@ -80,9 +80,12 @@ flowchart TD
 
 若在数字装配体中两个接触面几何完全共面（如轴径 $50.00\text{ mm}$，孔径 $50.00\text{ mm}$），在 WebGL 渲染中由于深度缓冲区（Z-buffer）浮点精度限制，将产生灾难性的 **Z-Fighting（共面闪烁撕裂）**。
 - **公差建模法则 (`EVIDENCE`)**：
-  - **螺栓通孔配合**：严格遵循 **ISO 273** 标准（中等装配精度）：
-    - M10 螺栓 $\rightarrow$ 通孔 $\varnothing 11.0\text{ mm}$（径向间隙 $0.5\text{ mm}$）；
-    - M14 螺栓 $\rightarrow$ 通孔 $\varnothing 15.0\text{ mm}$（径向间隙 $0.5\text{ mm}$）；
+  - **螺栓通孔配合**：严格遵循 **ISO 273:1979** 国际标准（Fasteners — Clearance holes for bolts and screws）：
+    - 针对公制紧固件，ISO 273 定义了三个标准离散孔径系列：**Fine (精细)**、**Medium (中等 - 通用机械工程推荐)**、**Coarse (粗糙)**；
+    - M10 螺栓 ($d=10\text{ mm}$)：Fine $\varnothing 10.5\text{ mm}$（径向间隙 $0.25\text{ mm}$），Medium $\varnothing 11.0\text{ mm}$（径向间隙 $0.50\text{ mm}$），Coarse $\varnothing 12.0\text{ mm}$（径向间隙 $1.00\text{ mm}$）；
+    - M14 螺栓 ($d=14\text{ mm}$)：**Fine $\varnothing 15.0\text{ mm}$（径向间隙 $0.50\text{ mm}$）**，**Medium $\varnothing 15.5\text{ mm}$（径向间隙 $0.75\text{ mm}$）**，**Coarse $\varnothing 16.5\text{ mm}$（径向间隙 $1.25\text{ mm}$）**；
+    - > [!IMPORTANT]
+      > **严禁在代码中自造线性经验公式（如 `stud_d + 0.8`）并谎称符合 ISO 273！** 真实标准为非均匀阶梯离散值，必须通过查表字典（`ISO_273_TABLE`）严格匹配。原 V1 原型中将 M14 $\varnothing 15.0\text{ mm}$ 误标为 `medium`（实为 `fine` 系列），已在 V2 审计返工中彻底纠正。
   - **圆柱过盈/过渡配合**（如轴承外圈与转向节孔座）：
     - CAD STEP 导出保持工程公称尺寸；
     - Blender / GLB 处理流水线中，轴承外表面赋予独立的物理材质，并在 Three.js 材质中设置微小的 `polygonOffset: { factor: 1, units: 1 }`，彻底杜绝网格闪烁。
@@ -116,21 +119,34 @@ graph LR
 为防止生成在物理上无解、机械干涉或导致内核崩溃的模型，必须在调用 CAD 建模前注入防御性断言：
 
 ```python
-# 核心防呆断言公式示例
-# 1. 螺栓节圆 (PCD) 穿透中心孔防呆
+# 核心防呆断言示例（消除经验外推，采用 ISO 273 权威查表）
+ISO_273_TABLE = {
+    10.0: {"fine": 10.5, "medium": 11.0, "coarse": 12.0},
+    12.0: {"fine": 13.0, "medium": 13.5, "coarse": 14.5},
+    14.0: {"fine": 15.0, "medium": 15.5, "coarse": 16.5},
+    16.0: {"fine": 17.0, "medium": 17.5, "coarse": 18.5},
+    20.0: {"fine": 21.0, "medium": 22.0, "coarse": 24.0},
+}
+
+# 1. 紧固件与孔配合防呆（ISO 273 离散查表，杜绝孔径过紧卡死）
+if stud_d in ISO_273_TABLE:
+    fine_d = ISO_273_TABLE[stud_d]["fine"]
+    assert bolt_hole_diameter >= fine_d, (
+        f"[POKA-YOKE FIT REJECTED] Hole diameter ({bolt_hole_diameter}mm) is tighter "
+        f"than ISO 273 fine series ({fine_d}mm) for M{stud_d:.0f}."
+    )
+
+# 2. 螺栓节圆 (PCD) 穿透中心孔防呆
 inner_margin = (pcd - center_bore) / 2.0 - bolt_hole_diameter / 2.0
 assert inner_margin >= min_wall_margin, f"PCD bolt holes penetrate center bore! margin={inner_margin}mm"
 
-# 2. 螺栓孔超出法兰外径防呆
+# 3. 螺栓孔超出法兰外径防呆
 outer_margin = (outer_diameter - pcd) / 2.0 - bolt_hole_diameter / 2.0
 assert outer_margin >= min_wall_margin, f"PCD bolt holes exceed outer diameter! margin={outer_margin}mm"
 
-# 3. 螺栓头圆周干涉防呆
+# 4. 螺栓头圆周干涉防呆
 chordal_pitch = pcd * math.sin(math.pi / bolt_count)
 assert chordal_pitch > bolt_head_diameter + 2.0, "Bolt heads collide along PCD circumference!"
-
-# 4. 紧固件与孔配合防呆
-assert bolt_hole_diameter > stud_nominal_diameter, "Bolt hole diameter must be > stud diameter (ISO 273 clearance)!"
 ```
 
 ---
@@ -163,7 +179,7 @@ assert bolt_hole_diameter > stud_nominal_diameter, "Bolt hole diameter must be >
   - `blender_assembly_to_glb.py`：无头 Blender 5.2.2 导入各 STL，构建装配层级并导出 `wheel_hub_assembly.glb`；
   - `verify_assembly.py`：自动化综合校验与防呆反例测试。
 
-### 6.2 实测运行结果记录
+### 6.2 实测运行结果记录 (V2 审计对齐版)
 
 在 PowerShell 环境下实际执行自动化验证套件：
 ```powershell
@@ -172,34 +188,45 @@ Set-Location "F:\project\cyq\AI_Coding\car"
 .\.venv\Scripts\python.exe .\cad\experiments\planning_feasibility\verify_assembly.py
 ```
 
-**实测测试输出（100% PASS）**：
-1. **测试 1：合法装配 CAD 生成 (Valid Assembly Build)**
-   - 轮毂法兰实体：体积 $228,265.67\text{ mm}^3$，B-rep 有效性 `solid_valid=True`，包围盒 $[152.0, 152.0, 32.0]\text{ mm}$；
+**实测测试输出（6 项全套 100% PASS）**：
+1. **测试 1：ISO 273 Medium 系列标准装配 CAD 生成 (默认正例)**
+   - 螺栓规格：M14；孔径设置：$\varnothing 15.5\text{ mm}$（严格符合 ISO 273 Medium 系列推荐值）；
+   - 径向配合间隙：实测 $\Delta r = 0.7500\text{ mm}$ $\rightarrow$ **PASS**，标准系列匹配度确认：`medium`；
+   - 轮毂法兰实体：体积 $227,427.26\text{ mm}^3$，B-rep 有效性 `solid_valid=True`，包围盒 $[152.0, 152.0, 32.0]\text{ mm}$；
    - 轴承总成实体：体积 $118,098.75\text{ mm}^3$，B-rep 有效性 `solid_valid=True`，包围盒 $[80.0, 80.0, 42.0]\text{ mm}$；
    - 5 颗螺柱组件：体积 $46,040.04\text{ mm}^3$，B-rep 有效性 `solid_valid=True`；
-   - **ISO 273 间隙配合校验**：孔径 $15.0\text{ mm}$，螺栓公称直径 $14.0\text{ mm}$，径向配合间隙 $\Delta r = 0.5000\text{ mm}$ $\rightarrow$ **PASS**；
-2. **测试 2：Blender 5.2.2 无头 GLB 转换与装配层级验证**
+2. **测试 2：ISO 273 Fine 系列标准装配回归测试 (精细孔径正例)**
+   - 传入参数：`override-hole-d = 15.0mm`；
+   - 径向配合间隙：实测 $\Delta r = 0.5000\text{ mm}$ $\rightarrow$ **PASS**，标准系列匹配度确认：`fine`；
+   - 法兰实体体积：$228,265.67\text{ mm}^3$；澄清了原 V1 将 $\varnothing 15.0\text{ mm}$ 误标为 `medium` 的问题。
+3. **测试 3：Blender 5.2.2 无头 GLB 转换与 `node.extras` 工程属性完整性**
    - 生成层级节点：`Assembly_WheelHub` $\rightarrow$ `Part_Hub` (2016 顶点, 4052 面), `Part_Bearing` (1260 顶点, 2516 面), `Part_WheelStuds` (2520 顶点, 5020 面)；
-   - 总面数：$11,588$ 三角面；总顶点数：$5,796$；
-   - GLB 产物文件大小：$211,592\text{ bytes}$；
-   - 校验结果：文件头部二进制魔数 `glTF` 验证通过，单位由 mm 严格缩放至 m（$0.001$ 倍）。
-3. **测试 3：防呆反例 1（PCD 过小穿透中心孔）**
-   - 传入非法参数：`override-pcd = 75.0mm`（中心孔为 67.1mm，螺栓孔 15.0mm）；
-   - 内壁裕量计算：$(75 - 67.1)/2 - 7.5 = -3.55\text{ mm} < 0$；
-   - **拦截结果**：程序成功抛出 `PokaYokeViolation`，返回码 `2`，错误信息：  
-     `POKA-YOKE STRUCTURAL REJECTED: PCD (75.0 mm) bolt holes penetrate center bore (67.1 mm). Inner wall margin is -3.55 mm < minimum required 5.00 mm.`  
-     成功在调用 CAD 内核布尔运算前实施防御阻断。
-4. **测试 4：防呆反例 2（PCD 超出法兰外径）**
-   - 传入非法参数：`override-pcd = 150.0mm`（法兰外径 152.0mm，螺栓孔 15.0mm）；
-   - 外壁裕量计算：$(152 - 150)/2 - 7.5 = -6.50\text{ mm} < 0$；
-   - **拦截结果**：程序成功抛出 `PokaYokeViolation`，返回码 `2`，错误信息：  
-     `POKA-YOKE STRUCTURAL REJECTED: PCD (150.0 mm) bolt holes exceed flange outer diameter (152.0 mm). Outer wall margin is -6.50 mm < minimum required 5.00 mm.`
+   - 总面数：$11,588$ 三角面；总顶点数：$5,796$；GLB 产物文件大小：$212,460\text{ bytes}$；
+   - **`node.extras` 验证 (`EVIDENCE`)**：解析 GLB 二进制 Chunk 0 JSON，证实 4 个节点均成功注入工程元数据（`carlab_part_id`, `partFamily`, `materialClass`, `mountingType`, `modelingFidelity`, `clearanceHoleStandard` 等）。
+4. **测试 4：Poka-Yoke 配合防呆（孔径小于 ISO 273 Fine 极限）**
+   - 传入非法孔径：`override-hole-d = 14.2mm`（小于 M14 Fine 系列 $15.0\text{ mm}$）；
+   - **拦截结果**：程序以退出码 `2` 阻断并准确报错：  
+     `POKA_YOKE_ERROR: [POKA-YOKE FIT REJECTED] Hole diameter (14.20 mm) is tighter than ISO 273 fine series (15.00 mm) for M14. Bolt assembly would jam.`
+5. **测试 5：Poka-Yoke 结构防呆 1（PCD 过小穿透中心孔）**
+   - 传入非法参数：`override-pcd = 75.0mm`（中心孔为 67.1mm，螺栓孔 15.5mm）；
+   - 内壁裕量计算：$(75 - 67.1)/2 - 7.75 = -3.80\text{ mm} < 0$；
+   - **拦截结果**：程序以退出码 `2` 阻断：`POKA-YOKE STRUCTURAL REJECTED: PCD (75.0 mm) bolt holes penetrate center bore (67.1 mm). Inner wall margin is -3.80 mm < minimum required 5.00 mm.`
+6. **测试 6：Poka-Yoke 结构防呆 2（PCD 超出法兰外径）**
+   - 传入非法参数：`override-pcd = 150.0mm`（法兰外径 152.0mm，螺栓孔 15.5mm）；
+   - 外壁裕量计算：$(152 - 150)/2 - 7.75 = -6.75\text{ mm} < 0$；
+   - **拦截结果**：程序以退出码 `2` 阻断：`POKA-YOKE STRUCTURAL REJECTED: PCD (150.0 mm) bolt holes exceed flange outer diameter (152.0 mm). Outer wall margin is -6.75 mm < minimum required 5.00 mm.`
+
+> [!NOTE]
+> **工程保真度边界声明 (`ASSUMPTION` / `EVIDENCE`)**：
+> - `DAC42800042` 轴承仅作为几何外包络与密封槽特征的展示（`ASSUMPTION`），内部滚子运动学、滚道赫兹接触应力、过盈压装公差与预紧力**未进行物理仿真**；
+> - 螺栓采用公称圆柱加贴图标注（`ASSUMPTION`），未扫掠真实几何螺旋齿形；
+> - GLB 中 3 个独立网格节点证明了图形层级与对象分离（`EVIDENCE`），**不等于已通过整车动力学连接副与螺栓预紧力验证**。
 
 实验结果已保存至结构化证据文件：`docs/planning/evidence/RP-04-feasibility.json`。
 
 ---
 
-## 7. 机械 CAD 生成领域的 6 大典型失败反例 (Failure Counter-Examples)
+## 7. 机械 CAD 生成领域的 7 大典型失败反例 (Failure Counter-Examples)
 
 > [!WARNING]
 > **绝对不能把“STL 导出成功”等同于“工程装配成功”！** 以下是真实机械建模中常见的灾难性反例与防御策略：
@@ -222,6 +249,9 @@ Set-Location "F:\project\cyq\AI_Coding\car"
 6. **反例 6：刚性无公差装配导致无法拆装与 Z-Fighting**
    - *现象*：将轴公称尺寸直接做成与孔公称尺寸完全一致，导致物理引擎中无法计算滑动接触阻尼，在 WebGL 中观察产生剧烈黑白闪烁条纹。
    - *防御*：紧固件孔位严格遵循 ISO 273 间隙标准；精密配合面在 WebGL 材质端启用多边形偏移（Polygon Offset）。
+7. **反例 7：标准引用的自造公式假阳性与公差误标（Homemade Standard Approximations & Tautological Testing）**
+   - *现象*：开发人员未查证真实工业标准文本，凭个人经验手写线性外推公式（如自造 `stud_d + 0.8` 并谎称满足 ISO 273），或将 ISO 273 Fine 系列误标为 Medium 系列。此种“自写断言检验自造公式”产生虚假的 PASS，一旦进入下游与真实零部件配合，将因孔径公差过紧导致螺栓卡死无法安装。
+   - *防御*：工程标准必须采用标准组织发布的正式离散表格（如 `ISO_273_TABLE`），将自造经验公式从代码与流水线中全面清除，并通过正例（不同标准系列）、反例（违背标准极限）双向核验。
 
 ---
 

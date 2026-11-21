@@ -1,0 +1,141 @@
+{
+  "status": "PASS",
+  "cases": [
+    "default-build",
+    "independent-artifact-verification",
+    "independent-part-generation",
+    "bearing-width-bore-pcd-axial-and-arm-frame-propagation",
+    "reject-impossible-pcd",
+    "reject-negative-clearance",
+    "reject-tampered-glb",
+    "reject-injected-solid-interference",
+    "reject-stale-snapshot-binding"
+  ],
+  "default": {
+    "status": "PASS",
+    "packageId": "c01-c5d74da77c293aa5321f",
+    "radialClearancesMm": {
+      "bearingSeat": 0.03499999999999659,
+      "journal": 0.02499999999999858,
+      "bearingRingSeparation": 4.5,
+      "studSeat1": 0.054999999999999716,
+      "studSeat2": 0.054999999999999716,
+      "studSeat3": 0.054999999999999716,
+      "studSeat4": 0.054999999999999716,
+      "studSeat5": 0.054999999999999716
+    },
+    "ballJointSeats": {
+      "upper": {
+        "entryDiameterMm": 20.0,
+        "halfAngleDeg": 5.440332031005506
+      },
+      "lower": {
+        "entryDiameterMm": 22.0,
+        "halfAngleDeg": 6.203447901691836
+      }
+    },
+    "axialStudHeadToCarrierFaceMm": 3,
+    "interference": {
+      "pairs": 36,
+      "maxOverlapMm3": 0.0,
+      "thresholdMm3": 0.01
+    },
+    "sampledAssembly": {
+      "pairChecks": 78,
+      "maxOverlapMm3": 0.0,
+      "seatedMinDistancesMm": {
+        "outerRingShoulder": 0.0,
+        "hubJournalShoulder": 0.0,
+        "studHeadSeat1": 0.0,
+        "studHeadSeat2": 0.0,
+        "studHeadSeat3": 0.0,
+        "studHeadSeat4": 0.0,
+        "studHeadSeat5": 0.0
+      }
+    },
+    "step": {
+      "independentParts": 5,
+      "reassembledInstances": 9,
+      "groups": 2
+    },
+    "glb": {
+      "instances": 9,
+      "distinctMeshes": 5,
+      "assemblyGroups": 2,
+      "triangles": 35022,
+      "bytes": 750248,
+      "maxBoundsErrorMm": 0.05655777454376121,
+      "maxTransformError": 2.498574958043065E-09
+    }
+  },
+  "variant": {
+    "status": "PASS",
+    "packageId": "c01-ea089b3769dc79ae1360",
+    "radialClearancesMm": {
+      "bearingSeat": 0.03499999999999659,
+      "journal": 0.02499999999999858,
+      "bearingRingSeparation": 4.5,
+      "studSeat1": 0.054999999999999716,
+      "studSeat2": 0.054999999999999716,
+      "studSeat3": 0.054999999999999716,
+      "studSeat4": 0.054999999999999716,
+      "studSeat5": 0.054999999999999716
+    },
+    "ballJointSeats": {
+      "upper": {
+        "entryDiameterMm": 20.0,
+        "halfAngleDeg": 5.440332031005506
+      },
+      "lower": {
+        "entryDiameterMm": 22.0,
+        "halfAngleDeg": 6.203447901691836
+      }
+    },
+    "axialStudHeadToCarrierFaceMm": 6,
+    "interference": {
+      "pairs": 36,
+      "maxOverlapMm3": 0.0,
+      "thresholdMm3": 0.01
+    },
+    "sampledAssembly": {
+      "pairChecks": 78,
+      "maxOverlapMm3": 0.0,
+      "seatedMinDistancesMm": {
+        "outerRingShoulder": 0.0,
+        "hubJournalShoulder": 0.0,
+        "studHeadSeat1": 0.0,
+        "studHeadSeat2": 0.0,
+        "studHeadSeat3": 0.0,
+        "studHeadSeat4": 0.0,
+        "studHeadSeat5": 0.0
+      }
+    },
+    "step": {
+      "independentParts": 5,
+      "reassembledInstances": 9,
+      "groups": 2
+    },
+    "glb": {
+      "instances": 9,
+      "distinctMeshes": 5,
+      "assemblyGroups": 2,
+      "triangles": 35024,
+      "bytes": 750288,
+      "maxBoundsErrorMm": 0.05655777454376121,
+      "maxTransformError": 4.410743714711174E-09
+    }
+  },
+  "workbenchHttp": {
+    "status": "PASS",
+    "manifest": "http://localhost:5173/cad/experiments/vehicle-cad-pipeline-v1/out/c01-c5d74da77c293aa5321f/manifest.json",
+    "metrics": {
+      "instances": 9,
+      "distinctMeshes": 5,
+      "assemblyGroups": 2,
+      "triangles": 35022,
+      "bytes": 750248,
+      "maxBoundsErrorMm": 0.05655777454376121,
+      "maxTransformError": 2.498574958043065E-09
+    }
+  }
+}
