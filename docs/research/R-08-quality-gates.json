@@ -51,6 +51,86 @@
           "errorCode": "ERR_INPUT_UNTRUSTED_PROVENANCE"
         },
         {
+          "checkId": "CHK_OEM_SPEC_EVIDENCE",
+          "description": "OEM_SPEC claims must provide structured source with sourceId, drawingNumber, and applicableScope; unverified claims are rejected.",
+          "errorCode": "ERR_INPUT_UNVERIFIED_OEM_PROVENANCE"
+        },
+        {
+          "checkId": "CHK_FORGED_SOURCE_EVIDENCE",
+          "description": "Rejects fabricated or placeholder strings (DOES-NOT-EXIST, FAKE-*, DUMMY, PLACEHOLDER).",
+          "errorCode": "ERR_INPUT_FORGED_SOURCE_EVIDENCE"
+        },
+        {
+          "checkId": "CHK_PROVENANCE_REGISTRY_LOOKUP",
+          "description": "Source ID must resolve to an authentic record in the offline provenance registry.",
+          "errorCode": "ERR_INPUT_UNREGISTERED_SOURCE_ID"
+        },
+        {
+          "checkId": "CHK_EVIDENCE_FILE_EXISTS",
+          "description": "Evidence doc file specified in registry must actually exist on disk; self-certified missing paths are rejected.",
+          "errorCode": "ERR_INPUT_MISSING_EVIDENCE_FILE"
+        },
+        {
+          "checkId": "CHK_EVIDENCE_RECORD_EXISTS",
+          "description": "VERIFIED_VALID record must have a structured verificationRecord dictionary.",
+          "errorCode": "ERR_INPUT_MISSING_EVIDENCE_RECORD"
+        },
+        {
+          "checkId": "CHK_EVIDENCE_PATH_MANDATORY",
+          "description": "VERIFIED_VALID record must declare non-empty evidenceDocPath.",
+          "errorCode": "ERR_INPUT_MISSING_EVIDENCE_PATH"
+        },
+        {
+          "checkId": "CHK_EVIDENCE_HASH_MANDATORY",
+          "description": "VERIFIED_VALID record must declare non-empty evidenceSha256.",
+          "errorCode": "ERR_INPUT_MISSING_EVIDENCE_HASH"
+        },
+        {
+          "checkId": "CHK_EVIDENCE_PATH_ESCAPE",
+          "description": "Evidence file path must not contain directory traversal (..) or attempt path escape.",
+          "errorCode": "ERR_INPUT_EVIDENCE_PATH_ESCAPE"
+        },
+        {
+          "checkId": "CHK_EVIDENCE_TRUSTED_LOCATION",
+          "description": "Evidence file must reside within approved evidence directories (docs/planning/evidence, cad/experiments/asset_quality_v1).",
+          "errorCode": "ERR_INPUT_UNTRUSTED_EVIDENCE_LOCATION"
+        },
+        {
+          "checkId": "CHK_TEST_FIXTURE_PRODUCTION_ISOLATION",
+          "description": "Sources designated as test fixtures (tier: TEST_ONLY) are prohibited from satisfying OEM_SPEC in production mode.",
+          "errorCode": "ERR_INPUT_TEST_FIXTURE_IN_PRODUCTION"
+        },
+        {
+          "checkId": "CHK_EVIDENCE_FILE_HASH",
+          "description": "Evidence doc file SHA-256 on disk must match the hash recorded in provenance registry.",
+          "errorCode": "ERR_INPUT_EVIDENCE_HASH_MISMATCH"
+        },
+        {
+          "checkId": "CHK_REGISTRY_VERIFICATION_STATUS",
+          "description": "Registry entry must have VERIFIED_VALID status; unverified fixtures fail closed under OEM_SPEC.",
+          "errorCode": "ERR_INPUT_UNVERIFIED_SOURCE_EVIDENCE"
+        },
+        {
+          "checkId": "CHK_DRAWING_NUMBER_CONSISTENCY",
+          "description": "Claimed drawing number must match the registered drawing number in provenance registry.",
+          "errorCode": "ERR_INPUT_FORGED_DRAWING_NUMBER"
+        },
+        {
+          "checkId": "CHK_PART_AUTHORIZATION",
+          "description": "Part ID must be authorized in registeredParts for the cited evidence source.",
+          "errorCode": "ERR_INPUT_PART_MISMATCH"
+        },
+        {
+          "checkId": "CHK_ISO_STANDARD_APPLICATION",
+          "description": "ISO_STANDARD provides geometric/tolerance rules; claiming vehicle assembly release without OEM engineering release document is rejected.",
+          "errorCode": "ERR_INPUT_UNVERIFIED_STANDARD_APPLICATION"
+        },
+        {
+          "checkId": "CHK_DEMO_ESTIMATE_DISCLAIMER",
+          "description": "DEMO_ESTIMATE parts must explicitly flag is_demo_only: true and include mandatory disclaimer.",
+          "errorCode": "ERR_INPUT_MISSING_DEMO_DISCLAIMER"
+        },
+        {
           "checkId": "CHK_PARAMETER_BOUNDS",
           "description": "Physical parameters must be positive and within reasonable engineering envelopes.",
           "rules": {

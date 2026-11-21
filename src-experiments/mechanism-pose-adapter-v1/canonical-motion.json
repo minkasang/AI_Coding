@@ -1,0 +1,1763 @@
+{
+  "schema": "carlab.canonicalMotion/0.1-proposal",
+  "legalAssembly": true,
+  "playbackAllowed": true,
+  "status": "CURRENT",
+  "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+  "sourceRevision": 1,
+  "variantId": "VAR-R16-BOF-ICE",
+  "frames": [
+    {
+      "frameIndex": 0,
+      "travelM": -0.04,
+      "sourceRevision": 1,
+      "frameBasis": {
+        "frameId": "FR-VEHICLE",
+        "units": "m",
+        "basis": "DEMO_ASSUMPTION"
+      },
+      "validity": "VALID",
+      "instances": [
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-001-FL",
+          "role": "UPPER_ARM",
+          "positionMeters": [
+            0.28,
+            0.22,
+            0.13
+          ],
+          "quaternion": [
+            -0.01171405431781215,
+            -0.005857027158906066,
+            -0.07614135306577889,
+            0.9970110182528634
+          ],
+          "residual": 4.424707234739738e-11,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-008-FL",
+          "role": "LOWER_ARM",
+          "positionMeters": [
+            0.32,
+            -0.04,
+            0.16
+          ],
+          "quaternion": [
+            -0.011975508715255007,
+            -0.005987754357627505,
+            -0.06386937981469337,
+            0.9978684463950396
+          ],
+          "residual": 3.1027311364760905e-12,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-016-FL",
+          "role": "KNUCKLE",
+          "positionMeters": [
+            0.6166459509699874,
+            -0.10197438428188225,
+            0.00456398271955366
+          ],
+          "quaternion": [
+            0.3535095733885992,
+            0.4534380266267247,
+            0.6660684591080642,
+            0.4751607573368002
+          ],
+          "residual": 4.1196761554690066e-11,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        }
+      ],
+      "omitted": [
+        {
+          "role": "TIEROD",
+          "definitionId": "PART-20-075",
+          "instanceId": null,
+          "requiredButDeferred": true,
+          "validity": "REQUIRED_DEFERRED",
+          "published": false,
+          "observedPositionMeters": [
+            0.26,
+            0.06,
+            0.15
+          ]
+        },
+        {
+          "role": "HUB",
+          "instanceId": null,
+          "candidateInstanceId": "PI-30-006-FL",
+          "roleOnly": true,
+          "bindingBasis": "WHEEL_CENTER_AND_SPINDLE_NOT_FLANGE_FRAME",
+          "validity": "ROLE_ONLY",
+          "published": false,
+          "notARigidPartPose": true,
+          "observedPositionMeters": [
+            0.7154311619468701,
+            -0.04000000001231825,
+            0.0037529422389379072
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "constraintId": "CON-SUSP-UPPER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 0,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SUSP-LOWER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 0,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-KINGPIN-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 4.1196761554690066e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-TIE-ROD-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 0,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 0,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SHOCK-OUTPUT",
+          "jointOrConstraint": "OUTPUT",
+          "lengthM": 0.4566574096592305,
+          "residualM": null,
+          "status": "OUTPUT"
+        }
+      ],
+      "clearance": {
+        "method": "DECLARED_SPHERE_PROXY",
+        "notCadCollision": true,
+        "pairs": [
+          {
+            "a": "upper-ball",
+            "b": "rail",
+            "clearanceM": 0.4612410937154049,
+            "interference": false
+          }
+        ],
+        "status": "CLEAR",
+        "label": "DEMO_SPHERE_PROXY",
+        "cadCollisionVerified": false
+      },
+      "force": "N/A"
+    },
+    {
+      "frameIndex": 1,
+      "travelM": -0.02,
+      "sourceRevision": 1,
+      "frameBasis": {
+        "frameId": "FR-VEHICLE",
+        "units": "m",
+        "basis": "DEMO_ASSUMPTION"
+      },
+      "validity": "VALID",
+      "instances": [
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-001-FL",
+          "role": "UPPER_ARM",
+          "positionMeters": [
+            0.28,
+            0.22,
+            0.13
+          ],
+          "quaternion": [
+            -0.0057748218257057315,
+            -0.002887410912852862,
+            -0.03753634186708722,
+            0.9992744054214232
+          ],
+          "residual": 2.0594368077512405e-13,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-008-FL",
+          "role": "LOWER_ARM",
+          "positionMeters": [
+            0.32,
+            -0.04,
+            0.16
+          ],
+          "quaternion": [
+            -0.0059490113005429,
+            -0.0029745056502714505,
+            -0.03172806026956214,
+            0.9994744077625067
+          ],
+          "residual": 8.605347544503314e-15,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-016-FL",
+          "role": "KNUCKLE",
+          "positionMeters": [
+            0.6190124676589179,
+            -0.08090741405512844,
+            0.0021452323816212038
+          ],
+          "quaternion": [
+            0.3552307147146943,
+            0.45064115661114756,
+            0.664143146081563,
+            0.479215576546024
+          ],
+          "residual": 1.8672406416380936e-13,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        }
+      ],
+      "omitted": [
+        {
+          "role": "TIEROD",
+          "definitionId": "PART-20-075",
+          "instanceId": null,
+          "requiredButDeferred": true,
+          "validity": "REQUIRED_DEFERRED",
+          "published": false,
+          "observedPositionMeters": [
+            0.26,
+            0.06,
+            0.15
+          ]
+        },
+        {
+          "role": "HUB",
+          "instanceId": null,
+          "candidateInstanceId": "PI-30-006-FL",
+          "roleOnly": true,
+          "bindingBasis": "WHEEL_CENTER_AND_SPINDLE_NOT_FLANGE_FRAME",
+          "validity": "ROLE_ONLY",
+          "published": false,
+          "notARigidPartPose": true,
+          "observedPositionMeters": [
+            0.7184611359020198,
+            -0.02000000000004138,
+            0.0016459350797608282
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "constraintId": "CON-SUSP-UPPER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -4.241096362989083e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SUSP-LOWER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -2.9482527530433345e-12,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-KINGPIN-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 1.8672406416380936e-13,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-TIE-ROD-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -6.659295337385629e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 1.2276870492433645e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SHOCK-OUTPUT",
+          "jointOrConstraint": "OUTPUT",
+          "lengthM": 0.44353327004321447,
+          "residualM": null,
+          "status": "OUTPUT"
+        }
+      ],
+      "clearance": {
+        "method": "DECLARED_SPHERE_PROXY",
+        "notCadCollision": true,
+        "pairs": [
+          {
+            "a": "upper-ball",
+            "b": "rail",
+            "clearanceM": 0.4637542952194492,
+            "interference": false
+          }
+        ],
+        "status": "CLEAR",
+        "label": "DEMO_SPHERE_PROXY",
+        "cadCollisionVerified": false
+      },
+      "force": "N/A"
+    },
+    {
+      "frameIndex": 2,
+      "travelM": 0,
+      "sourceRevision": 1,
+      "frameBasis": {
+        "frameId": "FR-VEHICLE",
+        "units": "m",
+        "basis": "DEMO_ASSUMPTION"
+      },
+      "validity": "VALID",
+      "instances": [
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-001-FL",
+          "role": "UPPER_ARM",
+          "positionMeters": [
+            0.28,
+            0.22,
+            0.13
+          ],
+          "quaternion": [
+            1.8919641568915527e-14,
+            9.45982078445775e-15,
+            1.229776701979508e-13,
+            1
+          ],
+          "residual": 3.952903665903919e-14,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-008-FL",
+          "role": "LOWER_ARM",
+          "positionMeters": [
+            0.32,
+            -0.04,
+            0.16
+          ],
+          "quaternion": [
+            4.901607029329319e-15,
+            2.45080351466466e-15,
+            2.6141904156423037e-14,
+            1
+          ],
+          "residual": 9.04246378223479e-16,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-016-FL",
+          "role": "KNUCKLE",
+          "positionMeters": [
+            0.6200000000000012,
+            -0.059999999999982775,
+            -1.832756863201326e-15
+          ],
+          "quaternion": [
+            0.35618046318836644,
+            0.44757923523687565,
+            0.6629939384381387,
+            0.48295687532323167
+          ],
+          "residual": 3.403540704569405e-14,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        }
+      ],
+      "omitted": [
+        {
+          "role": "TIEROD",
+          "definitionId": "PART-20-075",
+          "instanceId": null,
+          "requiredButDeferred": true,
+          "validity": "REQUIRED_DEFERRED",
+          "published": false,
+          "observedPositionMeters": [
+            0.26,
+            0.06,
+            0.15
+          ]
+        },
+        {
+          "role": "HUB",
+          "instanceId": null,
+          "candidateInstanceId": "PI-30-006-FL",
+          "roleOnly": true,
+          "bindingBasis": "WHEEL_CENTER_AND_SPINDLE_NOT_FLANGE_FRAME",
+          "validity": "ROLE_ONLY",
+          "published": false,
+          "notARigidPartPose": true,
+          "observedPositionMeters": [
+            0.7200000000000131,
+            -2.6645352591003757e-15,
+            -8.660500684680144e-14
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "constraintId": "CON-SUSP-UPPER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -4.257116881234424e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SUSP-LOWER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -2.955469202703398e-12,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-KINGPIN-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 3.403540704569405e-14,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-TIE-ROD-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -6.687272957606183e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 1.2315586050970495e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SHOCK-OUTPUT",
+          "jointOrConstraint": "OUTPUT",
+          "lengthM": 0.43025951471174995,
+          "residualM": null,
+          "status": "OUTPUT"
+        }
+      ],
+      "clearance": {
+        "method": "DECLARED_SPHERE_PROXY",
+        "notCadCollision": true,
+        "pairs": [
+          {
+            "a": "upper-ball",
+            "b": "rail",
+            "clearanceM": 0.4654997502496925,
+            "interference": false
+          }
+        ],
+        "status": "CLEAR",
+        "label": "DEMO_SPHERE_PROXY",
+        "cadCollisionVerified": false
+      },
+      "force": "N/A"
+    },
+    {
+      "frameIndex": 3,
+      "travelM": 0.02,
+      "sourceRevision": 1,
+      "frameBasis": {
+        "frameId": "FR-VEHICLE",
+        "units": "m",
+        "basis": "DEMO_ASSUMPTION"
+      },
+      "validity": "VALID",
+      "instances": [
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-001-FL",
+          "role": "UPPER_ARM",
+          "positionMeters": [
+            0.28,
+            0.22,
+            0.13
+          ],
+          "quaternion": [
+            0.005660461742143173,
+            0.0028302308710715825,
+            0.03679300132393059,
+            0.9993028690140239
+          ],
+          "residual": 7.641032965792348e-15,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-008-FL",
+          "role": "LOWER_ARM",
+          "positionMeters": [
+            0.32,
+            -0.04,
+            0.16
+          ],
+          "quaternion": [
+            0.005901279621587034,
+            0.0029506398107935175,
+            0.03147349131513085,
+            0.9994828102413623
+          ],
+          "residual": 2.1942709178604383e-17,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-016-FL",
+          "role": "KNUCKLE",
+          "positionMeters": [
+            0.6196548686356063,
+            -0.03921649271752812,
+            -0.0018837416769078921
+          ],
+          "quaternion": [
+            0.35648488903052505,
+            0.4442854730197354,
+            0.662464483852277,
+            0.48648715295561556
+          ],
+          "residual": 5.445259135413863e-15,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        }
+      ],
+      "omitted": [
+        {
+          "role": "TIEROD",
+          "definitionId": "PART-20-075",
+          "instanceId": null,
+          "requiredButDeferred": true,
+          "validity": "REQUIRED_DEFERRED",
+          "published": false,
+          "observedPositionMeters": [
+            0.26,
+            0.06,
+            0.15
+          ]
+        },
+        {
+          "role": "HUB",
+          "instanceId": null,
+          "candidateInstanceId": "PI-30-006-FL",
+          "roleOnly": true,
+          "bindingBasis": "WHEEL_CENTER_AND_SPINDLE_NOT_FLANGE_FRAME",
+          "validity": "ROLE_ONLY",
+          "published": false,
+          "notARigidPartPose": true,
+          "observedPositionMeters": [
+            0.7201186691977063,
+            0.020000000000000538,
+            -0.001226651992419143
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "constraintId": "CON-SUSP-UPPER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -4.2601866478975126e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SUSP-LOWER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -2.9564684034255606e-12,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-KINGPIN-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 5.445259135413863e-15,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-TIE-ROD-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -6.692907339456156e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 1.2318788350507148e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SHOCK-OUTPUT",
+          "jointOrConstraint": "OUTPUT",
+          "lengthM": 0.41679315986884563,
+          "residualM": null,
+          "status": "OUTPUT"
+        }
+      ],
+      "clearance": {
+        "method": "DECLARED_SPHERE_PROXY",
+        "notCadCollision": true,
+        "pairs": [
+          {
+            "a": "upper-ball",
+            "b": "rail",
+            "clearanceM": 0.4665436678349397,
+            "interference": false
+          }
+        ],
+        "status": "CLEAR",
+        "label": "DEMO_SPHERE_PROXY",
+        "cadCollisionVerified": false
+      },
+      "force": "N/A"
+    },
+    {
+      "frameIndex": 4,
+      "travelM": 0.04,
+      "sourceRevision": 1,
+      "frameBasis": {
+        "frameId": "FR-VEHICLE",
+        "units": "m",
+        "basis": "DEMO_ASSUMPTION"
+      },
+      "validity": "VALID",
+      "instances": [
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-001-FL",
+          "role": "UPPER_ARM",
+          "positionMeters": [
+            0.28,
+            0.22,
+            0.13
+          ],
+          "quaternion": [
+            0.011245283630092725,
+            0.0056226418150463545,
+            0.07309434359560264,
+            0.9972457803517779
+          ],
+          "residual": 1.3515043456530234e-15,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-008-FL",
+          "role": "LOWER_ARM",
+          "positionMeters": [
+            0.32,
+            -0.04,
+            0.16
+          ],
+          "quaternion": [
+            0.011780151120359945,
+            0.005890075560179974,
+            0.06282747264191971,
+            0.9979374949018128
+          ],
+          "residual": 1.168623092716607e-16,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-016-FL",
+          "role": "KNUCKLE",
+          "positionMeters": [
+            0.6179981754030649,
+            -0.018532736785140873,
+            -0.003512213814467706
+          ],
+          "quaternion": [
+            0.35620955150492756,
+            0.4407571882639778,
+            0.6624655104370599,
+            0.48988499047394435
+          ],
+          "residual": 3.0420665039441727e-16,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        }
+      ],
+      "omitted": [
+        {
+          "role": "TIEROD",
+          "definitionId": "PART-20-075",
+          "instanceId": null,
+          "requiredButDeferred": true,
+          "validity": "REQUIRED_DEFERRED",
+          "published": false,
+          "observedPositionMeters": [
+            0.26,
+            0.06,
+            0.15
+          ]
+        },
+        {
+          "role": "HUB",
+          "instanceId": null,
+          "candidateInstanceId": "PI-30-006-FL",
+          "roleOnly": true,
+          "bindingBasis": "WHEEL_CENTER_AND_SPINDLE_NOT_FLANGE_FRAME",
+          "validity": "ROLE_ONLY",
+          "published": false,
+          "notARigidPartPose": true,
+          "observedPositionMeters": [
+            0.7188534500262072,
+            0.03999999999999995,
+            -0.0020519723508828263
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "constraintId": "CON-SUSP-UPPER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -4.26078616833081e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SUSP-LOWER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -2.956301869971867e-12,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-KINGPIN-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 3.0420665039441727e-16,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-TIE-ROD-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -6.694167442589105e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 1.2318202013972268e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SHOCK-OUTPUT",
+          "jointOrConstraint": "OUTPUT",
+          "lengthM": 0.40309598638474153,
+          "residualM": null,
+          "status": "OUTPUT"
+        }
+      ],
+      "clearance": {
+        "method": "DECLARED_SPHERE_PROXY",
+        "notCadCollision": true,
+        "pairs": [
+          {
+            "a": "upper-ball",
+            "b": "rail",
+            "clearanceM": 0.4669249412787724,
+            "interference": false
+          }
+        ],
+        "status": "CLEAR",
+        "label": "DEMO_SPHERE_PROXY",
+        "cadCollisionVerified": false
+      },
+      "force": "N/A"
+    },
+    {
+      "frameIndex": 5,
+      "travelM": 0.02,
+      "sourceRevision": 1,
+      "frameBasis": {
+        "frameId": "FR-VEHICLE",
+        "units": "m",
+        "basis": "DEMO_ASSUMPTION"
+      },
+      "validity": "VALID",
+      "instances": [
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-001-FL",
+          "role": "UPPER_ARM",
+          "positionMeters": [
+            0.28,
+            0.22,
+            0.13
+          ],
+          "quaternion": [
+            0.005660461742141022,
+            0.0028302308710705065,
+            0.03679300132391661,
+            0.9993028690140244
+          ],
+          "residual": 2.6932837584549114e-15,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-008-FL",
+          "role": "LOWER_ARM",
+          "positionMeters": [
+            0.32,
+            -0.04,
+            0.16
+          ],
+          "quaternion": [
+            0.005901279621586186,
+            0.002950639810793094,
+            0.03147349131512633,
+            0.9994828102413625
+          ],
+          "residual": 2.7755575615628914e-17,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-016-FL",
+          "role": "KNUCKLE",
+          "positionMeters": [
+            0.6196548686356065,
+            -0.03921649271753111,
+            -0.001883741676907691
+          ],
+          "quaternion": [
+            0.35648488903049874,
+            0.4442854730197083,
+            0.6624644838523045,
+            0.48648715295562217
+          ],
+          "residual": 2.2155298486539686e-15,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        }
+      ],
+      "omitted": [
+        {
+          "role": "TIEROD",
+          "definitionId": "PART-20-075",
+          "instanceId": null,
+          "requiredButDeferred": true,
+          "validity": "REQUIRED_DEFERRED",
+          "published": false,
+          "observedPositionMeters": [
+            0.26,
+            0.06,
+            0.15
+          ]
+        },
+        {
+          "role": "HUB",
+          "instanceId": null,
+          "candidateInstanceId": "PI-30-006-FL",
+          "roleOnly": true,
+          "bindingBasis": "WHEEL_CENTER_AND_SPINDLE_NOT_FLANGE_FRAME",
+          "validity": "ROLE_ONLY",
+          "published": false,
+          "notARigidPartPose": true,
+          "observedPositionMeters": [
+            0.7201186691977051,
+            0.01999999999999974,
+            -0.0012266519924084365
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "constraintId": "CON-SUSP-UPPER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -4.260652941567855e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SUSP-LOWER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -2.956357381123098e-12,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-KINGPIN-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 2.2155298486539686e-15,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-TIE-ROD-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -6.693878784602703e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 1.2317990377708199e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SHOCK-OUTPUT",
+          "jointOrConstraint": "OUTPUT",
+          "lengthM": 0.4167931598688476,
+          "residualM": null,
+          "status": "OUTPUT"
+        }
+      ],
+      "clearance": {
+        "method": "DECLARED_SPHERE_PROXY",
+        "notCadCollision": true,
+        "pairs": [
+          {
+            "a": "upper-ball",
+            "b": "rail",
+            "clearanceM": 0.4665436678349395,
+            "interference": false
+          }
+        ],
+        "status": "CLEAR",
+        "label": "DEMO_SPHERE_PROXY",
+        "cadCollisionVerified": false
+      },
+      "force": "N/A"
+    },
+    {
+      "frameIndex": 6,
+      "travelM": 0,
+      "sourceRevision": 1,
+      "frameBasis": {
+        "frameId": "FR-VEHICLE",
+        "units": "m",
+        "basis": "DEMO_ASSUMPTION"
+      },
+      "validity": "VALID",
+      "instances": [
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-001-FL",
+          "role": "UPPER_ARM",
+          "positionMeters": [
+            0.28,
+            0.22,
+            0.13
+          ],
+          "quaternion": [
+            6.8709319245761934e-15,
+            3.4354659622880916e-15,
+            4.4661057509745213e-14,
+            1
+          ],
+          "residual": 1.3885800350875079e-14,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-008-FL",
+          "role": "LOWER_ARM",
+          "positionMeters": [
+            0.32,
+            -0.04,
+            0.16
+          ],
+          "quaternion": [
+            1.664636654186768e-15,
+            8.323183270933841e-16,
+            8.878062155662763e-15,
+            1
+          ],
+          "residual": 4.473574507577884e-16,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-016-FL",
+          "role": "KNUCKLE",
+          "positionMeters": [
+            0.6200000000000006,
+            -0.05999999999999415,
+            -6.086401419853471e-16
+          ],
+          "quaternion": [
+            0.35618046318823005,
+            0.44757923523673904,
+            0.6629939384382841,
+            0.4829568753232594
+          ],
+          "residual": 1.2889008150919895e-14,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        }
+      ],
+      "omitted": [
+        {
+          "role": "TIEROD",
+          "definitionId": "PART-20-075",
+          "instanceId": null,
+          "requiredButDeferred": true,
+          "validity": "REQUIRED_DEFERRED",
+          "published": false,
+          "observedPositionMeters": [
+            0.26,
+            0.06,
+            0.15
+          ]
+        },
+        {
+          "role": "HUB",
+          "instanceId": null,
+          "candidateInstanceId": "PI-30-006-FL",
+          "roleOnly": true,
+          "bindingBasis": "WHEEL_CENTER_AND_SPINDLE_NOT_FLANGE_FRAME",
+          "validity": "ROLE_ONLY",
+          "published": false,
+          "notARigidPartPose": true,
+          "observedPositionMeters": [
+            0.7200000000000047,
+            -1.214306433183765e-15,
+            -3.1677320756295465e-14
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "constraintId": "CON-SUSP-UPPER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -4.259581576349092e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SUSP-LOWER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -2.955913291913248e-12,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-KINGPIN-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 1.2889008150919895e-14,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-TIE-ROD-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -6.692035814381825e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 1.2317036279796412e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SHOCK-OUTPUT",
+          "jointOrConstraint": "OUTPUT",
+          "lengthM": 0.43025951471175716,
+          "residualM": null,
+          "status": "OUTPUT"
+        }
+      ],
+      "clearance": {
+        "method": "DECLARED_SPHERE_PROXY",
+        "notCadCollision": true,
+        "pairs": [
+          {
+            "a": "upper-ball",
+            "b": "rail",
+            "clearanceM": 0.4654997502496896,
+            "interference": false
+          }
+        ],
+        "status": "CLEAR",
+        "label": "DEMO_SPHERE_PROXY",
+        "cadCollisionVerified": false
+      },
+      "force": "N/A"
+    },
+    {
+      "frameIndex": 7,
+      "travelM": -0.02,
+      "sourceRevision": 1,
+      "frameBasis": {
+        "frameId": "FR-VEHICLE",
+        "units": "m",
+        "basis": "DEMO_ASSUMPTION"
+      },
+      "validity": "VALID",
+      "instances": [
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-001-FL",
+          "role": "UPPER_ARM",
+          "positionMeters": [
+            0.28,
+            0.22,
+            0.13
+          ],
+          "quaternion": [
+            -0.00577482182577737,
+            -0.002887410912888681,
+            -0.03753634186755287,
+            0.9992744054214052
+          ],
+          "residual": 6.261267995329566e-14,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-008-FL",
+          "role": "LOWER_ARM",
+          "positionMeters": [
+            0.32,
+            -0.04,
+            0.16
+          ],
+          "quaternion": [
+            -0.005949011300557704,
+            -0.0029745056502788526,
+            -0.03172806026964109,
+            0.9994744077625041
+          ],
+          "residual": 3.276262870190693e-15,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-016-FL",
+          "role": "KNUCKLE",
+          "positionMeters": [
+            0.6190124676589087,
+            -0.08090741405517986,
+            0.0021452323816277936
+          ],
+          "quaternion": [
+            0.3552307147139029,
+            0.4506411566103646,
+            0.6641431460824181,
+            0.47921557654616215
+          ],
+          "residual": 6.136756986479607e-14,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        }
+      ],
+      "omitted": [
+        {
+          "role": "TIEROD",
+          "definitionId": "PART-20-075",
+          "instanceId": null,
+          "requiredButDeferred": true,
+          "validity": "REQUIRED_DEFERRED",
+          "published": false,
+          "observedPositionMeters": [
+            0.26,
+            0.06,
+            0.15
+          ]
+        },
+        {
+          "role": "HUB",
+          "instanceId": null,
+          "candidateInstanceId": "PI-30-006-FL",
+          "roleOnly": true,
+          "bindingBasis": "WHEEL_CENTER_AND_SPINDLE_NOT_FLANGE_FRAME",
+          "validity": "ROLE_ONLY",
+          "published": false,
+          "notARigidPartPose": true,
+          "observedPositionMeters": [
+            0.7184611359019635,
+            -0.020000000000013424,
+            0.001645935080077498
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "constraintId": "CON-SUSP-UPPER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -4.2548853329549274e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SUSP-LOWER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -2.9532487566541477e-12,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-KINGPIN-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 6.136756986479607e-14,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-TIE-ROD-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -6.684403031087527e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 1.2304827295972487e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SHOCK-OUTPUT",
+          "jointOrConstraint": "OUTPUT",
+          "lengthM": 0.4435332700432472,
+          "residualM": null,
+          "status": "OUTPUT"
+        }
+      ],
+      "clearance": {
+        "method": "DECLARED_SPHERE_PROXY",
+        "notCadCollision": true,
+        "pairs": [
+          {
+            "a": "upper-ball",
+            "b": "rail",
+            "clearanceM": 0.46375429521942335,
+            "interference": false
+          }
+        ],
+        "status": "CLEAR",
+        "label": "DEMO_SPHERE_PROXY",
+        "cadCollisionVerified": false
+      },
+      "force": "N/A"
+    },
+    {
+      "frameIndex": 8,
+      "travelM": -0.04,
+      "sourceRevision": 1,
+      "frameBasis": {
+        "frameId": "FR-VEHICLE",
+        "units": "m",
+        "basis": "DEMO_ASSUMPTION"
+      },
+      "validity": "VALID",
+      "instances": [
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-001-FL",
+          "role": "UPPER_ARM",
+          "positionMeters": [
+            0.28,
+            0.22,
+            0.13
+          ],
+          "quaternion": [
+            -0.011714054342369556,
+            -0.005857027171184769,
+            -0.07614135322540204,
+            0.9970110182403125
+          ],
+          "residual": 3.01492809067338e-13,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-008-FL",
+          "role": "LOWER_ARM",
+          "positionMeters": [
+            0.32,
+            -0.04,
+            0.16
+          ],
+          "quaternion": [
+            -0.011975508719792131,
+            -0.005987754359896067,
+            -0.06386937983889138,
+            0.9978684463934228
+          ],
+          "residual": 1.917140697975685e-14,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        },
+        {
+          "runId": "RUN-SLA-FL-SNAP1-001",
+          "sourceRevision": 1,
+          "frameBasis": {
+            "frameId": "FR-VEHICLE",
+            "units": "m",
+            "basis": "DEMO_ASSUMPTION",
+            "notEqualTo": "FR-WHEEL-END-FL"
+          },
+          "instanceId": "PI-20-016-FL",
+          "role": "KNUCKLE",
+          "positionMeters": [
+            0.6166459509646895,
+            -0.1019743842971841,
+            0.004563982721981764
+          ],
+          "quaternion": [
+            0.3535095731661423,
+            0.45343802642291503,
+            0.6660684593559251,
+            0.47516075734935037
+          ],
+          "residual": 2.7447405341055685e-13,
+          "validity": "VALID",
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "published": true
+        }
+      ],
+      "omitted": [
+        {
+          "role": "TIEROD",
+          "definitionId": "PART-20-075",
+          "instanceId": null,
+          "requiredButDeferred": true,
+          "validity": "REQUIRED_DEFERRED",
+          "published": false,
+          "observedPositionMeters": [
+            0.26,
+            0.06,
+            0.15
+          ]
+        },
+        {
+          "role": "HUB",
+          "instanceId": null,
+          "candidateInstanceId": "PI-30-006-FL",
+          "roleOnly": true,
+          "bindingBasis": "WHEEL_CENTER_AND_SPINDLE_NOT_FLANGE_FRAME",
+          "validity": "ROLE_ONLY",
+          "published": false,
+          "notARigidPartPose": true,
+          "observedPositionMeters": [
+            0.7154311619249868,
+            -0.04000000000008487,
+            0.0037529423253142577
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "constraintId": "CON-SUSP-UPPER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -4.2318926141149404e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SUSP-LOWER-CIRCLE",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -2.9381497235192455e-12,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-KINGPIN-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 2.7447405341055685e-13,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-TIE-ROD-LENGTH",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": -6.648265271635978e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-WHEEL-CENTER-HEIGHT",
+          "jointOrConstraint": "CONSTRAINT",
+          "residualM": 1.2233380974890906e-11,
+          "status": "SATISFIED"
+        },
+        {
+          "constraintId": "CON-SHOCK-OUTPUT",
+          "jointOrConstraint": "OUTPUT",
+          "lengthM": 0.4566574096689857,
+          "residualM": null,
+          "status": "OUTPUT"
+        }
+      ],
+      "clearance": {
+        "method": "DECLARED_SPHERE_PROXY",
+        "notCadCollision": true,
+        "pairs": [
+          {
+            "a": "upper-ball",
+            "b": "rail",
+            "clearanceM": 0.4612410937035033,
+            "interference": false
+          }
+        ],
+        "status": "CLEAR",
+        "label": "DEMO_SPHERE_PROXY",
+        "cadCollisionVerified": false
+      },
+      "force": "N/A"
+    }
+  ],
+  "simulationRun": {
+    "runId": "RUN-SLA-FL-SNAP1-001",
+    "sourceRevision": 1,
+    "inputRevision": 1,
+    "solver": "src-experiments/mechanism-stream-v1/stream.mjs",
+    "status": "CURRENT",
+    "frameId": "FR-VEHICLE",
+    "resultHash": "ea07924e32613ccb4500ac737d4f6c08a6f531bba0afa0e6219f45bd4784ddc3",
+    "rebase": {
+      "fromRunId": "RUN-SLA-FL-DEMO-001",
+      "fromInputRevision": 3,
+      "fromResultHash": "d3c7fd2430861d4db4a8e426e39337a243988d225ba6861698355e757a6732c0",
+      "toSourceRevision": 1,
+      "rebaseHash": "ea07924e32613ccb4500ac737d4f6c08a6f531bba0afa0e6219f45bd4784ddc3"
+    }
+  },
+  "force": "N/A",
+  "motionValueBasis": "DEMO_ASSUMPTION",
+  "geometryValueBasis": "UNKNOWN",
+  "conflicts": [
+    {
+      "code": "R28-DISC-HUB",
+      "r22": "BOUND_TO_PI-30-006-FL",
+      "r28": "ROLE_ONLY",
+      "reason": "轮心加旋转轴不是独立轮毂法兰的已证实局部坐标。"
+    },
+    {
+      "code": "R28-DISC-FRAME",
+      "demoFrame": "FR-VEHICLE",
+      "otherFrame": "FR-WHEEL-END-FL",
+      "reason": "R-22 记录两套原点相差约 1.277 m。本流不合并坐标。"
+    }
+  ]
+}

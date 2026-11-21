@@ -1,0 +1,2379 @@
+{
+  "schemaVersion": "carlab.r30.runSummary/1.0",
+  "repeat": true,
+  "generatedAt": "2026-11-21T07:52:19.263Z",
+  "server": {
+    "base": "http://127.0.0.1:5173",
+    "reusedExisting": true,
+    "constantPortsOnly": true
+  },
+  "chrome": {
+    "headless": true,
+    "backend": "SwiftShader",
+    "budgetMs": 45000
+  },
+  "payload": {
+    "schemaVersion": "carlab.r30.releaseCheck/1.0",
+    "glb": {
+      "asset": "/viewer/experiments/engineering-viewer/assets/wheel_hub_assembly.glb",
+      "glbUnit": "m",
+      "bbox": {
+        "min": [
+          -0.076,
+          -0.042,
+          -0.076
+        ],
+        "max": [
+          0.076,
+          0.045,
+          0.076
+        ],
+        "size": [
+          0.152,
+          0.087,
+          0.152
+        ]
+      },
+      "nativePbr": {
+        "hub": [
+          {
+            "name": "Mat_Part_Hub",
+            "metalness": 0.85,
+            "roughness": 0.25
+          }
+        ],
+        "bearing": [
+          {
+            "name": "Mat_Part_Bearing",
+            "metalness": 0.95,
+            "roughness": 0.12
+          }
+        ],
+        "studs": [
+          {
+            "name": "Mat_Part_WheelStuds",
+            "metalness": 0.8,
+            "roughness": 0.5
+          }
+        ]
+      },
+      "instances": [
+        {
+          "instanceId": "inst-hub-001",
+          "partKey": "hub"
+        },
+        {
+          "instanceId": "inst-bearing-001",
+          "partKey": "bearing"
+        },
+        {
+          "instanceId": "inst-studs-001",
+          "partKey": "studs"
+        }
+      ]
+    },
+    "fixed": {
+      "viewport": [
+        1280,
+        800
+      ],
+      "pixelRatio": 1,
+      "productionClass": "workbench-v2/viewport.js :: EngineeringViewport",
+      "productionFileModified": false,
+      "fileLock": "composer-2-5 owns workbench-v2 main/index/styles/smoke/inspection-bridge",
+      "legacyPbr": {
+        "metalness": 0.7,
+        "roughness": 0.34,
+        "envMapIntensity": 1.05
+      },
+      "legacySource": "workbench-v2/viewport.js:166-167",
+      "rendererBackend": "headless Chrome + SwiftShader 软件光栅化",
+      "exposure": 1.18,
+      "hemi": 0.9,
+      "sun": 2,
+      "fill": 0.9,
+      "groundY": -0.096,
+      "gridY": -0.095,
+      "geometryNormalsModified": false,
+      "toneMapping": "ACESFilmicToneMapping",
+      "colorSpace": "SRGBColorSpace",
+      "shadowMap": "PCFSoftShadowMap"
+    },
+    "flag": {
+      "offStatus": {
+        "schema": "carlab.r30.mPbrFlag/1.0",
+        "enabled": false,
+        "defaultEnabled": false,
+        "switches": 0,
+        "appliedMaterials": 3,
+        "legacy": {
+          "metalness": 0.7,
+          "roughness": 0.34,
+          "envMapIntensity": 1.05
+        },
+        "legacySource": "workbench-v2/viewport.js:166-167",
+        "nativeParts": [
+          "hub",
+          "bearing",
+          "studs"
+        ],
+        "missingTargets": [],
+        "rollback": "disable() 无条件写回 LEGACY_PBR，与 viewport.js:166-167 一致",
+        "fileLock": "本 adapter 位于 viewer/experiments/render-release-v1/，不写 workbench-v2/"
+      },
+      "onStatus": {
+        "schema": "carlab.r30.mPbrFlag/1.0",
+        "enabled": true,
+        "defaultEnabled": false,
+        "switches": 1,
+        "appliedMaterials": 3,
+        "legacy": {
+          "metalness": 0.7,
+          "roughness": 0.34,
+          "envMapIntensity": 1.05
+        },
+        "legacySource": "workbench-v2/viewport.js:166-167",
+        "nativeParts": [
+          "hub",
+          "bearing",
+          "studs"
+        ],
+        "missingTargets": [],
+        "rollback": "disable() 无条件写回 LEGACY_PBR，与 viewport.js:166-167 一致",
+        "fileLock": "本 adapter 位于 viewer/experiments/render-release-v1/，不写 workbench-v2/"
+      },
+      "histogramOff": {
+        "distinct": 1,
+        "buckets": {
+          "0.7/0.34": 3
+        }
+      },
+      "histogramOn": {
+        "distinct": 3,
+        "buckets": {
+          "0.8/0.5": 1,
+          "0.85/0.25": 1,
+          "0.95/0.12": 1
+        }
+      },
+      "snapshotOff": [
+        {
+          "instanceId": "inst-hub-001",
+          "partKey": "hub",
+          "index": 0,
+          "metalness": 0.7,
+          "roughness": 0.34,
+          "envMapIntensity": 1.05,
+          "color": "8e9fb3",
+          "emissive": "000000",
+          "emissiveIntensity": 0,
+          "visible": true,
+          "clippingPlanes": 0,
+          "clipIntersection": false
+        },
+        {
+          "instanceId": "inst-bearing-001",
+          "partKey": "bearing",
+          "index": 0,
+          "metalness": 0.7,
+          "roughness": 0.34,
+          "envMapIntensity": 1.05,
+          "color": "607891",
+          "emissive": "000000",
+          "emissiveIntensity": 0,
+          "visible": true,
+          "clippingPlanes": 0,
+          "clipIntersection": false
+        },
+        {
+          "instanceId": "inst-studs-001",
+          "partKey": "studs",
+          "index": 0,
+          "metalness": 0.7,
+          "roughness": 0.34,
+          "envMapIntensity": 1.05,
+          "color": "8194af",
+          "emissive": "000000",
+          "emissiveIntensity": 0,
+          "visible": true,
+          "clippingPlanes": 0,
+          "clipIntersection": false
+        }
+      ],
+      "snapshotOn": [
+        {
+          "instanceId": "inst-hub-001",
+          "partKey": "hub",
+          "index": 0,
+          "metalness": 0.85,
+          "roughness": 0.25,
+          "envMapIntensity": 1.05,
+          "color": "8e9fb3",
+          "emissive": "2364bd",
+          "emissiveIntensity": 0.19,
+          "visible": true,
+          "clippingPlanes": 1,
+          "clipIntersection": false
+        },
+        {
+          "instanceId": "inst-bearing-001",
+          "partKey": "bearing",
+          "index": 0,
+          "metalness": 0.95,
+          "roughness": 0.12,
+          "envMapIntensity": 1.05,
+          "color": "607891",
+          "emissive": "000000",
+          "emissiveIntensity": 0,
+          "visible": true,
+          "clippingPlanes": 1,
+          "clipIntersection": false
+        },
+        {
+          "instanceId": "inst-studs-001",
+          "partKey": "studs",
+          "index": 0,
+          "metalness": 0.8,
+          "roughness": 0.5,
+          "envMapIntensity": 1.05,
+          "color": "8194af",
+          "emissive": "000000",
+          "emissiveIntensity": 0,
+          "visible": true,
+          "clippingPlanes": 1,
+          "clipIntersection": false
+        }
+      ],
+      "snapshotRollback": [
+        {
+          "instanceId": "inst-hub-001",
+          "partKey": "hub",
+          "index": 0,
+          "metalness": 0.7,
+          "roughness": 0.34,
+          "envMapIntensity": 1.05,
+          "color": "8e9fb3",
+          "emissive": "2364bd",
+          "emissiveIntensity": 0.19,
+          "visible": true,
+          "clippingPlanes": 1,
+          "clipIntersection": false
+        },
+        {
+          "instanceId": "inst-bearing-001",
+          "partKey": "bearing",
+          "index": 0,
+          "metalness": 0.7,
+          "roughness": 0.34,
+          "envMapIntensity": 1.05,
+          "color": "607891",
+          "emissive": "000000",
+          "emissiveIntensity": 0,
+          "visible": true,
+          "clippingPlanes": 1,
+          "clipIntersection": false
+        },
+        {
+          "instanceId": "inst-studs-001",
+          "partKey": "studs",
+          "index": 0,
+          "metalness": 0.7,
+          "roughness": 0.34,
+          "envMapIntensity": 1.05,
+          "color": "8194af",
+          "emissive": "000000",
+          "emissiveIntensity": 0,
+          "visible": true,
+          "clippingPlanes": 1,
+          "clipIntersection": false
+        }
+      ],
+      "rollback": {
+        "ok": true,
+        "violations": []
+      },
+      "finalRollback": {
+        "ok": true,
+        "violations": []
+      },
+      "idempotent": {
+        "ok": true,
+        "diffs": [],
+        "countA": 3,
+        "countB": 3
+      },
+      "nonPbrStable": true,
+      "nonPbrBaselineAtNone": "[{\"instanceId\":\"inst-hub-001\",\"partKey\":\"hub\",\"index\":0,\"color\":\"8e9fb3\",\"emissive\":\"000000\",\"emissiveIntensity\":0,\"visible\":true,\"clippingPlanes\":0,\"clipIntersection\":false},{\"instanceId\":\"inst-bearing-001\",\"partKey\":\"bearing\",\"index\":0,\"color\":\"607891\",\"emissive\":\"000000\",\"emissiveIntensity\":0,\"visible\":true,\"clippingPlanes\":0,\"clipIntersection\":false},{\"instanceId\":\"inst-studs-001\",\"partKey\":\"studs\",\"index\":0,\"color\":\"8194af\",\"emissive\":\"000000\",\"emissiveIntensity\":0,\"visible\":true,\"clippingPlanes\":0,\"clipIntersection\":false}]",
+      "defaultEnabled": false,
+      "switches": 4
+    },
+    "measure": {
+      "off": {
+        "ok": true,
+        "pointCount": 2,
+        "distanceM": 0.066753,
+        "formatted": "66.75 mm（0.0668 m）",
+        "hitInstanceIds": [
+          "inst-studs-001",
+          "inst-hub-001"
+        ],
+        "points": [
+          [
+            0.0141,
+            0.045,
+            -0.0509
+          ],
+          [
+            -0.0394,
+            0.032,
+            -0.0131
+          ]
+        ]
+      },
+      "on": {
+        "ok": true,
+        "pointCount": 2,
+        "distanceM": 0.066753,
+        "formatted": "66.75 mm（0.0668 m）",
+        "hitInstanceIds": [
+          "inst-studs-001",
+          "inst-hub-001"
+        ],
+        "points": [
+          [
+            0.0141,
+            0.045,
+            -0.0509
+          ],
+          [
+            -0.0394,
+            0.032,
+            -0.0131
+          ]
+        ]
+      },
+      "sameDistance": true,
+      "sameFormatted": true
+    },
+    "states": [
+      {
+        "name": "none",
+        "label": "未选中",
+        "selectedId": null,
+        "explode": 0,
+        "clip": {
+          "enabled": false,
+          "axis": "y",
+          "t": 0.5
+        }
+      },
+      {
+        "name": "selectExplode",
+        "label": "选中 + 爆炸",
+        "selectedId": "inst-hub-001",
+        "explode": 1,
+        "clip": {
+          "enabled": false,
+          "axis": "y",
+          "t": 0.5
+        }
+      },
+      {
+        "name": "selectClip",
+        "label": "选中 + 剖切",
+        "selectedId": "inst-hub-001",
+        "explode": 0,
+        "clip": {
+          "enabled": true,
+          "axis": "y",
+          "t": 0.55
+        }
+      }
+    ],
+    "views": [
+      {
+        "name": "iso",
+        "dir": [
+          0.92,
+          0.78,
+          1.12
+        ],
+        "dist": 0.485,
+        "target": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "side",
+        "dir": [
+          0.18,
+          0.3,
+          1
+        ],
+        "dist": 0.42,
+        "target": [
+          0,
+          -0.01,
+          0
+        ]
+      }
+    ],
+    "frames": [
+      {
+        "flag": "off",
+        "state": "none",
+        "stateLabel": "未选中",
+        "view": "iso",
+        "camera": {
+          "dir": [
+            0.92,
+            0.78,
+            1.12
+          ],
+          "dist": 0.485,
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.04200000315904617,
+            "max": 0.04500000178813934
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 218.968,
+          "lumaStdDev": 29.054,
+          "highlightRatio": 0.730048,
+          "nearWhiteRatio": 0.505788,
+          "clippedRatio": 0,
+          "edgeGradient": 2.7949,
+          "pixels": 170004
+        },
+        "contact": {
+          "profile": [
+            242.3,
+            242.3,
+            242.3,
+            242.13,
+            241.65,
+            240.79,
+            240.88,
+            239.79,
+            216.57,
+            215.43,
+            200.35,
+            169.74,
+            152.25,
+            148.13,
+            149.16,
+            149.37,
+            148.3,
+            145.92,
+            143.78,
+            147.68,
+            168.2,
+            202.75,
+            214.63,
+            214.92,
+            222.11,
+            242.27,
+            242.12,
+            241.97,
+            241.55,
+            241.95,
+            242.3,
+            242.3
+          ],
+          "asymmetry": 1.802,
+          "centerEdgeRatio": 0.6814,
+          "edgeMean": 235.51,
+          "centerMean": 160.47,
+          "minLuma": 143.78,
+          "maxLuma": 242.3,
+          "rect": {
+            "x": 366,
+            "y": 487,
+            "w": 548,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 406.8170509391713,
+            "y": 244.64154222094666,
+            "w": 455.7068251089956,
+            "h": 370.6106473282172
+          },
+          "contact": {
+            "x": 366.57590493460276,
+            "y": 487.0944314053122,
+            "w": 546.8481901307947,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "off",
+        "state": "none",
+        "stateLabel": "未选中",
+        "view": "side",
+        "camera": {
+          "dir": [
+            0.18,
+            0.3,
+            1
+          ],
+          "dist": 0.42,
+          "target": [
+            0,
+            -0.01,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.04200000315904617,
+            "max": 0.04500000178813934
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 205.222,
+          "lumaStdDev": 36.789,
+          "highlightRatio": 0.620288,
+          "nearWhiteRatio": 0.301098,
+          "clippedRatio": 0,
+          "edgeGradient": 2.8289,
+          "pixels": 140114
+        },
+        "contact": {
+          "profile": [
+            241.3,
+            231.19,
+            221.58,
+            215.87,
+            215.32,
+            215.37,
+            215.57,
+            215.6,
+            215.6,
+            197.06,
+            160.85,
+            133.44,
+            124.14,
+            121.31,
+            120.38,
+            119.83,
+            119.23,
+            118.83,
+            119.42,
+            122.62,
+            133.46,
+            163.55,
+            218.07,
+            241.98,
+            241.99,
+            242.2,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3
+          ],
+          "asymmetry": -21.358,
+          "centerEdgeRatio": 0.5663,
+          "edgeMean": 229.13,
+          "centerMean": 129.76,
+          "minLuma": 118.83,
+          "maxLuma": 242.3,
+          "rect": {
+            "x": 375,
+            "y": 485,
+            "w": 530,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 382.3156407980688,
+            "y": 243.28174682420888,
+            "w": 441.53985361582437,
+            "h": 316.568050144141
+          },
+          "contact": {
+            "x": 375.0760878305054,
+            "y": 485.0938417177124,
+            "w": 529.8478243389892,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "off",
+        "state": "selectExplode",
+        "stateLabel": "选中 + 爆炸",
+        "view": "iso",
+        "camera": {
+          "dir": [
+            0.92,
+            0.78,
+            1.12
+          ],
+          "dist": 0.485,
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.046000000052154065,
+            "max": 0.06000000151991844
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "2364bd",
+            "emissiveIntensity": 0.19,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 212.189,
+          "lumaStdDev": 34.108,
+          "highlightRatio": 0.65518,
+          "nearWhiteRatio": 0.433843,
+          "clippedRatio": 0,
+          "edgeGradient": 3.1475,
+          "pixels": 187515
+        },
+        "contact": {
+          "profile": [
+            242.03,
+            242.3,
+            242.29,
+            241.93,
+            241.92,
+            241.94,
+            240.91,
+            171.36,
+            141.28,
+            179.02,
+            221.35,
+            206.57,
+            194.63,
+            170.9,
+            153.93,
+            147.05,
+            121.3,
+            121.27,
+            187.89,
+            215.32,
+            215.58,
+            209.47,
+            222.79,
+            219.7,
+            242.3,
+            242.3,
+            242.3,
+            241.78,
+            241.63,
+            241.97,
+            242.18,
+            242.3
+          ],
+          "asymmetry": -19.427,
+          "centerEdgeRatio": 0.7907,
+          "edgeMean": 228.21,
+          "centerMean": 180.44,
+          "minLuma": 121.27,
+          "maxLuma": 242.3,
+          "rect": {
+            "x": 362,
+            "y": 494,
+            "w": 556,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 403.09941638457707,
+            "y": 217.2830129026517,
+            "w": 462.8074716965194,
+            "h": 403.8168705646292
+          },
+          "contact": {
+            "x": 362.31551698208847,
+            "y": 494.8500717620134,
+            "w": 555.3689660358233,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "off",
+        "state": "selectExplode",
+        "stateLabel": "选中 + 爆炸",
+        "view": "side",
+        "camera": {
+          "dir": [
+            0.18,
+            0.3,
+            1
+          ],
+          "dist": 0.42,
+          "target": [
+            0,
+            -0.01,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.046000000052154065,
+            "max": 0.06000000151991844
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "2364bd",
+            "emissiveIntensity": 0.19,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 200.315,
+          "lumaStdDev": 37.888,
+          "highlightRatio": 0.540645,
+          "nearWhiteRatio": 0.28495,
+          "clippedRatio": 0,
+          "edgeGradient": 3.3643,
+          "pixels": 160832
+        },
+        "contact": {
+          "profile": [
+            215.6,
+            215.59,
+            215.6,
+            215.6,
+            217.03,
+            198.64,
+            200.39,
+            182.1,
+            150.14,
+            126.58,
+            127.62,
+            130.55,
+            132.46,
+            134.74,
+            135.69,
+            134.3,
+            132.43,
+            130.26,
+            128.09,
+            127.14,
+            132.55,
+            163.39,
+            241.99,
+            211.48,
+            185.01,
+            193.18,
+            190.07,
+            238.17,
+            241.99,
+            241.99,
+            241.99,
+            241.99
+          ],
+          "asymmetry": -29.059,
+          "centerEdgeRatio": 0.6439,
+          "edgeMean": 208.26,
+          "centerMean": 134.1,
+          "minLuma": 126.58,
+          "maxLuma": 241.99,
+          "rect": {
+            "x": 371,
+            "y": 495,
+            "w": 538,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 379.126439368247,
+            "y": 210.82002967735417,
+            "w": 447.2265395195822,
+            "h": 357.6827956295368
+          },
+          "contact": {
+            "x": 371.66407628825067,
+            "y": 495.2344331952579,
+            "w": 536.6718474234987,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "off",
+        "state": "selectClip",
+        "stateLabel": "选中 + 剖切",
+        "view": "iso",
+        "camera": {
+          "dir": [
+            0.92,
+            0.78,
+            1.12
+          ],
+          "dist": 0.485,
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.04200000315904617,
+            "max": 0.04500000178813934
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "2364bd",
+            "emissiveIntensity": 0.19,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 224.285,
+          "lumaStdDev": 22.177,
+          "highlightRatio": 0.807263,
+          "nearWhiteRatio": 0.521341,
+          "clippedRatio": 0,
+          "edgeGradient": 2.0423,
+          "pixels": 170004
+        },
+        "contact": {
+          "profile": [
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            240.15,
+            216.57,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            222.11,
+            242.27,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3
+          ],
+          "asymmetry": 1.932,
+          "centerEdgeRatio": 0.913,
+          "edgeMean": 235.85,
+          "centerMean": 215.32,
+          "minLuma": 215.32,
+          "maxLuma": 242.3,
+          "rect": {
+            "x": 366,
+            "y": 487,
+            "w": 548,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 406.8170509391713,
+            "y": 244.64154222094666,
+            "w": 455.7068251089956,
+            "h": 370.6106473282172
+          },
+          "contact": {
+            "x": 366.57590493460276,
+            "y": 487.0944314053122,
+            "w": 546.8481901307947,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "off",
+        "state": "selectClip",
+        "stateLabel": "选中 + 剖切",
+        "view": "side",
+        "camera": {
+          "dir": [
+            0.18,
+            0.3,
+            1
+          ],
+          "dist": 0.42,
+          "target": [
+            0,
+            -0.01,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.04200000315904617,
+            "max": 0.04500000178813934
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "2364bd",
+            "emissiveIntensity": 0.19,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 222.538,
+          "lumaStdDev": 19.797,
+          "highlightRatio": 0.808228,
+          "nearWhiteRatio": 0.427959,
+          "clippedRatio": 0,
+          "edgeGradient": 2.1465,
+          "pixels": 140114
+        },
+        "contact": {
+          "profile": [
+            241.3,
+            231.19,
+            221.58,
+            215.87,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.5,
+            221.49,
+            233.4,
+            242.02,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3
+          ],
+          "asymmetry": -22.114,
+          "centerEdgeRatio": 0.969,
+          "edgeMean": 231.24,
+          "centerMean": 224.08,
+          "minLuma": 215.32,
+          "maxLuma": 242.3,
+          "rect": {
+            "x": 375,
+            "y": 485,
+            "w": 530,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 382.3156407980688,
+            "y": 243.28174682420888,
+            "w": 441.53985361582437,
+            "h": 316.568050144141
+          },
+          "contact": {
+            "x": 375.0760878305054,
+            "y": 485.0938417177124,
+            "w": 529.8478243389892,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "on",
+        "state": "none",
+        "stateLabel": "未选中",
+        "view": "iso",
+        "camera": {
+          "dir": [
+            0.92,
+            0.78,
+            1.12
+          ],
+          "dist": 0.485,
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.04200000315904617,
+            "max": 0.04500000178813934
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 215.075,
+          "lumaStdDev": 33.992,
+          "highlightRatio": 0.681149,
+          "nearWhiteRatio": 0.510964,
+          "clippedRatio": 0.001506,
+          "edgeGradient": 3.7242,
+          "pixels": 170004
+        },
+        "contact": {
+          "profile": [
+            242.3,
+            242.3,
+            242.3,
+            242.13,
+            241.65,
+            240.79,
+            240.88,
+            239.79,
+            216.57,
+            215.43,
+            208.77,
+            185.21,
+            152.92,
+            146.25,
+            146.85,
+            147.45,
+            147.2,
+            145.88,
+            145.28,
+            152.26,
+            186.89,
+            210.28,
+            214.63,
+            214.92,
+            222.11,
+            242.27,
+            242.12,
+            241.97,
+            241.55,
+            241.95,
+            242.3,
+            242.3
+          ],
+          "asymmetry": 1.802,
+          "centerEdgeRatio": 0.6989,
+          "edgeMean": 235.51,
+          "centerMean": 164.6,
+          "minLuma": 145.28,
+          "maxLuma": 242.3,
+          "rect": {
+            "x": 366,
+            "y": 487,
+            "w": 548,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 406.8170509391713,
+            "y": 244.64154222094666,
+            "w": 455.7068251089956,
+            "h": 370.6106473282172
+          },
+          "contact": {
+            "x": 366.57590493460276,
+            "y": 487.0944314053122,
+            "w": 546.8481901307947,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "on",
+        "state": "none",
+        "stateLabel": "未选中",
+        "view": "side",
+        "camera": {
+          "dir": [
+            0.18,
+            0.3,
+            1
+          ],
+          "dist": 0.42,
+          "target": [
+            0,
+            -0.01,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.04200000315904617,
+            "max": 0.04500000178813934
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 199.652,
+          "lumaStdDev": 42.262,
+          "highlightRatio": 0.571556,
+          "nearWhiteRatio": 0.300184,
+          "clippedRatio": 0.002505,
+          "edgeGradient": 3.7502,
+          "pixels": 140114
+        },
+        "contact": {
+          "profile": [
+            241.3,
+            231.19,
+            221.58,
+            215.87,
+            215.32,
+            215.37,
+            215.57,
+            215.6,
+            215.6,
+            209.19,
+            174.06,
+            138.61,
+            125.49,
+            120.53,
+            118.57,
+            117.82,
+            117.79,
+            118.5,
+            120.56,
+            125.91,
+            140.08,
+            178.29,
+            228.26,
+            241.98,
+            241.99,
+            242.2,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3
+          ],
+          "asymmetry": -21.164,
+          "centerEdgeRatio": 0.5777,
+          "edgeMean": 230.24,
+          "centerMean": 133.02,
+          "minLuma": 117.79,
+          "maxLuma": 242.3,
+          "rect": {
+            "x": 375,
+            "y": 485,
+            "w": 530,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 382.3156407980688,
+            "y": 243.28174682420888,
+            "w": 441.53985361582437,
+            "h": 316.568050144141
+          },
+          "contact": {
+            "x": 375.0760878305054,
+            "y": 485.0938417177124,
+            "w": 529.8478243389892,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "on",
+        "state": "selectExplode",
+        "stateLabel": "选中 + 爆炸",
+        "view": "iso",
+        "camera": {
+          "dir": [
+            0.92,
+            0.78,
+            1.12
+          ],
+          "dist": 0.485,
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.046000000052154065,
+            "max": 0.06000000151991844
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "2364bd",
+            "emissiveIntensity": 0.19,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 203.492,
+          "lumaStdDev": 46.362,
+          "highlightRatio": 0.580556,
+          "nearWhiteRatio": 0.442567,
+          "clippedRatio": 0.00257,
+          "edgeGradient": 4.9172,
+          "pixels": 187515
+        },
+        "contact": {
+          "profile": [
+            242.03,
+            242.3,
+            242.29,
+            241.93,
+            241.92,
+            241.94,
+            240.91,
+            173.18,
+            95.01,
+            80.2,
+            171.22,
+            130.52,
+            135.44,
+            98.88,
+            97.88,
+            86.99,
+            79.28,
+            105.79,
+            198.07,
+            215.32,
+            215.58,
+            211.69,
+            215.66,
+            221.32,
+            242.3,
+            242.3,
+            242.3,
+            241.78,
+            241.63,
+            241.97,
+            242.18,
+            242.3
+          ],
+          "asymmetry": -33.203,
+          "centerEdgeRatio": 0.6593,
+          "edgeMean": 220.77,
+          "centerMean": 145.55,
+          "minLuma": 79.28,
+          "maxLuma": 242.3,
+          "rect": {
+            "x": 362,
+            "y": 494,
+            "w": 556,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 403.09941638457707,
+            "y": 217.2830129026517,
+            "w": 462.8074716965194,
+            "h": 403.8168705646292
+          },
+          "contact": {
+            "x": 362.31551698208847,
+            "y": 494.8500717620134,
+            "w": 555.3689660358233,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "on",
+        "state": "selectExplode",
+        "stateLabel": "选中 + 爆炸",
+        "view": "side",
+        "camera": {
+          "dir": [
+            0.18,
+            0.3,
+            1
+          ],
+          "dist": 0.42,
+          "target": [
+            0,
+            -0.01,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.046000000052154065,
+            "max": 0.06000000151991844
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "2364bd",
+            "emissiveIntensity": 0.19,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 0,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 189.711,
+          "lumaStdDev": 50.694,
+          "highlightRatio": 0.478008,
+          "nearWhiteRatio": 0.288388,
+          "clippedRatio": 0.00646,
+          "edgeGradient": 4.9766,
+          "pixels": 160832
+        },
+        "contact": {
+          "profile": [
+            215.6,
+            215.59,
+            215.6,
+            215.6,
+            217.03,
+            197.35,
+            208.01,
+            196.29,
+            163.22,
+            125.43,
+            118.48,
+            116.83,
+            113.81,
+            111.61,
+            113.08,
+            113.23,
+            114.43,
+            116.12,
+            117.45,
+            120.29,
+            132.73,
+            182.42,
+            241.99,
+            207.86,
+            184.04,
+            190.62,
+            183.51,
+            237.9,
+            241.99,
+            241.99,
+            241.99,
+            241.99
+          ],
+          "asymmetry": -24.416,
+          "centerEdgeRatio": 0.5858,
+          "edgeMean": 209.18,
+          "centerMean": 122.54,
+          "minLuma": 111.61,
+          "maxLuma": 241.99,
+          "rect": {
+            "x": 371,
+            "y": 495,
+            "w": 538,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 379.126439368247,
+            "y": 210.82002967735417,
+            "w": 447.2265395195822,
+            "h": 357.6827956295368
+          },
+          "contact": {
+            "x": 371.66407628825067,
+            "y": 495.2344331952579,
+            "w": 536.6718474234987,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "on",
+        "state": "selectClip",
+        "stateLabel": "选中 + 剖切",
+        "view": "iso",
+        "camera": {
+          "dir": [
+            0.92,
+            0.78,
+            1.12
+          ],
+          "dist": 0.485,
+          "target": [
+            0,
+            0,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.04200000315904617,
+            "max": 0.04500000178813934
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "2364bd",
+            "emissiveIntensity": 0.19,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 220.503,
+          "lumaStdDev": 28.187,
+          "highlightRatio": 0.757165,
+          "nearWhiteRatio": 0.526658,
+          "clippedRatio": 0.001529,
+          "edgeGradient": 2.842,
+          "pixels": 170004
+        },
+        "contact": {
+          "profile": [
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            240.15,
+            216.57,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            222.11,
+            242.27,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3
+          ],
+          "asymmetry": 1.932,
+          "centerEdgeRatio": 0.913,
+          "edgeMean": 235.85,
+          "centerMean": 215.32,
+          "minLuma": 215.32,
+          "maxLuma": 242.3,
+          "rect": {
+            "x": 366,
+            "y": 487,
+            "w": 548,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 406.8170509391713,
+            "y": 244.64154222094666,
+            "w": 455.7068251089956,
+            "h": 370.6106473282172
+          },
+          "contact": {
+            "x": 366.57590493460276,
+            "y": 487.0944314053122,
+            "w": 546.8481901307947,
+            "h": 20
+          }
+        }
+      },
+      {
+        "flag": "on",
+        "state": "selectClip",
+        "stateLabel": "选中 + 剖切",
+        "view": "side",
+        "camera": {
+          "dir": [
+            0.18,
+            0.3,
+            1
+          ],
+          "dist": 0.42,
+          "target": [
+            0,
+            -0.01,
+            0
+          ],
+          "fov": 38
+        },
+        "renderInfo": {
+          "calls": 5,
+          "triangles": 11590,
+          "geometries": 6,
+          "textures": 2
+        },
+        "counts": {
+          "triangles": 11590,
+          "calls": 5
+        },
+        "clipBounds": {
+          "x": {
+            "min": -0.07600000500679016,
+            "max": 0.07600000500679016
+          },
+          "y": {
+            "min": -0.04200000315904617,
+            "max": 0.04500000178813934
+          },
+          "z": {
+            "min": -0.07597638666629791,
+            "max": 0.07597638666629791
+          }
+        },
+        "stateRows": [
+          {
+            "instanceId": "inst-hub-001",
+            "partKey": "hub",
+            "index": 0,
+            "color": "8e9fb3",
+            "emissive": "2364bd",
+            "emissiveIntensity": 0.19,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-bearing-001",
+            "partKey": "bearing",
+            "index": 0,
+            "color": "607891",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          },
+          {
+            "instanceId": "inst-studs-001",
+            "partKey": "studs",
+            "index": 0,
+            "color": "8194af",
+            "emissive": "000000",
+            "emissiveIntensity": 0,
+            "visible": true,
+            "clippingPlanes": 1,
+            "clipIntersection": false
+          }
+        ],
+        "model": {
+          "meanLuma": 218.512,
+          "lumaStdDev": 25.507,
+          "highlightRatio": 0.7548,
+          "nearWhiteRatio": 0.427166,
+          "clippedRatio": 0.002427,
+          "edgeGradient": 2.7885,
+          "pixels": 140114
+        },
+        "contact": {
+          "profile": [
+            241.3,
+            231.19,
+            221.58,
+            215.87,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.32,
+            215.5,
+            221.49,
+            233.4,
+            242.02,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3,
+            242.3
+          ],
+          "asymmetry": -22.114,
+          "centerEdgeRatio": 0.969,
+          "edgeMean": 231.24,
+          "centerMean": 224.08,
+          "minLuma": 215.32,
+          "maxLuma": 242.3,
+          "rect": {
+            "x": 375,
+            "y": 485,
+            "w": 530,
+            "h": 21
+          }
+        },
+        "roi": {
+          "model": {
+            "x": 382.3156407980688,
+            "y": 243.28174682420888,
+            "w": 441.53985361582437,
+            "h": 316.568050144141
+          },
+          "contact": {
+            "x": 375.0760878305054,
+            "y": 485.0938417177124,
+            "w": 529.8478243389892,
+            "h": 20
+          }
+        }
+      }
+    ],
+    "integrity": {
+      "backgroundSamples": [
+        {
+          "flag": "off",
+          "state": "none",
+          "view": "iso",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "off",
+          "state": "none",
+          "view": "side",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "off",
+          "state": "selectExplode",
+          "view": "iso",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "off",
+          "state": "selectExplode",
+          "view": "side",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "off",
+          "state": "selectClip",
+          "view": "iso",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "off",
+          "state": "selectClip",
+          "view": "side",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "on",
+          "state": "none",
+          "view": "iso",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "on",
+          "state": "none",
+          "view": "side",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "on",
+          "state": "selectExplode",
+          "view": "iso",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "on",
+          "state": "selectExplode",
+          "view": "side",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "on",
+          "state": "selectClip",
+          "view": "iso",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "flag": "on",
+          "state": "selectClip",
+          "view": "side",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        }
+      ],
+      "preserveDrawingBuffer": true,
+      "emptyFrameDetected": false
+    },
+    "measuredAt": "2026-11-21T07:52:10.593Z"
+  },
+  "shots": {
+    "off-none-iso": "results/repeat/shot-off-none-iso.png",
+    "off-none-side": "results/repeat/shot-off-none-side.png",
+    "off-selectExplode-iso": "results/repeat/shot-off-selectExplode-iso.png",
+    "off-selectExplode-side": "results/repeat/shot-off-selectExplode-side.png",
+    "off-selectClip-iso": "results/repeat/shot-off-selectClip-iso.png",
+    "off-selectClip-side": "results/repeat/shot-off-selectClip-side.png",
+    "on-none-iso": "results/repeat/shot-on-none-iso.png",
+    "on-none-side": "results/repeat/shot-on-none-side.png",
+    "on-selectExplode-iso": "results/repeat/shot-on-selectExplode-iso.png",
+    "on-selectExplode-side": "results/repeat/shot-on-selectExplode-side.png",
+    "on-selectClip-iso": "results/repeat/shot-on-selectClip-iso.png",
+    "on-selectClip-side": "results/repeat/shot-on-selectClip-side.png"
+  }
+}

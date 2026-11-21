@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "carlab.r30.patchCandidate/1.0",
+  "status": "PROPOSAL_NOT_APPLIED",
+  "target": "workbench-v2/viewport.js",
+  "owner": "composer-2-5",
+  "requiresApproval": [
+    "gpt-6",
+    "composer-2-5"
+  ],
+  "policy": "FEATURE_FLAG_DEFAULT_OFF",
+  "defaultEnabled": false,
+  "generatedAt": "2026-11-21T07:51:08.214Z",
+  "measuredOn": "headless Chrome + SwiftShader；无真实 GPU FPS/帧时间/显存数据",
+  "productionFileModified": false,
+  "scope": "仅 M 单变量（metalness/roughness 恢复 GLB 分档）；不调曝光/灯光/地面高度",
+  "steps": [
+    {
+      "order": 1,
+      "file": "workbench-v2/viewport.js",
+      "insertAt": "constructor 末尾（this.animate(); 之前或之后均可）",
+      "code": "this.mPbrFlag = null;",
+      "note": "只新增一个字段，不改任何现有参数"
+    },
+    {
+      "order": 2,
+      "file": "workbench-v2/viewport.js",
+      "insertAt": "sync() 末尾，_updateClipBounds() 之后",
+      "code": "if (this.mPbrFlag) this.mPbrFlag.reapply();",
+      "note": "处理 sync 新增零件后 M 与旧值的混合态；未注入实例时为 no-op"
+    }
+  ],
+  "adapterFiles": [
+    {
+      "from": "viewer/experiments/render-release-v1/m-pbr-flag.mjs",
+      "to": "workbench-v2/m-pbr-flag.mjs",
+      "contentUnchanged": true
+    },
+    {
+      "from": "viewer/experiments/render-release-v1/glb-pbr.mjs",
+      "to": "workbench-v2/glb-pbr.mjs",
+      "contentUnchanged": true
+    }
+  ],
+  "injection": [
+    "import { MPbrFlag } from \"./m-pbr-flag.mjs\";",
+    "const flag = MPbrFlag.attach(viewport, { seed, instances: getInstances(project), enabled: false });",
+    "// 配置来源建议：URL ?mPbr=1 或 localStorage，默认 false"
+  ],
+  "rollback": [
+    "A. 运行时：flag.disable() —— 无条件写回 0.70/0.34/1.05，已实测精确回退",
+    "B. 配置：把 enabled 置回 false 或删掉 ?mPbr=1",
+    "C. 代码：删除注入的 2 行 + adapter 文件，viewport.js 行为与合入前完全一致"
+  ],
+  "evidence": {
+    "defaultEnabled": false,
+    "histogramOn": {
+      "distinct": 3,
+      "buckets": {
+        "0.8/0.5": 1,
+        "0.85/0.25": 1,
+        "0.95/0.12": 1
+      }
+    },
+    "histogramOff": {
+      "distinct": 1,
+      "buckets": {
+        "0.7/0.34": 3
+      }
+    },
+    "rollbackOk": true,
+    "finalRollbackOk": true,
+    "idempotentOk": true,
+    "nonPbrStable": true,
+    "measureSameDistance": true,
+    "measure": {
+      "off": {
+        "ok": true,
+        "pointCount": 2,
+        "distanceM": 0.066753,
+        "formatted": "66.75 mm（0.0668 m）",
+        "hitInstanceIds": [
+          "inst-studs-001",
+          "inst-hub-001"
+        ],
+        "points": [
+          [
+            0.0141,
+            0.045,
+            -0.0509
+          ],
+          [
+            -0.0394,
+            0.032,
+            -0.0131
+          ]
+        ]
+      },
+      "on": {
+        "ok": true,
+        "pointCount": 2,
+        "distanceM": 0.066753,
+        "formatted": "66.75 mm（0.0668 m）",
+        "hitInstanceIds": [
+          "inst-studs-001",
+          "inst-hub-001"
+        ],
+        "points": [
+          [
+            0.0141,
+            0.045,
+            -0.0509
+          ],
+          [
+            -0.0394,
+            0.032,
+            -0.0131
+          ]
+        ]
+      }
+    },
+    "frameContrast": {
+      "isoNearWhiteRatio": {
+        "off": 0.505788,
+        "on": 0.510964
+      },
+      "isoLumaStdDev": {
+        "off": 29.054,
+        "on": 33.992
+      },
+      "isoEdgeGradient": {
+        "off": 2.7949,
+        "on": 3.7242
+      }
+    },
+    "costUnchanged": true
+  },
+  "caveats": [
+    "PBR 数值来自项目自身 GLB 的 DEMO 材质，不是厂商材料或 OEM 尺寸；仍为 VISUAL_ASSUMPTION",
+    "本轮不改几何法线、不改曝光/hemi/sun/fill、不改地面高度",
+    "SwiftShader 只支持像素级可复验截图与 renderer.info 计数，不代表 RTX GPU 性能",
+    "接入生产前须由 Composer 在 5173 主页做一次真实 Chrome 回归；本候选不自行合入",
+    "换 GLB 资产后 nativePbr 会变，adapter 从模板实时读取，不需要改代码；但需重跑本检查"
+  ]
+}

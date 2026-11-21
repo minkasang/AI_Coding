@@ -1,0 +1,267 @@
+{
+  "schema": "carlab.r31.consumerCheck.v1",
+  "date": "2026-11-21",
+  "command": "node src-experiments/vehicle-consumer-v1/run-checks.mjs",
+  "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+  "snapshotRevision": 1,
+  "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+  "passCount": 20,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "C01_integrity_and_hash",
+      "pass": true,
+      "detail": {
+        "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+        "revision": 1,
+        "parts": 278
+      }
+    },
+    {
+      "id": "C02_root_tree_is_13_systems",
+      "pass": true,
+      "detail": {
+        "total": 13
+      }
+    },
+    {
+      "id": "C03_tree_covers_278_parts_and_37_assemblies",
+      "pass": true,
+      "detail": {
+        "systems": 13,
+        "assemblies": 37,
+        "parts": 278,
+        "mapped": 13,
+        "canonicalOnly": 265
+      }
+    },
+    {
+      "id": "C04_pi_selection_is_stable",
+      "pass": true,
+      "detail": {
+        "selection": {
+          "selectionKey": "partInstanceId",
+          "selectionId": "PI-20-001-FL",
+          "nodeId": "part:PI-20-001-FL",
+          "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+          "revision": 1
+        }
+      }
+    },
+    {
+      "id": "C05_alias_is_conditional_and_never_canonical",
+      "pass": true,
+      "detail": {
+        "alias": {
+          "ok": true,
+          "aliasId": "INST-HUB-FL",
+          "aliasKind": "R17_PROJECTION",
+          "canonicalKind": "partInstance",
+          "canonicalInstanceId": "PI-30-006-FL",
+          "canonicalAssemblyInstanceId": null,
+          "conditional": true,
+          "role": null,
+          "roleOnly": false,
+          "note": "Alias is a projection key, never the canonical engineering identity."
+        }
+      }
+    },
+    {
+      "id": "C06_unbound_required_alias_is_explained",
+      "pass": true,
+      "detail": {
+        "expected": "E_ALIAS_UNBOUND"
+      }
+    },
+    {
+      "id": "C07_hub_detail_keeps_role_marker_and_demo_cad_separate",
+      "pass": true,
+      "detail": {
+        "badges": [
+          "NO_GEOMETRY",
+          "DEMO_SUBSTITUTE",
+          "ROLE_HUB"
+        ],
+        "demoCad": "DEMO_SUBSTITUTE"
+      }
+    },
+    {
+      "id": "C08_upper_arm_strict_pose_is_disabled_but_demo_available",
+      "pass": true,
+      "detail": {
+        "pose": {
+          "strict": {
+            "available": false,
+            "status": "STALE",
+            "reason": "SOURCE_REVISION_MISMATCH"
+          },
+          "demo": {
+            "available": true,
+            "attachTo": "PART",
+            "notARigidPartPose": false
+          }
+        }
+      }
+    },
+    {
+      "id": "C09_required_deferred_and_variant_undecided_are_visible",
+      "pass": true,
+      "detail": {
+        "tie": "REQUIRED_BUT_DEFERRED",
+        "bracket": "VARIANT_UNDECIDED"
+      }
+    },
+    {
+      "id": "C10_display_status_reports_stale_demo_and_conflicts",
+      "pass": true,
+      "detail": {
+        "pose": {
+          "strict": {
+            "runId": "RUN-SLA-FL-DEMO-001",
+            "status": "STALE",
+            "sourceRevision": 3,
+            "snapshotRevision": 1,
+            "playbackAllowed": false,
+            "currentFrames": 0,
+            "reason": "SOURCE_REVISION_MISMATCH"
+          },
+          "demo": {
+            "available": true,
+            "badge": "DEMO_ONLY_STALE_SOURCE_REV_3",
+            "frames": 9,
+            "requiresDemoMode": true,
+            "publishAsCurrent": false,
+            "sourceRevision": 3
+          }
+        },
+        "geometry": {
+          "noGeometryInstances": 278,
+          "sourcedGeometryInstances": 0,
+          "demoCadBindings": 1,
+          "demoCadInstanceIds": [
+            "PI-30-006-FL"
+          ],
+          "bulkCadBindingForbidden": true
+        },
+        "conflicts": {
+          "total": 24,
+          "open": 24,
+          "bySource": {
+            "R-21": 9,
+            "R-22": 10,
+            "R-27": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "C11_strict_pose_run_fails_closed",
+      "pass": true,
+      "detail": {
+        "strict": "blocked"
+      }
+    },
+    {
+      "id": "C12_demo_playback_requires_explicit_flags",
+      "pass": true,
+      "detail": {
+        "badge": "DEMO_ONLY_STALE_SOURCE_REV_3",
+        "attach": {
+          "PART": 3,
+          "NONE": 1,
+          "ROLE_MARKER": 1
+        }
+      }
+    },
+    {
+      "id": "C13_workspace_state_keeps_snapshot_read_only",
+      "pass": true,
+      "detail": {
+        "model": {
+          "canSelectTree": true,
+          "canInspect": true,
+          "canEditSnapshot": false,
+          "canSaveSnapshot": false,
+          "canSaveProject": "EXTERNAL_PROJECT_STORE_ONLY",
+          "canAddPart": false,
+          "canEditVehicleTree": false,
+          "canPlayStrictPose": false,
+          "canPlayDemoPose": false,
+          "canRenderDemoCad": false
+        },
+        "inspect": {
+          "canSelectTree": true,
+          "canInspect": true,
+          "canEditSnapshot": false,
+          "canSaveSnapshot": false,
+          "canSaveProject": "EXTERNAL_PROJECT_STORE_ONLY",
+          "canAddPart": false,
+          "canEditVehicleTree": false,
+          "canPlayStrictPose": false,
+          "canPlayDemoPose": false,
+          "canRenderDemoCad": false
+        }
+      }
+    },
+    {
+      "id": "C14_selection_restore_rejects_stale_or_alias_key",
+      "pass": true,
+      "detail": {
+        "restored": {
+          "selectionKey": "partInstanceId",
+          "selectionId": "PI-20-001-FL",
+          "nodeId": "part:PI-20-001-FL",
+          "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+          "revision": 1
+        }
+      }
+    },
+    {
+      "id": "C15_snapshot_hash_fails_closed",
+      "pass": true,
+      "detail": {
+        "hash": "checked"
+      }
+    },
+    {
+      "id": "C16_unknown_ids_and_pagination_errors",
+      "pass": true,
+      "detail": {
+        "errors": "checked"
+      }
+    },
+    {
+      "id": "C18_consumer_does_not_mutate_snapshot",
+      "pass": true,
+      "detail": {
+        "unchanged": true
+      }
+    },
+    {
+      "id": "C19_pagination_and_query_work",
+      "pass": true,
+      "detail": {
+        "first": 5,
+        "second": 5,
+        "filtered": 1
+      }
+    },
+    {
+      "id": "C20_assembly_and_placeholder_detail",
+      "pass": true,
+      "detail": {
+        "assemblyParts": 2,
+        "placeholder": "发动机总成（直列四缸火花点火，深钻样例）"
+      }
+    },
+    {
+      "id": "C17_fetch_helper_verifies_hash",
+      "pass": true,
+      "detail": {
+        "hash": "f60d977efc2f5aef",
+        "mismatchRejected": true
+      }
+    }
+  ]
+}

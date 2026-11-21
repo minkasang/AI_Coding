@@ -34,6 +34,18 @@ ALLOWED_PROVENANCE_TIERS = {
     "DEMO_ESTIMATE",
 }
 
+REGISTRY_PATH = Path(__file__).resolve().parent / "provenance_registry.json"
+
+
+def get_provenance_registry() -> Dict[str, Any]:
+    if REGISTRY_PATH.exists():
+        try:
+            with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {"sources": {}}
+
 
 @dataclass
 class GateResult:
@@ -58,7 +70,7 @@ class GateResult:
 # =========================================================================
 class Gate1_InputProvenance:
     @staticmethod
-    def evaluate(config: Dict[str, Any], strict_provenance: bool = True) -> GateResult:
+    def evaluate(config: Dict[str, Any], strict_provenance: bool = True, allow_test_fixtures: bool = False) -> GateResult:
         gate_id = "GATE_01_INPUT_PROVENANCE"
         if not isinstance(config, dict) or "parts" not in config:
             return GateResult(
@@ -83,7 +95,7 @@ class Gate1_InputProvenance:
                         details={"part": part_name, "missing_field": k},
                     )
 
-            # 2. Provenance tag validation
+            # 2. Provenance tag & verifiable evidence validation
             provenance = part_cfg.get("provenance")
             if provenance not in ALLOWED_PROVENANCE_TIERS:
                 return GateResult(
@@ -93,6 +105,268 @@ class Gate1_InputProvenance:
                     message=f"Part '{part_name}' has unrecognized provenance '{provenance}'.",
                     details={"part": part_name, "provenance": provenance, "allowed": list(ALLOWED_PROVENANCE_TIERS)},
                 )
+
+            # Strict two-layer evidence checks for each provenance tier (anti false-positive):
+            registry = get_provenance_registry().get("sources", {})
+
+            if provenance == "OEM_SPEC":
+                source = part_cfg.get("source")
+                if not isinstance(source, dict):
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_UNVERIFIED_OEM_PROVENANCE",
+                        message=f"Part '{part_name}' claims OEM_SPEC but lacks a structured 'source' object with traceable engineering evidence.",
+                        details={"part": part_name, "provenance": provenance},
+                    )
+                source_id = str(source.get("sourceId", "")).strip()
+                drawing_no = str(source.get("drawingNumber", source.get("documentNumber", ""))).strip()
+                applicable_scope = str(source.get("applicableScope", "")).strip()
+
+                # Layer 1: Schema & anti-forgery token check
+                if not source_id or source_id.upper() in ("NONE", "N/A", "UNKNOWN", ""):
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_UNVERIFIED_OEM_PROVENANCE",
+                        message=f"Part '{part_name}' claims OEM_SPEC but has invalid or empty sourceId '{source_id}'.",
+                        details={"part": part_name, "source": source},
+                    )
+                if not drawing_no or drawing_no.upper() in ("NONE", "N/A", "UNKNOWN", ""):
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_UNVERIFIED_OEM_PROVENANCE",
+                        message=f"Part '{part_name}' claims OEM_SPEC but lacks verifiable drawingNumber or documentNumber.",
+                        details={"part": part_name, "source": source},
+                    )
+                if not applicable_scope or applicable_scope.upper() in ("NONE", "N/A", "UNKNOWN", ""):
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_UNVERIFIED_OEM_PROVENANCE",
+                        message=f"Part '{part_name}' claims OEM_SPEC but lacks applicableScope (vehicle/chassis generation).",
+                        details={"part": part_name, "source": source},
+                    )
+
+                # Anti-forgery check: catch explicit placeholder/fabricated tokens
+                forgery_tokens = ["DOES-NOT-EXIST", "FAKE-", "PLACEHOLDER", "DUMMY", "MOCK", "TBD"]
+                for field_val in (source_id, drawing_no, applicable_scope):
+                    for tok in forgery_tokens:
+                        if tok in field_val.upper():
+                            return GateResult(
+                                passed=False,
+                                gate_id=gate_id,
+                                error_code="ERR_INPUT_FORGED_SOURCE_EVIDENCE",
+                                message=f"Part '{part_name}' claims OEM_SPEC but contains fabricated/placeholder token '{tok}' in source field '{field_val}'.",
+                                details={"part": part_name, "source": source, "detectedToken": tok},
+                            )
+
+                # Layer 2: Offline Registry resolution & verification
+                if source_id not in registry:
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_UNREGISTERED_SOURCE_ID",
+                        message=f"Part '{part_name}' claims OEM_SPEC with sourceId '{source_id}', but this source is not registered in the offline provenance registry.",
+                        details={"part": part_name, "sourceId": source_id},
+                    )
+
+                reg_entry = registry[source_id]
+                if reg_entry.get("verificationStatus") != "VERIFIED_VALID":
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_UNVERIFIED_SOURCE_EVIDENCE",
+                        message=f"Source '{source_id}' registered in provenance registry has unverified status: '{reg_entry.get('verificationStatus')}'. Real OEM drawings are absent in CARLAB; must be classified as DEMO_ESTIMATE or UNVERIFIED_CLAIM.",
+                        details={"sourceId": source_id, "status": reg_entry.get("verificationStatus")},
+                    )
+
+                # Physical evidence file existence and SHA-256 integrity verification (Anti self-certification)
+                evidence_rec = reg_entry.get("verificationRecord")
+                if not isinstance(evidence_rec, dict) or not evidence_rec:
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_MISSING_EVIDENCE_RECORD",
+                        message=f"Source '{source_id}' is marked VERIFIED_VALID but lacks a valid verificationRecord object.",
+                        details={"sourceId": source_id},
+                    )
+
+                doc_rel_path = evidence_rec.get("evidenceDocPath")
+                if not doc_rel_path or not str(doc_rel_path).strip():
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_MISSING_EVIDENCE_PATH",
+                        message=f"Source '{source_id}' is marked VERIFIED_VALID but missing mandatory 'evidenceDocPath'.",
+                        details={"sourceId": source_id},
+                    )
+
+                expected_sha256 = evidence_rec.get("evidenceSha256")
+                if not expected_sha256 or not str(expected_sha256).strip():
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_MISSING_EVIDENCE_HASH",
+                        message=f"Source '{source_id}' is marked VERIFIED_VALID but missing mandatory 'evidenceSha256'.",
+                        details={"sourceId": source_id},
+                    )
+
+                # Directory traversal and path safety checks
+                doc_rel_path_str = str(doc_rel_path).strip()
+                if Path(doc_rel_path_str).is_absolute() or ".." in Path(doc_rel_path_str).parts:
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_EVIDENCE_PATH_ESCAPE",
+                        message=f"OEM evidence path '{doc_rel_path_str}' attempts directory traversal outside project root.",
+                        details={"sourceId": source_id, "evidenceDocPath": doc_rel_path_str},
+                    )
+
+                project_root = REGISTRY_PATH.parents[3].resolve()
+                doc_path = (project_root / doc_rel_path_str).resolve()
+                allowed_evidence_roots = [
+                    (project_root / "docs/planning/evidence").resolve(),
+                    (project_root / "cad/experiments/asset_quality_v1").resolve(),
+                ]
+                if not any(doc_path == root or doc_path.is_relative_to(root) for root in allowed_evidence_roots):
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_UNTRUSTED_EVIDENCE_LOCATION",
+                        message=f"OEM evidence file '{doc_rel_path_str}' is outside trusted evidence directories (docs/planning/evidence, cad/experiments/asset_quality_v1).",
+                        details={"sourceId": source_id, "docPath": str(doc_path)},
+                    )
+
+                if not doc_path.is_file():
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_MISSING_EVIDENCE_FILE",
+                        message=f"Claimed OEM evidence file '{doc_rel_path}' does not exist on disk! Self-certification rejected.",
+                        details={"sourceId": source_id, "evidenceDocPath": doc_rel_path},
+                    )
+
+                actual_sha256 = hashlib.sha256(doc_path.read_bytes()).hexdigest()
+                if actual_sha256.lower() != str(expected_sha256).strip().lower():
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_EVIDENCE_HASH_MISMATCH",
+                        message=f"OEM evidence file '{doc_rel_path}' SHA-256 hash mismatch! Actual: {actual_sha256}, expected: {expected_sha256}.",
+                        details={"sourceId": source_id, "actualSha256": actual_sha256, "expectedSha256": expected_sha256},
+                    )
+
+                reg_drawing = reg_entry.get("drawingNumber")
+                if reg_drawing and reg_drawing != drawing_no:
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_FORGED_DRAWING_NUMBER",
+                        message=f"Part '{part_name}' claims drawingNumber '{drawing_no}', but registered drawingNumber is '{reg_drawing}'.",
+                        details={"claimed": drawing_no, "registered": reg_drawing},
+                    )
+
+                reg_scope = reg_entry.get("applicableScope")
+                if reg_scope and reg_scope != applicable_scope:
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_SCOPE_MISMATCH",
+                        message=f"Part '{part_name}' claims scope '{applicable_scope}', but registered scope is '{reg_scope}'.",
+                        details={"claimed": applicable_scope, "registered": reg_scope},
+                    )
+
+                part_id = part_cfg.get("part_id")
+                registered_parts = reg_entry.get("registeredParts", [])
+                if registered_parts and part_id not in registered_parts:
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_PART_MISMATCH",
+                        message=f"Source '{source_id}' is only registered for parts {registered_parts}, but claimed by '{part_id}'.",
+                        details={"partId": part_id, "registeredParts": registered_parts},
+                    )
+
+                # Test fixture vs production environment isolation
+                is_test_fixture = bool(reg_entry.get("isTestFixture", False) or reg_entry.get("tier") == "TEST_ONLY" or "TEST" in str(reg_entry.get("sourceType", "")))
+                if is_test_fixture and strict_provenance and not allow_test_fixtures:
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_TEST_FIXTURE_IN_PRODUCTION",
+                        message=f"Source '{source_id}' is designated as an offline test fixture ('tier: TEST_ONLY') and prohibited from production OEM_SPEC validation. Unverified production parts must use DEMO_ESTIMATE.",
+                        details={"sourceId": source_id, "tier": reg_entry.get("tier"), "isTestFixture": is_test_fixture},
+                    )
+
+            elif provenance == "ISO_STANDARD":
+                source = part_cfg.get("source")
+                if not isinstance(source, dict):
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_UNVERIFIED_STANDARD_APPLICATION",
+                        message=f"Part '{part_name}' claims ISO_STANDARD but lacks structured 'source' reference.",
+                        details={"part": part_name},
+                    )
+                source_id = str(source.get("sourceId", "")).strip()
+                standard_code = str(source.get("standardCode", "")).strip()
+                if not source_id or not standard_code or source_id.upper() in ("NONE", "N/A", "UNKNOWN"):
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_UNVERIFIED_STANDARD_APPLICATION",
+                        message=f"Part '{part_name}' claims ISO_STANDARD but lacks valid sourceId or standardCode.",
+                        details={"part": part_name, "source": source},
+                    )
+
+                # Forgery check
+                forgery_tokens = ["DOES-NOT-EXIST", "FAKE-", "PLACEHOLDER", "DUMMY", "MOCK", "TBD"]
+                for field_val in (source_id, standard_code):
+                    for tok in forgery_tokens:
+                        if tok in field_val.upper():
+                            return GateResult(
+                                passed=False,
+                                gate_id=gate_id,
+                                error_code="ERR_INPUT_FORGED_SOURCE_EVIDENCE",
+                                message=f"Part '{part_name}' claims ISO_STANDARD with fabricated token '{tok}' in '{field_val}'.",
+                                details={"part": part_name, "source": source, "detectedToken": tok},
+                            )
+
+                # Standard gives geometric/tolerance rules, NOT vehicle-specific assembly release!
+                if part_cfg.get("claims_vehicle_assembly_release", False) or source.get("claimsVehicleAssemblyRelease", False):
+                    oem_release = str(source.get("oemEngineeringReleaseNumber", "")).strip()
+                    if not oem_release or oem_release.upper() in ("NONE", "N/A", "UNKNOWN", ""):
+                        return GateResult(
+                            passed=False,
+                            gate_id=gate_id,
+                            error_code="ERR_INPUT_UNVERIFIED_STANDARD_APPLICATION",
+                            message=f"Part '{part_name}' claims vehicle assembly certification under ISO_STANDARD alone without OEM engineering release document.",
+                            details={"part": part_name, "source": source},
+                        )
+
+                # Layer 2: Registry resolution
+                if source_id not in registry:
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_UNREGISTERED_SOURCE_ID",
+                        message=f"Part '{part_name}' claims ISO_STANDARD with sourceId '{source_id}', but source is not registered in provenance registry.",
+                        details={"part": part_name, "sourceId": source_id},
+                    )
+
+            elif provenance == "DEMO_ESTIMATE":
+                disclaimer = str(part_cfg.get("disclaimer", "")).strip()
+                is_demo = bool(part_cfg.get("is_demo_only", False))
+                if not is_demo or not disclaimer:
+                    return GateResult(
+                        passed=False,
+                        gate_id=gate_id,
+                        error_code="ERR_INPUT_MISSING_DEMO_DISCLAIMER",
+                        message=f"Part '{part_name}' has DEMO_ESTIMATE provenance but must explicitly declare 'is_demo_only: true' and non-empty 'disclaimer'.",
+                        details={"part": part_name},
+                    )
 
             # 3. Numeric bounds validation
             for param_k, param_v in part_cfg.items():

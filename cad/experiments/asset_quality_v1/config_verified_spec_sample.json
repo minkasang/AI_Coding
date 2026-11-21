@@ -1,0 +1,66 @@
+{
+  "assembly_id": "SYS-30-WHEEL-END-VERIFIED-SAMPLE",
+  "assembly_name": "wheel_end_verified_evidence_sample",
+  "pipeline_version": "2.0.0-quality-gate",
+  "provenance_policy": "VERIFIED_EVIDENCE_SAMPLE",
+  "units": {
+    "cad_internal": "mm",
+    "gltf_export": "meter",
+    "scale_factor": 0.001
+  },
+  "coordinate_frames": {
+    "cad_engine": "Z_UP_RIGHT_HANDED",
+    "webgl_gltf": "Y_UP_RIGHT_HANDED",
+    "cad_to_gltf_transform_matrix": [
+      [0.001, 0.0, 0.0, 0.0],
+      [0.0, 0.0, 0.001, 0.0],
+      [0.0, -0.001, 0.0, 0.0],
+      [0.0, 0.0, 0.0, 1.0]
+    ]
+  },
+  "parts": {
+    "hub": {
+      "part_id": "PART-30-006",
+      "name": "Verified OEM Front Hub Flange Sample",
+      "provenance": "OEM_SPEC",
+      "source": {
+        "sourceId": "SRC-OEM-FIXTURE-GEN3-HUB-01",
+        "sourceType": "OEM_ENGINEERING_DRAWING",
+        "drawingNumber": "DWG-OEM-HUB-GEN3-REV-C",
+        "revision": "C",
+        "applicableScope": "PLATFORM-GEN3-FRONT-CORNER",
+        "citationLocation": "Sheet 1, Section B-B, Title block & tolerance spec"
+      },
+      "family": "rotational_symmetric",
+      "material_class": "aluminum_alloy_A356",
+      "pcd_mm": 114.3,
+      "bolt_count": 5,
+      "bolt_hole_diameter_mm": 15.5,
+      "outer_diameter_mm": 152.0,
+      "flange_thickness_mm": 14.0,
+      "center_bore_mm": 67.1,
+      "pilot_diameter_mm": 84.0,
+      "pilot_height_mm": 18.0
+    },
+    "stud": {
+      "part_id": "PART-30-015",
+      "name": "Standard ISO Metric Fastener Spec Sample",
+      "provenance": "ISO_STANDARD",
+      "source": {
+        "sourceId": "SRC-ISO-273-1979-TABLE1",
+        "standardCode": "ISO 273:1979",
+        "tableReference": "Table 1 - Clearance holes for bolts and screws (Medium fit M14)",
+        "claimsVehicleAssemblyRelease": false
+      },
+      "family": "threaded_fastener",
+      "material_class": "high_tensile_steel_grade_10.9",
+      "thread_spec": "M14x1.5-6g",
+      "nominal_diameter_mm": 14.0,
+      "head_diameter_mm": 22.0,
+      "head_thickness_mm": 6.0,
+      "shank_length_mm": 55.0,
+      "instance_count": 5,
+      "pcd_mm": 114.3
+    }
+  }
+}

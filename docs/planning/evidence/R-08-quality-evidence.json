@@ -2,10 +2,11 @@
   "task": "R-08",
   "displayCode": "03.10",
   "owner": "gemini-3-8-flash",
-  "timestamp": "2026-11-14T22:35:00+08:00",
+  "timestamp": "2026-11-16T20:45:00+08:00",
+  "provenancePolicy": "STRICT_EVIDENCE_GATED",
   "suiteSummary": {
-    "totalTests": 8,
-    "passedTests": 8,
+    "totalTests": 22,
+    "passedTests": 22,
     "failedTests": 0,
     "allPassed": true
   },
@@ -104,28 +105,28 @@
         },
         "built_parts": {
           "hub": {
-            "fingerprint": "15aec45cb70b66bdbbd02f30feda30516e7f317521276c88ee4cfb46f7696870",
+            "fingerprint": "3cd219a5eacf571002d48911be39e579b462dc8ec82079307e3a974d1ab3401b",
             "status": "CACHE_MISS_REBUILT",
             "step": "F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\asset_quality_v1\\out\\hub.step",
             "stl": "F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\asset_quality_v1\\out\\hub.stl",
             "volumeMm3": 227427.2592281379
           },
           "rotor": {
-            "fingerprint": "1a7bd75136e5868b08fabe5f1321aa09e575a221a90e2b8bdac6c85acde596aa",
+            "fingerprint": "9d1b2d3c92d0667b4c9b9d8ffd0e83ce0f865896070ccd82225f4aa2dbdba43a",
             "status": "CACHE_MISS_REBUILT",
             "step": "F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\asset_quality_v1\\out\\rotor.step",
             "stl": "F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\asset_quality_v1\\out\\rotor.stl",
             "volumeMm3": 1505101.4775060315
           },
           "bearing": {
-            "fingerprint": "3edb6920b8c504def199db8066118ea6878c7dce0358947f34e31dd935e1a6dd",
+            "fingerprint": "50d8561c51b63df93c9b2947c7e261f143ab15d6479f4ac011b685eb7c773356",
             "status": "CACHE_MISS_REBUILT",
             "step": "F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\asset_quality_v1\\out\\bearing.step",
             "stl": "F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\asset_quality_v1\\out\\bearing.stl",
             "volumeMm3": 152926.44719144393
           },
           "stud": {
-            "fingerprint": "53bd370be888fdc5fc8b0e5f9412d58157c43907d0d3c0dcd499648d85c74ccc",
+            "fingerprint": "e9d32b454dc5766a6f0f6aaacae83481a8233298e92c84e8bd14f7f3def5a4d3",
             "status": "CACHE_MISS_REBUILT",
             "step": "F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\asset_quality_v1\\out\\stud.step",
             "stl": "F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\asset_quality_v1\\out\\stud.stl",
@@ -155,11 +156,11 @@
             "passed": true,
             "gateId": "GATE_05_WEBGL_BUDGET",
             "errorCode": null,
-            "message": "Gate 5 PASS: GLB within budget (tris: 10620, verts: 6403, size: 223500 B), 100% extras and mesh instancing verified.",
+            "message": "Gate 5 PASS: GLB within budget (tris: 10620, verts: 6403, size: 223528 B), 100% extras and mesh instancing verified.",
             "details": {
               "triangles": 10620,
               "vertices": 6403,
-              "fileSizeBytes": 223500,
+              "fileSizeBytes": 223528,
               "nodeCount": 9,
               "meshCount": 4
             }
@@ -168,7 +169,146 @@
         "success": true
       },
       "glbPath": "F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\asset_quality_v1\\out\\wheel_end_quality_v2.glb",
-      "glbSizeBytes": 223500,
+      "glbSizeBytes": 223528,
+      "passed": true
+    },
+    {
+      "testName": "POSITIVE_VERIFIED_OEM_WITH_REAL_FILE_AND_HASH",
+      "gateResult": {
+        "passed": true,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": null,
+        "message": "Gate 1 PASS: All schemas, provenance tiers, and relational bounds verified.",
+        "details": {}
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_UNVERIFIED_SOURCE_EVIDENCE",
+      "expectedErrorCode": "ERR_INPUT_UNVERIFIED_SOURCE_EVIDENCE",
+      "actualErrorCode": "ERR_INPUT_UNVERIFIED_SOURCE_EVIDENCE",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_UNVERIFIED_SOURCE_EVIDENCE",
+        "message": "Source 'SRC-OEM-FIXTURE-GEN3-HUB-01' registered in provenance registry has unverified status: 'UNVERIFIED_FIXTURE_NO_DRAWING_RELEASE'. Real OEM drawings are absent in CARLAB; must be classified as DEMO_ESTIMATE or UNVERIFIED_CLAIM.",
+        "details": {
+          "sourceId": "SRC-OEM-FIXTURE-GEN3-HUB-01",
+          "status": "UNVERIFIED_FIXTURE_NO_DRAWING_RELEASE"
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_MISSING_EVIDENCE_FILE",
+      "expectedErrorCode": "ERR_INPUT_MISSING_EVIDENCE_FILE",
+      "actualErrorCode": "ERR_INPUT_MISSING_EVIDENCE_FILE",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_MISSING_EVIDENCE_FILE",
+        "message": "Claimed OEM evidence file 'docs/planning/evidence/NON_EXISTENT_FILE_ABC.json' does not exist on disk! Self-certification rejected.",
+        "details": {
+          "sourceId": "SRC-TEST-MISSING-DOC",
+          "evidenceDocPath": "docs/planning/evidence/NON_EXISTENT_FILE_ABC.json"
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_EVIDENCE_HASH_MISMATCH",
+      "expectedErrorCode": "ERR_INPUT_EVIDENCE_HASH_MISMATCH",
+      "actualErrorCode": "ERR_INPUT_EVIDENCE_HASH_MISMATCH",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_EVIDENCE_HASH_MISMATCH",
+        "message": "OEM evidence file 'docs/planning/evidence/TEST_FIXTURE_VERIFIED_OEM.meta.json' SHA-256 hash mismatch! Actual: f5dac76e8bff5272485f690f3100c925fb80164b44db8fd1e360892e819ab26e, expected: bad000000000000000000000000000000000000000000000000000000000dead.",
+        "details": {
+          "sourceId": "SRC-TEST-TAMPERED-HASH",
+          "actualSha256": "f5dac76e8bff5272485f690f3100c925fb80164b44db8fd1e360892e819ab26e",
+          "expectedSha256": "bad000000000000000000000000000000000000000000000000000000000dead"
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_MISSING_EVIDENCE_PATH",
+      "expectedErrorCode": "ERR_INPUT_MISSING_EVIDENCE_PATH",
+      "actualErrorCode": "ERR_INPUT_MISSING_EVIDENCE_PATH",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_MISSING_EVIDENCE_PATH",
+        "message": "Source 'SRC-TEST-NO-PATH' is marked VERIFIED_VALID but missing mandatory 'evidenceDocPath'.",
+        "details": {
+          "sourceId": "SRC-TEST-NO-PATH"
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_MISSING_EVIDENCE_HASH",
+      "expectedErrorCode": "ERR_INPUT_MISSING_EVIDENCE_HASH",
+      "actualErrorCode": "ERR_INPUT_MISSING_EVIDENCE_HASH",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_MISSING_EVIDENCE_HASH",
+        "message": "Source 'SRC-TEST-NO-HASH' is marked VERIFIED_VALID but missing mandatory 'evidenceSha256'.",
+        "details": {
+          "sourceId": "SRC-TEST-NO-HASH"
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_EVIDENCE_PATH_ESCAPE",
+      "expectedErrorCode": "ERR_INPUT_EVIDENCE_PATH_ESCAPE",
+      "actualErrorCode": "ERR_INPUT_EVIDENCE_PATH_ESCAPE",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_EVIDENCE_PATH_ESCAPE",
+        "message": "OEM evidence path '../../secret.json' attempts directory traversal outside project root.",
+        "details": {
+          "sourceId": "SRC-TEST-ESCAPE",
+          "evidenceDocPath": "../../secret.json"
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_UNTRUSTED_EVIDENCE_LOCATION",
+      "expectedErrorCode": "ERR_INPUT_UNTRUSTED_EVIDENCE_LOCATION",
+      "actualErrorCode": "ERR_INPUT_UNTRUSTED_EVIDENCE_LOCATION",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_UNTRUSTED_EVIDENCE_LOCATION",
+        "message": "OEM evidence file 'scripts/start-carlab.ps1' is outside trusted evidence directories (docs/planning/evidence, cad/experiments/asset_quality_v1).",
+        "details": {
+          "sourceId": "SRC-TEST-UNTRUSTED-LOC",
+          "docPath": "F:\\project\\cyq\\AI_Coding\\car\\scripts\\start-carlab.ps1"
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_TEST_FIXTURE_IN_PRODUCTION",
+      "expectedErrorCode": "ERR_INPUT_TEST_FIXTURE_IN_PRODUCTION",
+      "actualErrorCode": "ERR_INPUT_TEST_FIXTURE_IN_PRODUCTION",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_TEST_FIXTURE_IN_PRODUCTION",
+        "message": "Source 'SRC-TEST-GENUINE-EVIDENCE-FILE-01' is designated as an offline test fixture ('tier: TEST_ONLY') and prohibited from production OEM_SPEC validation. Unverified production parts must use DEMO_ESTIMATE.",
+        "details": {
+          "sourceId": "SRC-TEST-GENUINE-EVIDENCE-FILE-01",
+          "tier": "TEST_ONLY",
+          "isTestFixture": true
+        }
+      },
       "passed": true
     },
     {
@@ -185,9 +325,95 @@
           "provenance": "REDDIT_RUMOR_THREAD",
           "allowed": [
             "DEMO_ESTIMATE",
-            "OEM_SPEC",
+            "REVERSE_ENGINEERED",
             "ISO_STANDARD",
-            "REVERSE_ENGINEERED"
+            "OEM_SPEC"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_UNVERIFIED_OEM_PROVENANCE",
+      "expectedErrorCode": "ERR_INPUT_UNVERIFIED_OEM_PROVENANCE",
+      "actualErrorCode": "ERR_INPUT_UNVERIFIED_OEM_PROVENANCE",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_UNVERIFIED_OEM_PROVENANCE",
+        "message": "Part 'hub' claims OEM_SPEC but lacks a structured 'source' object with traceable engineering evidence.",
+        "details": {
+          "part": "hub",
+          "provenance": "OEM_SPEC"
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_UNVERIFIED_STANDARD_APPLICATION",
+      "expectedErrorCode": "ERR_INPUT_UNVERIFIED_STANDARD_APPLICATION",
+      "actualErrorCode": "ERR_INPUT_UNVERIFIED_STANDARD_APPLICATION",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_UNVERIFIED_STANDARD_APPLICATION",
+        "message": "Part 'stud' claims vehicle assembly certification under ISO_STANDARD alone without OEM engineering release document.",
+        "details": {
+          "part": "stud",
+          "source": {
+            "sourceId": "SRC-ISO-273-1979-TABLE1",
+            "standardCode": "ISO 273:1979",
+            "claimsVehicleAssemblyRelease": true
+          }
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_UNREGISTERED_SOURCE_ID",
+      "expectedErrorCode": "ERR_INPUT_UNREGISTERED_SOURCE_ID",
+      "actualErrorCode": "ERR_INPUT_UNREGISTERED_SOURCE_ID",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_UNREGISTERED_SOURCE_ID",
+        "message": "Part 'hub' claims OEM_SPEC with sourceId 'SRC-UNREGISTERED-ABC-999', but this source is not registered in the offline provenance registry.",
+        "details": {
+          "part": "hub",
+          "sourceId": "SRC-UNREGISTERED-ABC-999"
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_FORGED_DRAWING_NUMBER",
+      "expectedErrorCode": "ERR_INPUT_FORGED_DRAWING_NUMBER",
+      "actualErrorCode": "ERR_INPUT_FORGED_DRAWING_NUMBER",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_FORGED_DRAWING_NUMBER",
+        "message": "Part 'hub' claims drawingNumber 'DWG-TAMPERED-WRONG-123', but registered drawingNumber is 'DWG-TEST-VERIFIED-2026'.",
+        "details": {
+          "claimed": "DWG-TAMPERED-WRONG-123",
+          "registered": "DWG-TEST-VERIFIED-2026"
+        }
+      },
+      "passed": true
+    },
+    {
+      "testName": "INJECTED_ERR_INPUT_PART_MISMATCH",
+      "expectedErrorCode": "ERR_INPUT_PART_MISMATCH",
+      "actualErrorCode": "ERR_INPUT_PART_MISMATCH",
+      "gateResult": {
+        "passed": false,
+        "gateId": "GATE_01_INPUT_PROVENANCE",
+        "errorCode": "ERR_INPUT_PART_MISMATCH",
+        "message": "Source 'SRC-TEST-GENUINE-EVIDENCE-FILE-01' is only registered for parts ['PART-30-006'], but claimed by 'PART-40-001'.",
+        "details": {
+          "partId": "PART-40-001",
+          "registeredParts": [
+            "PART-30-006"
           ]
         }
       },
@@ -279,9 +505,9 @@
         "passed": true,
         "gateId": "GATE_06_ATOMIC_CACHE",
         "errorCode": null,
-        "message": "Gate 6 PASS: Cache checksum verified (2d61b894ac29ee7a...).",
+        "message": "Gate 6 PASS: Cache checksum verified (00883122fcba65dc...).",
         "details": {
-          "sha256": "2d61b894ac29ee7a5735ac3249c21a39efc85728f44e2ff12a588d7f2ff7efbb"
+          "sha256": "00883122fcba65dc20332c2e35dc2a82d33279889f569fa4c5978cd2596edfd0"
         }
       },
       "cacheTamperDetection": {
@@ -290,7 +516,7 @@
         "errorCode": "ERR_CACHE_CHECKSUM_MISMATCH",
         "message": "Cache integrity check failed for 'hub.step': SHA-256 mismatch.",
         "details": {
-          "actual": "2d61b894ac29ee7a5735ac3249c21a39efc85728f44e2ff12a588d7f2ff7efbb",
+          "actual": "00883122fcba65dc20332c2e35dc2a82d33279889f569fa4c5978cd2596edfd0",
           "expected": "0000000000000000000000000000000000000000000000000000000000000000"
         }
       },

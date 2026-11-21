@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>R-30 · M 单变量受控验证（加载中）</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+  }
+}
+</script>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #eef3f8; overflow: hidden;
+    font: 13px/1.5 "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; color: #23262b; }
+  #stage { width: 1280px; height: 800px; }
+  #canvas { display: block; width: 1280px; height: 800px; }
+  .hud { position: fixed; left: 14px; top: 12px; max-width: 680px; padding: 8px 12px;
+    border-radius: 8px; background: rgba(255,255,255,.94); border: 1px solid #d9d6cf;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+  .hud b { letter-spacing: .04em; }
+  .hud .vars { margin-top: 2px; color: #59616b; font-variant-numeric: tabular-nums; }
+  .hud .flag { margin-top: 4px; font-weight: 600; }
+  .hud .flag[data-on="1"] { color: #1d5fd6; }
+  .hud .flag[data-on="0"] { color: #6b7280; }
+  .hud .note { margin-top: 4px; color: #8a6d3b; font-size: 12px; }
+  #metrics { position: fixed; left: -99999px; top: 0; }
+  body.clean .hud { display: none; }
+  #err { position: fixed; left: 14px; bottom: 14px; max-width: 900px; padding: 10px 14px;
+    background: #fff2f0; border: 1px solid #e5b4ad; border-radius: 8px; color: #7a2318; white-space: pre-wrap; }
+  #err[hidden] { display: none; }
+</style>
+</head>
+<body>
+  <div id="stage"><canvas id="canvas" width="1280" height="800" aria-label="R-30 M 单变量受控验证"></canvas></div>
+  <div class="hud" id="hud">
+    <b>CARLAB · R-30 M 单变量受控验证</b>
+    <div class="vars" id="vars">loading…</div>
+    <div class="flag" id="flag" data-on="0">M flag：默认关闭（生产旧设置）</div>
+    <div class="note">隔离实验：直接使用生产 EngineeringViewport 与真实测距工具；未修改 workbench-v2 任何文件。样板材质为 VISUAL_ASSUMPTION。</div>
+  </div>
+  <pre id="metrics"></pre>
+  <div id="err" hidden></div>
+  <script type="module">
+    const q = new URLSearchParams(location.search);
+    if (q.get('clean') === '1') document.body.classList.add('clean');
+    document.getElementById('vars').textContent =
+      '状态 none / selectExplode / selectClip · 机位 iso + side · flag off/on · 1280×800 · 同一 5173 GLB';
+    window.addEventListener('error', (e) => {
+      const el = document.getElementById('err');
+      el.hidden = false;
+      el.textContent = '模块加载/运行错误：' + (e.message || e.error || 'unknown');
+    });
+  </script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

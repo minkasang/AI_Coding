@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "registryTitle": "CARLAB Offline Provenance Evidence Registry",
+  "version": "1.2.0",
+  "description": "Authoritative offline registry for all verified OEM drawings, CMM reports, and international standards. All claims of OEM_SPEC or ISO_STANDARD must resolve to an entry in this registry with valid checksum, registered drawing numbers, and permitted parts. Unverified fixtures fail-closed under OEM_SPEC.",
+  "sources": {
+    "SRC-TEST-GENUINE-EVIDENCE-FILE-01": {
+      "sourceId": "SRC-TEST-GENUINE-EVIDENCE-FILE-01",
+      "sourceType": "OEM_ENGINEERING_DRAWING",
+      "drawingNumber": "DWG-TEST-VERIFIED-2026",
+      "revision": "A",
+      "applicableScope": "PLATFORM-GEN3-FRONT-CORNER",
+      "verificationStatus": "VERIFIED_VALID",
+      "tier": "TEST_ONLY",
+      "isTestFixture": true,
+      "registeredParts": [
+        "PART-30-006"
+      ],
+      "verificationRecord": {
+        "verifiedBy": "CARLAB_ENGINEERING_AUDIT",
+        "verifiedDate": "2026-11-16",
+        "evidenceSha256": "f5dac76e8bff5272485f690f3100c925fb80164b44db8fd1e360892e819ab26e",
+        "evidenceDocPath": "docs/planning/evidence/TEST_FIXTURE_VERIFIED_OEM.meta.json",
+        "citationLocation": "Document header and root JSON metadata",
+        "fixtureDisclaimer": "CONTROLLED OFFLINE TEST FIXTURE: Demonstrates physical file existence and SHA-256 integrity validation in unit tests. Prohibited from satisfying production OEM_SPEC requirements."
+      }
+    },
+    "SRC-OEM-FIXTURE-GEN3-HUB-01": {
+      "sourceId": "SRC-OEM-FIXTURE-GEN3-HUB-01",
+      "sourceType": "OEM_ENGINEERING_DRAWING",
+      "drawingNumber": "DWG-OEM-HUB-GEN3-REV-C",
+      "revision": "C",
+      "applicableScope": "PLATFORM-GEN3-FRONT-CORNER",
+      "verificationStatus": "UNVERIFIED_FIXTURE_NO_DRAWING_RELEASE",
+      "registeredParts": [
+        "PART-30-006"
+      ],
+      "verificationRecord": {
+        "verifiedBy": "NONE",
+        "verifiedDate": null,
+        "evidenceSha256": null,
+        "evidenceDocPath": null,
+        "citationLocation": null,
+        "statusReason": "CARLAB currently has no legal OEM engineering drawings on disk. This record is registered as an unverified fixture and must fail closed under OEM_SPEC production gate."
+      }
+    },
+    "SRC-ISO-273-1979-TABLE1": {
+      "sourceId": "SRC-ISO-273-1979-TABLE1",
+      "sourceType": "INTERNATIONAL_STANDARD",
+      "standardCode": "ISO 273:1979",
+      "tableReference": "Table 1 - Clearance holes for bolts and screws (Medium fit M14)",
+      "verificationStatus": "VERIFIED_VALID",
+      "registeredParts": [
+        "PART-30-015",
+        "SYS-30-STUD-M14"
+      ],
+      "verificationRecord": {
+        "standardBody": "ISO",
+        "publishedYear": 1979,
+        "isPartLevelStandardOnly": true,
+        "vehicleAssemblyCertified": false
+      }
+    }
+  }
+}

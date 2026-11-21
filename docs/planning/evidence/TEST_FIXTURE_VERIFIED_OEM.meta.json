@@ -1,0 +1,7 @@
+{
+  "documentId": "TEST-OEM-DRAWING-VERIFIED-SAMPLE",
+  "title": "Controlled Authentic Evidence File for Gate 1 Verification Test",
+  "issuedDate": "2026-11-16",
+  "verificationAuthority": "CARLAB_ENGINEERING_AUDIT",
+  "notes": "Authentic physical evidence document on disk used to verify Gate 1 file existence and SHA-256 byte-level hash verification."
+}

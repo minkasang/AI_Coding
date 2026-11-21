@@ -1,0 +1,60 @@
+{
+  "schema": "carlab.r28.poseAdapterRun.v1",
+  "date": "2026-11-21",
+  "command": "node src-experiments/mechanism-pose-adapter-v1/run-checks.mjs",
+  "passCount": 10,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "C01_revision_and_three_ids",
+      "pass": true,
+      "revision": 1,
+      "frames": 9
+    },
+    {
+      "id": "C02_tie_and_hub_not_invented",
+      "pass": true
+    },
+    {
+      "id": "C03_quaternion_unit_and_cycle",
+      "pass": true
+    },
+    {
+      "id": "C04_hinge_origin_stays",
+      "pass": true,
+      "upperMove": 0
+    },
+    {
+      "id": "C05_force_and_demo_basis",
+      "pass": true
+    },
+    {
+      "id": "C06_apply_pose_reads_snapshot",
+      "pass": true,
+      "keys": [
+        "PI-20-001-FL",
+        "PI-20-008-FL",
+        "PI-20-016-FL"
+      ]
+    },
+    {
+      "id": "C07_wrong_revision_not_playable",
+      "pass": true
+    },
+    {
+      "id": "C08_wrong_variant_blocked",
+      "pass": true
+    },
+    {
+      "id": "C09_illegal_length_blocks",
+      "pass": true,
+      "status": "BLOCKED"
+    },
+    {
+      "id": "C10_snapshot_revision_is_one",
+      "pass": true,
+      "rebaseHash": "ea07924e32613ccb4500ac737d4f6c08a6f531bba0afa0e6219f45bd4784ddc3"
+    }
+  ]
+}

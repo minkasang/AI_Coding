@@ -78,7 +78,7 @@ def main():
     root_empty.empty_display_type = "PLAIN_AXES"
     root_empty["carlab_part_id"] = config.get("assembly_id", "SYS-30-WHEEL-END-ASSY")
     root_empty["carlab_unit"] = "meter"
-    root_empty["provenance"] = "HYBRID_VALIDATED"
+    root_empty["provenance"] = config.get("provenance_policy", "DEMO_ESTIMATE")
     root_empty["revision"] = "v2.0.0"
     root_empty["partId"] = config.get("assembly_id", "SYS-30-WHEEL-END-ASSY")
     root_empty["instanceId"] = "root_assembly#0"
