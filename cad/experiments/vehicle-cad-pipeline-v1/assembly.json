@@ -1,0 +1,25 @@
+{
+  "root": {
+    "frameId": "FR-C01-WHEEL-END-FL",
+    "origin": [0, 0, 0],
+    "xAxis": [0, 1, 0],
+    "zAxis": [1, 0, 0],
+    "description": "C-01 workholding frame. CAD +X outboard, +Y rear, +Z up. Root origin is the outboard bearing face on the spindle axis."
+  },
+  "snapshot": {
+    "path": "src-experiments/vehicle-snapshot-v1/fixtures/vehicle-snapshot.json",
+    "consumerIndex": "src-experiments/vehicle-snapshot-v1/fixtures/vehicle-snapshot.consumer.json",
+    "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+    "revision": 1
+  },
+  "placements": [
+    { "partInstanceId": "PI-20-016-FL", "partId": "PART-20-016", "parent": null, "parentMount": "root", "childMount": "bearingSeatFront", "constraint": "FIXTURE_ANCHOR" },
+    { "partInstanceId": "PI-30-001-FL", "partId": "PART-30-001", "parent": "PI-20-016-FL", "parentMount": "bearingSeatBack", "childMount": "backFace", "constraint": "COAXIAL_AND_AXIAL_STOP" },
+    { "partInstanceId": "PI-30-002-FL", "partId": "PART-30-002", "parent": "PI-30-001-FL", "parentMount": "frontFace", "childMount": "frontFace", "constraint": "COAXIAL_NEUTRAL_AXIAL_PLACEMENT" },
+    { "partInstanceId": "PI-30-006-FL", "partId": "PART-30-006", "parent": "PI-30-002-FL", "parentMount": "frontFace", "childMount": "journalShoulder", "constraint": "COAXIAL_AND_AXIAL_STOP" }
+  ],
+  "repeatedPlacement": {
+    "partId": "PART-30-009", "parent": "PI-30-006-FL", "parentMountPrefix": "studSeat", "childMount": "headSeat", "constraint": "COAXIAL_AND_AXIAL_STOP",
+    "partInstanceIds": ["PI-30-009-FL-01", "PI-30-009-FL-02", "PI-30-009-FL-03", "PI-30-009-FL-04", "PI-30-009-FL-05"]
+  }
+}
