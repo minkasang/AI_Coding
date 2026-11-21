@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "carlab.vehicleSnapshot/0.1.0-proposal",
+  "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+  "status": "CANDIDATE_NOT_FROZEN",
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "inputHashes": {
+    "ok": true,
+    "errors": []
+  },
+  "counts": {
+    "systems": 13,
+    "subsystems": 53,
+    "assemblyDefinitions": 108,
+    "assemblyInstances": 37,
+    "partDefinitions": 493,
+    "partInstances": 278,
+    "mountFrames": 37,
+    "projectionFrames": 21,
+    "references": 35,
+    "bomLines": 190,
+    "noGeometryInstances": 278,
+    "sourcedGeometryInstances": 0,
+    "demoCadBindings": 1,
+    "crosswalkMappedInstances": 13,
+    "crosswalkUnmappedInstances": 265,
+    "qtyConflicts": 12,
+    "conflictRegister": 24,
+    "decisions": 9,
+    "poseRunCurrentFrames": 0,
+    "demoMotionFrames": 9,
+    "rigidPartPoseBindings": 3,
+    "candidateRoleBindings": 1,
+    "unboundRequiredRoles": 1
+  },
+  "variant": {
+    "variantId": "VAR-R16-BOF-ICE",
+    "status": "PROPOSED_NOT_APPROVED",
+    "generation": "GEN1",
+    "alignmentStatus": "BLOCKED_PENDING_ADJUDICATION",
+    "sameVehicleClaim": false,
+    "projectionVariantId": "VV-A-SWB-STD",
+    "projectionProjectId": "PROJECT-FL-WHEEL-END",
+    "generationAgrees": true,
+    "r16ChoiceGroups": [
+      "CG-FSUSP",
+      "CG-RSUSP",
+      "CG-STEER",
+      "CG-BOOST",
+      "CG-PARK",
+      "CG-HUB",
+      "CG-RBRK",
+      "CG-POWER",
+      "CG-TRANS",
+      "CG-FASTENER"
+    ],
+    "r17ChoiceGroups": [
+      "CG-HUB"
+    ],
+    "blockedActions": [
+      "CLAIM_SAME_VEHICLE",
+      "FREEZE_VARIANT",
+      "USE_PROJECTION_AS_PRODUCTION"
+    ]
+  },
+  "qty": {
+    "auditStatus": "CONSISTENT",
+    "conflicts": 12,
+    "doubleCountExample": {
+      "partId": "PART-30-009",
+      "physicalInstances": 20,
+      "sourceQtyPerCorner": 5,
+      "naiveSumOfQtyPerCorner": 100,
+      "inheritedVehicleTotal": 20,
+      "correctTotal": 20
+    }
+  },
+  "bindingMatrix": [
+    {
+      "role": "UPPER_ARM",
+      "r21": "BOUND_TO_INSTANCE",
+      "r22": "BOUND",
+      "r23": "BOUND",
+      "r27": "BOUND_RIGID_PART",
+      "target": "PI-20-001-FL",
+      "attachTo": "PART",
+      "agreement": "3_OF_3"
+    },
+    {
+      "role": "LOWER_ARM",
+      "r21": "BOUND_TO_INSTANCE",
+      "r22": "BOUND",
+      "r23": "BOUND",
+      "r27": "BOUND_RIGID_PART",
+      "target": "PI-20-008-FL",
+      "attachTo": "PART",
+      "agreement": "3_OF_3"
+    },
+    {
+      "role": "UPRIGHT",
+      "r21": "BOUND_TO_INSTANCE",
+      "r22": "BOUND",
+      "r23": "BOUND",
+      "r27": "BOUND_RIGID_PART",
+      "target": "PI-20-016-FL",
+      "attachTo": "PART",
+      "agreement": "3_OF_3"
+    },
+    {
+      "role": "HUB",
+      "r21": "BOUND_TO_INSTANCE",
+      "r22": "BOUND",
+      "r23": "UNBOUND_NO_HUB_BODY",
+      "r27": "CANDIDATE_ROLE_BINDING",
+      "target": "PI-30-006-FL",
+      "attachTo": "ROLE_MARKER",
+      "agreement": "2_OF_3"
+    },
+    {
+      "role": "TIEROD",
+      "r21": "DEFERRED_NO_INSTANCE",
+      "r22": "UNBOUND",
+      "r23": "DEFERRED_NO_INSTANCE",
+      "r27": "REQUIRED_DEFERRED_NO_INSTANCE",
+      "target": null,
+      "attachTo": "NONE",
+      "agreement": "3_OF_3_UNBOUND"
+    }
+  ],
+  "poseRun": {
+    "status": "STALE",
+    "sourceRevision": 3,
+    "snapshotRevision": 1,
+    "playbackAllowed": false,
+    "frames": 0,
+    "demoFrames": 9,
+    "demoBadge": "DEMO_ONLY_STALE_SOURCE_REV_3"
+  },
+  "conflicts": 24,
+  "decisions": [
+    "D-R27-01",
+    "D-R27-02",
+    "D-R27-03",
+    "D-R27-04",
+    "D-R27-05",
+    "D-R27-06",
+    "D-R27-07",
+    "D-R27-08",
+    "D-R27-09"
+  ],
+  "r26": {
+    "status": "ready",
+    "artifacts": [],
+    "decisionPolicy": "MISSING_OUTPUT_PRESERVE_ALL_CONFLICTS"
+  }
+}

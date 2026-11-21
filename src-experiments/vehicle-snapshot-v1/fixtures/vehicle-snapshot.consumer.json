@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "carlab.vehicleSnapshot.consumer/0.1.0-proposal",
+  "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+  "snapshotPath": "src-experiments/vehicle-snapshot-v1/fixtures/vehicle-snapshot.json",
+  "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+  "readOnly": true,
+  "status": "CANDIDATE_NOT_FROZEN",
+  "counts": {
+    "systems": 13,
+    "subsystems": 53,
+    "assemblyDefinitions": 108,
+    "assemblyInstances": 37,
+    "partDefinitions": 493,
+    "partInstances": 278,
+    "mountFrames": 37,
+    "projectionFrames": 21,
+    "references": 35,
+    "bomLines": 190,
+    "noGeometryInstances": 278,
+    "sourcedGeometryInstances": 0,
+    "demoCadBindings": 1,
+    "crosswalkMappedInstances": 13,
+    "crosswalkUnmappedInstances": 265,
+    "qtyConflicts": 12,
+    "conflictRegister": 24,
+    "decisions": 9,
+    "poseRunCurrentFrames": 0,
+    "demoMotionFrames": 9,
+    "rigidPartPoseBindings": 3,
+    "candidateRoleBindings": 1,
+    "unboundRequiredRoles": 1
+  },
+  "entrypoints": {
+    "tree": "workbenchTree",
+    "indexes": "indexes",
+    "partInstances": "tree.partInstances",
+    "partDefinitions": "tree.partDefinitions",
+    "bindingMatrix": "bindingMatrix",
+    "strictPoseRun": "poseRun",
+    "demoMotionView": "demoMotionView",
+    "consumerContract": "consumerContract",
+    "conflicts": "conflictRegister"
+  },
+  "canonicalSelectionKey": "partInstanceId",
+  "aliases": {
+    "r17PartInstance": "INST-*",
+    "r17AssemblyInstance": "ASM-*",
+    "aliasesAreNotCanonical": true,
+    "requireExplicitProjectionField": true
+  },
+  "badges": {
+    "noGeometry": "NO_GEOMETRY",
+    "demoCad": "DEMO_SUBSTITUTE",
+    "demoPose": "DEMO_ONLY_STALE_SOURCE_REV_3",
+    "variant": "VARIANT_NOT_ALIGNED",
+    "requiredDeferred": "REQUIRED_NOT_INSTANTIATED",
+    "placeholderAssembly": "PLACEHOLDER_ASSEMBLY"
+  },
+  "posePlayback": {
+    "strict": "DISABLED_STALE",
+    "demo": "DEMO_MODE_ONLY_WITH_BADGE",
+    "frameId": "FR-VEHICLE",
+    "units": "m",
+    "up": "Y"
+  },
+  "forbidden": [
+    "USE_INST_OR_ASM_AS_CANONICAL_SELECTION_KEY",
+    "CLONE_DEMO_GLB_TO_278_INSTANCES",
+    "FABRICATE_MESH_FOR_NO_GEOMETRY",
+    "PLAY_STALE_RUN_AS_CURRENT",
+    "PROMOTE_SOURCE_WITHOUT_ARTIFACT_AND_HASH",
+    "REWRITE_RP01_NAMES_OR_PARENTS"
+  ],
+  "requiredFields": {
+    "partInstance": [
+      "partInstanceId",
+      "partId",
+      "assemblyInstanceId",
+      "frameId",
+      "corner",
+      "quantity",
+      "geometryStatus",
+      "evidenceInherited"
+    ],
+    "assemblyInstance": [
+      "assemblyInstanceId",
+      "definitionRef",
+      "systemId",
+      "frameId",
+      "corner",
+      "geometryStatus"
+    ],
+    "demoPose": [
+      "role",
+      "instanceId",
+      "bindingStatus",
+      "attachTo",
+      "published",
+      "positionM",
+      "quaternionXYZW",
+      "matrixWorld",
+      "geometryStatus"
+    ]
+  }
+}
