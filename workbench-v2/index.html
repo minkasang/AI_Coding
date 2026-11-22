@@ -53,26 +53,50 @@
       <span class="module-status" id="viewContext">已有四轮驾驶演示 · 简化物理模型</span>
     </nav>
     <main class="workbench" id="assemblyWorkbench" hidden>
-      <aside class="left-panel">
-        <div class="panel-section-title"><span>VEHICLE ENGINEERING</span><span class="section-indicator">01</span></div>
-        <div class="tree-header"><h2>整车工程骨架</h2><span class="tiny-info">R-27 只读</span></div>
-        <p class="section-help" id="vehicleTreeHelp">278 实例 · 选择键 PI-* · 仅 1 项演示 CAD</p>
-        <div id="vehicleTree" class="tree vehicle-tree" role="tree" aria-label="整车工程对象树">
-          <div class="skeleton-line"></div>
-        </div>
-        <div class="tree-divider" aria-hidden="true"></div>
-        <div class="panel-section-title"><span>PROJECT EXPLORER</span><span class="section-indicator">02</span></div>
-        <div class="tree-header"><h2>可编辑装配</h2><span class="tiny-info">当前工程</span></div>
-        <div id="tree" class="tree" role="tree" aria-label="当前工程对象树">
-          <div class="skeleton-line"></div><div class="skeleton-line short"></div>
-        </div>
-        <div class="tree-footer"><span class="info-led"></span><span id="treeFoot">加载零件中</span></div>
-        <div class="catalog-block">
-          <div class="panel-section-title"><span>COMPONENT LIBRARY</span><span class="section-indicator">03</span></div>
-          <div class="tree-header"><h2>可用零件</h2><span class="tiny-info">演示资产</span></div>
-          <p class="section-help">这里可以真正添加零件实例。目前仅开放已经生成的 3 个轮端部件。</p>
-          <div id="catalog" class="catalog-list"></div>
-        </div>
+      <aside class="left-panel" id="leftPanel">
+        <details class="explorer-pane" id="paneVehicle" open>
+          <summary class="explorer-pane-summary">
+            <span class="pane-kicker">VEHICLE ENGINEERING <span class="section-indicator">01</span></span>
+            <span class="pane-title">整车工程骨架</span>
+            <span class="pane-meta tiny-info">R-27 只读</span>
+          </summary>
+          <div class="explorer-pane-body">
+            <p class="section-help pane-help" id="vehicleTreeHelp">278 实例 · 选择键 PI-* · 仅 1 项演示 CAD</p>
+            <div class="pane-scroll" id="vehicleTreeScroll">
+              <div id="vehicleTree" class="tree vehicle-tree" role="tree" aria-label="整车工程对象树">
+                <div class="skeleton-line"></div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="explorer-pane" id="paneProject" open>
+          <summary class="explorer-pane-summary">
+            <span class="pane-kicker">PROJECT EXPLORER <span class="section-indicator">02</span></span>
+            <span class="pane-title">可编辑装配</span>
+            <span class="pane-meta tiny-info">当前工程</span>
+          </summary>
+          <div class="explorer-pane-body">
+            <div class="pane-scroll" id="projectTreeScroll">
+              <div id="tree" class="tree" role="tree" aria-label="当前工程对象树">
+                <div class="skeleton-line"></div><div class="skeleton-line short"></div>
+              </div>
+            </div>
+            <div class="tree-footer pane-footer"><span class="info-led"></span><span id="treeFoot">加载零件中</span></div>
+          </div>
+        </details>
+        <details class="explorer-pane explorer-pane--catalog" id="paneCatalog" open>
+          <summary class="explorer-pane-summary">
+            <span class="pane-kicker">COMPONENT LIBRARY <span class="section-indicator">03</span></span>
+            <span class="pane-title">可用零件</span>
+            <span class="pane-meta tiny-info">演示资产</span>
+          </summary>
+          <div class="explorer-pane-body">
+            <p class="section-help pane-help">这里可以真正添加零件实例。目前仅开放已经生成的 3 个轮端部件。</p>
+            <div class="pane-scroll" id="catalogScroll">
+              <div id="catalog" class="catalog-list"></div>
+            </div>
+          </div>
+        </details>
         <div class="panel-bottom-note">
           <span class="note-mark">i</span>
           <p>零件身份和版本由工程模型管理，不依赖 GLB 节点名。当前为 V2 隔离实验。</p>

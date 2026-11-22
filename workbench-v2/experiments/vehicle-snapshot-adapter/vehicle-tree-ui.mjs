@@ -31,7 +31,8 @@ export class VehicleTreeUI {
       const pick = e.target.closest('button[data-vehicle-select]');
       if (pick) {
         this.selectedId = pick.dataset.vehicleSelect;
-        this.onSelect(this.selectedId);
+        Promise.resolve(this.onSelect(this.selectedId))
+          .catch((err) => console.error('vehicle tree select', err));
         this.render();
       }
     });

@@ -49,6 +49,45 @@ async function shot(filename) {
   const response = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
   writeFileSync(path.join(OUT, filename), Buffer.from(response.data, 'base64'));
 }
+async function setViewport(width, height) {
+  await send('Emulation.setDeviceMetricsOverride', {
+    width, height, deviceScaleFactor: 1, mobile: false
+  });
+  await sleep(400);
+}
+async function inspectorScrollOk() {
+  return evaluate(`(() => {
+    const inspector = document.getElementById('inspector');
+    const panel = document.querySelector('.right-panel');
+    if (!inspector || !panel) return false;
+    const panelRect = panel.getBoundingClientRect();
+    const docH = document.documentElement.scrollHeight;
+    const viewH = window.innerHeight;
+    if (docH > viewH + 8) return false;
+    const overflowY = getComputedStyle(inspector).overflowY;
+    const scrollable = inspector.scrollHeight > inspector.clientHeight + 4;
+    if (inspector.scrollHeight > panel.clientHeight && !scrollable && overflowY === 'visible') return false;
+    return panelRect.bottom <= viewH + 4 && panelRect.top >= 0;
+  })()`);
+}
+async function layoutPanesOk() {
+  return evaluate(`(() => {
+    const ids = ['paneVehicle', 'paneProject', 'paneCatalog'];
+    const panes = ids.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const style = getComputedStyle(el);
+      if (style.display === 'none') return null;
+      const r = el.getBoundingClientRect();
+      return { id, top: r.top, bottom: r.bottom, height: r.height };
+    }).filter(Boolean);
+    if (panes.length < 2) return false;
+    for (let i = 0; i < panes.length - 1; i++) {
+      if (panes[i + 1].top < panes[i].bottom - 1) return false;
+    }
+    return panes.every((p) => p.height > 12);
+  })()`);
+}
 try {
   let endpoint = null;
   for (let i=0;i<55;i++) {
@@ -105,6 +144,22 @@ try {
     await sleep(200);
   }
   check('R-27 vehicle snapshot on 5173 main page',vehicleSnap,true);
+  await evaluate(`(() => {
+    const open = (sel) => {
+      const b = document.querySelector(sel);
+      if (b && b.getAttribute('aria-expanded') !== 'true') b.click();
+    };
+    open('[data-tree-toggle="SYS-20"]');
+    open('[data-tree-toggle="AI-20-003-FL"]');
+  })()`);
+  check('left panes do not overlap at 1600x1000', await layoutPanesOk(), true);
+  await setViewport(1500, 920);
+  check('left panes do not overlap at 1500x920', await layoutPanesOk(), true);
+  await shot('08-layout-1500x920-expanded-tree.png');
+  await setViewport(1280, 800);
+  check('left panes do not overlap at 1280x800', await layoutPanesOk(), true);
+  await shot('09-layout-1280x800-expanded-tree.png');
+  await setViewport(1600, 1000);
   check('initial demo has three parts',await evaluate("document.querySelectorAll('[data-select]').length"),3);
   check('canvas available',await evaluate("document.getElementById('viewCanvas').width>0"),true);
   await shot('01-project-loaded.png');
@@ -119,11 +174,21 @@ try {
   check('tree selection drives inspector', await evaluate("document.querySelector('.selected-name')?.textContent"),'轴承包络');
   await shot('02-selected-bearing.png');
   await evaluate(`(() => {
-    document.querySelector('[data-tree-toggle="SYS-20"]')?.click();
-    document.querySelector('[data-tree-toggle="AI-20-003-FL"]')?.click();
+    const open = (sel) => {
+      const b = document.querySelector(sel);
+      if (b && b.getAttribute('aria-expanded') !== 'true') b.click();
+    };
+    open('[data-tree-toggle="SYS-20"]');
+    open('[data-tree-toggle="AI-20-003-FL"]');
+    const scroll = document.getElementById('vehicleTreeScroll');
+    if (scroll) scroll.scrollTop = 0;
     document.querySelector('[data-vehicle-select="PI-20-008-FL"]')?.click();
   })()`);
   check('vehicle lower-arm shows NO_GEOMETRY inspector',await evaluate("document.querySelector('.vehicle-inspector-title')?.textContent"),'下摆臂本体');
+  await setViewport(1280, 800);
+  check('right inspector stays in viewport at 1280x800', await inspectorScrollOk(), true);
+  await shot('09b-inspector-1280-vehicle-selection.png');
+  await setViewport(1600, 1000);
   await evaluate("document.querySelector('.module-tab[data-workview=inspect]').click()");
   check('inspect measure/clip locked without vehicle geometry',await evaluate("document.getElementById('inspectTools').dataset.geometryLocked"),'true');
   await evaluate("document.querySelector('.module-tab[data-workview=model]').click()");
@@ -131,14 +196,14 @@ try {
   check('measure tools hidden in model view',await evaluate("document.getElementById('inspectTools').hidden"),true);
   await evaluate("document.querySelector('.module-tab[data-workview=inspect]').click()");
   check('inspection shares the same selected engineering object',await evaluate("document.querySelector('.selected-name')?.textContent"),'轴承包络');
-  check('inspection hides editing part library',await evaluate("getComputedStyle(document.querySelector('.catalog-block')).display"),'none');
+  check('inspection hides editing part library',await evaluate("getComputedStyle(document.getElementById('paneCatalog')).display"),'none');
   check('inspection hides the editing operations menu',await evaluate("getComputedStyle(document.getElementById('projectMenu')).display"),'none');
   check('inspection hides remove-part button',await evaluate("getComputedStyle(document.querySelector('[data-action=remove]')).display"),'none');
   check('inspection keeps explode controls',await evaluate("getComputedStyle(document.querySelector('.workspace-actions')).display !== 'none'"),true);
   check('inspection shows measure/clip tools',await evaluate("!document.getElementById('inspectTools').hidden"),true);
   await shot('02b-inspection-workspace.png');
   await evaluate("document.querySelector('.module-tab[data-workview=model]').click()");
-  check('engineering model restores editing library',await evaluate("getComputedStyle(document.querySelector('.catalog-block')).display !== 'none'"),true);
+  check('engineering model restores editing library',await evaluate("getComputedStyle(document.getElementById('paneCatalog')).display !== 'none'"),true);
 
   await evaluate("document.querySelector('[data-add=hub]').click()");
   check('add creates independent part instance', await evaluate("document.querySelectorAll('[data-select]').length"),4);

@@ -11,6 +11,7 @@ import {
   validateSnapshot,
   verifyInputHashes
 } from '../snapshot.mjs';
+import { readPublished } from '../guard.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
 const clone = (value) => JSON.parse(JSON.stringify(value));
@@ -34,10 +35,13 @@ function expectCode(report, code) {
   );
 }
 
-test('control: the live snapshot validates with zero errors and zero warnings', () => {
-  assert.deepEqual(baseReport.errors, []);
-  assert.deepEqual(baseReport.warnings, []);
-  assert.equal(baseReport.ok, true);
+test('control: published snapshot is valid; the live candidate is blocked only by pending R-26 consumption', () => {
+  const published = readPublished(root);
+  const publishedReport = validateSnapshot(published.snapshot);
+  assert.deepEqual(publishedReport.errors, []);
+  assert.equal(publishedReport.ok, true);
+  assert.deepEqual(baseReport.errors.map((error) => error.code), ['SNAP-E-R26']);
+  assert.equal(baseReport.ok, false);
 });
 
 test('input pins match the live files', () => {
@@ -210,14 +214,14 @@ test('workbench tree and indexes cover the whole tree exactly once', () => {
   assert.equal(base.consumerContract.canonicalSelectionKey, 'partInstanceId');
 });
 
-test('conflict register keeps 9 R-21 + 10 R-22 + 5 R-27 conflicts and R-26 missing policy', () => {
+test('conflict register keeps 9 R-21 + 10 R-22 + 5 R-27 conflicts; R-26 output is present but not consumed', () => {
   assert.equal(base.conflictRegister.length, 24);
   assert.equal(base.conflictRegister.filter((conflict) => conflict.source === 'R-21').length, 9);
   assert.equal(base.conflictRegister.filter((conflict) => conflict.source === 'R-22').length, 10);
   assert.equal(base.conflictRegister.filter((conflict) => conflict.source === 'R-27').length, 5);
   assert.equal(base.decisions.length, 9);
-  assert.equal(base.r26.status, 'ready');
-  assert.deepEqual(base.r26.artifacts, []);
+  assert.equal(base.r26.status, 'approved');
+  assert.deepEqual(base.r26.artifacts, ['R-26-decision-candidates.fixture.json', 'R-26-decision-candidates.md']);
   assert.equal(base.r26.decisionPolicy, 'MISSING_OUTPUT_PRESERVE_ALL_CONFLICTS');
   const decisionIds = new Set(base.decisions.map((decision) => decision.decisionId));
   for (const conflict of base.conflictRegister) assert.ok(decisionIds.has(conflict.decisionRef), conflict.registerId);
@@ -424,7 +428,7 @@ test('liveness: a same-revision R-23 run becomes a strict CURRENT view', () => {
   changed.r23.simulationRun.inputRevision = changed.r22.vehicleProject.revision;
   const next = buildSnapshot(changed);
   const report = validateSnapshot(next);
-  assert.deepEqual(report.errors, []);
+  assert.deepEqual(report.errors.filter((error) => error.code !== 'SNAP-E-R26'), []);
   assert.equal(next.poseRun.status, 'CURRENT');
   assert.equal(next.poseRun.playbackAllowed, true);
   assert.equal(next.poseRun.frames.length, 9);

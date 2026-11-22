@@ -1,0 +1,166 @@
+{
+  "schema": "carlab.r45.demoClosure.v1",
+  "date": "2026-11-22",
+  "command": "node src-experiments/wheel-end-demo-closure-v1/run-checks.mjs",
+  "playbackAllowed": false,
+  "passCount": 5,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "K01_published_points_consistent",
+      "pass": true,
+      "distancesM": {
+        "upperToLower": 0.26155305389155753,
+        "wheelToLower": 0.1285184811612711,
+        "wheelToUpper": 0.1355027674994131,
+        "outerToLower": 0.1929689094128896,
+        "outerToUpper": 0.15081445554057477,
+        "outerToWheel": 0.11702991070662234
+      }
+    },
+    {
+      "id": "K02_nominal_distances_positive",
+      "pass": true,
+      "upperToLower": 0.26155305389155753,
+      "wheelToLower": 0.1285184811612711,
+      "wheelToUpper": 0.1355027674994131,
+      "outerToLower": 0.1929689094128896,
+      "outerToUpper": 0.15081445554057477,
+      "outerToWheel": 0.11702991070662234
+    },
+    {
+      "id": "K03_travel_blocked",
+      "pass": true
+    },
+    {
+      "id": "K04_inner_end_named",
+      "pass": true
+    },
+    {
+      "id": "K05_pins_present",
+      "pass": true,
+      "c03ManifestSha256": "bfe27ea9f2ae6a3283a463389950373c5338287f6200b1179a6ed46b7d337e91",
+      "c04ManifestSha256": "a29d64a876dbfde97e4442ecd3cf513a9109be8455fa31a2b5fb1a5fc1f37369",
+      "c05ManifestSha256": "e2030af04969982174baa3275b7c19507df4f64d992b65140cc044b5afd1adfc"
+    }
+  ],
+  "closure": {
+    "ok": true,
+    "code": "NOMINAL_POINTS_CONSISTENT",
+    "fixtureId": "DEMO-CLOSURE-R45-001",
+    "sourceGrade": "DEMO_ASSUMPTION",
+    "playbackAllowed": false,
+    "packages": {
+      "c03": "c03-3f4bf8c599df28679b86",
+      "c04": "c04-bae128570c76aec59353",
+      "c05": "c05-ee1e461fecf00faa8151"
+    },
+    "pins": {
+      "c03ManifestSha256": "bfe27ea9f2ae6a3283a463389950373c5338287f6200b1179a6ed46b7d337e91",
+      "c04ManifestSha256": "a29d64a876dbfde97e4442ecd3cf513a9109be8455fa31a2b5fb1a5fc1f37369",
+      "c05ManifestSha256": "e2030af04969982174baa3275b7c19507df4f64d992b65140cc044b5afd1adfc"
+    },
+    "snapshot": {
+      "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+      "revision": 1,
+      "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+      "variantId": "VAR-R16-BOF-ICE",
+      "selectionKey": "partInstanceId",
+      "mappingStatus": "DEMO_SUBSTITUTE",
+      "sameVehicleClaim": false
+    },
+    "points": {
+      "upperBallM": [
+        -0.021,
+        0.134,
+        -0.009
+      ],
+      "lowerBallM": [
+        -0.021,
+        -0.127,
+        0.008
+      ],
+      "wheelCenterM": [
+        -0.003,
+        0,
+        0
+      ],
+      "outerBallM": [
+        -0.027,
+        0.024,
+        -0.112
+      ]
+    },
+    "distancesM": {
+      "upperToLower": 0.26155305389155753,
+      "wheelToLower": 0.1285184811612711,
+      "wheelToUpper": 0.1355027674994131,
+      "outerToLower": 0.1929689094128896,
+      "outerToUpper": 0.15081445554057477,
+      "outerToWheel": 0.11702991070662234
+    },
+    "constraints": [
+      {
+        "id": "CON-UPPER-LOWER-BALL",
+        "type": "DISTANCE",
+        "status": "MEASURED_DEMO",
+        "points": [
+          "upperBall",
+          "lowerBall"
+        ]
+      },
+      {
+        "id": "CON-WHEEL-CENTER",
+        "type": "DISTANCE",
+        "status": "MEASURED_DEMO",
+        "points": [
+          "wheelCenter",
+          "lowerBall",
+          "upperBall"
+        ]
+      },
+      {
+        "id": "CON-OUTER-BALL",
+        "type": "DISTANCE",
+        "status": "MEASURED_DEMO",
+        "points": [
+          "outerBall",
+          "upperBall",
+          "lowerBall",
+          "wheelCenter"
+        ]
+      },
+      {
+        "id": "CON-TIE-ROD-LENGTH",
+        "type": "DISTANCE",
+        "status": "BLOCKED",
+        "reason": "INNER_TIE_ROD_MISSING"
+      }
+    ],
+    "blockers": [
+      {
+        "id": "INNER_TIE_ROD_INTERFACE_NULL",
+        "owner": "C-05",
+        "detail": "innerTieRodInterface 为 null，C-06 尚未验收。"
+      },
+      {
+        "id": "TIE_ROD_LENGTH_NULL",
+        "owner": "C-05",
+        "detail": "tieRodLengthMm 为 null。"
+      },
+      {
+        "id": "CHASSIS_PIVOTS_ABSENT",
+        "owner": "R-45",
+        "detail": "没有已发布的车身摆臂枢轴，不能做行程。"
+      },
+      {
+        "id": "R44_NOT_USED",
+        "owner": "R-44",
+        "detail": "R-44 仍是 ready，本夹具直接钉住 C-04 发布清单，不读取未完成的消费层。"
+      }
+    ],
+    "bodyHardpoints": null,
+    "r28AcceptedForClosure": false
+  }
+}

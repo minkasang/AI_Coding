@@ -1,0 +1,111 @@
+{
+  "status": "PASS",
+  "baselinePackageId": "c04-bae128570c76aec59353",
+  "variantPackageId": "c04-96c50787bb4e4b228239",
+  "cases": [
+    "baseline-build-and-verify",
+    "positive-offset-millimetres-to-metres",
+    "unchanged-c03-ball-centers-and-motion-boundary",
+    "reject-same-id-and-revision-with-different-snapshot-bytes",
+    "negative-offset-variant-actual-step",
+    "reject-offset-outside-barrel",
+    "reject-inverted-offset",
+    "reject-mirrored-frame",
+    "reject-premature-playback",
+    "reject-edited-step"
+  ],
+  "baseline": {
+    "status": "PASS",
+    "independentStepSolids": 1,
+    "sourceFixedInstances": 11,
+    "measuredWheelCenter": {
+      "localMm": [
+        0.0,
+        0.0,
+        -24.0
+      ],
+      "workholdingMm": [
+        -3.0,
+        0.0,
+        0.0
+      ],
+      "workholdingYUpM": [
+        -0.003,
+        0.0,
+        0.0
+      ]
+    },
+    "measuredSignedOffset": {
+      "definition": "DOT(HUB_MOUNT_CENTER_MINUS_WHEEL_CENTER, OUTBOARD_UNIT_AXIS)",
+      "positiveMeans": "HUB_MOUNTING_FACE_OUTBOARD_OF_WHEEL_CENTER",
+      "mm": 24.0,
+      "m": 0.024,
+      "valueBasis": "DEMO_ASSUMPTION"
+    },
+    "frameChecks": {
+      "rootFromRimDeterminant": 1.0,
+      "workholdingToYUpDeterminant": 1.0,
+      "millimetresToMetres": 0.001
+    },
+    "mountFit": {
+      "approachOffsetsFromSeatedMm": [
+        23,
+        10.5,
+        2,
+        0
+      ],
+      "pairChecks": 44,
+      "maximumVolumetricOverlapMm3": 0,
+      "clashToleranceMm3": 0.01,
+      "hubPlaneContactAreaMm2": 13708.16071191,
+      "overtravel0p1MmOverlapMm3": 1370.81607119
+    }
+  },
+  "variant": {
+    "status": "PASS",
+    "independentStepSolids": 1,
+    "sourceFixedInstances": 11,
+    "measuredWheelCenter": {
+      "localMm": [
+        0.0,
+        0.0,
+        8.0
+      ],
+      "workholdingMm": [
+        29.0,
+        0.0,
+        0.0
+      ],
+      "workholdingYUpM": [
+        0.029,
+        0.0,
+        0.0
+      ]
+    },
+    "measuredSignedOffset": {
+      "definition": "DOT(HUB_MOUNT_CENTER_MINUS_WHEEL_CENTER, OUTBOARD_UNIT_AXIS)",
+      "positiveMeans": "HUB_MOUNTING_FACE_OUTBOARD_OF_WHEEL_CENTER",
+      "mm": -8.0,
+      "m": -0.008,
+      "valueBasis": "DEMO_ASSUMPTION"
+    },
+    "frameChecks": {
+      "rootFromRimDeterminant": 1.0,
+      "workholdingToYUpDeterminant": 1.0,
+      "millimetresToMetres": 0.001
+    },
+    "mountFit": {
+      "approachOffsetsFromSeatedMm": [
+        23,
+        10.5,
+        2,
+        0
+      ],
+      "pairChecks": 44,
+      "maximumVolumetricOverlapMm3": 0,
+      "clashToleranceMm3": 0.01,
+      "hubPlaneContactAreaMm2": 13708.16071191,
+      "overtravel0p1MmOverlapMm3": 1370.81607119
+    }
+  }
+}

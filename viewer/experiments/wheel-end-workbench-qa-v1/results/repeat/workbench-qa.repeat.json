@@ -1,0 +1,745 @@
+{
+  "schemaVersion": "carlab.r40.workbenchQa/1.0",
+  "repeat": true,
+  "generatedAt": "2026-11-22T04:23:34.317Z",
+  "page": "http://127.0.0.1:5173/workbench-v2/index.html?view=model",
+  "backend": "headless Chrome + SwiftShader 软件光栅化",
+  "c01": {
+    "ok": true,
+    "err": null,
+    "heading": "C-01 静态工装",
+    "description": "STATIC_WORKHOLDING_DEMO · 非整车坐标 · 运动禁用",
+    "context": "编辑当前装配 · DEMO 零件库，整车工程尚未完成",
+    "treeCount": 9,
+    "vehicleRows": 14
+  },
+  "demoLabel": {
+    "hasStatic": true,
+    "hasDemo": true,
+    "heading": "C-01 静态工装",
+    "description": "STATIC_WORKHOLDING_DEMO · 非整车坐标 · 运动禁用"
+  },
+  "trees": {
+    "assembly": {
+      "count": 9,
+      "rows": [
+        {
+          "id": "PI-20-016-FL",
+          "text": "◇ 转向节本体",
+          "noGeometry": false
+        },
+        {
+          "id": "PI-30-001-FL",
+          "text": "◇ 轴承外圈（压入转向节）",
+          "noGeometry": false
+        },
+        {
+          "id": "PI-30-002-FL",
+          "text": "◇ 轴承内圈（两列配对）",
+          "noGeometry": false
+        },
+        {
+          "id": "PI-30-006-FL",
+          "text": "◇ 独立轮毂法兰",
+          "noGeometry": false
+        },
+        {
+          "id": "PI-30-009-FL-01",
+          "text": "◇ 车轮螺柱（压装于轮毂）",
+          "noGeometry": false
+        },
+        {
+          "id": "PI-30-009-FL-02",
+          "text": "◇ 车轮螺柱（压装于轮毂）",
+          "noGeometry": false
+        },
+        {
+          "id": "PI-30-009-FL-03",
+          "text": "◇ 车轮螺柱（压装于轮毂）",
+          "noGeometry": false
+        },
+        {
+          "id": "PI-30-009-FL-04",
+          "text": "◇ 车轮螺柱（压装于轮毂）",
+          "noGeometry": false
+        },
+        {
+          "id": "PI-30-009-FL-05",
+          "text": "◇ 车轮螺柱（压装于轮毂）",
+          "noGeometry": false
+        }
+      ]
+    },
+    "vehicle": {
+      "count": 14,
+      "rows": [
+        {
+          "id": "PI-30-001-FL",
+          "text": "◇ 轴承外圈（压入转向节）无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-002-FL",
+          "text": "◇ 轴承内圈（两列配对）无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-003-FL",
+          "text": "◇ 滚动体（两列球）无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-004-FL",
+          "text": "◇ 保持架无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-005-FL-01",
+          "text": "◇ 多唇密封（内侧/外侧）无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-005-FL-02",
+          "text": "◇ 多唇密封（内侧/外侧）无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-006-FL",
+          "text": "◇ 独立轮毂法兰DEMO",
+          "noGeometry": false
+        },
+        {
+          "id": "PI-30-007-FL",
+          "text": "◇ 轮毂锁紧螺母/铆压边无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-008-FL",
+          "text": "◇ 轴头卡簧无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-009-FL-01",
+          "text": "◇ 车轮螺柱（压装于轮毂）无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-009-FL-02",
+          "text": "◇ 车轮螺柱（压装于轮毂）无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-009-FL-03",
+          "text": "◇ 车轮螺柱（压装于轮毂）无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-009-FL-04",
+          "text": "◇ 车轮螺柱（压装于轮毂）无几何",
+          "noGeometry": true
+        },
+        {
+          "id": "PI-30-009-FL-05",
+          "text": "◇ 车轮螺柱（压装于轮毂）无几何",
+          "noGeometry": true
+        }
+      ],
+      "noGeometryCount": 13
+    },
+    "isSelectedClassOnBoth": 2
+  },
+  "sizes": [
+    {
+      "tag": "1500x920",
+      "width": 1500,
+      "height": 920,
+      "frames": {
+        "overall": "results/repeat/shot-1500x920-overall.png",
+        "selectedHub": "results/repeat/shot-1500x920-selected-hub.png"
+      },
+      "overall": {
+        "pixels": 61803,
+        "meanLuma": 207.047,
+        "lumaStdDev": 34.138,
+        "nearWhiteRatio": 0.274404
+      },
+      "canvasNoSelection": {
+        "x": 288,
+        "y": 317.4,
+        "w": 876,
+        "h": 579.6
+      },
+      "canvasWithSelection": {
+        "x": 288,
+        "y": 317.4,
+        "w": 876,
+        "h": 579.6
+      },
+      "layout": {
+        "rects": [
+          {
+            "text": "可编辑装配",
+            "x": 16,
+            "y": 442.6,
+            "w": 177,
+            "h": 19
+          }
+        ],
+        "overlaps": [],
+        "docScrollW": 1500,
+        "docClientW": 1500
+      }
+    },
+    {
+      "tag": "1280x800",
+      "width": 1280,
+      "height": 800,
+      "frames": {
+        "overall": "results/repeat/shot-1280x800-overall.png",
+        "selectedHub": "results/repeat/shot-1280x800-selected-hub.png"
+      },
+      "overall": {
+        "pixels": 48664,
+        "meanLuma": 211.765,
+        "lumaStdDev": 35.544,
+        "nearWhiteRatio": 0.351533
+      },
+      "canvasNoSelection": {
+        "x": 246,
+        "y": 306.6,
+        "w": 748,
+        "h": 475.4
+      },
+      "canvasWithSelection": {
+        "x": 246,
+        "y": 306.6,
+        "w": 748,
+        "h": 475.4
+      },
+      "layout": {
+        "rects": [
+          {
+            "text": "可编辑装配",
+            "x": 16,
+            "y": 397.2,
+            "w": 144,
+            "h": 19
+          }
+        ],
+        "overlaps": [],
+        "docScrollW": 1280,
+        "docClientW": 1280
+      }
+    }
+  ],
+  "overallVisibility": [
+    {
+      "instanceId": "PI-20-016-FL",
+      "semantic": "knuckle",
+      "label": "转向节",
+      "selectOk": true,
+      "viaTree": "viewport-pick",
+      "pickTries": 1,
+      "sameCanvas": true,
+      "changedPixels": 11934,
+      "changedRatio": 0.0235,
+      "visibleColor": {
+        "pixels": 9657,
+        "rgb": [
+          156.9,
+          169.8,
+          179.6
+        ],
+        "luma": 167.74,
+        "ratios": {
+          "rg": 0.84,
+          "bg": 1.133
+        }
+      },
+      "frame": "results/repeat/shot-overall-sel-knuckle.png"
+    },
+    {
+      "instanceId": "PI-30-006-FL",
+      "semantic": "hub",
+      "label": "轮毂法兰",
+      "selectOk": true,
+      "viaTree": "vehicle-tree",
+      "pickTries": null,
+      "sameCanvas": true,
+      "changedPixels": 19704,
+      "changedRatio": 0.0388,
+      "visibleColor": {
+        "pixels": 0,
+        "rgb": null,
+        "luma": null,
+        "ratios": null
+      },
+      "frame": "results/repeat/shot-overall-sel-hub.png"
+    },
+    {
+      "instanceId": "PI-30-009-FL-01",
+      "semantic": "stud",
+      "label": "螺柱 01",
+      "selectOk": true,
+      "viaTree": "vehicle-tree",
+      "pickTries": null,
+      "sameCanvas": true,
+      "changedPixels": 580,
+      "changedRatio": 0.0011,
+      "visibleColor": {
+        "pixels": 154,
+        "rgb": [
+          161.8,
+          169,
+          178.8
+        ],
+        "luma": 168.2,
+        "ratios": {
+          "rg": 0.908,
+          "bg": 1.133
+        }
+      },
+      "frame": "results/repeat/shot-overall-sel-stud.png"
+    },
+    {
+      "instanceId": "PI-30-001-FL",
+      "semantic": "bearingOuter",
+      "label": "轴承外圈",
+      "selectOk": true,
+      "viaTree": "vehicle-tree",
+      "pickTries": null,
+      "sameCanvas": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "visibleColor": null,
+      "frame": "results/repeat/shot-overall-sel-bearingOuter.png"
+    },
+    {
+      "instanceId": "PI-30-002-FL",
+      "semantic": "bearingInner",
+      "label": "轴承内圈",
+      "selectOk": true,
+      "viaTree": "vehicle-tree",
+      "pickTries": null,
+      "sameCanvas": true,
+      "changedPixels": 0,
+      "changedRatio": 0,
+      "visibleColor": null,
+      "frame": "results/repeat/shot-overall-sel-bearingInner.png"
+    }
+  ],
+  "parts": [
+    {
+      "instanceId": "PI-20-016-FL",
+      "semantic": "knuckle",
+      "label": "转向节",
+      "expectedSrgb": [
+        134,
+        149,
+        162
+      ],
+      "selectOk": true,
+      "selectVia": "viewport-pick",
+      "pickTries": 1,
+      "treeLabel": null,
+      "inspectorTitle": null,
+      "isolateOk": true,
+      "isolateEmpty": false,
+      "measured": {
+        "pixels": 39550,
+        "rgb": [
+          168.1,
+          183.1,
+          200.8
+        ],
+        "luma": 181.18,
+        "lumaP50": 176,
+        "lumaP90": 213
+      },
+      "ratios": {
+        "rg": 0.827,
+        "bg": 1.229
+      },
+      "rawPixelsInModelArea": 39550,
+      "frame": "results/repeat/shot-isolate-knuckle.png"
+    },
+    {
+      "instanceId": "PI-30-006-FL",
+      "semantic": "hub",
+      "label": "轮毂法兰",
+      "expectedSrgb": [
+        191,
+        197,
+        206
+      ],
+      "selectOk": true,
+      "selectVia": "vehicle-tree",
+      "pickTries": null,
+      "treeLabel": "◇ 独立轮毂法兰",
+      "inspectorTitle": "独立轮毂法兰",
+      "isolateOk": true,
+      "isolateEmpty": false,
+      "measured": {
+        "pixels": 34129,
+        "rgb": [
+          192.6,
+          198.4,
+          209.2
+        ],
+        "luma": 197.91,
+        "lumaP50": 197,
+        "lumaP90": 209
+      },
+      "ratios": {
+        "rg": 0.936,
+        "bg": 1.126
+      },
+      "rawPixelsInModelArea": 34129,
+      "frame": "results/repeat/shot-isolate-hub.png"
+    },
+    {
+      "instanceId": "PI-30-009-FL-01",
+      "semantic": "stud",
+      "label": "螺柱 01",
+      "expectedSrgb": [
+        144,
+        153,
+        166
+      ],
+      "selectOk": true,
+      "selectVia": "vehicle-tree",
+      "pickTries": null,
+      "treeLabel": "◇ 车轮螺柱（压装于轮毂）",
+      "inspectorTitle": "车轮螺柱（压装于轮毂）",
+      "isolateOk": true,
+      "isolateEmpty": false,
+      "measured": {
+        "pixels": 17821,
+        "rgb": [
+          186.1,
+          195.9,
+          210.7
+        ],
+        "luma": 194.91,
+        "lumaP50": 200,
+        "lumaP90": 219
+      },
+      "ratios": {
+        "rg": 0.892,
+        "bg": 1.178
+      },
+      "rawPixelsInModelArea": 17821,
+      "frame": "results/repeat/shot-isolate-stud.png"
+    },
+    {
+      "instanceId": "PI-30-001-FL",
+      "semantic": "bearingOuter",
+      "label": "轴承外圈",
+      "expectedSrgb": [
+        173,
+        182,
+        192
+      ],
+      "selectOk": true,
+      "selectVia": "vehicle-tree",
+      "pickTries": null,
+      "treeLabel": "◇ 轴承外圈（压入转向节）",
+      "inspectorTitle": "轴承外圈（压入转向节）",
+      "isolateOk": true,
+      "isolateEmpty": false,
+      "measured": {
+        "pixels": 50953,
+        "rgb": [
+          192.9,
+          200.7,
+          211.9
+        ],
+        "luma": 199.84,
+        "lumaP50": 199,
+        "lumaP90": 215
+      },
+      "ratios": {
+        "rg": 0.915,
+        "bg": 1.13
+      },
+      "rawPixelsInModelArea": 50953,
+      "frame": "results/repeat/shot-isolate-bearingOuter.png"
+    },
+    {
+      "instanceId": "PI-30-002-FL",
+      "semantic": "bearingInner",
+      "label": "轴承内圈",
+      "expectedSrgb": [
+        211,
+        216,
+        223
+      ],
+      "selectOk": true,
+      "selectVia": "vehicle-tree",
+      "pickTries": null,
+      "treeLabel": "◇ 轴承内圈（两列配对）",
+      "inspectorTitle": "轴承内圈（两列配对）",
+      "isolateOk": true,
+      "isolateEmpty": false,
+      "measured": {
+        "pixels": 16312,
+        "rgb": [
+          201.8,
+          208.8,
+          218.6
+        ],
+        "luma": 208.03,
+        "lumaP50": 206,
+        "lumaP90": 215
+      },
+      "ratios": {
+        "rg": 0.926,
+        "bg": 1.109
+      },
+      "rawPixelsInModelArea": 16312,
+      "frame": "results/repeat/shot-isolate-bearingInner.png"
+    }
+  ],
+  "isolated": {
+    "clipModelMode": "results/repeat/shot-clip-model-mode.png",
+    "clipInspect": "results/repeat/shot-clip-inspect-x50.png"
+  },
+  "clip": null,
+  "assemblyTreeClick": {
+    "found": true,
+    "before": {
+      "heading": "C-01 静态工装",
+      "c01": true,
+      "selected": "PI-30-006-FL"
+    },
+    "after": {
+      "heading": "工程装配",
+      "c01": false,
+      "selected": "PI-30-006-FL"
+    },
+    "note": "点左栏装配树行会退出 C-01 模式且不改变选中，因此转向节在界面上没有可用的树入口",
+    "screenshot": "results/repeat/shot-assembly-tree-click-after.png"
+  },
+  "pickProbes": [
+    {
+      "name": "g00",
+      "clickAt": [
+        595,
+        482
+      ],
+      "rel": [
+        0.35,
+        0.35
+      ],
+      "selected": null,
+      "treeSaysSelected": false,
+      "treeLabel": null,
+      "inspector": "轴承内圈（两列配对）",
+      "inspectorVisible": true
+    },
+    {
+      "name": "g01",
+      "clickAt": [
+        726,
+        482
+      ],
+      "rel": [
+        0.5,
+        0.35
+      ],
+      "selected": "PI-20-016-FL",
+      "treeSaysSelected": true,
+      "treeLabel": "◇ 转向节本体",
+      "inspector": "转向节本体",
+      "inspectorVisible": true
+    },
+    {
+      "name": "g02",
+      "clickAt": [
+        857,
+        482
+      ],
+      "rel": [
+        0.65,
+        0.35
+      ],
+      "selected": null,
+      "treeSaysSelected": false,
+      "treeLabel": null,
+      "inspector": "转向节本体",
+      "inspectorVisible": true
+    },
+    {
+      "name": "g10",
+      "clickAt": [
+        595,
+        553
+      ],
+      "rel": [
+        0.35,
+        0.5
+      ],
+      "selected": null,
+      "treeSaysSelected": false,
+      "treeLabel": null,
+      "inspector": "转向节本体",
+      "inspectorVisible": true
+    },
+    {
+      "name": "g11",
+      "clickAt": [
+        726,
+        553
+      ],
+      "rel": [
+        0.5,
+        0.5
+      ],
+      "selected": "PI-30-009-FL-03",
+      "treeSaysSelected": true,
+      "treeLabel": "◇ 车轮螺柱（压装于轮毂）",
+      "inspector": "车轮螺柱（压装于轮毂）",
+      "inspectorVisible": true
+    },
+    {
+      "name": "g12",
+      "clickAt": [
+        857,
+        553
+      ],
+      "rel": [
+        0.65,
+        0.5
+      ],
+      "selected": null,
+      "treeSaysSelected": false,
+      "treeLabel": null,
+      "inspector": "车轮螺柱（压装于轮毂）",
+      "inspectorVisible": true
+    },
+    {
+      "name": "g20",
+      "clickAt": [
+        595,
+        624
+      ],
+      "rel": [
+        0.35,
+        0.65
+      ],
+      "selected": null,
+      "treeSaysSelected": false,
+      "treeLabel": null,
+      "inspector": "车轮螺柱（压装于轮毂）",
+      "inspectorVisible": true
+    },
+    {
+      "name": "g21",
+      "clickAt": [
+        726,
+        624
+      ],
+      "rel": [
+        0.5,
+        0.65
+      ],
+      "selected": "PI-30-009-FL-04",
+      "treeSaysSelected": true,
+      "treeLabel": "◇ 车轮螺柱（压装于轮毂）",
+      "inspector": "车轮螺柱（压装于轮毂）",
+      "inspectorVisible": true
+    },
+    {
+      "name": "g22",
+      "clickAt": [
+        857,
+        624
+      ],
+      "rel": [
+        0.65,
+        0.65
+      ],
+      "selected": null,
+      "treeSaysSelected": false,
+      "treeLabel": null,
+      "inspector": "车轮螺柱（压装于轮毂）",
+      "inspectorVisible": true
+    }
+  ],
+  "pickSummary": {
+    "probes": 9,
+    "hits": 3,
+    "distinctSelected": [
+      "PI-20-016-FL",
+      "PI-30-009-FL-03",
+      "PI-30-009-FL-04"
+    ],
+    "inconsistent": 0
+  },
+  "clearFailures": 0,
+  "layoutJump": {
+    "noSelection": {
+      "x": 288,
+      "y": 317.4,
+      "w": 876,
+      "h": 579.6
+    },
+    "withSelection": {
+      "x": 288,
+      "y": 317.4,
+      "w": 876,
+      "h": 579.6
+    },
+    "canvasWidthDelta": 0,
+    "canvasHeightDelta": 0
+  },
+  "isolateButton": {
+    "exists": true,
+    "text": "隔离选中零件",
+    "disabled": true
+  },
+  "clipModelMode": {
+    "ariaPressed": "false",
+    "disabled": false,
+    "inlineHidden": true,
+    "axis": "x",
+    "pos": "50",
+    "beforeSettled": true,
+    "afterSettled": true,
+    "visibleChangedPixels": 0,
+    "partPixelFraction": {
+      "before": 0.035,
+      "after": 0.035
+    },
+    "note": "剖切仅在 mode === inspect 下生效（inspection-bridge 第 81 行提前 return），整车视图下静默无效"
+  },
+  "clipInspectMode": {
+    "activation": {
+      "active": true,
+      "mode": "inspect",
+      "heading": "C-01 静态工装"
+    },
+    "ariaPressed": "true",
+    "disabled": false,
+    "inlineHidden": false,
+    "axis": "x",
+    "pos": "50",
+    "beforeSettled": true,
+    "afterSettled": true,
+    "beforeSize": [
+      876,
+      489
+    ],
+    "afterSize": [
+      876,
+      472
+    ],
+    "sizeChanged": true,
+    "visibleChangedPixels": null,
+    "partPixelFraction": {
+      "before": 0.0298,
+      "after": 0.0105
+    },
+    "note": "剖切控件展开挤压画布（高度变化），逐像素差分不可比；改用面积归一化占比判断剖切是否生效"
+  }
+}

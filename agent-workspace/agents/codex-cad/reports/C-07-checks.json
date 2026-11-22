@@ -1,0 +1,74 @@
+{
+  "status": "PASS",
+  "packageId": "c07-b429cf5c697fbd047925",
+  "variantPackageId": "c07-9bdf1f81f1eb8c65f9ec",
+  "cases": [
+    "independent-build-and-step-verification",
+    "coaxial-step-support-pairs-and-independent-coordinates",
+    "handedness-and-axis-independence",
+    "c06-neutral-and-static-scope",
+    "single-side-span-variant",
+    "reject-mixed-units",
+    "reject-fused-support-spans",
+    "reject-actual-coincident-axes",
+    "reject-c06-same-id-wrong-digest",
+    "reject-reversed-support-order",
+    "reject-edited-step"
+  ],
+  "baseline": {
+    "status": "PASS",
+    "independentStepSolids": 2,
+    "sameSourceFixedSolids": 15,
+    "locatorVsUpstream": {
+      "upper": {
+        "checkedPairs": 15,
+        "minimumClearanceMm": 82.99198603,
+        "nearestAssetId": "C06-FL-INNER-PIVOT-FIXTURE",
+        "maximumOverlapMm3": 0
+      },
+      "lower": {
+        "checkedPairs": 15,
+        "minimumClearanceMm": 98.83254793,
+        "nearestAssetId": "C06-FL-INNER-PIVOT-FIXTURE",
+        "maximumOverlapMm3": 0
+      }
+    },
+    "locatorPair": {
+      "checkedPairs": 1,
+      "minimumClearanceMm": 169.04454533,
+      "nearestAssetId": "C07-FL-LOWER-PIVOT-LOCATOR",
+      "maximumOverlapMm3": 0
+    },
+    "axisAngleDegrees": 7.43632649,
+    "shortestAxisDistanceMm": 35.0,
+    "basisDeterminant": 1.0
+  },
+  "variant": {
+    "status": "PASS",
+    "independentStepSolids": 2,
+    "sameSourceFixedSolids": 15,
+    "locatorVsUpstream": {
+      "upper": {
+        "checkedPairs": 15,
+        "minimumClearanceMm": 80.59193396,
+        "nearestAssetId": "C06-FL-INNER-PIVOT-FIXTURE",
+        "maximumOverlapMm3": 0
+      },
+      "lower": {
+        "checkedPairs": 15,
+        "minimumClearanceMm": 98.83254793,
+        "nearestAssetId": "C06-FL-INNER-PIVOT-FIXTURE",
+        "maximumOverlapMm3": 0
+      }
+    },
+    "locatorPair": {
+      "checkedPairs": 1,
+      "minimumClearanceMm": 168.15080062,
+      "nearestAssetId": "C07-FL-LOWER-PIVOT-LOCATOR",
+      "maximumOverlapMm3": 0
+    },
+    "axisAngleDegrees": 7.43632649,
+    "shortestAxisDistanceMm": 35.0,
+    "basisDeterminant": 1.0
+  }
+}

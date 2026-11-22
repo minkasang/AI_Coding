@@ -1,0 +1,511 @@
+{
+  "task": "R-43",
+  "displayCode": "03.45",
+  "owner": "gemini-3-8-flash",
+  "timestamp": "2026-11-22T11:55:00+08:00",
+  "packagesVerified": [
+    {
+      "packageId": "c03-3f4bf8c599df28679b86",
+      "role": "C03_DEMO_BALL_STUDS",
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "stepFiles": [
+        "upper-ball-stud.step",
+        "lower-ball-stud.step"
+      ]
+    },
+    {
+      "packageId": "c04-bae128570c76aec59353",
+      "role": "C04_DEMO_WHEEL_CENTER",
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "stepFiles": [
+        "rim-datum.step"
+      ]
+    }
+  ],
+  "suiteSummary": {
+    "totalTests": 22,
+    "passedTests": 22,
+    "failedTests": 0,
+    "allPassed": true
+  },
+  "negativeChecksCovered": [
+    "ERR_INPUT_MISSING_ASSET_HASH",
+    "ERR_INPUT_EMPTY_ASSET_HASHES",
+    "ERR_ASSET_HASH_MISMATCH",
+    "ERR_DEPENDENCY_HASH_MISMATCH",
+    "ERR_SNAPSHOT_BINDING_MISMATCH",
+    "ERR_SNAPSHOT_FILE_REQUIRED",
+    "ERR_PACKAGE_DIRECTORY_REQUIRED",
+    "ERR_PACKAGE_DIRECTORY_NOT_FOUND",
+    "ERR_UNVERIFIED_SOURCE_UPGRADE",
+    "ERR_UNVERIFIED_VEHICLE_CLAIM",
+    "ERR_ILLEGAL_PLAYBACK_ENABLED"
+  ],
+  "testCases": [
+    {
+      "testName": "POSITIVE_C03_AUTHENTIC_FULL_RELEASE",
+      "packageType": "C03_BALL_STUDS",
+      "description": "Authentic C-03 ball studs package verified cleanly with 2 STEP assets, snapshot binding, and C-01/C-02 dependency hashes.",
+      "passed": true,
+      "result": {
+        "passed": true,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": null,
+        "message": "Package 'c03-3f4bf8c599df28679b86' (C03_BALL_STUDS) PASSES full package release quality gate as verified DEMO_ASSUMPTION demonstration asset with 2 disk assets and lineage dependencies validated.",
+        "details": {
+          "verificationMode": "FULL_PACKAGE_RELEASE"
+        },
+        "summary": {
+          "packageId": "c03-3f4bf8c599df28679b86",
+          "packageType": "C03_BALL_STUDS",
+          "schemaVersion": "carlab.c03DemoBallStuds/1",
+          "sourceGrade": "DEMO_ASSUMPTION",
+          "verificationMode": "FULL_PACKAGE_RELEASE",
+          "verifiedFilesCount": 2,
+          "expectedAssetsCount": 2,
+          "playbackAllowed": false,
+          "existingR28Registration": "REGISTRATION_BLOCKED",
+          "sameVehicleClaim": false,
+          "lineageDependencies": [
+            "c01",
+            "c02",
+            "snapshot",
+            "referenceMotion"
+          ],
+          "demonstrationNotice": "Package 'c03-3f4bf8c599df28679b86' verified as DEMO_ASSUMPTION demonstration asset. No OEM production drawings released. Kinematic playback remains disabled."
+        }
+      }
+    },
+    {
+      "testName": "POSITIVE_C03_METADATA_ONLY",
+      "packageType": "C03_BALL_STUDS",
+      "description": "Explicit metadata-only verification of C-03 successfully validates schema, DEMO grade, and lineage declarations without disk files.",
+      "passed": true,
+      "result": {
+        "passed": true,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": null,
+        "message": "Package 'c03-3f4bf8c599df28679b86' (C03_BALL_STUDS) PASSES metadata-only quality gate (schema, sourceGrade, lineage declarations, and asset hashes verified; disk files not validated).",
+        "details": {
+          "verificationMode": "METADATA_ONLY"
+        },
+        "summary": {
+          "packageId": "c03-3f4bf8c599df28679b86",
+          "packageType": "C03_BALL_STUDS",
+          "schemaVersion": "carlab.c03DemoBallStuds/1",
+          "sourceGrade": "DEMO_ASSUMPTION",
+          "verificationMode": "METADATA_ONLY",
+          "verifiedFilesCount": 0,
+          "expectedAssetsCount": 2,
+          "playbackAllowed": false,
+          "existingR28Registration": "REGISTRATION_BLOCKED",
+          "sameVehicleClaim": false,
+          "lineageDependencies": [
+            "c01",
+            "c02",
+            "snapshot",
+            "referenceMotion"
+          ],
+          "demonstrationNotice": "Package 'c03-3f4bf8c599df28679b86' verified as DEMO_ASSUMPTION demonstration asset. No OEM production drawings released. Kinematic playback remains disabled."
+        }
+      }
+    },
+    {
+      "testName": "POSITIVE_C04_AUTHENTIC_FULL_RELEASE",
+      "packageType": "C04_WHEEL_CENTER",
+      "description": "Authentic C-04 wheel center package verified cleanly with 1 STEP asset, snapshot binding, and C-01/C-02/C-03 dependency hashes.",
+      "passed": true,
+      "result": {
+        "passed": true,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": null,
+        "message": "Package 'c04-bae128570c76aec59353' (C04_WHEEL_CENTER) PASSES full package release quality gate as verified DEMO_ASSUMPTION demonstration asset with 1 disk assets and lineage dependencies validated.",
+        "details": {
+          "verificationMode": "FULL_PACKAGE_RELEASE"
+        },
+        "summary": {
+          "packageId": "c04-bae128570c76aec59353",
+          "packageType": "C04_WHEEL_CENTER",
+          "schemaVersion": "carlab.c04DemoWheelCenter/1",
+          "sourceGrade": "DEMO_ASSUMPTION",
+          "verificationMode": "FULL_PACKAGE_RELEASE",
+          "verifiedFilesCount": 1,
+          "expectedAssetsCount": 1,
+          "playbackAllowed": false,
+          "existingR28Registration": "REGISTRATION_BLOCKED",
+          "sameVehicleClaim": false,
+          "lineageDependencies": [
+            "c01",
+            "c02",
+            "c03",
+            "snapshot",
+            "snapshotArchive",
+            "referenceMotion"
+          ],
+          "demonstrationNotice": "Package 'c04-bae128570c76aec59353' verified as DEMO_ASSUMPTION demonstration asset. No OEM production drawings released. Kinematic playback remains disabled."
+        }
+      }
+    },
+    {
+      "testName": "POSITIVE_C04_METADATA_ONLY",
+      "packageType": "C04_WHEEL_CENTER",
+      "description": "Explicit metadata-only verification of C-04 successfully validates schema, DEMO grade, and lineage declarations without disk files.",
+      "passed": true,
+      "result": {
+        "passed": true,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": null,
+        "message": "Package 'c04-bae128570c76aec59353' (C04_WHEEL_CENTER) PASSES metadata-only quality gate (schema, sourceGrade, lineage declarations, and asset hashes verified; disk files not validated).",
+        "details": {
+          "verificationMode": "METADATA_ONLY"
+        },
+        "summary": {
+          "packageId": "c04-bae128570c76aec59353",
+          "packageType": "C04_WHEEL_CENTER",
+          "schemaVersion": "carlab.c04DemoWheelCenter/1",
+          "sourceGrade": "DEMO_ASSUMPTION",
+          "verificationMode": "METADATA_ONLY",
+          "verifiedFilesCount": 0,
+          "expectedAssetsCount": 1,
+          "playbackAllowed": false,
+          "existingR28Registration": "REGISTRATION_BLOCKED",
+          "sameVehicleClaim": false,
+          "lineageDependencies": [
+            "c01",
+            "c02",
+            "c03",
+            "snapshot",
+            "snapshotArchive",
+            "referenceMotion"
+          ],
+          "demonstrationNotice": "Package 'c04-bae128570c76aec59353' verified as DEMO_ASSUMPTION demonstration asset. No OEM production drawings released. Kinematic playback remains disabled."
+        }
+      }
+    },
+    {
+      "testName": "INJECTED_C03_MISSING_STEP_HASH",
+      "expectedErrorCode": "ERR_INPUT_MISSING_ASSET_HASH",
+      "actualErrorCode": "ERR_INPUT_MISSING_ASSET_HASH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": "ERR_INPUT_MISSING_ASSET_HASH",
+        "message": "Package 'c03-3f4bf8c599df28679b86' is missing required asset hash for 'upper-ball-stud.step'.",
+        "details": {
+          "missingAsset": "upper-ball-stud.step"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C04_MISSING_STEP_HASH",
+      "expectedErrorCode": "ERR_INPUT_MISSING_ASSET_HASH",
+      "actualErrorCode": "ERR_INPUT_MISSING_ASSET_HASH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": "ERR_INPUT_MISSING_ASSET_HASH",
+        "message": "Package 'c04-bae128570c76aec59353' is missing required asset hash for 'rim-datum.step'.",
+        "details": {
+          "missingAsset": "rim-datum.step"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C03_EMPTY_SHA256",
+      "expectedErrorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+      "actualErrorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+        "message": "Package 'c03-3f4bf8c599df28679b86' sha256 asset hash manifest is empty or invalid.",
+        "details": {
+          "sha256": {}
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C04_EMPTY_SHA256",
+      "expectedErrorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+      "actualErrorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+        "message": "Package 'c04-bae128570c76aec59353' sha256 asset hash manifest is empty or invalid.",
+        "details": {
+          "sha256": {}
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C03_TAMPERED_STEP_HASH",
+      "expectedErrorCode": "ERR_ASSET_HASH_MISMATCH",
+      "actualErrorCode": "ERR_ASSET_HASH_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": "ERR_ASSET_HASH_MISMATCH",
+        "message": "Physical asset 'lower-ball-stud.step' hash mismatch! Expected: deadbeef00000000000000000000000000000000000000000000000000000000, actual: 23242a0fb1c9a93081f64bc5faeff815e8648ac2b2322b91491f5c54663918dd.",
+        "details": {
+          "file": "lower-ball-stud.step",
+          "expected": "deadbeef00000000000000000000000000000000000000000000000000000000",
+          "actual": "23242a0fb1c9a93081f64bc5faeff815e8648ac2b2322b91491f5c54663918dd"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C04_TAMPERED_STEP_HASH",
+      "expectedErrorCode": "ERR_ASSET_HASH_MISMATCH",
+      "actualErrorCode": "ERR_ASSET_HASH_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": "ERR_ASSET_HASH_MISMATCH",
+        "message": "Physical asset 'rim-datum.step' hash mismatch! Expected: deadbeef00000000000000000000000000000000000000000000000000000000, actual: 76e37510b2b99694c9024f5a0e65e89d71ba0da2266a71ba1b3c9b633fc8810f.",
+        "details": {
+          "file": "rim-datum.step",
+          "expected": "deadbeef00000000000000000000000000000000000000000000000000000000",
+          "actual": "76e37510b2b99694c9024f5a0e65e89d71ba0da2266a71ba1b3c9b633fc8810f"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C03_WRONG_C01_DEPENDENCY",
+      "expectedErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "actualErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+        "message": "Package 'c03-3f4bf8c599df28679b86' claims C-01 manifestSha256 '1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff', but disk C-01 manifest has actual hash '80e7e060de6b20015a6fdb8d5b81ea60b9e23ac442cebbb96b2bc2a5b5222d6a'.",
+        "details": {
+          "expected": "1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff",
+          "actual": "80e7e060de6b20015a6fdb8d5b81ea60b9e23ac442cebbb96b2bc2a5b5222d6a"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C03_WRONG_C02_DEPENDENCY",
+      "expectedErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "actualErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+        "message": "Package 'c03-3f4bf8c599df28679b86' claims C-02 datumsSha256 '1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff', but disk C-02 has actual hash '071eb3019dceeec74a53dc446f99413fadeaffc0a796358f61bb515a86e5f146'.",
+        "details": {
+          "expected": "1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff",
+          "actual": "071eb3019dceeec74a53dc446f99413fadeaffc0a796358f61bb515a86e5f146"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C04_WRONG_C03_DEPENDENCY",
+      "expectedErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "actualErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+        "message": "Package 'c04-bae128570c76aec59353' claims C-03 manifestSha256 '1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff', but disk C-03 manifest has actual hash 'bfe27ea9f2ae6a3283a463389950373c5338287f6200b1179a6ed46b7d337e91'.",
+        "details": {
+          "expected": "1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff",
+          "actual": "bfe27ea9f2ae6a3283a463389950373c5338287f6200b1179a6ed46b7d337e91"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C04_WRONG_C03_STEP_HASH",
+      "expectedErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "actualErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+        "message": "Package 'c04-bae128570c76aec59353' claims C-03 step 'upper-ball-stud.step' hash '1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff', but disk STEP has actual hash '4ef7a17304c035edbceb8bb76009fd389e2f483d8488b4d67bb84056ed9fb88b'.",
+        "details": {
+          "step": "upper-ball-stud.step",
+          "expected": "1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff",
+          "actual": "4ef7a17304c035edbceb8bb76009fd389e2f483d8488b4d67bb84056ed9fb88b"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C03_SNAPSHOT_HASH_TAMPERED",
+      "expectedErrorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+      "actualErrorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+        "message": "Snapshot binding SHA-256 mismatch! Package claims '1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff', disk snapshot is 'f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4'.",
+        "details": {
+          "expected": "1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff",
+          "actual": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C04_SNAPSHOT_HASH_TAMPERED",
+      "expectedErrorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+      "actualErrorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+        "message": "Snapshot binding SHA-256 mismatch! Package claims '1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff', disk snapshot is 'f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4'.",
+        "details": {
+          "expected": "1111222233334444555566667777888899990000aaaabbbbccccddddeeeeffff",
+          "actual": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C03_OMITTED_SNAPSHOT_FILE",
+      "expectedErrorCode": "ERR_SNAPSHOT_FILE_REQUIRED",
+      "actualErrorCode": "ERR_SNAPSHOT_FILE_REQUIRED",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": "ERR_SNAPSHOT_FILE_REQUIRED",
+        "message": "Full release verification for 'c03-3f4bf8c599df28679b86' requires 'snapshot_file'. Pass metadata_only=True for standalone metadata check.",
+        "details": {
+          "snapshotFile": null
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C04_OMITTED_PACKAGE_DIRECTORY",
+      "expectedErrorCode": "ERR_PACKAGE_DIRECTORY_REQUIRED",
+      "actualErrorCode": "ERR_PACKAGE_DIRECTORY_REQUIRED",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": "ERR_PACKAGE_DIRECTORY_REQUIRED",
+        "message": "Full release verification for 'c04-bae128570c76aec59353' requires 'package_dir'. Pass metadata_only=True for standalone metadata check.",
+        "details": {
+          "packageDir": null
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C03_FALSE_OEM_UPGRADE",
+      "expectedErrorCode": "ERR_UNVERIFIED_SOURCE_UPGRADE",
+      "actualErrorCode": "ERR_UNVERIFIED_SOURCE_UPGRADE",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": "ERR_UNVERIFIED_SOURCE_UPGRADE",
+        "message": "Package 'c03-3f4bf8c599df28679b86' claims sourceGrade 'OEM_SPEC', but demonstration packages MUST NOT claim unverified OEM or production status without certified drawings.",
+        "details": {
+          "claimedGrade": "OEM_SPEC",
+          "allowed": [
+            "DEMO_ESTIMATE",
+            "DEMO_ASSUMPTION"
+          ]
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C04_FALSE_SAME_VEHICLE_CLAIM",
+      "expectedErrorCode": "ERR_UNVERIFIED_VEHICLE_CLAIM",
+      "actualErrorCode": "ERR_UNVERIFIED_VEHICLE_CLAIM",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": "ERR_UNVERIFIED_VEHICLE_CLAIM",
+        "message": "Package 'c04-bae128570c76aec59353' declares sameVehicleClaim=true! Demonstration models cannot certify same-vehicle production release.",
+        "details": {
+          "sameVehicleClaim": true
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C03_ILLEGAL_PLAYBACK_ENABLED",
+      "expectedErrorCode": "ERR_ILLEGAL_PLAYBACK_ENABLED",
+      "actualErrorCode": "ERR_ILLEGAL_PLAYBACK_ENABLED",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c03-3f4bf8c599df28679b86",
+        "packageType": "C03_BALL_STUDS",
+        "errorCode": "ERR_ILLEGAL_PLAYBACK_ENABLED",
+        "message": "Package 'c03-3f4bf8c599df28679b86' has playbackAllowed=True. Demonstration inputs must keep playbackAllowed=false until full closed-loop vehicle registration.",
+        "details": {
+          "playbackAllowed": true
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_C04_NONEXISTENT_PACKAGE_DIR",
+      "expectedErrorCode": "ERR_PACKAGE_DIRECTORY_NOT_FOUND",
+      "actualErrorCode": "ERR_PACKAGE_DIRECTORY_NOT_FOUND",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c04-bae128570c76aec59353",
+        "packageType": "C04_WHEEL_CENTER",
+        "errorCode": "ERR_PACKAGE_DIRECTORY_NOT_FOUND",
+        "message": "Package directory 'F:\\tmp\\nonexistent_wheel_center_c04_package_xyz' does not exist on disk or is not a directory.",
+        "details": {
+          "packageDir": "F:\\tmp\\nonexistent_wheel_center_c04_package_xyz"
+        },
+        "summary": {}
+      }
+    }
+  ]
+}

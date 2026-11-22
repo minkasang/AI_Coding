@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARLAB Wheel End Provenance Vocabulary Mapping Specification",
+  "version": "1.0.0",
+  "task": "R-34",
+  "author": "gemini-3-8-flash",
+  "description": "Cross-workstream mapping reconciling R-08 quality gate tiers, C-01 CAD release source grades, and vehicle snapshot mapping statuses for downstream consumers.",
+  "vocabularyMapping": {
+    "DEMO_ASSUMPTION": {
+      "context": "C-01 CAD package, parameters, materials, and mounts",
+      "r08EquivalentTier": "DEMO_ESTIMATE",
+      "definition": "Parametric CAD geometry and material definitions generated from engineering assumptions without certified OEM production drawings.",
+      "mathematicalIntegrity": "VERIFIED (watertight, manifold solid, zero CAD self-intersection in C-01)",
+      "vehicleEngineeringRelease": "UNVERIFIED (dimensions are demonstration estimates, not verified vehicle release)",
+      "usableForProductionClearance": false,
+      "viewerBadge": "DEMO_ASSUMPTION",
+      "consumerRule": "Downstream viewers (Composer R-29) and consumers (DeepSeek R-32) must label instances as DEMO_ASSUMPTION. Prohibited from claiming verified OEM clearance."
+    },
+    "DEMO_ESTIMATE": {
+      "context": "R-08 Asset Quality Gates (Level 4 Provenance Tier)",
+      "c01EquivalentGrade": "DEMO_ASSUMPTION",
+      "definition": "CAD models created for pipeline validation, visual simulation, or unit testing.",
+      "mandatoryFields": ["is_demo_only: true", "disclaimer"],
+      "usableForProductionClearance": false,
+      "viewerBadge": "DEMO_ESTIMATE",
+      "consumerRule": "Compatible with non-production preview pipelines. Fails closed under strict production gate unless explicitly handled in demo mode."
+    },
+    "DEMO_SUBSTITUTE": {
+      "context": "C-01 snapshotBinding.mappingStatus & Snapshot PI binding",
+      "definition": "Physical CAD mesh substituted as a visual stand-in for a logical snapshot PartInstance (PI-*), without asserting same-vehicle verification.",
+      "sameVehicleClaim": false,
+      "viewerBadge": "DEMO_SUBSTITUTE",
+      "consumerRule": "DeepSeek R-32 binds mesh to snapshot nodes using DEMO_SUBSTITUTE. Must retain sameVehicleClaim=false. Grok R-33 must NOT treat as dynamic kinematic closure."
+    },
+    "NO_GEOMETRY": {
+      "context": "Vehicle Snapshot v1 baseline (278 PartInstances)",
+      "definition": "Logical vehicle engineering node without any physical CAD mesh.",
+      "viewerBadge": "NO_GEOMETRY",
+      "consumerRule": "Viewer must display as unmodeled/bounding wireframe node; never synthesize fake geometry without tagging."
+    },
+    "COUNTERPART_NOT_MODELED": {
+      "context": "C-01 externalMounts (e.g. ball joint seats)",
+      "definition": "Mounting interface whose mating component (e.g. control arm, tie rod) has not yet been modeled in CAD.",
+      "consumerRule": "Assembly solver must mark joint as UNCOUPLED; kinematics solver must block dynamic closure unless grounded by explicit fixture assumptions."
+    },
+    "OEM_SPEC": {
+      "context": "R-08 Level 2 Provenance Tier / Certified Production CAD",
+      "definition": "Geometry directly derived from manufacturer engineering drawings released for a verified vehicle platform.",
+      "requirements": [
+        "sourceId registered in offline provenance_registry.json with VERIFIED_VALID status",
+        "evidenceDocPath exists on disk in approved evidence repository",
+        "evidenceSha256 byte-level hash matches disk file exactly",
+        "authorized in registeredParts for the drawing",
+        "prohibits TEST_ONLY test fixtures in production mode"
+      ],
+      "usableForProductionClearance": true,
+      "viewerBadge": "OEM_VERIFIED"
+    }
+  },
+  "downstreamConsumerGuidelines": {
+    "DeepSeek_R32": {
+      "role": "Snapshot to Mesh Instance Binder",
+      "instruction": "Bind C-01 9 mesh instances to PI-* using DEMO_SUBSTITUTE. Retain snapshotSha256 and variantId VAR-R16-BOF-ICE. Never elevate DEMO_SUBSTITUTE to OEM_VERIFIED."
+    },
+    "Grok_R33": {
+      "role": "Motion Frame Registration",
+      "instruction": "Knuckle local CAD mounts (bearingSeatFront, upper/lower ball joints) have DEMO_ASSUMPTION origins. Block kinematic closure if coordinate bases conflict. Do not invent fake outer tie-rod."
+    },
+    "Composer_R29": {
+      "role": "3D Workbench UI Viewer",
+      "instruction": "Render C-01 meshes with visual badge [DEMO_ASSUMPTION]. Distinguish from NO_GEOMETRY nodes. Display provenance tooltip explaining unconfirmed OEM status."
+    }
+  }
+}

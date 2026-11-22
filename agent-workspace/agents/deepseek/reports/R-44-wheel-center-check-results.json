@@ -1,0 +1,178 @@
+{
+  "schema": "carlab.r44.wheelCenterCheck.v1",
+  "date": "2026-11-22",
+  "command": "node src-experiments/wheel-end-reference-input-v1/run-c04-checks.mjs",
+  "status": "ACCEPTED_STATIC_INPUTS_MOTION_BLOCKED",
+  "playbackAllowed": false,
+  "c04": {
+    "packageId": "c04-bae128570c76aec59353",
+    "manifestSha256": "a29d64a876dbfde97e4442ecd3cf513a9109be8455fa31a2b5fb1a5fc1f37369",
+    "stepSha256": "76e37510b2b99694c9024f5a0e65e89d71ba0da2266a71ba1b3c9b633fc8810f",
+    "wheelCenterYUpM": [
+      -0.003,
+      0,
+      0
+    ],
+    "spindleYUp": [
+      1,
+      0,
+      0
+    ],
+    "signedOffsetM": 0.024
+  },
+  "passCount": 15,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "W01_approved_c04_is_accepted_with_values",
+      "pass": true,
+      "detail": {
+        "wheelCenter": [
+          -0.003,
+          0,
+          0
+        ],
+        "spindle": [
+          1,
+          0,
+          0
+        ],
+        "signedOffsetM": 0.024
+      }
+    },
+    {
+      "id": "W02_dependencies_and_snapshot_archive_are_pinned",
+      "pass": true,
+      "detail": {
+        "manifest": "a29d64a876dbfde97e4442ecd3cf513a9109be8455fa31a2b5fb1a5fc1f37369",
+        "step": "76e37510b2b99694c9024f5a0e65e89d71ba0da2266a71ba1b3c9b633fc8810f",
+        "archive": "3524e32116019cca2a2decd91d6dfad4b180a2b2"
+      }
+    },
+    {
+      "id": "W03_signed_offset_direction_is_consistent",
+      "pass": true,
+      "detail": {
+        "delta": [
+          0.024,
+          0,
+          0
+        ],
+        "dot": 0.024,
+        "signedOffset": {
+          "definition": "DOT(HUB_MOUNT_CENTER_MINUS_WHEEL_CENTER, OUTBOARD_UNIT_AXIS)",
+          "positiveMeans": "HUB_MOUNTING_FACE_OUTBOARD_OF_WHEEL_CENTER",
+          "mm": 24,
+          "m": 0.024,
+          "valueBasis": "DEMO_ASSUMPTION"
+        }
+      }
+    },
+    {
+      "id": "W04_r38_input_includes_wheel_center_but_keeps_playback_off",
+      "pass": true,
+      "detail": {
+        "wheelCenter": [
+          -0.003,
+          0,
+          0
+        ],
+        "playbackAllowed": false
+      }
+    },
+    {
+      "id": "W05_c03_candidates_and_r28_reference_remain_unchanged",
+      "pass": true,
+      "detail": {
+        "upper": [
+          -0.021,
+          0.134,
+          -0.009
+        ],
+        "lower": [
+          -0.021,
+          -0.127,
+          0.008
+        ]
+      }
+    },
+    {
+      "id": "W06_unknowns_keep_outer_tie_rod_but_clear_wheel_center",
+      "pass": true,
+      "detail": {
+        "unknowns": [
+          "knuckleOuterTieRodInterface",
+          "sharedPhysicalLandmarkCorrespondences",
+          "clockingWitness",
+          "productionBallJointEntity",
+          "R28PoseAsNewRegistration"
+        ]
+      }
+    },
+    {
+      "id": "W07_r39_default_without_includeC04_still_pending",
+      "pass": true,
+      "detail": {
+        "status": "C04_OUTPUT_PRESENT_PENDING_REVIEW",
+        "accepted": false
+      }
+    },
+    {
+      "id": "W08_unapproved_package_and_same_id_hash_fail_closed",
+      "pass": true,
+      "detail": {
+        "checked": 2
+      }
+    },
+    {
+      "id": "W09_manifest_and_step_hash_mismatch_fail_closed",
+      "pass": true,
+      "detail": {
+        "checked": 3
+      }
+    },
+    {
+      "id": "W10_offset_direction_wheel_center_and_unit_fail_closed",
+      "pass": true,
+      "detail": {
+        "checked": 3
+      }
+    },
+    {
+      "id": "W11_dependency_and_snapshot_archive_fail_closed",
+      "pass": true,
+      "detail": {
+        "checked": 3
+      }
+    },
+    {
+      "id": "W12_motion_boundary_and_asset_identity_fail_closed",
+      "pass": true,
+      "detail": {
+        "checked": 4
+      }
+    },
+    {
+      "id": "W13_c03_ball_centers_must_be_copied_unchanged",
+      "pass": true,
+      "detail": {
+        "checked": 1
+      }
+    },
+    {
+      "id": "W14_missing_c04_package_fails_closed",
+      "pass": true,
+      "detail": {
+        "checked": 1
+      }
+    },
+    {
+      "id": "W15_c04_package_and_dependencies_are_read_only",
+      "pass": true,
+      "detail": {
+        "unchanged": true
+      }
+    }
+  ]
+}

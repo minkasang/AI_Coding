@@ -122,6 +122,15 @@ export class EngineeringViewport {
   }
   async load(seed) {
     if (seed.glbUnit !== 'm') throw new Error('GLB 必须以米为单位，不允许自动猜测缩放');
+    for (const [, object] of this.objects) {
+      this.modelLayer.remove(object);
+      object.traverse((node) => {
+        if (node.isMesh) {
+          for (const mat of Array.isArray(node.material) ? node.material : [node.material]) mat?.dispose();
+        }
+      });
+    }
+    this.objects.clear();
     this.templates.clear();
     const result = await new GLTFLoader().loadAsync(seed.asset);
     for (const part of seed.catalog) {

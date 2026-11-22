@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "packageId": "c03-3f4bf8c599df28679b86",
+  "cases": [
+    "default-build",
+    "independent-package-verification",
+    "ball-centers-in-three-coordinate-representations",
+    "adjustable-stem-clearance-and-ball-center",
+    "reject-insufficient-radial-clearance",
+    "reject-collar-without-stop-area",
+    "reject-swapped-candidate-associations",
+    "reject-premature-playback",
+    "reject-edited-step"
+  ],
+  "validation": {
+    "status": "PASS",
+    "independentStepSolids": 2,
+    "clashToleranceMm3": 0.01,
+    "insertionAndSeat": {
+      "upper": {
+        "axialApproachSamplesMm": [
+          22.3,
+          20.3,
+          10.15,
+          2.0,
+          0.0
+        ],
+        "pairChecks": 45,
+        "maximumVolumetricOverlapMm3": 0,
+        "stopContactAreaMm2": 301.59289474,
+        "shortOfSeatDistanceMm": 0.05,
+        "overtravelDistanceMm": 0.1,
+        "overtravelOverlapMm3": 30.18919991
+      },
+      "lower": {
+        "axialApproachSamplesMm": [
+          24.1,
+          22.1,
+          11.05,
+          2.0,
+          0.0
+        ],
+        "pairChecks": 45,
+        "maximumVolumetricOverlapMm3": 0,
+        "stopContactAreaMm2": 374.63492394,
+        "shortOfSeatDistanceMm": 0.05,
+        "overtravelDistanceMm": 0.1,
+        "overtravelOverlapMm3": 37.50104254
+      }
+    },
+    "seatedStudPairOverlapMm3": 0.0
+  }
+}

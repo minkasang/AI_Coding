@@ -1,0 +1,14 @@
+{
+  "unit": "mm",
+  "sourceGrade": "DEMO_ASSUMPTION",
+  "nominalOffsetMm": 24,
+  "referenceWidthMm": 140,
+  "barrelOuterDiameterMm": 410,
+  "barrelWallMm": 4.5,
+  "endFlangeRadialRiseMm": 4,
+  "endFlangeRadialReturnMm": 3,
+  "endFlangeLengthMm": 6,
+  "mountingWebThicknessMm": 10,
+  "pilotRadialGapMm": 0.1,
+  "studRadialGapMm": 0.3
+}

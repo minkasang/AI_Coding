@@ -1,0 +1,31 @@
+{
+  "unit": "mm",
+  "sourceGrade": "DEMO_ASSUMPTION",
+  "corner": "FL",
+  "upper": {
+    "inboardFromOuterMm": 195,
+    "rearwardFromOuterMm": -9,
+    "upwardFromOuterMm": -14,
+    "axisRisePer100Mm": 8,
+    "supportSpanMm": 122,
+    "earThicknessMm": 13,
+    "earOuterDiameterMm": 42,
+    "boreDiameterMm": 16,
+    "bridgeInnerOffsetMm": 14,
+    "bridgeWidthMm": 20,
+    "bridgeHeightMm": 34
+  },
+  "lower": {
+    "inboardFromOuterMm": 230,
+    "rearwardFromOuterMm": 8,
+    "upwardFromOuterMm": 27,
+    "axisRisePer100Mm": -5,
+    "supportSpanMm": 158,
+    "earThicknessMm": 15,
+    "earOuterDiameterMm": 48,
+    "boreDiameterMm": 18,
+    "bridgeInnerOffsetMm": 16,
+    "bridgeWidthMm": 22,
+    "bridgeHeightMm": 38
+  }
+}

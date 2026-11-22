@@ -1,0 +1,130 @@
+{
+  "schema": "carlab.r38.staticRegistration.v1",
+  "date": "2026-11-22",
+  "command": "node src-experiments/wheel-end-same-source-registration-v1/run-checks.mjs",
+  "fixtureId": "DEMO-KNUCKLE-STATIC-R38-001",
+  "playbackAllowed": false,
+  "passCount": 8,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "A01_sources_match",
+      "pass": true,
+      "packageId": "c03-3f4bf8c599df28679b86",
+      "datumsSha256": "071eb3019dceeec74a53dc446f99413fadeaffc0a796358f61bb515a86e5f146"
+    },
+    {
+      "id": "A02_two_poses_match_witness",
+      "pass": true,
+      "identityResidualM": 2.7809732887839817e-17,
+      "obliqueWitnessM": 5.551115123125783e-17
+    },
+    {
+      "id": "N01_swapped_balls_rejected",
+      "pass": true,
+      "residualM": 0.17436870259437173
+    },
+    {
+      "id": "N02_unit_mix_rejected",
+      "pass": true,
+      "residualM": 131.96212754867696
+    },
+    {
+      "id": "N03_reversed_outboard_rejected",
+      "pass": true,
+      "code": "MIRROR_REJECTED"
+    },
+    {
+      "id": "A03_transforms_replay_witness",
+      "pass": true,
+      "translation": [
+        0.2,
+        0.1,
+        -0.30000000000000004
+      ]
+    },
+    {
+      "id": "N04_wrong_revision_stale",
+      "pass": true
+    },
+    {
+      "id": "N05_bad_manifest_fingerprint_has_no_transform",
+      "pass": true
+    }
+  ],
+  "transforms": [
+    {
+      "poseId": "POSE-IDENTITY",
+      "frameId": "FR-R38-KNUCKLE-FL",
+      "sourceFrameId": "FR-C01-WHEEL-END-FL",
+      "units": "m",
+      "convention": "row-major matrix acting on column vectors",
+      "rotation": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1.0000000000000002,
+          0
+        ],
+        [
+          0,
+          0,
+          1.0000000000000002
+        ]
+      ],
+      "translationMeters": [
+        0,
+        6.938893903907228e-18,
+        -4.336808689942018e-19
+      ],
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "playbackAllowed": false
+    },
+    {
+      "poseId": "POSE-OBLIQUE",
+      "frameId": "FR-R38-KNUCKLE-FL",
+      "sourceFrameId": "FR-C01-WHEEL-END-FL",
+      "units": "m",
+      "convention": "row-major matrix acting on column vectors",
+      "rotation": [
+        [
+          0,
+          -5.551115123125783e-17,
+          1.0000000000000002
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1.0000000000000002,
+          5.551115123125783e-17
+        ]
+      ],
+      "translationMeters": [
+        0.2,
+        0.1,
+        -0.30000000000000004
+      ],
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "playbackAllowed": false
+    }
+  ],
+  "provenance": {
+    "packageId": "c03-3f4bf8c599df28679b86",
+    "manifestSha256": "bfe27ea9f2ae6a3283a463389950373c5338287f6200b1179a6ed46b7d337e91",
+    "datumsSha256": "071eb3019dceeec74a53dc446f99413fadeaffc0a796358f61bb515a86e5f146",
+    "c01ManifestSha256": "80e7e060de6b20015a6fdb8d5b81ea60b9e23ac442cebbb96b2bc2a5b5222d6a",
+    "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+    "snapshotRevision": 1,
+    "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+    "sourceGrade": "DEMO_ASSUMPTION"
+  }
+}

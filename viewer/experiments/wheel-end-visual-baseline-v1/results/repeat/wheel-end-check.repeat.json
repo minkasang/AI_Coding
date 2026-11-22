@@ -1,0 +1,2004 @@
+{
+  "schemaVersion": "carlab.r35.check/1.0",
+  "repeat": true,
+  "generatedAt": "2026-11-21T13:41:09.785Z",
+  "server": "http://127.0.0.1:5173",
+  "chrome": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "payload": {
+    "schemaVersion": "carlab.r35.wheelEndVisual/1.0",
+    "generatedAt": "2026-11-21T13:41:00.696Z",
+    "packageId": "c01-c5d74da77c293aa5321f",
+    "sourceGrade": "DEMO_ASSUMPTION",
+    "glb": {
+      "asset": "/cad/experiments/vehicle-cad-pipeline-v1/out/c01-c5d74da77c293aa5321f/wheel-end.glb",
+      "bytes": 750248,
+      "unit": "m",
+      "materials": 5,
+      "meshes": 5,
+      "nativeTiers": [
+        {
+          "metalness": 0.7200000286102295,
+          "roughness": 0.3400000035762787,
+          "materials": 5
+        }
+      ],
+      "nativeDistinct": 1,
+      "textures": 0,
+      "images": 0
+    },
+    "seedCount": {
+      "instances": 9,
+      "parts": 5
+    },
+    "partKeys": {
+      "PART-20-016": "knuckle",
+      "PART-30-001": "bearingOuter",
+      "PART-30-002": "bearingInner",
+      "PART-30-006": "hub",
+      "PART-30-009": "stud"
+    },
+    "views": [
+      {
+        "view": "full",
+        "label": "全装配 3/4 等轴",
+        "visibleSemantics": null,
+        "camera": {
+          "box": {
+            "min": [
+              -0.049,
+              -0.1,
+              -0.076943
+            ],
+            "max": [
+              0.042,
+              0.11,
+              0.075361
+            ]
+          },
+          "center": [
+            -0.0035,
+            0.005,
+            -0.000791
+          ],
+          "dist": 0.379244,
+          "radius": 0.137457
+        },
+        "sameWorldMatrices": true,
+        "arms": [
+          {
+            "arm": "A",
+            "armLabel": "现有覆盖 metalness 0.70 / roughness 0.34 / env 1.05",
+            "renderInfo": {
+              "calls": 11,
+              "triangles": 38488,
+              "geometries": 8,
+              "textures": 2
+            },
+            "modelPixels": 165388,
+            "overall": {
+              "meanLuma": 208.902,
+              "lumaStdDev": 31.006,
+              "highlightRatio": 0.491417,
+              "nearWhiteRatio": 0.389695,
+              "clippedRatio": 0,
+              "edgeGradient": 1.6313,
+              "pixels": 277296
+            },
+            "parts": [
+              {
+                "key": "PI-20-016-FL",
+                "pixels": 49950,
+                "coverage": 0.302017,
+                "meanLuma": 170.302,
+                "lumaStdDev": 23.45,
+                "label": "转向节本体"
+              },
+              {
+                "key": "PI-30-001-FL",
+                "pixels": 0,
+                "coverage": 0,
+                "meanLuma": null,
+                "lumaStdDev": null,
+                "label": "轴承外圈（压入转向节）"
+              },
+              {
+                "key": "PI-30-002-FL",
+                "pixels": 0,
+                "coverage": 0,
+                "meanLuma": null,
+                "lumaStdDev": null,
+                "label": "轴承内圈（两列配对）"
+              },
+              {
+                "key": "PI-30-006-FL",
+                "pixels": 98330,
+                "coverage": 0.594541,
+                "meanLuma": 196.461,
+                "lumaStdDev": 12.555,
+                "label": "独立轮毂法兰"
+              },
+              {
+                "key": "PI-30-009-FL-01",
+                "pixels": 2662,
+                "coverage": 0.016095,
+                "meanLuma": 186.901,
+                "lumaStdDev": 20.745,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-02",
+                "pixels": 3552,
+                "coverage": 0.021477,
+                "meanLuma": 182.347,
+                "lumaStdDev": 22.367,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-03",
+                "pixels": 4607,
+                "coverage": 0.027856,
+                "meanLuma": 185.059,
+                "lumaStdDev": 20.341,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-04",
+                "pixels": 3603,
+                "coverage": 0.021785,
+                "meanLuma": 187.383,
+                "lumaStdDev": 17.506,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-05",
+                "pixels": 2684,
+                "coverage": 0.016229,
+                "meanLuma": 189.011,
+                "lumaStdDev": 18.352,
+                "label": "车轮螺柱（压装于轮毂）"
+              }
+            ],
+            "groups": [
+              {
+                "key": "knuckle",
+                "instances": 1,
+                "pixels": 49950,
+                "meanLuma": 170.302
+              },
+              {
+                "key": "hub",
+                "instances": 1,
+                "pixels": 98330,
+                "meanLuma": 196.461
+              },
+              {
+                "key": "stud",
+                "instances": 5,
+                "pixels": 17108,
+                "meanLuma": 185.892
+              }
+            ],
+            "pairs": [
+              {
+                "a": "bearingInner",
+                "b": "bearingOuter",
+                "note": "轴承内圈 vs 外圈（同轴压装，最易混）",
+                "aLuma": null,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "bearingOuter",
+                "b": "hub",
+                "note": "轴承外圈 vs 轮毂法兰",
+                "aLuma": null,
+                "bLuma": 196.461,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "hub",
+                "b": "stud",
+                "note": "轮毂法兰 vs 螺柱",
+                "aLuma": 196.461,
+                "bLuma": 185.892,
+                "deltaLuma": 10.569,
+                "verdict": "MARGINAL"
+              },
+              {
+                "a": "knuckle",
+                "b": "bearingOuter",
+                "note": "转向节 vs 轴承外圈（压入关系）",
+                "aLuma": 170.302,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "stud",
+                "b": "bearingInner",
+                "note": "螺柱 vs 轴承内圈",
+                "aLuma": 185.892,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              }
+            ],
+            "allPairs": [
+              {
+                "a": "knuckle",
+                "b": "hub",
+                "note": "knuckle vs hub",
+                "aLuma": 170.302,
+                "bLuma": 196.461,
+                "deltaLuma": 26.159,
+                "verdict": "DISTINCT",
+                "keyPair": false
+              },
+              {
+                "a": "knuckle",
+                "b": "stud",
+                "note": "knuckle vs stud",
+                "aLuma": 170.302,
+                "bLuma": 185.892,
+                "deltaLuma": 15.59,
+                "verdict": "DISTINCT",
+                "keyPair": false
+              },
+              {
+                "a": "hub",
+                "b": "stud",
+                "note": "轮毂法兰 vs 螺柱",
+                "aLuma": 196.461,
+                "bLuma": 185.892,
+                "deltaLuma": 10.569,
+                "verdict": "MARGINAL",
+                "keyPair": true
+              }
+            ],
+            "occluded": [
+              "PI-30-001-FL",
+              "PI-30-002-FL"
+            ],
+            "worldMatrices": [
+              {
+                "instanceId": "PI-20-016-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-001-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-002-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-006-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-01",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0,
+                  -0.058,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-02",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0.055161,
+                  -0.017923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-03",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0.034092,
+                  0.046923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-04",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  -0.034092,
+                  0.046923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-05",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  -0.055161,
+                  -0.017923,
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "arm": "B",
+            "armLabel": "GLB 原生 PBR",
+            "renderInfo": {
+              "calls": 11,
+              "triangles": 38488,
+              "geometries": 8,
+              "textures": 2
+            },
+            "modelPixels": 165388,
+            "overall": {
+              "meanLuma": 208.154,
+              "lumaStdDev": 31.72,
+              "highlightRatio": 0.483869,
+              "nearWhiteRatio": 0.389681,
+              "clippedRatio": 0,
+              "edgeGradient": 1.6596,
+              "pixels": 277296
+            },
+            "parts": [
+              {
+                "key": "PI-20-016-FL",
+                "pixels": 49950,
+                "coverage": 0.302017,
+                "meanLuma": 168.365,
+                "lumaStdDev": 23.925,
+                "label": "转向节本体"
+              },
+              {
+                "key": "PI-30-001-FL",
+                "pixels": 0,
+                "coverage": 0,
+                "meanLuma": null,
+                "lumaStdDev": null,
+                "label": "轴承外圈（压入转向节）"
+              },
+              {
+                "key": "PI-30-002-FL",
+                "pixels": 0,
+                "coverage": 0,
+                "meanLuma": null,
+                "lumaStdDev": null,
+                "label": "轴承内圈（两列配对）"
+              },
+              {
+                "key": "PI-30-006-FL",
+                "pixels": 98330,
+                "coverage": 0.594541,
+                "meanLuma": 195.563,
+                "lumaStdDev": 12.67,
+                "label": "独立轮毂法兰"
+              },
+              {
+                "key": "PI-30-009-FL-01",
+                "pixels": 2662,
+                "coverage": 0.016095,
+                "meanLuma": 185.721,
+                "lumaStdDev": 20.999,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-02",
+                "pixels": 3552,
+                "coverage": 0.021477,
+                "meanLuma": 181.092,
+                "lumaStdDev": 22.619,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-03",
+                "pixels": 4607,
+                "coverage": 0.027856,
+                "meanLuma": 183.802,
+                "lumaStdDev": 20.606,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-04",
+                "pixels": 3603,
+                "coverage": 0.021785,
+                "meanLuma": 186.108,
+                "lumaStdDev": 17.757,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-05",
+                "pixels": 2684,
+                "coverage": 0.016229,
+                "meanLuma": 187.829,
+                "lumaStdDev": 18.629,
+                "label": "车轮螺柱（压装于轮毂）"
+              }
+            ],
+            "groups": [
+              {
+                "key": "knuckle",
+                "instances": 1,
+                "pixels": 49950,
+                "meanLuma": 168.365
+              },
+              {
+                "key": "hub",
+                "instances": 1,
+                "pixels": 98330,
+                "meanLuma": 195.563
+              },
+              {
+                "key": "stud",
+                "instances": 5,
+                "pixels": 17108,
+                "meanLuma": 184.655
+              }
+            ],
+            "pairs": [
+              {
+                "a": "bearingInner",
+                "b": "bearingOuter",
+                "note": "轴承内圈 vs 外圈（同轴压装，最易混）",
+                "aLuma": null,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "bearingOuter",
+                "b": "hub",
+                "note": "轴承外圈 vs 轮毂法兰",
+                "aLuma": null,
+                "bLuma": 195.563,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "hub",
+                "b": "stud",
+                "note": "轮毂法兰 vs 螺柱",
+                "aLuma": 195.563,
+                "bLuma": 184.655,
+                "deltaLuma": 10.908,
+                "verdict": "MARGINAL"
+              },
+              {
+                "a": "knuckle",
+                "b": "bearingOuter",
+                "note": "转向节 vs 轴承外圈（压入关系）",
+                "aLuma": 168.365,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "stud",
+                "b": "bearingInner",
+                "note": "螺柱 vs 轴承内圈",
+                "aLuma": 184.655,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              }
+            ],
+            "allPairs": [
+              {
+                "a": "knuckle",
+                "b": "hub",
+                "note": "knuckle vs hub",
+                "aLuma": 168.365,
+                "bLuma": 195.563,
+                "deltaLuma": 27.198,
+                "verdict": "DISTINCT",
+                "keyPair": false
+              },
+              {
+                "a": "knuckle",
+                "b": "stud",
+                "note": "knuckle vs stud",
+                "aLuma": 168.365,
+                "bLuma": 184.655,
+                "deltaLuma": 16.29,
+                "verdict": "DISTINCT",
+                "keyPair": false
+              },
+              {
+                "a": "hub",
+                "b": "stud",
+                "note": "轮毂法兰 vs 螺柱",
+                "aLuma": 195.563,
+                "bLuma": 184.655,
+                "deltaLuma": 10.908,
+                "verdict": "MARGINAL",
+                "keyPair": true
+              }
+            ],
+            "occluded": [
+              "PI-30-001-FL",
+              "PI-30-002-FL"
+            ],
+            "worldMatrices": [
+              {
+                "instanceId": "PI-20-016-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-001-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-002-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-006-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-01",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0,
+                  -0.058,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-02",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0.055161,
+                  -0.017923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-03",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0.034092,
+                  0.046923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-04",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  -0.034092,
+                  0.046923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-05",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  -0.055161,
+                  -0.017923,
+                  1
+                ]
+              }
+            ]
+          }
+        ],
+        "armDelta": [
+          {
+            "key": "PI-20-016-FL",
+            "aLuma": 170.302,
+            "bLuma": 168.365,
+            "deltaLuma": -1.937
+          },
+          {
+            "key": "PI-30-001-FL",
+            "aLuma": null,
+            "bLuma": null,
+            "deltaLuma": null
+          },
+          {
+            "key": "PI-30-002-FL",
+            "aLuma": null,
+            "bLuma": null,
+            "deltaLuma": null
+          },
+          {
+            "key": "PI-30-006-FL",
+            "aLuma": 196.461,
+            "bLuma": 195.563,
+            "deltaLuma": -0.898
+          },
+          {
+            "key": "PI-30-009-FL-01",
+            "aLuma": 186.901,
+            "bLuma": 185.721,
+            "deltaLuma": -1.18
+          },
+          {
+            "key": "PI-30-009-FL-02",
+            "aLuma": 182.347,
+            "bLuma": 181.092,
+            "deltaLuma": -1.255
+          },
+          {
+            "key": "PI-30-009-FL-03",
+            "aLuma": 185.059,
+            "bLuma": 183.802,
+            "deltaLuma": -1.257
+          },
+          {
+            "key": "PI-30-009-FL-04",
+            "aLuma": 187.383,
+            "bLuma": 186.108,
+            "deltaLuma": -1.275
+          },
+          {
+            "key": "PI-30-009-FL-05",
+            "aLuma": 189.011,
+            "bLuma": 187.829,
+            "deltaLuma": -1.182
+          }
+        ],
+        "overallDelta": {
+          "lumaStdDev": 0.714,
+          "edgeGradient": 0.0283,
+          "meanLuma": -0.748
+        }
+      },
+      {
+        "view": "bearingIsolated",
+        "label": "轴承内外圈隔离（局部）",
+        "visibleSemantics": [
+          "bearingOuter",
+          "bearingInner"
+        ],
+        "camera": {
+          "box": {
+            "min": [
+              -0.042,
+              -0.042992,
+              -0.043
+            ],
+            "max": [
+              0,
+              0.042992,
+              0.042966
+            ]
+          },
+          "center": [
+            -0.021,
+            0,
+            -0.000017
+          ],
+          "dist": 0.149434,
+          "radius": 0.064318
+        },
+        "sameWorldMatrices": true,
+        "arms": [
+          {
+            "arm": "A",
+            "armLabel": "现有覆盖 metalness 0.70 / roughness 0.34 / env 1.05",
+            "renderInfo": {
+              "calls": 4,
+              "triangles": 27178,
+              "geometries": 8,
+              "textures": 2
+            },
+            "modelPixels": 416981,
+            "overall": {
+              "meanLuma": 209.695,
+              "lumaStdDev": 25.288,
+              "highlightRatio": 0.51459,
+              "nearWhiteRatio": 0.259562,
+              "clippedRatio": 0.004871,
+              "edgeGradient": 0.8538,
+              "pixels": 559488
+            },
+            "parts": [
+              {
+                "key": "PI-30-001-FL",
+                "pixels": 253076,
+                "coverage": 0.606925,
+                "meanLuma": 192.281,
+                "lumaStdDev": 20.638,
+                "label": "轴承外圈（压入转向节）"
+              },
+              {
+                "key": "PI-30-002-FL",
+                "pixels": 163905,
+                "coverage": 0.393075,
+                "meanLuma": 212.284,
+                "lumaStdDev": 16.737,
+                "label": "轴承内圈（两列配对）"
+              }
+            ],
+            "groups": [
+              {
+                "key": "bearingOuter",
+                "instances": 1,
+                "pixels": 253076,
+                "meanLuma": 192.281
+              },
+              {
+                "key": "bearingInner",
+                "instances": 1,
+                "pixels": 163905,
+                "meanLuma": 212.284
+              }
+            ],
+            "pairs": [
+              {
+                "a": "bearingInner",
+                "b": "bearingOuter",
+                "note": "轴承内圈 vs 外圈（同轴压装，最易混）",
+                "aLuma": 212.284,
+                "bLuma": 192.281,
+                "deltaLuma": 20.003,
+                "verdict": "DISTINCT"
+              },
+              {
+                "a": "bearingOuter",
+                "b": "hub",
+                "note": "轴承外圈 vs 轮毂法兰",
+                "aLuma": 192.281,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "hub",
+                "b": "stud",
+                "note": "轮毂法兰 vs 螺柱",
+                "aLuma": null,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "knuckle",
+                "b": "bearingOuter",
+                "note": "转向节 vs 轴承外圈（压入关系）",
+                "aLuma": null,
+                "bLuma": 192.281,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "stud",
+                "b": "bearingInner",
+                "note": "螺柱 vs 轴承内圈",
+                "aLuma": null,
+                "bLuma": 212.284,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              }
+            ],
+            "allPairs": [
+              {
+                "a": "bearingOuter",
+                "b": "bearingInner",
+                "note": "轴承内圈 vs 外圈（同轴压装，最易混）",
+                "aLuma": 192.281,
+                "bLuma": 212.284,
+                "deltaLuma": 20.003,
+                "verdict": "DISTINCT",
+                "keyPair": true
+              }
+            ],
+            "occluded": [],
+            "worldMatrices": [
+              {
+                "instanceId": "PI-30-001-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-002-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "arm": "B",
+            "armLabel": "GLB 原生 PBR",
+            "renderInfo": {
+              "calls": 4,
+              "triangles": 27178,
+              "geometries": 8,
+              "textures": 2
+            },
+            "modelPixels": 416981,
+            "overall": {
+              "meanLuma": 208.943,
+              "lumaStdDev": 25.851,
+              "highlightRatio": 0.506751,
+              "nearWhiteRatio": 0.259192,
+              "clippedRatio": 0.00514,
+              "edgeGradient": 0.8758,
+              "pixels": 559488
+            },
+            "parts": [
+              {
+                "key": "PI-30-001-FL",
+                "pixels": 253076,
+                "coverage": 0.606925,
+                "meanLuma": 191.071,
+                "lumaStdDev": 21.017,
+                "label": "轴承外圈（压入转向节）"
+              },
+              {
+                "key": "PI-30-002-FL",
+                "pixels": 163905,
+                "coverage": 0.393075,
+                "meanLuma": 211.597,
+                "lumaStdDev": 17.078,
+                "label": "轴承内圈（两列配对）"
+              }
+            ],
+            "groups": [
+              {
+                "key": "bearingOuter",
+                "instances": 1,
+                "pixels": 253076,
+                "meanLuma": 191.071
+              },
+              {
+                "key": "bearingInner",
+                "instances": 1,
+                "pixels": 163905,
+                "meanLuma": 211.597
+              }
+            ],
+            "pairs": [
+              {
+                "a": "bearingInner",
+                "b": "bearingOuter",
+                "note": "轴承内圈 vs 外圈（同轴压装，最易混）",
+                "aLuma": 211.597,
+                "bLuma": 191.071,
+                "deltaLuma": 20.526,
+                "verdict": "DISTINCT"
+              },
+              {
+                "a": "bearingOuter",
+                "b": "hub",
+                "note": "轴承外圈 vs 轮毂法兰",
+                "aLuma": 191.071,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "hub",
+                "b": "stud",
+                "note": "轮毂法兰 vs 螺柱",
+                "aLuma": null,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "knuckle",
+                "b": "bearingOuter",
+                "note": "转向节 vs 轴承外圈（压入关系）",
+                "aLuma": null,
+                "bLuma": 191.071,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "stud",
+                "b": "bearingInner",
+                "note": "螺柱 vs 轴承内圈",
+                "aLuma": null,
+                "bLuma": 211.597,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              }
+            ],
+            "allPairs": [
+              {
+                "a": "bearingOuter",
+                "b": "bearingInner",
+                "note": "轴承内圈 vs 外圈（同轴压装，最易混）",
+                "aLuma": 191.071,
+                "bLuma": 211.597,
+                "deltaLuma": 20.526,
+                "verdict": "DISTINCT",
+                "keyPair": true
+              }
+            ],
+            "occluded": [],
+            "worldMatrices": [
+              {
+                "instanceId": "PI-30-001-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-002-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              }
+            ]
+          }
+        ],
+        "armDelta": [
+          {
+            "key": "PI-30-001-FL",
+            "aLuma": 192.281,
+            "bLuma": 191.071,
+            "deltaLuma": -1.21
+          },
+          {
+            "key": "PI-30-002-FL",
+            "aLuma": 212.284,
+            "bLuma": 211.597,
+            "deltaLuma": -0.687
+          }
+        ],
+        "overallDelta": {
+          "lumaStdDev": 0.563,
+          "edgeGradient": 0.022,
+          "meanLuma": -0.752
+        }
+      },
+      {
+        "view": "hubStack",
+        "label": "轮毂 + 五螺柱 正面（局部）",
+        "visibleSemantics": [
+          "hub",
+          "stud"
+        ],
+        "camera": {
+          "box": {
+            "min": [
+              -0.042,
+              -0.076963,
+              -0.076943
+            ],
+            "max": [
+              0.042,
+              0.076963,
+              0.075361
+            ]
+          },
+          "center": [
+            0,
+            0,
+            -0.000791
+          ],
+          "dist": 0.330525,
+          "radius": 0.116132
+        },
+        "sameWorldMatrices": true,
+        "arms": [
+          {
+            "arm": "A",
+            "armLabel": "现有覆盖 metalness 0.70 / roughness 0.34 / env 1.05",
+            "renderInfo": {
+              "calls": 8,
+              "triangles": 8012,
+              "geometries": 8,
+              "textures": 2
+            },
+            "modelPixels": 239201,
+            "overall": {
+              "meanLuma": 195.976,
+              "lumaStdDev": 25.174,
+              "highlightRatio": 0.267431,
+              "nearWhiteRatio": 0.184678,
+              "clippedRatio": 0,
+              "edgeGradient": 1.0226,
+              "pixels": 314130
+            },
+            "parts": [
+              {
+                "key": "PI-30-006-FL",
+                "pixels": 221261,
+                "coverage": 0.925,
+                "meanLuma": 184.679,
+                "lumaStdDev": 8.579,
+                "label": "独立轮毂法兰"
+              },
+              {
+                "key": "PI-30-009-FL-01",
+                "pixels": 3630,
+                "coverage": 0.015176,
+                "meanLuma": 171.736,
+                "lumaStdDev": 26.984,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-02",
+                "pixels": 3686,
+                "coverage": 0.01541,
+                "meanLuma": 161.021,
+                "lumaStdDev": 26.741,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-03",
+                "pixels": 3289,
+                "coverage": 0.01375,
+                "meanLuma": 160.749,
+                "lumaStdDev": 26.089,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-04",
+                "pixels": 3707,
+                "coverage": 0.015497,
+                "meanLuma": 173.843,
+                "lumaStdDev": 21.7,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-05",
+                "pixels": 3628,
+                "coverage": 0.015167,
+                "meanLuma": 179.008,
+                "lumaStdDev": 22.676,
+                "label": "车轮螺柱（压装于轮毂）"
+              }
+            ],
+            "groups": [
+              {
+                "key": "hub",
+                "instances": 1,
+                "pixels": 221261,
+                "meanLuma": 184.679
+              },
+              {
+                "key": "stud",
+                "instances": 5,
+                "pixels": 17940,
+                "meanLuma": 169.426
+              }
+            ],
+            "pairs": [
+              {
+                "a": "bearingInner",
+                "b": "bearingOuter",
+                "note": "轴承内圈 vs 外圈（同轴压装，最易混）",
+                "aLuma": null,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "bearingOuter",
+                "b": "hub",
+                "note": "轴承外圈 vs 轮毂法兰",
+                "aLuma": null,
+                "bLuma": 184.679,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "hub",
+                "b": "stud",
+                "note": "轮毂法兰 vs 螺柱",
+                "aLuma": 184.679,
+                "bLuma": 169.426,
+                "deltaLuma": 15.253,
+                "verdict": "DISTINCT"
+              },
+              {
+                "a": "knuckle",
+                "b": "bearingOuter",
+                "note": "转向节 vs 轴承外圈（压入关系）",
+                "aLuma": null,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "stud",
+                "b": "bearingInner",
+                "note": "螺柱 vs 轴承内圈",
+                "aLuma": 169.426,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              }
+            ],
+            "allPairs": [
+              {
+                "a": "hub",
+                "b": "stud",
+                "note": "轮毂法兰 vs 螺柱",
+                "aLuma": 184.679,
+                "bLuma": 169.426,
+                "deltaLuma": 15.253,
+                "verdict": "DISTINCT",
+                "keyPair": true
+              }
+            ],
+            "occluded": [],
+            "worldMatrices": [
+              {
+                "instanceId": "PI-30-006-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-01",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0,
+                  -0.058,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-02",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0.055161,
+                  -0.017923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-03",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0.034092,
+                  0.046923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-04",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  -0.034092,
+                  0.046923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-05",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  -0.055161,
+                  -0.017923,
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "arm": "B",
+            "armLabel": "GLB 原生 PBR",
+            "renderInfo": {
+              "calls": 8,
+              "triangles": 8012,
+              "geometries": 8,
+              "textures": 2
+            },
+            "modelPixels": 239201,
+            "overall": {
+              "meanLuma": 195.05,
+              "lumaStdDev": 25.714,
+              "highlightRatio": 0.265712,
+              "nearWhiteRatio": 0.184694,
+              "clippedRatio": 0,
+              "edgeGradient": 1.0439,
+              "pixels": 314130
+            },
+            "parts": [
+              {
+                "key": "PI-30-006-FL",
+                "pixels": 221261,
+                "coverage": 0.925,
+                "meanLuma": 183.482,
+                "lumaStdDev": 8.822,
+                "label": "独立轮毂法兰"
+              },
+              {
+                "key": "PI-30-009-FL-01",
+                "pixels": 3630,
+                "coverage": 0.015176,
+                "meanLuma": 170.352,
+                "lumaStdDev": 27.39,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-02",
+                "pixels": 3686,
+                "coverage": 0.01541,
+                "meanLuma": 159.472,
+                "lumaStdDev": 27.222,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-03",
+                "pixels": 3289,
+                "coverage": 0.01375,
+                "meanLuma": 159.324,
+                "lumaStdDev": 26.525,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-04",
+                "pixels": 3707,
+                "coverage": 0.015497,
+                "meanLuma": 172.628,
+                "lumaStdDev": 21.828,
+                "label": "车轮螺柱（压装于轮毂）"
+              },
+              {
+                "key": "PI-30-009-FL-05",
+                "pixels": 3628,
+                "coverage": 0.015167,
+                "meanLuma": 177.821,
+                "lumaStdDev": 22.881,
+                "label": "车轮螺柱（压装于轮毂）"
+              }
+            ],
+            "groups": [
+              {
+                "key": "hub",
+                "instances": 1,
+                "pixels": 221261,
+                "meanLuma": 183.482
+              },
+              {
+                "key": "stud",
+                "instances": 5,
+                "pixels": 17940,
+                "meanLuma": 168.076
+              }
+            ],
+            "pairs": [
+              {
+                "a": "bearingInner",
+                "b": "bearingOuter",
+                "note": "轴承内圈 vs 外圈（同轴压装，最易混）",
+                "aLuma": null,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "bearingOuter",
+                "b": "hub",
+                "note": "轴承外圈 vs 轮毂法兰",
+                "aLuma": null,
+                "bLuma": 183.482,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "hub",
+                "b": "stud",
+                "note": "轮毂法兰 vs 螺柱",
+                "aLuma": 183.482,
+                "bLuma": 168.076,
+                "deltaLuma": 15.406,
+                "verdict": "DISTINCT"
+              },
+              {
+                "a": "knuckle",
+                "b": "bearingOuter",
+                "note": "转向节 vs 轴承外圈（压入关系）",
+                "aLuma": null,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              },
+              {
+                "a": "stud",
+                "b": "bearingInner",
+                "note": "螺柱 vs 轴承内圈",
+                "aLuma": 168.076,
+                "bLuma": null,
+                "deltaLuma": null,
+                "verdict": "UNKNOWN"
+              }
+            ],
+            "allPairs": [
+              {
+                "a": "hub",
+                "b": "stud",
+                "note": "轮毂法兰 vs 螺柱",
+                "aLuma": 183.482,
+                "bLuma": 168.076,
+                "deltaLuma": 15.406,
+                "verdict": "DISTINCT",
+                "keyPair": true
+              }
+            ],
+            "occluded": [],
+            "worldMatrices": [
+              {
+                "instanceId": "PI-30-006-FL",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-01",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0,
+                  -0.058,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-02",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0.055161,
+                  -0.017923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-03",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  0.034092,
+                  0.046923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-04",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  -0.034092,
+                  0.046923,
+                  1
+                ]
+              },
+              {
+                "instanceId": "PI-30-009-FL-05",
+                "visible": true,
+                "matrix": [
+                  0,
+                  0,
+                  -1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  -1,
+                  0,
+                  0,
+                  0.008,
+                  -0.055161,
+                  -0.017923,
+                  1
+                ]
+              }
+            ]
+          }
+        ],
+        "armDelta": [
+          {
+            "key": "PI-30-006-FL",
+            "aLuma": 184.679,
+            "bLuma": 183.482,
+            "deltaLuma": -1.197
+          },
+          {
+            "key": "PI-30-009-FL-01",
+            "aLuma": 171.736,
+            "bLuma": 170.352,
+            "deltaLuma": -1.384
+          },
+          {
+            "key": "PI-30-009-FL-02",
+            "aLuma": 161.021,
+            "bLuma": 159.472,
+            "deltaLuma": -1.549
+          },
+          {
+            "key": "PI-30-009-FL-03",
+            "aLuma": 160.749,
+            "bLuma": 159.324,
+            "deltaLuma": -1.425
+          },
+          {
+            "key": "PI-30-009-FL-04",
+            "aLuma": 173.843,
+            "bLuma": 172.628,
+            "deltaLuma": -1.215
+          },
+          {
+            "key": "PI-30-009-FL-05",
+            "aLuma": 179.008,
+            "bLuma": 177.821,
+            "deltaLuma": -1.187
+          }
+        ],
+        "overallDelta": {
+          "lumaStdDev": 0.54,
+          "edgeGradient": 0.0213,
+          "meanLuma": -0.926
+        }
+      }
+    ],
+    "fixed": {
+      "viewport": [
+        1280,
+        800
+      ],
+      "pixelRatio": 1,
+      "productionClass": "workbench-v2/viewport.js :: EngineeringViewport",
+      "productionFileModified": false,
+      "fileLock": "composer-2-5 owns workbench-v2 main/index/styles/smoke + R-29 report",
+      "exposure": 1.18,
+      "toneMapping": 4,
+      "colorSpace": "srgb",
+      "shadowMap": 2,
+      "legacyPbr": {
+        "metalness": 0.7,
+        "roughness": 0.34,
+        "envMapIntensity": 1.05
+      },
+      "legacySource": "workbench-v2/viewport.js:166-167",
+      "rendererBackend": "headless Chrome + SwiftShader 软件光栅化",
+      "geometryNormalsModified": false,
+      "gridY": -0.095,
+      "groundY": -0.096
+    },
+    "integrity": {
+      "preserveDrawingBuffer": true,
+      "backgroundSamples": [
+        {
+          "view": "full",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "view": "bearingIsolated",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        },
+        {
+          "view": "hubStack",
+          "rgba": [
+            238,
+            243,
+            248,
+            255
+          ]
+        }
+      ]
+    },
+    "elapsedMs": 35,
+    "shots": [
+      "seg-full",
+      "A-full",
+      "B-full",
+      "seg-bearingIsolated",
+      "A-bearingIsolated",
+      "B-bearingIsolated",
+      "seg-hubStack",
+      "A-hubStack",
+      "B-hubStack"
+    ]
+  },
+  "shots": [
+    "results/repeat/shot-seg-full.png",
+    "results/repeat/shot-A-full.png",
+    "results/repeat/shot-B-full.png",
+    "results/repeat/shot-seg-bearingIsolated.png",
+    "results/repeat/shot-A-bearingIsolated.png",
+    "results/repeat/shot-B-bearingIsolated.png",
+    "results/repeat/shot-seg-hubStack.png",
+    "results/repeat/shot-A-hubStack.png",
+    "results/repeat/shot-B-hubStack.png"
+  ]
+}

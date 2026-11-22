@@ -1,0 +1,193 @@
+{
+  "schema": "carlab.r39.referenceInputCheck.v1",
+  "date": "2026-11-22",
+  "command": "node src-experiments/wheel-end-reference-input-v1/run-checks.mjs",
+  "status": "ACCEPTED_STATIC_INPUTS_MOTION_BLOCKED",
+  "playbackAllowed": false,
+  "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+  "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+  "snapshotSource": {
+    "kind": "WORKING_TREE",
+    "path": "src-experiments/vehicle-snapshot-v1/fixtures/vehicle-snapshot.json",
+    "sha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4"
+  },
+  "workingTree": {
+    "detected": false,
+    "sha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+    "approvedSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4"
+  },
+  "fingerprints": {
+    "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+    "workingTreeSnapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+    "c02DatumsSha256": "071eb3019dceeec74a53dc446f99413fadeaffc0a796358f61bb515a86e5f146",
+    "c03ManifestSha256": "bfe27ea9f2ae6a3283a463389950373c5338287f6200b1179a6ed46b7d337e91",
+    "c03PackageId": "c03-3f4bf8c599df28679b86",
+    "referenceMotionSha256": "44a58318a89522db68b1dc9dfa3aad94e7876d8c5714e7e02b63d1d7117c265d",
+    "fixtureSha256": "9cdc6e8241a5f539f56dafb6ae1d6e68b0ec02ff8fb4e8bc3a05c0f5cf0b6ed1",
+    "c01ManifestSha256": "80e7e060de6b20015a6fdb8d5b81ea60b9e23ac442cebbb96b2bc2a5b5222d6a",
+    "c01GlbSha256": "c11da5170450979ba0d1b444af18e32679cc3e9fce11a941bb1172f8427710c3"
+  },
+  "passCount": 18,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "B01_reference_inputs_accepted_and_playback_blocked",
+      "pass": true,
+      "detail": {
+        "status": "ACCEPTED_STATIC_INPUTS_MOTION_BLOCKED",
+        "blockers": [],
+        "span": 261.553
+      }
+    },
+    {
+      "id": "B02_fingerprints_match_approved_files",
+      "pass": true,
+      "detail": {
+        "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+        "workingTreeSnapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+        "c02DatumsSha256": "071eb3019dceeec74a53dc446f99413fadeaffc0a796358f61bb515a86e5f146",
+        "c03ManifestSha256": "bfe27ea9f2ae6a3283a463389950373c5338287f6200b1179a6ed46b7d337e91",
+        "c03PackageId": "c03-3f4bf8c599df28679b86",
+        "referenceMotionSha256": "44a58318a89522db68b1dc9dfa3aad94e7876d8c5714e7e02b63d1d7117c265d",
+        "fixtureSha256": "9cdc6e8241a5f539f56dafb6ae1d6e68b0ec02ff8fb4e8bc3a05c0f5cf0b6ed1",
+        "c01ManifestSha256": "80e7e060de6b20015a6fdb8d5b81ea60b9e23ac442cebbb96b2bc2a5b5222d6a",
+        "c01GlbSha256": "c11da5170450979ba0d1b444af18e32679cc3e9fce11a941bb1172f8427710c3"
+      }
+    },
+    {
+      "id": "B03_ball_centers_and_candidate_assemblies",
+      "pass": true,
+      "detail": {
+        "upper": "PI-20-003-FL",
+        "lower": "PI-20-010-FL"
+      }
+    },
+    {
+      "id": "B04_c04_output_present_but_not_accepted",
+      "pass": true,
+      "detail": {
+        "status": "C04_OUTPUT_PRESENT_PENDING_REVIEW",
+        "packages": 1
+      }
+    },
+    {
+      "id": "B05_r28_is_reference_only_not_new_registration",
+      "pass": true,
+      "detail": {
+        "runId": "RUN-SLA-FL-SNAP1-001",
+        "sourceStatus": "CURRENT",
+        "sourcePlaybackAllowed": true,
+        "acceptedForNewDemo": false,
+        "reason": "OLD_R28_FRAME_NOT_REGISTERED_TO_C02_C03",
+        "resultHash": "ea07924e32613ccb4500ac737d4f6c08a6f531bba0afa0e6219f45bd4784ddc3",
+        "frameId": "FR-VEHICLE",
+        "sourceRevision": 1
+      }
+    },
+    {
+      "id": "B06_registration_remains_blocked_with_explicit_missing",
+      "pass": true,
+      "detail": {
+        "missing": [
+          "upperTaperToBallCenter",
+          "lowerTaperToBallCenter",
+          "bearingOutboardFaceToLowerBallCenter",
+          "wheelMountFaceToWheelCenter",
+          "knuckleOuterTieRodInterface",
+          "sharedPhysicalLandmarkCorrespondences"
+        ]
+      }
+    },
+    {
+      "id": "B07_r38_input_has_datums_witnesses_and_no_wheel_center",
+      "pass": true,
+      "detail": {
+        "status": "READY_FOR_STATIC_REGISTRATION_INPUTS",
+        "witness": [
+          "PI-20-016-FL/bearingSeatFront",
+          "PI-20-016-FL/upperBallJointSeat",
+          "PI-20-016-FL/lowerBallJointSeat"
+        ]
+      }
+    },
+    {
+      "id": "B08_snapshot_working_tree_drift_is_reported_as_blocker",
+      "pass": true,
+      "detail": {
+        "clean": "ACCEPTED_STATIC_INPUTS_MOTION_BLOCKED",
+        "drift": "ACCEPTED_STATIC_INPUTS_PINNED_BYTES_WORKING_TREE_BLOCKED"
+      }
+    },
+    {
+      "id": "B09_wrong_datums_or_c03_hash_fails_closed",
+      "pass": true,
+      "detail": {
+        "checked": 2
+      }
+    },
+    {
+      "id": "B10_wrong_snapshot_hash_revision_or_variant_fails_closed",
+      "pass": true,
+      "detail": {
+        "checked": 3
+      }
+    },
+    {
+      "id": "B11_swapped_roles_or_ball_centers_fail_closed",
+      "pass": true,
+      "detail": {
+        "checked": 2
+      }
+    },
+    {
+      "id": "B12_unit_mix_and_wrong_offset_fail_closed",
+      "pass": true,
+      "detail": {
+        "checked": 2
+      }
+    },
+    {
+      "id": "B13_candidate_as_production_fails_closed",
+      "pass": true,
+      "detail": {
+        "checked": 2
+      }
+    },
+    {
+      "id": "B14_r28_pose_input_and_c04_value_are_rejected",
+      "pass": true,
+      "detail": {
+        "checked": 2
+      }
+    },
+    {
+      "id": "B15_missing_datum_wrong_part_or_wrong_corner_fails_closed",
+      "pass": true,
+      "detail": {
+        "checked": 3
+      }
+    },
+    {
+      "id": "B16_reference_motion_hash_or_run_mismatch_fails_closed",
+      "pass": true,
+      "detail": {
+        "checked": 2
+      }
+    },
+    {
+      "id": "B17_registration_status_or_candidate_pi_mismatch_fails_closed",
+      "pass": true,
+      "detail": {
+        "checked": 2
+      }
+    },
+    {
+      "id": "B18_read_only_inputs_are_not_mutated",
+      "pass": true,
+      "detail": {
+        "unchanged": true
+      }
+    }
+  ]
+}

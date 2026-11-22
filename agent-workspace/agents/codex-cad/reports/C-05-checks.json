@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "packageId": "c05-ee1e461fecf00faa8151",
+  "variantPackageId": "c05-1951834823334738916a",
+  "cases": [
+    "independent-step-build-and-verify",
+    "outer-ball-center-in-four-coordinate-representations",
+    "deferred-identity-and-playback-boundary",
+    "reach-variant-propagates-only-related-geometry-and-datum",
+    "reject-reversed-taper",
+    "reject-disconnected-arm",
+    "reject-invented-outer-tie-rod-instance",
+    "reject-premature-motion-playback",
+    "reject-edited-step"
+  ],
+  "default": {
+    "status": "PASS",
+    "independentStepSolids": 2,
+    "outerBallCenter": {
+      "studLocalMm": [
+        0.0,
+        0.0,
+        20.0
+      ],
+      "knuckleLocalMm": [
+        112.0,
+        24.0,
+        -27.0
+      ],
+      "workholdingMm": [
+        -27.0,
+        112.0,
+        24.0
+      ],
+      "workholdingYUpM": [
+        -0.027,
+        0.024,
+        -0.112
+      ]
+    },
+    "retainedKnuckleDeviationMm3": 0.0,
+    "addedArmVolumeMm3": 30352.56132228,
+    "derivedKnuckleStaticPairs": 11,
+    "derivedKnuckleMaximumOverlapMm3": 0,
+    "outerStudOverlapWithOriginalKnuckleMm3": 0.0,
+    "outerStudInsertionAndSeat": {
+      "axialApproachSamplesMm": [
+        25.2,
+        23.2,
+        11.6,
+        2.0,
+        0.0
+      ],
+      "pairChecks": 60,
+      "maximumVolumetricOverlapMm3": 0,
+      "stopContactAreaMm2": 251.32741229,
+      "shortOfSeatDistanceMm": 0.05,
+      "overtravelDistanceMm": 0.1,
+      "overtravelOverlapMm3": 25.15367791
+    }
+  },
+  "variant": {
+    "status": "PASS",
+    "independentStepSolids": 2,
+    "outerBallCenter": {
+      "studLocalMm": [
+        0.0,
+        0.0,
+        20.0
+      ],
+      "knuckleLocalMm": [
+        124.0,
+        24.0,
+        -27.0
+      ],
+      "workholdingMm": [
+        -27.0,
+        124.0,
+        24.0
+      ],
+      "workholdingYUpM": [
+        -0.027,
+        0.024,
+        -0.124
+      ]
+    },
+    "retainedKnuckleDeviationMm3": 0.0,
+    "addedArmVolumeMm3": 33048.36179004,
+    "derivedKnuckleStaticPairs": 11,
+    "derivedKnuckleMaximumOverlapMm3": 0,
+    "outerStudOverlapWithOriginalKnuckleMm3": 0.0,
+    "outerStudInsertionAndSeat": {
+      "axialApproachSamplesMm": [
+        25.2,
+        23.2,
+        11.6,
+        2.0,
+        0.0
+      ],
+      "pairChecks": 60,
+      "maximumVolumetricOverlapMm3": 0,
+      "stopContactAreaMm2": 251.32741229,
+      "shortOfSeatDistanceMm": 0.05,
+      "overtravelDistanceMm": 0.1,
+      "overtravelOverlapMm3": 25.15367791
+    }
+  }
+}

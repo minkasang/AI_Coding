@@ -1,0 +1,212 @@
+{
+  "schema": "carlab.r33.registrationRun.v1",
+  "date": "2026-11-21",
+  "command": "node src-experiments/wheel-end-frame-registration-v1/run-checks.mjs",
+  "playbackAllowed": false,
+  "status": "REGISTRATION_BLOCKED",
+  "passCount": 12,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "R01_real_pair_blocked",
+      "pass": true,
+      "missing": [
+        "BALL_CENTER",
+        "SHARED_POINT_IDS",
+        "ANCHOR_IS_NOT_ROOT_AXIS",
+        "BEARING_FACE_TO_LOWER_BALL"
+      ]
+    },
+    {
+      "id": "R02_roles_preserved",
+      "pass": true
+    },
+    {
+      "id": "R03_identity_recorded",
+      "pass": true,
+      "hash": "ea07924e32613ccb4500ac737d4f6c08a6f531bba0afa0e6219f45bd4784ddc3"
+    },
+    {
+      "id": "R04_synthetic_fit_recovers",
+      "pass": true,
+      "residualM": 8.777083671441753e-17
+    },
+    {
+      "id": "R08_oblique_rigid_motion_recovers",
+      "pass": true,
+      "code": "REGISTERED",
+      "residualM": 3.342213888644167e-16
+    },
+    {
+      "id": "R09_same_physical_direction_passes",
+      "pass": true
+    },
+    {
+      "id": "R05_mirror_rejected",
+      "pass": true,
+      "code": "MIRROR_REJECTED",
+      "normalDot": -0.9999999999999996
+    },
+    {
+      "id": "R10_collinear_is_not_mirror",
+      "pass": true
+    },
+    {
+      "id": "R11_coincident_rejected",
+      "pass": true
+    },
+    {
+      "id": "R12_c02_still_blocks_playback",
+      "pass": true
+    },
+    {
+      "id": "R06_millimetre_mix_rejected",
+      "pass": true,
+      "residualM": 80.47308618413985
+    },
+    {
+      "id": "R07_wrong_revision_not_playable",
+      "pass": true
+    }
+  ],
+  "assessment": {
+    "playbackAllowed": false,
+    "status": "REGISTRATION_BLOCKED",
+    "motionValueBasis": "DEMO_ASSUMPTION",
+    "source": {
+      "cadFrameId": "FR-C01-WHEEL-END-FL",
+      "cadUnits": "mm",
+      "cadSourceGrade": "DEMO_ASSUMPTION",
+      "cadOriginMeaning": "C-01 workholding frame. CAD +X outboard, +Y rear, +Z up. Root origin is the outboard bearing face on the spindle axis.",
+      "cadNumericAxes": {
+        "xAxis": [
+          0,
+          1,
+          0
+        ],
+        "zAxis": [
+          1,
+          0,
+          0
+        ],
+        "role": "INSTALLATION_ANCHOR_IN_WORKHOLDING"
+      },
+      "workholdingAxes": {
+        "x": "OUTBOARD",
+        "y": "REAR",
+        "z": "UP"
+      },
+      "c02Registration": "REGISTRATION_BLOCKED",
+      "c02VehicleFromWorkholding": null,
+      "spindleProjectionDifferenceMm": -79.3776009561,
+      "taperSeats": [
+        {
+          "name": "upperBallJointSeat",
+          "generatorOriginMm": [
+            9,
+            110,
+            -21
+          ],
+          "generatorAxis": [
+            0,
+            1,
+            0
+          ],
+          "meaning": "锥孔座轴线过凸台，不是球心。"
+        },
+        {
+          "name": "lowerBallJointSeat",
+          "generatorOriginMm": [
+            -8,
+            -100,
+            -21
+          ],
+          "generatorAxis": [
+            0,
+            -1,
+            0
+          ],
+          "meaning": "锥孔座轴线过凸台，不是球心。"
+        }
+      ],
+      "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+      "runId": "RUN-SLA-FL-SNAP1-001",
+      "sourceRevision": 1,
+      "resultHash": "ea07924e32613ccb4500ac737d4f6c08a6f531bba0afa0e6219f45bd4784ddc3",
+      "variantId": "VAR-R16-BOF-ICE",
+      "instanceId": "PI-20-016-FL"
+    },
+    "motionKnuckle": {
+      "originMeaning": "LOWER_BALL_JOINT",
+      "positionMeters": [
+        0.6166459509699874,
+        -0.10197438428188225,
+        0.00456398271955366
+      ],
+      "quaternion": [
+        0.3535095733885992,
+        0.4534380266267247,
+        0.6660684591080642,
+        0.4751607573368002
+      ]
+    },
+    "roles": {
+      "hub": {
+        "role": "HUB",
+        "instanceId": null,
+        "candidateInstanceId": "PI-30-006-FL",
+        "roleOnly": true,
+        "bindingBasis": "WHEEL_CENTER_AND_SPINDLE_NOT_FLANGE_FRAME",
+        "validity": "ROLE_ONLY",
+        "published": false,
+        "notARigidPartPose": true,
+        "observedPositionMeters": [
+          0.7154311619468701,
+          -0.04000000001231825,
+          0.0037529422389379072
+        ]
+      },
+      "tierod": {
+        "role": "TIEROD",
+        "definitionId": "PART-20-075",
+        "instanceId": null,
+        "requiredButDeferred": true,
+        "validity": "REQUIRED_DEFERRED",
+        "published": false,
+        "observedPositionMeters": [
+          0.26,
+          0.06,
+          0.15
+        ]
+      }
+    },
+    "missing": [
+      {
+        "id": "BALL_CENTER",
+        "owner": "C-01",
+        "detail": "球头未建模，只有锥孔座。沿锥轴到球心的距离没有来源。"
+      },
+      {
+        "id": "SHARED_POINT_IDS",
+        "owner": "C-01 与 R-28",
+        "detail": "运动硬点是另一套虚构夹具，没有和锥孔座使用同一个点编号。"
+      },
+      {
+        "id": "ANCHOR_IS_NOT_ROOT_AXIS",
+        "owner": "C-02",
+        "detail": "assembly.json 的 xAxis/zAxis 是安装锚点在工装根坐标中的分量，不是第二套“Z 向上”定义。工装根仍是 X 外侧、Y 后、Z 上。"
+      },
+      {
+        "id": "BEARING_FACE_TO_LOWER_BALL",
+        "owner": "C-01 与 R-28",
+        "detail": "CAD 原点是外侧轴承端面与主轴交点。运动转向节原点是下球铰。两者的偏移没有共同测量。"
+      }
+    ],
+    "thresholds": {
+      "positionM": 0.0001,
+      "angleRad": 0.0017453292519943296,
+      "positionBasis": "C-01 文档写明 CAD 与 GLB 误差上限 0.10 mm。这不是实车 K&C 容差。"
+    }
+  }
+}

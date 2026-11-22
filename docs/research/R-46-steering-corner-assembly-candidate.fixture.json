@@ -1,0 +1,505 @@
+{
+  "schemaVersion": "1.0",
+  "artifact": "R-46 steering left/right sub-assembly candidate",
+  "owner": "qwen4",
+  "taskId": "R-46",
+  "date": "2026-11-22",
+  "status": "submitted",
+  "purpose": "验证 R-42 的局部层级方案：中央转向器保持一个 VEH 级总成，在其下提议左右子总成，让内外拉杆、锁紧件与保护件获得独立角位与 Frame。只交候选，不改 R-16、不重建快照、不新增正式 PI。",
+  "inputs": [
+    {
+      "path": "docs/research/R-16-vehicle-skeleton.fixture.json",
+      "readOnly": true,
+      "hashPolicy": "REQUIRED",
+      "sha256": "20af8ba0444c68b7b671664735e01517f61a5b58fa34dcc4bbf6dce898ef331e"
+    },
+    {
+      "path": "src-experiments/vehicle-snapshot-v1/fixtures/vehicle-snapshot.json",
+      "readOnly": true,
+      "hashPolicy": "ADVISORY",
+      "sha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4"
+    }
+  ],
+  "baseline": {
+    "r16Counts": {
+      "assemblyDefinitions": 108,
+      "assemblyInstances": 37,
+      "partDefinitions": 493,
+      "partInstances": 278,
+      "mountFrames": 37
+    },
+    "snapshot": {
+      "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+      "revision": 1,
+      "status": "CANDIDATE_NOT_FROZEN",
+      "readOnly": true
+    },
+    "central": {
+      "assemblyDefinitionId": "ASSY-20-014",
+      "name": "转向操纵与齿轮齿条转向器",
+      "parentId": "SUB-20-03",
+      "instanceId": "AI-20-014-VEH",
+      "corner": "VEH",
+      "mountFrameId": "FR-20-014-VEH",
+      "instanceCount": 1,
+      "worldFrame": "UNFROZEN_PENDING_RP07",
+      "childPartInstances": [
+        "PI-20-066-VEH",
+        "PI-20-067-VEH",
+        "PI-20-068-VEH",
+        "PI-20-069-VEH-01",
+        "PI-20-069-VEH-02",
+        "PI-20-069-VEH-03",
+        "PI-20-069-VEH-04",
+        "PI-20-070-VEH",
+        "PI-20-071-VEH",
+        "PI-20-072-VEH",
+        "PI-20-073-VEH-01",
+        "PI-20-073-VEH-02",
+        "PI-20-088-VEH"
+      ],
+      "childPartInstanceCount": 13,
+      "unchanged": true
+    }
+  },
+  "structurePrecedent": {
+    "caseA": {
+      "parent": "ASSY-30-004",
+      "parentName": "车轮总成",
+      "parentInstances": [
+        "AI-30-004-FL",
+        "AI-30-004-FR",
+        "AI-30-004-RL",
+        "AI-30-004-RR"
+      ],
+      "child": "ASSY-30-005",
+      "childName": "轮胎总成（外购不可拆总成，分层仅示意）",
+      "childInstances": [
+        "AI-30-005-FL",
+        "AI-30-005-FR",
+        "AI-30-005-RL",
+        "AI-30-005-RR"
+      ],
+      "pattern": "父总成有每角实例，子总成同样有每角实例"
+    },
+    "caseB": {
+      "parent": "ASSY-20-001",
+      "parentName": "双叉臂前悬架总成",
+      "parentInstances": [],
+      "child": "ASSY-20-002",
+      "childName": "上摆臂总成",
+      "childInstances": [
+        "AI-20-002-FL",
+        "AI-20-002-FR"
+      ],
+      "pattern": "容器总成可以没有实例，只有子总成有实例"
+    },
+    "conclusion": "总成嵌套本身在 R-16 已存在。本轮新增的只有一种组合：**每角子总成实例挂在 VEH 级父总成实例下**。"
+  },
+  "newRelation": {
+    "id": "R46-REL-01",
+    "rule": "允许每角子总成实例（corner=FL|FR）挂在 VEH 级父总成实例下，条件是：子总成显式声明其角位、其全部子件的角位与子总成实例角位一致、且每个子件在整车数量上只被这两侧各计一次。",
+    "whyNeeded": "中央转向器必须保持一个 VEH 级实例（总控已定），而内外拉杆/锁紧件/保护件天然是左右各一件。现有对角规则只约束『零件角位 == 直接父总成实例角位』，不约束『总成实例角位 == 其父总成实例角位』。",
+    "doesNotBreakExistingGuards": {
+      "checked": [
+        "tools/r16_skeleton_tool.py",
+        "tools/r21_mapping_tool.py",
+        "tools/r42_identity_tool.py"
+      ],
+      "finding": "三个校验器均未断言『总成实例角位 == 父总成实例角位』；对角规则只作用于零件实例与其直接父总成实例。",
+      "newRelationIsAdditive": true
+    },
+    "alternativeRejected": "放宽『零件角位可以细于父总成实例』（R-42 的 OPT-42-B）会直接改动对角规则、影响全部 278 个零件实例的校验；本候选不动那条规则。"
+  },
+  "candidateTree": {
+    "central": {
+      "instanceId": "AI-20-014-VEH",
+      "unchanged": true
+    },
+    "subAssemblies": [
+      {
+        "candidateAssemblyDefinitionId": "CAND-ASSY-20-014-FL",
+        "name": "转向拉杆子总成（左）",
+        "parentAssemblyDefinitionId": "ASSY-20-014",
+        "corner": "FL",
+        "cornerScopeStatus": "CANDIDATE_DECLARED",
+        "candidateAssemblyInstanceId": "CAND-AI-20-014-FL",
+        "candidateMountFrameId": "CAND-FR-20-014-FL",
+        "worldFrame": "UNFROZEN_PENDING_RP07",
+        "parts": [
+          {
+            "partId": "PART-20-074",
+            "name": "内拉杆（轴向接头 axial joint）",
+            "qtyVehicleTotal": 2,
+            "qtyPerCornerInCandidate": 1,
+            "candidateInstanceId": "CAND-PI-20-074-FL",
+            "parentCandidateAssemblyInstanceId": "CAND-AI-20-014-FL",
+            "corner": "FL",
+            "evidenceInherited": "EVIDENCE",
+            "geometryBasis": "UNKNOWN",
+            "geometryStatus": "GEOMETRY_PENDING",
+            "handednessKind": "SYMMETRIC_PART_DISTINCT_MOUNT"
+          },
+          {
+            "partId": "PART-20-075",
+            "name": "外拉杆端（tie rod end）",
+            "qtyVehicleTotal": 2,
+            "qtyPerCornerInCandidate": 1,
+            "candidateInstanceId": "CAND-PI-20-075-FL",
+            "parentCandidateAssemblyInstanceId": "CAND-AI-20-014-FL",
+            "corner": "FL",
+            "evidenceInherited": "EVIDENCE",
+            "geometryBasis": "UNKNOWN",
+            "geometryStatus": "GEOMETRY_PENDING",
+            "handednessKind": "MIRROR_REGENERATE"
+          },
+          {
+            "partId": "PART-20-076",
+            "name": "拉杆锁紧螺母",
+            "qtyVehicleTotal": 2,
+            "qtyPerCornerInCandidate": 1,
+            "candidateInstanceId": "CAND-PI-20-076-FL",
+            "parentCandidateAssemblyInstanceId": "CAND-AI-20-014-FL",
+            "corner": "FL",
+            "evidenceInherited": "ASSUMPTION",
+            "geometryBasis": "DEMO_ASSUMPTION",
+            "geometryStatus": "GEOMETRY_PENDING",
+            "handednessKind": "SYMMETRIC_PART_DISTINCT_MOUNT"
+          },
+          {
+            "partId": "PART-20-077",
+            "name": "转向器防尘罩（波纹管）",
+            "qtyVehicleTotal": 2,
+            "qtyPerCornerInCandidate": 1,
+            "candidateInstanceId": "CAND-PI-20-077-FL",
+            "parentCandidateAssemblyInstanceId": "CAND-AI-20-014-FL",
+            "corner": "FL",
+            "evidenceInherited": "EVIDENCE",
+            "geometryBasis": "DEMO_ASSUMPTION",
+            "geometryStatus": "GEOMETRY_PENDING",
+            "handednessKind": "SYMMETRIC_PART_DISTINCT_MOUNT"
+          },
+          {
+            "partId": "PART-20-078",
+            "name": "拉杆端卡簧与槽顶螺母",
+            "qtyVehicleTotal": 2,
+            "qtyPerCornerInCandidate": 1,
+            "candidateInstanceId": "CAND-PI-20-078-FL",
+            "parentCandidateAssemblyInstanceId": "CAND-AI-20-014-FL",
+            "corner": "FL",
+            "evidenceInherited": "ASSUMPTION",
+            "geometryBasis": "DEMO_ASSUMPTION",
+            "geometryStatus": "GEOMETRY_PENDING",
+            "handednessKind": "SYMMETRIC_PART_DISTINCT_MOUNT"
+          }
+        ]
+      },
+      {
+        "candidateAssemblyDefinitionId": "CAND-ASSY-20-014-FR",
+        "name": "转向拉杆子总成（右）",
+        "parentAssemblyDefinitionId": "ASSY-20-014",
+        "corner": "FR",
+        "cornerScopeStatus": "CANDIDATE_DECLARED",
+        "candidateAssemblyInstanceId": "CAND-AI-20-014-FR",
+        "candidateMountFrameId": "CAND-FR-20-014-FR",
+        "worldFrame": "UNFROZEN_PENDING_RP07",
+        "parts": [
+          {
+            "partId": "PART-20-074",
+            "name": "内拉杆（轴向接头 axial joint）",
+            "qtyVehicleTotal": 2,
+            "qtyPerCornerInCandidate": 1,
+            "candidateInstanceId": "CAND-PI-20-074-FR",
+            "parentCandidateAssemblyInstanceId": "CAND-AI-20-014-FR",
+            "corner": "FR",
+            "evidenceInherited": "EVIDENCE",
+            "geometryBasis": "UNKNOWN",
+            "geometryStatus": "GEOMETRY_PENDING",
+            "handednessKind": "SYMMETRIC_PART_DISTINCT_MOUNT"
+          },
+          {
+            "partId": "PART-20-075",
+            "name": "外拉杆端（tie rod end）",
+            "qtyVehicleTotal": 2,
+            "qtyPerCornerInCandidate": 1,
+            "candidateInstanceId": "CAND-PI-20-075-FR",
+            "parentCandidateAssemblyInstanceId": "CAND-AI-20-014-FR",
+            "corner": "FR",
+            "evidenceInherited": "EVIDENCE",
+            "geometryBasis": "UNKNOWN",
+            "geometryStatus": "GEOMETRY_PENDING",
+            "handednessKind": "MIRROR_REGENERATE"
+          },
+          {
+            "partId": "PART-20-076",
+            "name": "拉杆锁紧螺母",
+            "qtyVehicleTotal": 2,
+            "qtyPerCornerInCandidate": 1,
+            "candidateInstanceId": "CAND-PI-20-076-FR",
+            "parentCandidateAssemblyInstanceId": "CAND-AI-20-014-FR",
+            "corner": "FR",
+            "evidenceInherited": "ASSUMPTION",
+            "geometryBasis": "DEMO_ASSUMPTION",
+            "geometryStatus": "GEOMETRY_PENDING",
+            "handednessKind": "SYMMETRIC_PART_DISTINCT_MOUNT"
+          },
+          {
+            "partId": "PART-20-077",
+            "name": "转向器防尘罩（波纹管）",
+            "qtyVehicleTotal": 2,
+            "qtyPerCornerInCandidate": 1,
+            "candidateInstanceId": "CAND-PI-20-077-FR",
+            "parentCandidateAssemblyInstanceId": "CAND-AI-20-014-FR",
+            "corner": "FR",
+            "evidenceInherited": "EVIDENCE",
+            "geometryBasis": "DEMO_ASSUMPTION",
+            "geometryStatus": "GEOMETRY_PENDING",
+            "handednessKind": "SYMMETRIC_PART_DISTINCT_MOUNT"
+          },
+          {
+            "partId": "PART-20-078",
+            "name": "拉杆端卡簧与槽顶螺母",
+            "qtyVehicleTotal": 2,
+            "qtyPerCornerInCandidate": 1,
+            "candidateInstanceId": "CAND-PI-20-078-FR",
+            "parentCandidateAssemblyInstanceId": "CAND-AI-20-014-FR",
+            "corner": "FR",
+            "evidenceInherited": "ASSUMPTION",
+            "geometryBasis": "DEMO_ASSUMPTION",
+            "geometryStatus": "GEOMETRY_PENDING",
+            "handednessKind": "SYMMETRIC_PART_DISTINCT_MOUNT"
+          }
+        ]
+      }
+    ]
+  },
+  "totalsCheck": [
+    {
+      "partId": "PART-20-074",
+      "name": "内拉杆（轴向接头 axial joint）",
+      "qtyVehicleTotal": 2,
+      "candidateInstances": 2,
+      "instancesInCentral": 0,
+      "sum": 2,
+      "doubleCounted": false,
+      "balanced": true
+    },
+    {
+      "partId": "PART-20-075",
+      "name": "外拉杆端（tie rod end）",
+      "qtyVehicleTotal": 2,
+      "candidateInstances": 2,
+      "instancesInCentral": 0,
+      "sum": 2,
+      "doubleCounted": false,
+      "balanced": true
+    },
+    {
+      "partId": "PART-20-076",
+      "name": "拉杆锁紧螺母",
+      "qtyVehicleTotal": 2,
+      "candidateInstances": 2,
+      "instancesInCentral": 0,
+      "sum": 2,
+      "doubleCounted": false,
+      "balanced": true
+    },
+    {
+      "partId": "PART-20-077",
+      "name": "转向器防尘罩（波纹管）",
+      "qtyVehicleTotal": 2,
+      "candidateInstances": 2,
+      "instancesInCentral": 0,
+      "sum": 2,
+      "doubleCounted": false,
+      "balanced": true
+    },
+    {
+      "partId": "PART-20-078",
+      "name": "拉杆端卡簧与槽顶螺母",
+      "qtyVehicleTotal": 2,
+      "candidateInstances": 2,
+      "instancesInCentral": 0,
+      "sum": 2,
+      "doubleCounted": false,
+      "balanced": true
+    }
+  ],
+  "compatibility": {
+    "r16SourceModified": false,
+    "snapshotModified": false,
+    "snapshotRevision": 1,
+    "snapshotStatus": "CANDIDATE_NOT_FROZEN",
+    "globalCornerRuleUnchanged": true,
+    "formalPiChanged": false,
+    "candidateIdsAreCanonical": false,
+    "promotionPath": "总控批准后，由 R-16 维护方在 SUB-20-03 下新增两个 ASSY 定义与 FL/FR 实例，并把 5 个零件定义改挂到对应子总成；本轮只交候选，不执行。",
+    "versionNote": "候选建立在 R-16 候选树与 R-27 rev1 快照的只读副本之上；不改变任何已发布 ID、数量或 Frame。R-27 快照的 r26 块仍为旧值（R-26 已 approved），本候选不依赖该块。"
+  },
+  "positiveCases": [
+    {
+      "id": "P-46-01",
+      "claim": "中央转向器仍是唯一 VEH 级实例",
+      "evidence": "AI-20-014-VEH"
+    },
+    {
+      "id": "P-46-02",
+      "claim": "左右子总成各一个，角位分别为 FL/FR",
+      "evidence": [
+        "CAND-AI-20-014-FL",
+        "CAND-AI-20-014-FR"
+      ]
+    },
+    {
+      "id": "P-46-03",
+      "claim": "每侧 5 个每角零件，整车合计等于 qtyVehicleTotal",
+      "evidence": {
+        "PART-20-074": 2,
+        "PART-20-075": 2,
+        "PART-20-076": 2,
+        "PART-20-077": 2,
+        "PART-20-078": 2
+      }
+    },
+    {
+      "id": "P-46-04",
+      "claim": "零件角位 == 直接父总成实例角位（对角规则保持）",
+      "evidence": "10 个候选零件实例全部同侧"
+    },
+    {
+      "id": "P-46-05",
+      "claim": "中央 13 个 VEH 级子件未改动",
+      "evidence": [
+        "PI-20-066-VEH",
+        "PI-20-067-VEH",
+        "PI-20-068-VEH",
+        "PI-20-069-VEH-01",
+        "PI-20-069-VEH-02",
+        "PI-20-069-VEH-03",
+        "PI-20-069-VEH-04",
+        "PI-20-070-VEH",
+        "PI-20-071-VEH",
+        "PI-20-072-VEH",
+        "PI-20-073-VEH-01",
+        "PI-20-073-VEH-02",
+        "PI-20-088-VEH"
+      ]
+    },
+    {
+      "id": "P-46-06",
+      "claim": "每个候选子总成有独立 Frame",
+      "evidence": [
+        "CAND-FR-20-014-FL",
+        "CAND-FR-20-014-FR"
+      ]
+    }
+  ],
+  "negativeCases": [
+    {
+      "id": "N-46-01",
+      "error": "中央总成被复制成两个实例",
+      "mustFailWith": "CENTRAL_INSTANCE_COUNT_CHANGED"
+    },
+    {
+      "id": "N-46-02",
+      "error": "左侧零件挂到右侧子总成（左右错配）",
+      "mustFailWith": "CORNER_PARENT_MISMATCH"
+    },
+    {
+      "id": "N-46-03",
+      "error": "把 UNKNOWN 几何升格为已建模",
+      "mustFailWith": "GEOMETRY_UPGRADED"
+    },
+    {
+      "id": "N-46-04",
+      "error": "同一零件同时在中央与子总成计数（重复计数）",
+      "mustFailWith": "DOUBLE_COUNTED"
+    },
+    {
+      "id": "N-46-05",
+      "error": "候选 ID 当成正式 PI",
+      "mustFailWith": "CANDIDATE_CLAIMED_CANONICAL"
+    },
+    {
+      "id": "N-46-06",
+      "error": "子总成缺 Frame",
+      "mustFailWith": "SUB_ASSEMBLY_FRAME_MISSING"
+    },
+    {
+      "id": "N-46-07",
+      "error": "每角零件数量多一件或少一件",
+      "mustFailWith": "PART_QTY_UNBALANCED"
+    },
+    {
+      "id": "N-46-08",
+      "error": "把候选写回 R-16 或重建快照",
+      "mustFailWith": "SOURCE_CLAIMED_MODIFIED"
+    },
+    {
+      "id": "N-46-09",
+      "error": "只放左侧子总成，右侧缺失",
+      "mustFailWith": "SIDE_SET_INCOMPLETE"
+    },
+    {
+      "id": "N-46-10",
+      "error": "子总成实例角位与声明角位不一致",
+      "mustFailWith": "SUB_INSTANCE_CORNER_MISMATCH"
+    }
+  ],
+  "unknowns": [
+    {
+      "item": "总控是否批准该候选进入 R-16",
+      "status": "PENDING",
+      "why": "候选只提交，不执行"
+    },
+    {
+      "item": "两个新 ASSY 的编号",
+      "status": "UNKNOWN",
+      "why": "需 RP-01 编号分配，不得自行占用"
+    },
+    {
+      "item": "子总成 Frame 的局部原点与朝向",
+      "status": "UNKNOWN",
+      "why": "世界 Frame 仍 UNFROZEN_PENDING_RP07"
+    },
+    {
+      "item": "外拉杆端锥柄几何",
+      "status": "UNKNOWN",
+      "why": "R-42 已确认锥柄尺寸无来源"
+    },
+    {
+      "item": "左右镜像几何",
+      "status": "UNKNOWN",
+      "why": "PART-20-075 为 MIRROR_REGENERATE，尚无实体"
+    },
+    {
+      "item": "运动配准与播放",
+      "status": "BLOCKED",
+      "why": "REGISTRATION_BLOCKED，playbackAllowed=false"
+    },
+    {
+      "item": "变型同一性",
+      "status": "BLOCKED",
+      "why": "R-26 CF-09 未对齐"
+    }
+  ],
+  "invariants": {
+    "r16Modified": false,
+    "snapshotModified": false,
+    "formalInstancesCreated": 0,
+    "candidateEnvelopeComplete": true,
+    "geometryUpgraded": false,
+    "canonicalIdsClaimed": false,
+    "playbackAuthorised": false
+  },
+  "summary": {
+    "subAssemblies": 2,
+    "candidatePartInstances": 10,
+    "centralPartInstances": 13,
+    "partsBalanced": 5,
+    "partsTotal": 5,
+    "positiveCases": 6,
+    "negativeCases": 10,
+    "unknowns": 7
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "schema": "carlab.r32.wheelEndBindingCheck.v1",
+  "date": "2026-11-21",
+  "command": "node src-experiments/wheel-end-asset-binding-v1/run-checks.mjs",
+  "packageId": "c01-c5d74da77c293aa5321f",
+  "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+  "revision": 1,
+  "manifestSha256": "80e7e060de6b20015a6fdb8d5b81ea60b9e23ac442cebbb96b2bc2a5b5222d6a",
+  "glbSha256": "c11da5170450979ba0d1b444af18e32679cc3e9fce11a941bb1172f8427710c3",
+  "passCount": 17,
+  "failCount": 0,
+  "failed": [],
+  "checks": [
+    {
+      "id": "B01_package_snapshot_and_status",
+      "pass": true,
+      "detail": {
+        "c01Instances": 9,
+        "c01Meshes": 5,
+        "assemblyGroups": 2,
+        "studs": 5,
+        "snapshotPartInstances": 278,
+        "fallbackWithoutC01": 269
+      }
+    },
+    {
+      "id": "B02_nine_unique_canonical_instances",
+      "pass": true,
+      "detail": [
+        "PI-20-016-FL",
+        "PI-30-001-FL",
+        "PI-30-002-FL",
+        "PI-30-006-FL",
+        "PI-30-009-FL-01",
+        "PI-30-009-FL-02",
+        "PI-30-009-FL-03",
+        "PI-30-009-FL-04",
+        "PI-30-009-FL-05"
+      ]
+    },
+    {
+      "id": "B03_five_meshes_two_groups_five_shared_studs",
+      "pass": true,
+      "detail": {
+        "meshes": 5,
+        "groups": 2
+      }
+    },
+    {
+      "id": "B04_hierarchy_and_glb_transforms",
+      "pass": true,
+      "detail": {
+        "hubNode": 4,
+        "hubParent": "AI-30-002-FL"
+      }
+    },
+    {
+      "id": "B05_no_cad_matrix_reapplied",
+      "pass": true,
+      "detail": {
+        "translationM": [
+          0.00800000037997961,
+          0,
+          0
+        ],
+        "note": "Only for rebuilding from the manifest/STEP; never multiply this onto the GLB node transform."
+      }
+    },
+    {
+      "id": "B06_legacy_three_parts_and_no_geometry_fallbacks",
+      "pass": true,
+      "detail": {
+        "wheel": "NO_GEOMETRY",
+        "hubLegacy": "LEGACY_SINGLE_PART_DEMO",
+        "bearingLegacy": "LEGACY_GROUP_DEMO_NOT_ONE_TO_ONE",
+        "studLegacy": 5
+      }
+    },
+    {
+      "id": "B07_static_only_and_legacy_duplicate_guards",
+      "pass": true,
+      "detail": {
+        "c01": "STATIC_WORKHOLDING_DEMO",
+        "legacyGroups": 3
+      }
+    },
+    {
+      "id": "B08_instance_view_combines_detail_and_binding",
+      "pass": true,
+      "detail": {
+        "hubNode": 4,
+        "wheel": "E_NOT_IN_C01_PACKAGE"
+      }
+    },
+    {
+      "id": "B09_snapshot_and_variant_mismatches_fail_closed",
+      "pass": true,
+      "detail": {
+        "checked": 3
+      }
+    },
+    {
+      "id": "B10_glb_hash_and_package_id_fail_closed",
+      "pass": true,
+      "detail": {
+        "checked": 3
+      }
+    },
+    {
+      "id": "B11_manifest_instance_set_failures",
+      "pass": true,
+      "detail": {
+        "checked": 6
+      }
+    },
+    {
+      "id": "B12_glb_node_and_mesh_failures",
+      "pass": true,
+      "detail": {
+        "checked": 6
+      }
+    },
+    {
+      "id": "B13_package_missing_and_unknown_instance",
+      "pass": true,
+      "detail": {
+        "checked": 2
+      }
+    },
+    {
+      "id": "B14_live_node_transform_changes_binding",
+      "pass": true,
+      "detail": {
+        "translationM": 0.009
+      }
+    },
+    {
+      "id": "B15_read_only_inputs_not_mutated",
+      "pass": true,
+      "detail": {
+        "unchanged": true
+      }
+    },
+    {
+      "id": "B16_same_origin_5173_assets",
+      "pass": true,
+      "detail": {
+        "origin": "http://localhost:5173",
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "glbSha256": "c11da5170450979b"
+      }
+    },
+    {
+      "id": "B17_cross_origin_is_rejected",
+      "pass": true,
+      "detail": {
+        "checked": true
+      }
+    }
+  ]
+}

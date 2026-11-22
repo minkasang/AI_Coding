@@ -1,0 +1,489 @@
+{
+  "schemaVersion": "1.0",
+  "artifact": "R-37 ball joint identity and motion usage",
+  "owner": "qwen4",
+  "taskId": "R-37",
+  "date": "2026-11-22",
+  "status": "submitted",
+  "purpose": "为 C-03 两颗演示球头核对上/下球铰在整车结构中的候选身份与接口，把完整球铰、演示球头、转向节锥口、运动球心四者分开，交给 C-03 与 Grok。",
+  "inputs": [
+    {
+      "path": "docs/research/R-16-vehicle-skeleton.fixture.json",
+      "readOnly": true,
+      "hashPolicy": "REQUIRED",
+      "sha256": "20af8ba0444c68b7b671664735e01517f61a5b58fa34dcc4bbf6dce898ef331e"
+    },
+    {
+      "path": "src-experiments/vehicle-snapshot-v1/fixtures/vehicle-snapshot.json",
+      "readOnly": true,
+      "hashPolicy": "ADVISORY",
+      "sha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4"
+    },
+    {
+      "path": "cad/experiments/wheel-end-ball-joint-demo-v1/out/c03-3f4bf8c599df28679b86/manifest.json",
+      "readOnly": true,
+      "hashPolicy": "REQUIRED",
+      "sha256": "bfe27ea9f2ae6a3283a463389950373c5338287f6200b1179a6ed46b7d337e91"
+    },
+    {
+      "path": "cad/experiments/wheel-end-ball-joint-demo-v1/out/c03-3f4bf8c599df28679b86/validation.json",
+      "readOnly": true,
+      "hashPolicy": "REQUIRED",
+      "sha256": "1968ebe5ca6c6f68a7c7905fc03580f46690d45af2c606d2aea0ccd2b4d4a6c4"
+    },
+    {
+      "path": "cad/experiments/wheel-end-datum-interface-v1/datums.json",
+      "readOnly": true,
+      "hashPolicy": "REQUIRED",
+      "sha256": "071eb3019dceeec74a53dc446f99413fadeaffc0a796358f61bb515a86e5f146"
+    }
+  ],
+  "cornerScope": {
+    "corners": [
+      "FL",
+      "FR"
+    ],
+    "frontOnly": true,
+    "rearHasBallJoints": false,
+    "evidence": "PART-20-003/010 的 qtyVehicleTotal=2 且实例只有 FL/FR；后轴为整体桥，无独立球铰"
+  },
+  "ballJoints": [
+    {
+      "position": "UPPER",
+      "candidatePartInstanceId": "PI-20-003-FL",
+      "partDefinitionId": "PART-20-003",
+      "partDefinitionName": "上球铰总成",
+      "assemblyInstanceId": "AI-20-002-FL",
+      "assemblyDefinitionId": "ASSY-20-002",
+      "mountFrameId": "FR-20-002-FL",
+      "frameWorldFrame": "UNFROZEN_PENDING_RP07",
+      "corner": "FL",
+      "ordinal": 1,
+      "qtyPerCorner": 1,
+      "qtyVehicleTotalInherited": 2,
+      "countedInBom": true,
+      "identityBasis": "SOURCED_SECONDARY",
+      "geometryBasis": "UNKNOWN",
+      "geometryStatus": "GEOMETRY_PENDING",
+      "snapshotRevision": 1,
+      "snapshotGeometryStatus": "NO_GEOMETRY",
+      "snapshotInspectable": false,
+      "c03": {
+        "artifactId": "C03-UPPER-BALL-STUD",
+        "geometryRole": "BALL_STUD_ONLY",
+        "samplePartInstanceId": null,
+        "candidateStatus": "CANDIDATE_PARTIAL_GEOMETRY",
+        "candidatePartInstanceId": "PI-20-003-FL",
+        "candidateAssemblyInstanceId": "AI-20-002-FL",
+        "candidateSnapshotFrameId": "FR-20-002-FL",
+        "seatDatumId": "PI-20-016-FL/upperBallJointSeat",
+        "knucklePartInstanceId": "PI-20-016-FL",
+        "insertionDirectionRoot": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "ballCenterWorkholdingYUpM": [
+          -0.021,
+          0.134,
+          -0.009
+        ],
+        "fitType": "SAME_TAPER_CLEARANCE_WITH_PLANAR_STOP"
+      }
+    },
+    {
+      "position": "LOWER",
+      "candidatePartInstanceId": "PI-20-010-FL",
+      "partDefinitionId": "PART-20-010",
+      "partDefinitionName": "下球铰总成",
+      "assemblyInstanceId": "AI-20-003-FL",
+      "assemblyDefinitionId": "ASSY-20-003",
+      "mountFrameId": "FR-20-003-FL",
+      "frameWorldFrame": "UNFROZEN_PENDING_RP07",
+      "corner": "FL",
+      "ordinal": 1,
+      "qtyPerCorner": 1,
+      "qtyVehicleTotalInherited": 2,
+      "countedInBom": true,
+      "identityBasis": "SOURCED_SECONDARY",
+      "geometryBasis": "UNKNOWN",
+      "geometryStatus": "GEOMETRY_PENDING",
+      "snapshotRevision": 1,
+      "snapshotGeometryStatus": "NO_GEOMETRY",
+      "snapshotInspectable": false,
+      "c03": {
+        "artifactId": "C03-LOWER-BALL-STUD",
+        "geometryRole": "BALL_STUD_ONLY",
+        "samplePartInstanceId": null,
+        "candidateStatus": "CANDIDATE_PARTIAL_GEOMETRY",
+        "candidatePartInstanceId": "PI-20-010-FL",
+        "candidateAssemblyInstanceId": "AI-20-003-FL",
+        "candidateSnapshotFrameId": "FR-20-003-FL",
+        "seatDatumId": "PI-20-016-FL/lowerBallJointSeat",
+        "knucklePartInstanceId": "PI-20-016-FL",
+        "insertionDirectionRoot": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "ballCenterWorkholdingYUpM": [
+          -0.021,
+          -0.127,
+          0.008
+        ],
+        "fitType": "SAME_TAPER_CLEARANCE_WITH_PLANAR_STOP"
+      }
+    }
+  ],
+  "sideVariants": [
+    {
+      "corner": "FL",
+      "upperInstanceId": "PI-20-003-FL",
+      "lowerInstanceId": "PI-20-010-FL",
+      "relation": "SAME_DEFINITION_DISTINCT_INSTANCE",
+      "handednessPolicy": "SYMMETRIC_PART_DISTINCT_MOUNT",
+      "note": "左/右是同一定义的独立装车实例；不得把一个实例的位姿直接镜像成另一个的刚体位姿"
+    },
+    {
+      "corner": "FR",
+      "upperInstanceId": "PI-20-003-FR",
+      "lowerInstanceId": "PI-20-010-FR",
+      "relation": "SAME_DEFINITION_DISTINCT_INSTANCE",
+      "handednessPolicy": "SYMMETRIC_PART_DISTINCT_MOUNT",
+      "note": "左/右是同一定义的独立装车实例；不得把一个实例的位姿直接镜像成另一个的刚体位姿"
+    }
+  ],
+  "protectionParts": [
+    {
+      "partId": "PART-20-004",
+      "name": "上球铰防尘罩",
+      "belongsToBallJoint": "UPPER",
+      "parentAssemblyInstanceIds": [
+        "AI-20-002-FL",
+        "AI-20-002-FR"
+      ],
+      "instanceIds": [
+        "PI-20-004-FL",
+        "PI-20-004-FR"
+      ],
+      "qtyVehicleTotal": 2,
+      "ownership": "SEPARATE_PART_OWNED_BY_SAME_ASSEMBLY"
+    },
+    {
+      "partId": "PART-20-005",
+      "name": "上球铰卡簧",
+      "belongsToBallJoint": "UPPER",
+      "parentAssemblyInstanceIds": [
+        "AI-20-002-FL",
+        "AI-20-002-FR"
+      ],
+      "instanceIds": [
+        "PI-20-005-FL",
+        "PI-20-005-FR"
+      ],
+      "qtyVehicleTotal": 2,
+      "ownership": "SEPARATE_PART_OWNED_BY_SAME_ASSEMBLY"
+    },
+    {
+      "partId": "PART-20-011",
+      "name": "下球铰防尘罩",
+      "belongsToBallJoint": "LOWER",
+      "parentAssemblyInstanceIds": [
+        "AI-20-003-FL",
+        "AI-20-003-FR"
+      ],
+      "instanceIds": [
+        "PI-20-011-FL",
+        "PI-20-011-FR"
+      ],
+      "qtyVehicleTotal": 2,
+      "ownership": "SEPARATE_PART_OWNED_BY_SAME_ASSEMBLY"
+    },
+    {
+      "partId": "PART-20-012",
+      "name": "下球铰卡簧与槽顶螺母",
+      "belongsToBallJoint": "LOWER",
+      "parentAssemblyInstanceIds": [
+        "AI-20-003-FL",
+        "AI-20-003-FR"
+      ],
+      "instanceIds": [
+        "PI-20-012-FL",
+        "PI-20-012-FR"
+      ],
+      "qtyVehicleTotal": 2,
+      "ownership": "SEPARATE_PART_OWNED_BY_SAME_ASSEMBLY"
+    }
+  ],
+  "fastener": {
+    "partId": "PART-20-017",
+    "name": "球铰→转向节紧固螺栓/螺母",
+    "parentAssemblyInstanceIds": [
+      "AI-20-004-FL",
+      "AI-20-004-FR"
+    ],
+    "instanceIds": [
+      "PI-20-017-FL-01",
+      "PI-20-017-FL-02",
+      "PI-20-017-FR-01",
+      "PI-20-017-FR-02"
+    ],
+    "qtyPerCorner": 2,
+    "qtyVehicleTotal": 4,
+    "ownership": "SEPARATE_FASTENER_OWNED_BY_KNUCKLE_ASSEMBLY",
+    "note": "父级是转向节总成 ASSY-20-004，不是上下球铰总成；每角 2 件，不得并入球铰数量"
+  },
+  "familyTrap": {
+    "familyRef": "FAM-130-014",
+    "members": [
+      "PART-20-003",
+      "PART-20-010",
+      "PART-20-035",
+      "PART-20-044",
+      "PART-60-045"
+    ],
+    "parentSystemNumbers": [
+      "20",
+      "60"
+    ],
+    "memberRoles": {
+      "PART-20-003": "上球铰总成",
+      "PART-20-010": "下球铰总成",
+      "PART-20-035": "连杆球铰/衬套",
+      "PART-20-044": "下摆臂衬套与球铰",
+      "PART-60-045": "万向节"
+    },
+    "dedupForbidden": true,
+    "why": "上球铰总成、下球铰总成、前连杆球铰/衬套、下摆臂衬套与球铰、半轴端件共用同一 familyRef；按 familyRef 合并会把不同系统、不同功能的零件吞成一个。"
+  },
+  "seatDatum": {
+    "ownerPartInstanceId": "PI-20-016-FL",
+    "datums": [
+      {
+        "datumId": "PI-20-016-FL/upperBallJointSeat",
+        "partInstanceId": "PI-20-016-FL",
+        "mountName": "upperBallJointSeat"
+      },
+      {
+        "datumId": "PI-20-016-FL/lowerBallJointSeat",
+        "partInstanceId": "PI-20-016-FL",
+        "mountName": "lowerBallJointSeat"
+      }
+    ],
+    "directionOpposing": true,
+    "note": "两处锥口属于转向节本体 PI-20-016-FL，不属于球铰总成；球铰是装进锥口的零件。"
+  },
+  "c03SampleMapping": {
+    "upper": {
+      "artifactId": "C03-UPPER-BALL-STUD",
+      "samplePartInstanceId": null,
+      "candidatePartInstanceId": "PI-20-003-FL",
+      "geometryRole": "BALL_STUD_ONLY",
+      "status": "CANDIDATE_PARTIAL_GEOMETRY"
+    },
+    "lower": {
+      "artifactId": "C03-LOWER-BALL-STUD",
+      "samplePartInstanceId": null,
+      "candidatePartInstanceId": "PI-20-010-FL",
+      "geometryRole": "BALL_STUD_ONLY",
+      "status": "CANDIDATE_PARTIAL_GEOMETRY"
+    },
+    "interpretation": "C-03 的两件是完整球铰总成的局部几何（只有带球头的锥柄），不是新增零件、也不是完整总成；因此样件自身 partInstanceId=null。"
+  },
+  "motionUsage": {
+    "referenceMotionRunId": "RUN-SLA-FL-SNAP1-001",
+    "referenceMotionFrameId": "FR-VEHICLE",
+    "referenceMotionSourceRevision": 1,
+    "knuckleOriginFeature": "LOWER_BALL_CENTER",
+    "ballCenterIsPhysicalInstance": false,
+    "motionInputStatus": "CAD_INPUTS_FOR_NEW_DEMO_FIXTURE",
+    "playbackAllowed": false,
+    "existingR28Registration": "REGISTRATION_BLOCKED",
+    "ballSpanProjectionOnSpindleMm": 0.0,
+    "snapshotPoseRun": {
+      "status": "STALE",
+      "playbackAllowed": false,
+      "reason": "SOURCE_REVISION_MISMATCH"
+    },
+    "note": "球心是运动学参考点，不是新增实体实例；R-28 旧配准仍 REGISTRATION_BLOCKED，本轮不授权整车播放。knuckleOriginFeature 指 LOWER_BALL_CENTER，即运动取的是下球心。"
+  },
+  "c03Validation": {
+    "status": "PASS",
+    "sourceGrade": "DEMO_ASSUMPTION",
+    "independentStepSolids": 2,
+    "seatedStudPairOverlapMm3": 0.0,
+    "upperStopContactAreaMm2": 301.59289474,
+    "lowerStopContactAreaMm2": 374.63492394,
+    "independentOfIdentity": true,
+    "note": "装入/干涉/止挡结果只证明几何自洽，不证明这两个样件就是真实车型的球铰。"
+  },
+  "snapshotPin": {
+    "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+    "revision": 1,
+    "status": "CANDIDATE_NOT_FROZEN",
+    "currentR26TaskSha256": "09561f5e4a958243b6034139d44f5da23ac79988cd0a4ac3c3d5f6993bef9362",
+    "currentR26TaskStatus": "approved",
+    "committedBaseline": {
+      "source": "git HEAD",
+      "r26Block": {
+        "status": "ready",
+        "artifacts": [],
+        "decisionPolicy": "MISSING_OUTPUT_PRESERVE_ALL_CONFLICTS"
+      },
+      "r26InputPin": {
+        "role": "R26_DECISIONS",
+        "path": "agent-workspace/agents/qwen4/tasks/R-26.md",
+        "sha256": "c545f1fce4cc8f1c50b709f957ac372e8a52cf3e1c06358ceef12c24317d471d",
+        "provider": "qwen4",
+        "declaredStatus": "ready",
+        "readOnly": true,
+        "outputFound": false
+      },
+      "pinMatchesCurrent": false
+    },
+    "observedRebuild": {
+      "command": "node src-experiments/vehicle-snapshot-v1/run-checks.mjs",
+      "observedAt": "2026-11-22",
+      "result": "REGENERATED_THEN_VALIDATION_FAILED",
+      "error": "SNAP-E-R26",
+      "errorMessage": "output exists but ignored",
+      "regeneratedFiles": [
+        "src-experiments/vehicle-snapshot-v1/fixtures/vehicle-snapshot.json",
+        "src-experiments/vehicle-snapshot-v1/fixtures/vehicle-snapshot.consumer.json",
+        "agent-workspace/agents/deepseek/reports/R-27-results.json"
+      ],
+      "currentWorkingTreeAtObservation": "MATCHES_HEAD",
+      "sideEffectNote": "run-checks.mjs 不是只读脚本，会写上述 3 个文件。观测后快照与消费索引已回到已提交基线（快照 SHA-256 与 C-03 清单 pin 的 f60d977e… 一致）；DeepSeek 的 R-27-results.json 仍保留本次重建结果，由 DeepSeek 决定去留。",
+      "workingPin": {
+        "role": "R26_DECISIONS",
+        "path": "agent-workspace/agents/qwen4/tasks/R-26.md",
+        "sha256": "c545f1fce4cc8f1c50b709f957ac372e8a52cf3e1c06358ceef12c24317d471d",
+        "provider": "qwen4",
+        "declaredStatus": "ready",
+        "readOnly": true,
+        "outputFound": false
+      }
+    },
+    "finding": "已提交基线（git HEAD）建于 R-26 交付之前：r26.status=ready、artifacts=[]、decisionPolicy=MISSING_OUTPUT_PRESERVE_ALL_CONFLICTS，pin 与当前 R-26 任务卡不符。R-26 现已 approved 且有 fixture/md 产出，两者不一致；消费方不得把快照的 r26 块当作当前状态。",
+    "impact": "重建快照会触发 SNAP-E-R26『output exists but ignored』——生成器把MISSING_OUTPUT_PRESERVE_ALL_CONFLICTS 写死，尚无消费 R-26 决议的路径；需 R-39/快照维护方改生成逻辑并复审，不是把 policy 改掉了事。"
+  },
+  "confirmed": [
+    {
+      "claim": "上球铰 FL 候选实例",
+      "value": "PI-20-003-FL",
+      "evidence": "R-16 partInstances + R-27 tree"
+    },
+    {
+      "claim": "下球铰 FL 候选实例",
+      "value": "PI-20-010-FL",
+      "evidence": "R-16 partInstances + R-27 tree"
+    },
+    {
+      "claim": "上级链",
+      "value": "AI-20-002-FL/ASSY-20-002 与 AI-20-003-FL/ASSY-20-003",
+      "evidence": "R-16 assemblyInstances"
+    },
+    {
+      "claim": "Frame",
+      "value": "FR-20-002-FL / FR-20-003-FL",
+      "evidence": "R-16 mountFrames；worldFrame=UNFROZEN_PENDING_RP07"
+    },
+    {
+      "claim": "数量",
+      "value": "每角 1 件；整车 2 件（仅 FL/FR）",
+      "evidence": "R-16 qtyPerCorner=1, qtyVehicleTotal=2"
+    },
+    {
+      "claim": "锥口归属",
+      "value": "PI-20-016-FL 的两处锥口",
+      "evidence": "C-02 datums.json"
+    },
+    {
+      "claim": "样件不是实例",
+      "value": "partInstanceId=null",
+      "evidence": "C-03 manifest studs.*.partInstanceId"
+    }
+  ],
+  "unverified": [
+    {
+      "item": "是否为真实车型的球铰",
+      "status": "UNKNOWN",
+      "why": "C-03 sourceGrade=DEMO_ASSUMPTION，无 OEM 来源"
+    },
+    {
+      "item": "球铰内部结构（球座/预紧/密封）",
+      "status": "UNKNOWN",
+      "why": "样件仅 BALL_STUD_ONLY"
+    },
+    {
+      "item": "锥角与配合公差",
+      "status": "UNKNOWN",
+      "why": "按 STEP 锥面斜率保留径向间隙，属演示参数"
+    },
+    {
+      "item": "运动球心与实车球心的一致性",
+      "status": "UNKNOWN",
+      "why": "R-28 旧配准 REGISTRATION_BLOCKED；ballSpanProjectionOnSpindleMm=0 与 R-28 约 −79.38 mm 差异未解释"
+    },
+    {
+      "item": "左右件的镜像几何",
+      "status": "UNKNOWN",
+      "why": "R-16 标 MIRROR_REGENERATE，但尚无左右实体几何可比"
+    },
+    {
+      "item": "变型同一性",
+      "status": "BLOCKED",
+      "why": "R-26 CF-09：两套变型 ID 不同，未对齐"
+    }
+  ],
+  "rejectedClaims": [
+    {
+      "id": "REJ-37-01",
+      "claim": "把上球铰候选写成 PI-20-010-FL（上下互换）",
+      "reason": "上下定义与父级都不对"
+    },
+    {
+      "id": "REJ-37-02",
+      "claim": "把 FL 候选写成 PI-20-003-RR（错误角位）",
+      "reason": "这些零件只有 FL/FR 实例，后轴无球铰"
+    },
+    {
+      "id": "REJ-37-03",
+      "claim": "把运动球心当作新增实体实例",
+      "reason": "球心是运动学参考点，partInstanceId=null"
+    },
+    {
+      "id": "REJ-37-04",
+      "claim": "把两颗演示球头当成两个新零件",
+      "reason": "它们是完整球铰总成的局部几何"
+    },
+    {
+      "id": "REJ-37-05",
+      "claim": "按 FAM-130-014 合并球铰零件",
+      "reason": "同族五个成员跨两个系统"
+    },
+    {
+      "id": "REJ-37-06",
+      "claim": "把紧固件 PART-20-017 并入球铰数量",
+      "reason": "父级是转向节总成，每角 2 件"
+    }
+  ],
+  "invariants": {
+    "sourceFilesModified": false,
+    "newPhysicalInstancesCreated": 0,
+    "ballCenterTreatedAsInstance": false,
+    "geometryClaimedSourced": 0,
+    "playbackAuthorised": false,
+    "familyDeduped": false,
+    "fastenerMergedIntoBallJoint": false
+  },
+  "summary": {
+    "ballJoints": 2,
+    "confirmed": 7,
+    "unverified": 6,
+    "rejectedClaims": 6,
+    "familyMembers": 5,
+    "snapshotR26StaleInCommitted": true,
+    "snapshotRebuildFailsSnapE26": true
+  }
+}

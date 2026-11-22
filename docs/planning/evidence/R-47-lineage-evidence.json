@@ -1,0 +1,621 @@
+{
+  "taskId": "R-47",
+  "displayCode": "03.49",
+  "suite": "verify_steering_release_lineage.py",
+  "totalTests": 24,
+  "passedTests": 24,
+  "failedTests": 0,
+  "verdict": "PASS",
+  "packageEvaluated": "c05-ee1e461fecf00faa8151",
+  "schemaVersion": "carlab.c05DemoSteeringDatum/1",
+  "sourceGrade": "DEMO_ASSUMPTION",
+  "playbackAllowed": false,
+  "testCases": [
+    {
+      "testName": "Positive: C-05 Authentic Full Release Validation",
+      "status": "PASS",
+      "expectPass": true,
+      "expectedErrorCode": null,
+      "actualResult": {
+        "passed": true,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": null,
+        "message": "Package 'c05-ee1e461fecf00faa8151' (C05_STEERING_OUTBOARD) PASSES full package release quality gate as verified DEMO_ASSUMPTION demonstration asset with 2 disk assets and lineage dependencies validated.",
+        "details": {},
+        "summary": {
+          "packageId": "c05-ee1e461fecf00faa8151",
+          "schemaVersion": "carlab.c05DemoSteeringDatum/1",
+          "sourceGrade": "DEMO_ASSUMPTION",
+          "verifiedDiskAssets": [
+            "knuckle-steering-demo.step",
+            "steering-outer-ball-stud.step"
+          ],
+          "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+          "lineageChain": [
+            "snapshot",
+            "c01",
+            "c02",
+            "c03",
+            "c04",
+            "c05"
+          ],
+          "outerBallCenterWorkholdingYUpM": [
+            -0.027,
+            0.024,
+            -0.112
+          ],
+          "playbackAllowed": false,
+          "mode": "FULL_PACKAGE_RELEASE"
+        }
+      }
+    },
+    {
+      "testName": "Positive: C-05 Metadata-Only Mode Validation",
+      "status": "PASS",
+      "expectPass": true,
+      "expectedErrorCode": null,
+      "actualResult": {
+        "passed": true,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": null,
+        "message": "Package 'c05-ee1e461fecf00faa8151' (C05_STEERING_OUTBOARD) PASSES metadata-only quality gate (schema, sourceGrade, lineage declarations, and asset hashes verified; disk files not validated).",
+        "details": {},
+        "summary": {
+          "packageId": "c05-ee1e461fecf00faa8151",
+          "schemaVersion": "carlab.c05DemoSteeringDatum/1",
+          "sourceGrade": "DEMO_ASSUMPTION",
+          "declaredAssetsCount": 2,
+          "upstreamDependencies": [
+            "c01",
+            "c02",
+            "c03",
+            "c04",
+            "snapshot"
+          ],
+          "playbackAllowed": false,
+          "mode": "METADATA_ONLY"
+        }
+      }
+    },
+    {
+      "testName": "Negative: C-05 Missing knuckle-steering-demo.step in sha256",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_INPUT_MISSING_ASSET_HASH",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_INPUT_MISSING_ASSET_HASH",
+        "message": "Missing declared asset STEP files in 'sha256' dictionary: ['knuckle-steering-demo.step']",
+        "details": {
+          "missingAssets": [
+            "knuckle-steering-demo.step"
+          ],
+          "available": [
+            "steering-outer-ball-stud.step"
+          ]
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Missing steering-outer-ball-stud.step in sha256",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_INPUT_MISSING_ASSET_HASH",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_INPUT_MISSING_ASSET_HASH",
+        "message": "Missing declared asset STEP files in 'sha256' dictionary: ['steering-outer-ball-stud.step']",
+        "details": {
+          "missingAssets": [
+            "steering-outer-ball-stud.step"
+          ],
+          "available": [
+            "knuckle-steering-demo.step"
+          ]
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Empty sha256 dictionary",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+        "message": "Asset 'sha256' dictionary must not be empty.",
+        "details": {
+          "sha256": {}
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Tampered knuckle-steering-demo.step hash",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_ASSET_HASH_MISMATCH",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_ASSET_HASH_MISMATCH",
+        "message": "Asset 'knuckle-steering-demo.step' SHA-256 mismatch: declared 0000000000000000000000000000000000000000000000000000000000000000 != actual f247355d7a545c0412f0a819fe583d192992017add1b9301775033049302afef",
+        "details": {
+          "file": "knuckle-steering-demo.step",
+          "declared": "0000000000000000000000000000000000000000000000000000000000000000",
+          "actual": "f247355d7a545c0412f0a819fe583d192992017add1b9301775033049302afef"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Tampered steering-outer-ball-stud.step hash",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_ASSET_HASH_MISMATCH",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_ASSET_HASH_MISMATCH",
+        "message": "Asset 'steering-outer-ball-stud.step' SHA-256 mismatch: declared 1111111111111111111111111111111111111111111111111111111111111111 != actual 0fc1268188018cff9f8e1635b85b034d55a53728f285e8b366e14c9aeed91591",
+        "details": {
+          "file": "steering-outer-ball-stud.step",
+          "declared": "1111111111111111111111111111111111111111111111111111111111111111",
+          "actual": "0fc1268188018cff9f8e1635b85b034d55a53728f285e8b366e14c9aeed91591"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Wrong C-01 manifest hash",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+        "message": "C-01 manifest hash mismatch: declared deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef != actual 80e7e060de6b20015a6fdb8d5b81ea60b9e23ac442cebbb96b2bc2a5b5222d6a",
+        "details": {
+          "declared": "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef",
+          "actual": "80e7e060de6b20015a6fdb8d5b81ea60b9e23ac442cebbb96b2bc2a5b5222d6a"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Wrong C-02 datums hash",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+        "message": "C-02 datums hash mismatch: declared deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef != actual 071eb3019dceeec74a53dc446f99413fadeaffc0a796358f61bb515a86e5f146",
+        "details": {
+          "declared": "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef",
+          "actual": "071eb3019dceeec74a53dc446f99413fadeaffc0a796358f61bb515a86e5f146"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Wrong C-03 manifest hash",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+        "message": "C-03 manifest hash mismatch: declared deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef != actual bfe27ea9f2ae6a3283a463389950373c5338287f6200b1179a6ed46b7d337e91",
+        "details": {
+          "declared": "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef",
+          "actual": "bfe27ea9f2ae6a3283a463389950373c5338287f6200b1179a6ed46b7d337e91"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Wrong C-04 manifest hash",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_DEPENDENCY_HASH_MISMATCH",
+        "message": "C-04 manifest hash mismatch: declared deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef != actual a29d64a876dbfde97e4442ecd3cf513a9109be8455fa31a2b5fb1a5fc1f37369",
+        "details": {
+          "declared": "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef",
+          "actual": "a29d64a876dbfde97e4442ecd3cf513a9109be8455fa31a2b5fb1a5fc1f37369"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Snapshot hash mismatch",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+        "message": "Snapshot binding mismatch: declared deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef != actual f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+        "details": {
+          "declared": "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef",
+          "actual": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Omitted snapshot file",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_SNAPSHOT_FILE_REQUIRED",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_SNAPSHOT_FILE_REQUIRED",
+        "message": "Snapshot file must be provided for full package release verification (use metadata_only=True for schema-only check).",
+        "details": {},
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Omitted package directory",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_PACKAGE_DIRECTORY_REQUIRED",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_PACKAGE_DIRECTORY_REQUIRED",
+        "message": "Package directory must be provided for full package release verification (use metadata_only=True for schema-only check).",
+        "details": {},
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Non-existent package directory",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_PACKAGE_DIRECTORY_NOT_FOUND",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_PACKAGE_DIRECTORY_NOT_FOUND",
+        "message": "Package directory does not exist: F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\non_existent_pkg_dir_12345",
+        "details": {
+          "packageDir": "F:\\project\\cyq\\AI_Coding\\car\\cad\\experiments\\non_existent_pkg_dir_12345"
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 False OEM upgrade claim",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_UNVERIFIED_SOURCE_UPGRADE",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_UNVERIFIED_SOURCE_UPGRADE",
+        "message": "Illegal sourceGrade 'OEM_SPEC'. Demonstrations must remain DEMO_ASSUMPTION / DEMO_ESTIMATE.",
+        "details": {
+          "sourceGrade": "OEM_SPEC",
+          "allowed": [
+            "DEMO_ESTIMATE",
+            "DEMO_ASSUMPTION"
+          ]
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 False sameVehicleClaim=true",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_UNVERIFIED_VEHICLE_CLAIM",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_UNVERIFIED_VEHICLE_CLAIM",
+        "message": "Demonstration package falsely claims 'sameVehicleClaim: true'.",
+        "details": {
+          "snapshot": {
+            "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+            "revision": 1,
+            "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+            "variantId": "VAR-R16-BOF-ICE",
+            "selectionKey": "partInstanceId",
+            "mappingStatus": "DEMO_SUBSTITUTE",
+            "sameVehicleClaim": true
+          }
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Illegal playbackAllowed=true",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_ILLEGAL_PLAYBACK_ENABLED",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_ILLEGAL_PLAYBACK_ENABLED",
+        "message": "playbackAllowed must be false. Dynamic kinematics playback is prohibited for demonstration datum packages.",
+        "details": {
+          "motionInput": {
+            "status": "CAD_DATUMS_ONLY",
+            "playbackAllowed": true,
+            "vehicleFromWorkholding": null,
+            "outerTieRodEndIdentity": {
+              "partId": "PART-20-075",
+              "parentDefinitionId": "ASSY-20-014",
+              "partInstanceId": null,
+              "status": "REQUIRED_BUT_DEFERRED",
+              "snapshotInstanceCount": 0
+            },
+            "innerTieRodInterface": null,
+            "tieRodLengthMm": null,
+            "spindle": {
+              "outboardDirectionLocal": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "outboardDirectionWorkholding": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "outboardDirectionYUp": [
+                1.0,
+                0.0,
+                0.0
+              ]
+            },
+            "wheelCenter": {
+              "localMm": [
+                0.0,
+                0.0,
+                -24.0
+              ],
+              "workholdingMm": [
+                -3.0,
+                0.0,
+                0.0
+              ],
+              "workholdingYUpM": [
+                -0.003,
+                0.0,
+                0.0
+              ],
+              "feature": "MIDPLANE_OF_TWO_RIM_REFERENCE_SECTIONS_ON_SPINDLE"
+            },
+            "ballCentersFromC03": {
+              "upper": {
+                "artifactId": "C03-UPPER-BALL-STUD",
+                "localMm": [
+                  0.0,
+                  0.0,
+                  24.0
+                ],
+                "workholdingMm": [
+                  -21.0,
+                  9.0,
+                  134.0
+                ],
+                "workholdingYUpM": [
+                  -0.021,
+                  0.134,
+                  -0.009
+                ]
+              },
+              "lower": {
+                "artifactId": "C03-LOWER-BALL-STUD",
+                "localMm": [
+                  0.0,
+                  0.0,
+                  27.0
+                ],
+                "workholdingMm": [
+                  -21.0,
+                  -8.0,
+                  -127.0
+                ],
+                "workholdingYUpM": [
+                  -0.021,
+                  -0.127,
+                  0.008
+                ]
+              }
+            },
+            "existingR28Registration": "REGISTRATION_BLOCKED"
+          }
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Illegal partInstanceId on derivedKnuckle",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_ILLEGAL_PART_INSTANCE_ASSIGNMENT",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_ILLEGAL_PART_INSTANCE_ASSIGNMENT",
+        "message": "Experimental derived knuckle must have partInstanceId = null.",
+        "details": {
+          "derivedKnuckle": {
+            "artifactId": "C05-FL-KNUCKLE-STEERING-DEMO",
+            "partInstanceId": "PI-20-016-STEER",
+            "step": "knuckle-steering-demo.step",
+            "referencePartInstanceId": "PI-20-016-FL",
+            "role": "EXPERIMENTAL_DERIVATIVE"
+          }
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Illegal partInstanceId on outerBallStud",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_ILLEGAL_PART_INSTANCE_ASSIGNMENT",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_ILLEGAL_PART_INSTANCE_ASSIGNMENT",
+        "message": "Demonstration outer ball stud must have partInstanceId = null.",
+        "details": {
+          "outerBallStud": {
+            "artifactId": "C05-FL-STEERING-OUTER-BALL-STUD",
+            "partInstanceId": "PI-20-075-FL",
+            "step": "steering-outer-ball-stud.step",
+            "role": "BALL_STUD_ONLY"
+          }
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Illegal status on outerTieRodEndIdentity",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_ILLEGAL_DEFERRED_STATUS_ALTERATION",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_ILLEGAL_DEFERRED_STATUS_ALTERATION",
+        "message": "Outer tie rod end (PART-20-075) must remain REQUIRED_BUT_DEFERRED with snapshotInstanceCount=0 and partInstanceId=null.",
+        "details": {
+          "outerTieRodEndIdentity": {
+            "partId": "PART-20-075",
+            "parentDefinitionId": "ASSY-20-014",
+            "partInstanceId": null,
+            "status": "INSTANTIATED",
+            "snapshotInstanceCount": 2
+          }
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Illegal vehicleFromWorkholding non-null",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_ILLEGAL_MOTION_CLOSURE_CLAIM",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_ILLEGAL_MOTION_CLOSURE_CLAIM",
+        "message": "vehicleFromWorkholding must be null before vehicle-level registration is adjudicated.",
+        "details": {
+          "vehicleFromWorkholding": [
+            [
+              1,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Illegal innerTieRodInterface non-null",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_ILLEGAL_MOTION_CLOSURE_CLAIM",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_ILLEGAL_MOTION_CLOSURE_CLAIM",
+        "message": "innerTieRodInterface and tieRodLengthMm must be null before tie-rod closure.",
+        "details": {
+          "innerTieRodInterface": {
+            "innerBallCenter": [
+              -0.287,
+              0.054,
+              -0.1
+            ]
+          },
+          "tieRodLengthMm": null
+        },
+        "summary": {}
+      }
+    },
+    {
+      "testName": "Negative: C-05 Illegal tieRodLengthMm non-null",
+      "status": "PASS",
+      "expectPass": false,
+      "expectedErrorCode": "ERR_ILLEGAL_MOTION_CLOSURE_CLAIM",
+      "actualResult": {
+        "passed": false,
+        "packageId": "c05-ee1e461fecf00faa8151",
+        "packageType": "C05_STEERING_OUTBOARD",
+        "errorCode": "ERR_ILLEGAL_MOTION_CLOSURE_CLAIM",
+        "message": "innerTieRodInterface and tieRodLengthMm must be null before tie-rod closure.",
+        "details": {
+          "innerTieRodInterface": null,
+          "tieRodLengthMm": 340.0
+        },
+        "summary": {}
+      }
+    }
+  ]
+}

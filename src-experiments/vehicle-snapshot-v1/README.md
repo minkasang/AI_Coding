@@ -4,8 +4,17 @@
 
 ```text
 node src-experiments/vehicle-snapshot-v1/run-checks.mjs
+node src-experiments/vehicle-snapshot-v1/run-checks.mjs --candidate --out F:/tmp/r27-candidate
 node --test src-experiments/vehicle-snapshot-v1/tests/snapshot.test.mjs
+node --test src-experiments/vehicle-snapshot-v1/tests/snapshot-guard.test.mjs
 ```
+
+## 写入边界（R-41）
+
+- **默认复跑只读**：读取已发布 `fixtures/vehicle-snapshot.json` 与 `fixtures/vehicle-snapshot.consumer.json`，校验字节/哈希/计数；候选在内存中构建。发布两文件保持原字节，绝不重写。默认只写一份检查报告 `agent-workspace/agents/deepseek/reports/R-41-readonly-check-results.json`。
+- **候选生成隔离**：`--candidate` 只写 `src-experiments/vehicle-snapshot-v1/candidates/<candidateId>/` 或显式 `--out` 允许的 `F:/tmp/...`；写 `vehicle-snapshot.json`、`vehicle-snapshot.consumer.json`、`candidate-record.json`。记录源输入指纹、已发布快照哈希、拟议 revision（published revision + 1）和阻断原因。
+- **没有发布命令**：R-41 不提供 `--publish`。候选必须交 GPT-6 审核后，由总控正式发布新修订并重新钉下游 C-01/C-02/C-03/R-32。
+- 候选可能因 R-26 决议未被生成器消费而带 `SNAP-E-R26`；这是待审候选，不会被自动写入发布路径。
 
 ## 产物
 
@@ -26,5 +35,5 @@ node --test src-experiments/vehicle-snapshot-v1/tests/snapshot.test.mjs
 
 - 数据候选，不是冻结 Schema；等 GPT-6/RP-07 裁决。
 - 没有真实几何、OEM 硬点、受力或世界坐标。
-- R-26 输出缺失，快照保留 R-21/R-22 全部冲突，不自动裁决。
+- R-26 已有输出，但发布快照仍保留旧 `r26` 块；候选重建会以 `SNAP-E-R26` 阻断，等待总控决定 R-26 消费方式和新修订。
 - R-23 的 revision 3 与本快照 revision 1 不同，R-28 需发布绑定本 revision 的新运行或显式 rebase。

@@ -1,0 +1,29 @@
+{
+  "unit": "mm",
+  "sourceGrade": "DEMO_ASSUMPTION",
+  "corner": "FL",
+  "neutralOffset": {
+    "inboardMm": 260,
+    "rearwardMm": 30,
+    "upwardMm": 12
+  },
+  "locator": {
+    "blockWidthMm": 76,
+    "blockHeightMm": 52,
+    "blockDepthMm": 28,
+    "boreDepthMm": 19,
+    "attachmentHoleDiameterMm": 8,
+    "attachmentHolePitchMm": 54
+  },
+  "pin": {
+    "stemDiameterMm": 14,
+    "stemDepthMm": 18,
+    "radialClearanceMm": 0.1,
+    "tipChamferMm": 1,
+    "collarDiameterMm": 26,
+    "collarThicknessMm": 4,
+    "neckDiameterMm": 13,
+    "ballDiameterMm": 24,
+    "ballOffsetMm": 22
+  }
+}

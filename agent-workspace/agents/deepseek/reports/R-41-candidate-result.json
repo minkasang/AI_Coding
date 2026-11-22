@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "mode": "CANDIDATE",
+  "status": "CANDIDATE_NOT_PUBLISHED",
+  "candidateId": "r27-candidate-b8a1ac28b1ca",
+  "outDir": "src-experiments\\vehicle-snapshot-v1\\candidates\\r41-review-vs1fAl",
+  "published": {
+    "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+    "consumerSha256": "fa18862548d64e27f9f23cdafe906b974761d8c1e6826bdcd18045febb6c8df4",
+    "revision": 1
+  },
+  "candidate": {
+    "snapshotSha256": "b8a1ac28b1ca1094051c1f3f1335765d0e68b05dd7ad2bb5ff0218e0082ac1e5",
+    "consumerSha256": "63e09a585acb1bcbc7a282f605fac822cd87fc0516e506706b790b494f8e3030",
+    "valid": false,
+    "blockers": [
+      "SNAP-E-R26"
+    ],
+    "divergesFromPublished": true,
+    "changedInputs": [
+      {
+        "path": "workbench-v2/experiments/vehicle-structure-adapter/known-cad-map.mjs",
+        "role": "R25_CAD_WHITELIST",
+        "publishedSha256": "cc7f219212136f205914b7578d38fd15b0d446274d0901346998c0d186cf01c0",
+        "currentSha256": "4fae79fbcf99584e35e787d6a0da0f18d40bab8476344109e72f0607b543365e",
+        "status": "CHANGED_INPUT"
+      },
+      {
+        "path": "agent-workspace/agents/qwen4/tasks/R-26.md",
+        "role": "R26_DECISIONS",
+        "publishedSha256": "c545f1fce4cc8f1c50b709f957ac372e8a52cf3e1c06358ceef12c24317d471d",
+        "currentSha256": "09561f5e4a958243b6034139d44f5da23ac79988cd0a4ac3c3d5f6993bef9362",
+        "status": "CHANGED_INPUT"
+      }
+    ]
+  },
+  "recordPath": "src-experiments\\vehicle-snapshot-v1\\candidates\\r41-review-vs1fAl\\candidate-record.json",
+  "note": "Published snapshot/consumer index untouched; candidate artifacts are isolated for review."
+}

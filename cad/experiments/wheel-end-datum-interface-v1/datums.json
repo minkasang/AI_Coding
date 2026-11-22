@@ -1,0 +1,895 @@
+{
+  "schemaVersion": "carlab.c02WheelEndDatums/1",
+  "sourceGrade": "DEMO_ASSUMPTION",
+  "sources": {
+    "c01": {
+      "packageId": "c01-c5d74da77c293aa5321f",
+      "manifestSha256": "80e7e060de6b20015a6fdb8d5b81ea60b9e23ac442cebbb96b2bc2a5b5222d6a",
+      "assemblyDefinitionSha256": "14758e7126cca3d63167a7c900356c81da53ccc95d0b7fbe358e3a1c2f146eab",
+      "glb": "wheel-end.glb",
+      "assetsSha256": {
+        "wheel-end.step": "e44ea54eded24673c1578e321eb8fe4438688c21913e1b41f9eedc34ef8cdf7d",
+        "wheel-end.glb": "c11da5170450979ba0d1b444af18e32679cc3e9fce11a941bb1172f8427710c3",
+        "parts/PART-20-016.step": "12dcbfd3722cb9f582a23fb8fff51d000dcc6ca923887a4e40ed0a86fbd80527",
+        "parts/PART-30-001.step": "3196f723f22efd4d63e6db2d981ed028e29ab85b0715eb1f0c6ae1a6bf6ee396",
+        "parts/PART-30-002.step": "66d1967afa9e20a7fd4b60f5b057fbf7a2c1d05dfa4ef2eb5997bcf7286668fe",
+        "parts/PART-30-006.step": "c78f2ecc8f1aae6bc46b287b327cb696578bca400877e1b183d888e4147481e0",
+        "parts/PART-30-009.step": "61c95645fce54e6d6aa2cb25ee1786036aa4f12230323ca28f1bebb984f7e95b"
+      }
+    },
+    "snapshot": {
+      "path": "src-experiments/vehicle-snapshot-v1/fixtures/vehicle-snapshot.json",
+      "sha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+      "snapshotId": "SNAP-R27-R16-R21-R22-R23-01",
+      "revision": 1,
+      "snapshotSha256": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+      "variantId": "VAR-R16-BOF-ICE",
+      "selectionKey": "partInstanceId",
+      "mappingStatus": "DEMO_SUBSTITUTE",
+      "sameVehicleClaim": false
+    },
+    "referenceMotion": {
+      "path": "src-experiments/mechanism-pose-adapter-v1/canonical-motion.json",
+      "sha256": "44a58318a89522db68b1dc9dfa3aad94e7876d8c5714e7e02b63d1d7117c265d",
+      "fixturePath": "src-experiments/kinematics/fixture-demo.json",
+      "fixtureSha256": "9cdc6e8241a5f539f56dafb6ae1d6e68b0ec02ff8fb4e8bc3a05c0f5cf0b6ed1",
+      "runId": "RUN-SLA-FL-SNAP1-001",
+      "resultHash": "ea07924e32613ccb4500ac737d4f6c08a6f531bba0afa0e6219f45bd4784ddc3",
+      "frameId": "FR-VEHICLE",
+      "sourceRevision": 1,
+      "knuckleOriginFeature": "LOWER_BALL_CENTER",
+      "unit": "m",
+      "neutralFixtureCheck": {
+        "frameIndex": 2,
+        "maximumFixturePointErrorM": 8.763077946574285e-14
+      }
+    }
+  },
+  "frames": {
+    "matrixConvention": "row-major arrays acting on column vectors; translations in mm",
+    "workholding": {
+      "frameId": "FR-C01-WHEEL-END-FL",
+      "unit": "mm",
+      "handedness": "RIGHT",
+      "originDatumId": "PI-20-016-FL/bearingSeatFront",
+      "positiveAxes": {
+        "x": "OUTBOARD",
+        "y": "REAR",
+        "z": "UP"
+      }
+    },
+    "anchor": {
+      "expressedInFrameId": "FR-C01-WHEEL-END-FL",
+      "attachedDatumId": "PI-20-016-FL/bearingSeatFront",
+      "role": "INSTALLATION_ANCHOR_IN_WORKHOLDING",
+      "rootFromAnchorCad": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "display": {
+      "rootNodeFrameId": "FR-C01-WHEEL-END-FL",
+      "unit": "m",
+      "handedness": "RIGHT",
+      "glbFromCadDirections": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          -1,
+          0
+        ]
+      ],
+      "positionScale": 0.001
+    },
+    "spindle": {
+      "expressedInFrameId": "FR-C01-WHEEL-END-FL",
+      "originDatumId": "PI-20-016-FL/bearingSeatFront",
+      "outboardDirection": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "datums": [
+    {
+      "datumId": "PI-20-016-FL/bearingSeatFront",
+      "partInstanceId": "PI-20-016-FL",
+      "partId": "PART-20-016",
+      "mountName": "bearingSeatFront",
+      "feature": "BEARING_SEAT_OUTBOARD_FACE_AXIS_INTERSECTION",
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "partFromMountCad": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rootFromMountCad": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "glbOriginM": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "glbPositiveZDirection": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "stepEvidence": {
+        "part": {
+          "surface": "PLANE",
+          "rims": [
+            {
+              "centerMm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "diameterMm": 86.07
+            }
+          ]
+        },
+        "assembly": {
+          "surface": "PLANE",
+          "rims": [
+            {
+              "centerMm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "diameterMm": 86.07
+            }
+          ]
+        }
+      }
+    },
+    {
+      "datumId": "PI-20-016-FL/bearingSeatBack",
+      "partInstanceId": "PI-20-016-FL",
+      "partId": "PART-20-016",
+      "mountName": "bearingSeatBack",
+      "feature": "BEARING_SEAT_INBOARD_SHOULDER_AXIS_INTERSECTION",
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "partFromMountCad": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -42.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rootFromMountCad": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          -42.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "glbOriginM": [
+        -0.042,
+        0.0,
+        0.0
+      ],
+      "glbPositiveZDirection": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "stepEvidence": {
+        "part": {
+          "surface": "PLANE",
+          "rims": [
+            {
+              "centerMm": [
+                0.0,
+                0.0,
+                -42.0
+              ],
+              "diameterMm": 86.07
+            }
+          ]
+        },
+        "assembly": {
+          "surface": "PLANE",
+          "rims": [
+            {
+              "centerMm": [
+                -42.0,
+                0.0,
+                0.0
+              ],
+              "diameterMm": 86.07
+            }
+          ]
+        }
+      }
+    },
+    {
+      "datumId": "PI-30-001-FL/frontFace",
+      "partInstanceId": "PI-30-001-FL",
+      "partId": "PART-30-001",
+      "mountName": "frontFace",
+      "feature": "OUTER_BEARING_RING_OUTBOARD_FACE_AXIS_INTERSECTION",
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "partFromMountCad": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rootFromMountCad": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "glbOriginM": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "glbPositiveZDirection": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "stepEvidence": {
+        "part": {
+          "surface": "PLANE",
+          "rims": [
+            {
+              "centerMm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "diameterMm": 86.0
+            }
+          ]
+        },
+        "assembly": {
+          "surface": "PLANE",
+          "rims": [
+            {
+              "centerMm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "diameterMm": 86.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "datumId": "PI-30-001-FL/backFace",
+      "partInstanceId": "PI-30-001-FL",
+      "partId": "PART-30-001",
+      "mountName": "backFace",
+      "feature": "OUTER_BEARING_RING_INBOARD_FACE_AXIS_INTERSECTION",
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "partFromMountCad": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -42.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rootFromMountCad": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          -42.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "glbOriginM": [
+        -0.042,
+        0.0,
+        0.0
+      ],
+      "glbPositiveZDirection": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "stepEvidence": {
+        "part": {
+          "surface": "PLANE",
+          "rims": [
+            {
+              "centerMm": [
+                0.0,
+                0.0,
+                -42.0
+              ],
+              "diameterMm": 86.0
+            }
+          ]
+        },
+        "assembly": {
+          "surface": "PLANE",
+          "rims": [
+            {
+              "centerMm": [
+                -42.0,
+                0.0,
+                0.0
+              ],
+              "diameterMm": 86.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "datumId": "PI-30-006-FL/wheelMatingFace",
+      "partInstanceId": "PI-30-006-FL",
+      "partId": "PART-30-006",
+      "mountName": "wheelMatingFace",
+      "feature": "WHEEL_MOUNTING_FACE_AXIS_INTERSECTION",
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "partFromMountCad": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          13.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rootFromMountCad": [
+        [
+          0.0,
+          0.0,
+          1.0,
+          21.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "glbOriginM": [
+        0.021,
+        0.0,
+        0.0
+      ],
+      "glbPositiveZDirection": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "stepEvidence": {
+        "part": {
+          "surface": "PLANE",
+          "rims": [
+            {
+              "centerMm": [
+                0.0,
+                0.0,
+                13.0
+              ],
+              "diameterMm": 66.0
+            }
+          ]
+        },
+        "assembly": {
+          "surface": "PLANE",
+          "rims": [
+            {
+              "centerMm": [
+                21.0,
+                0.0,
+                0.0
+              ],
+              "diameterMm": 66.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "datumId": "PI-20-016-FL/upperBallJointSeat",
+      "partInstanceId": "PI-20-016-FL",
+      "partId": "PART-20-016",
+      "mountName": "upperBallJointSeat",
+      "feature": "UPPER_TAPER_LARGE_END_CENTER",
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "partFromMountCad": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          9.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          110.0
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0,
+          -21.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rootFromMountCad": [
+        [
+          0.0,
+          -1.0,
+          0.0,
+          -21.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          9.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          110.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "glbOriginM": [
+        -0.021,
+        0.11,
+        -0.009
+      ],
+      "glbPositiveZDirection": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "stepEvidence": {
+        "part": {
+          "surface": "CONE",
+          "rims": [
+            {
+              "centerMm": [
+                9.0,
+                110.0,
+                -21.0
+              ],
+              "diameterMm": 20.0
+            },
+            {
+              "centerMm": [
+                9.0,
+                88.9,
+                -21.0
+              ],
+              "diameterMm": 15.980952381
+            }
+          ],
+          "measuredTrimDepthMm": 21.1
+        },
+        "assembly": {
+          "surface": "CONE",
+          "rims": [
+            {
+              "centerMm": [
+                -21.0,
+                9.0,
+                110.0
+              ],
+              "diameterMm": 20.0
+            },
+            {
+              "centerMm": [
+                -21.0,
+                9.0,
+                88.9
+              ],
+              "diameterMm": 15.980952381
+            }
+          ],
+          "measuredTrimDepthMm": 21.1
+        }
+      }
+    },
+    {
+      "datumId": "PI-20-016-FL/lowerBallJointSeat",
+      "partInstanceId": "PI-20-016-FL",
+      "partId": "PART-20-016",
+      "mountName": "lowerBallJointSeat",
+      "feature": "LOWER_TAPER_LARGE_END_CENTER",
+      "sourceGrade": "DEMO_ASSUMPTION",
+      "partFromMountCad": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -8.0
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -100.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -21.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "rootFromMountCad": [
+        [
+          0.0,
+          1.0,
+          0.0,
+          -21.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          -8.0
+        ],
+        [
+          0.0,
+          0.0,
+          -1.0,
+          -100.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "glbOriginM": [
+        -0.021,
+        -0.1,
+        0.008
+      ],
+      "glbPositiveZDirection": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "stepEvidence": {
+        "part": {
+          "surface": "CONE",
+          "rims": [
+            {
+              "centerMm": [
+                -8.0,
+                -100.0,
+                -21.0
+              ],
+              "diameterMm": 22.0
+            },
+            {
+              "centerMm": [
+                -8.0,
+                -76.9,
+                -21.0
+              ],
+              "diameterMm": 16.9782608696
+            }
+          ],
+          "measuredTrimDepthMm": 23.1
+        },
+        "assembly": {
+          "surface": "CONE",
+          "rims": [
+            {
+              "centerMm": [
+                -21.0,
+                -8.0,
+                -100.0
+              ],
+              "diameterMm": 22.0
+            },
+            {
+              "centerMm": [
+                -21.0,
+                -8.0,
+                -76.9
+              ],
+              "diameterMm": 16.9782608696
+            }
+          ],
+          "measuredTrimDepthMm": 23.1
+        }
+      }
+    }
+  ],
+  "registration": {
+    "status": "REGISTRATION_BLOCKED",
+    "playbackAllowed": false,
+    "vehicleFromWorkholding": null,
+    "missing": [
+      {
+        "key": "upperTaperToBallCenter",
+        "value": null,
+        "owner": "CAD"
+      },
+      {
+        "key": "lowerTaperToBallCenter",
+        "value": null,
+        "owner": "CAD"
+      },
+      {
+        "key": "bearingOutboardFaceToLowerBallCenter",
+        "value": null,
+        "owner": "CAD"
+      },
+      {
+        "key": "wheelMountFaceToWheelCenter",
+        "value": null,
+        "owner": "CAD_AND_MOTION"
+      },
+      {
+        "key": "knuckleOuterTieRodInterface",
+        "value": null,
+        "owner": "CAD"
+      },
+      {
+        "key": "sharedPhysicalLandmarkCorrespondences",
+        "value": null,
+        "owner": "CAD_AND_MOTION"
+      }
+    ],
+    "projectionCheck": {
+      "pointOrder": "lower-to-upper",
+      "spindleDirection": "outboard",
+      "cadTaperEntranceDistanceMm": 210.6869715953,
+      "referenceBallCenterDistanceMm": 250.1999200639,
+      "cadTaperEntranceProjectionMm": 0.0,
+      "referenceBallCenterProjectionMm": -79.3776009561,
+      "coaxialTaperOffsetsCanBridgeDifference": false
+    }
+  }
+}

@@ -38,6 +38,12 @@ node workbench-v2/tests/project-store.test.mjs
 node workbench-v2/tests/browser-smoke.mjs   # 需 npm start + Chrome
 ```
 
+## 布局（返工）
+
+左栏三区块 `<details>` 可折叠，各自 `pane-scroll` 独立滚动；`#paneVehicle` / `#paneProject` / `#paneCatalog` 在 CDP 中做 boundingClientRect 不交叠断言（1600×1000、1500×920、1280×800）。
+
+截图：`F:\tmp\carlab_v2_test_images\08-layout-1500x920-expanded-tree.png`、`09-layout-1280x800-expanded-tree.png`
+
 ## 未做
 
 - 未播放 `demoMotionView` / 未填 R-16 Frame 世界位姿。

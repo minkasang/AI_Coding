@@ -1,0 +1,10 @@
+{
+  "taskId": "R-37",
+  "mode": "selftest",
+  "verdict": "PASS",
+  "caught": 24,
+  "missed": 0,
+  "total": 24,
+  "missedCases": [],
+  "ruleCoverage": "16/16"
+}

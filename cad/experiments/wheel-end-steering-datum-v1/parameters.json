@@ -1,0 +1,27 @@
+{
+  "unit": "mm",
+  "sourceGrade": "DEMO_ASSUMPTION",
+  "arm": {
+    "reachMm": 112,
+    "axialStationMm": -27,
+    "mouthYMm": 4,
+    "seatDepthMm": 24,
+    "bossDiameterMm": 36,
+    "largeDiameterMm": 16,
+    "smallDiameterMm": 12,
+    "webAttachXMm": 46,
+    "webInsetMm": 6,
+    "webThicknessMm": 14,
+    "webAttachAxialWidthMm": 18,
+    "webTipAxialWidthMm": 14
+  },
+  "stud": {
+    "ballDiameter": 23,
+    "ballCenterOffset": 20,
+    "neckDiameter": 12,
+    "collarDiameter": 24,
+    "collarThickness": 3,
+    "radialGap": 0.08,
+    "tipAxialAllowance": 0.8
+  }
+}

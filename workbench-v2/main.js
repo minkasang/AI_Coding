@@ -7,6 +7,7 @@ import {
   loadVehicleSnapshot, createSnapshotContext, DEMO_VIEWPORT_BRIDGE
 } from './experiments/vehicle-snapshot-adapter/vehicle-snapshot-client.mjs';
 import { VehicleTreeUI } from './experiments/vehicle-snapshot-adapter/vehicle-tree-ui.mjs';
+import { loadC01ViewportAssets, isC01PartInstance, revokeC01VerifiedGlbUrl } from './c01-viewport-mode.mjs';
 import './shell-router.js';
 
 const el = (id) => document.getElementById(id);
@@ -30,12 +31,117 @@ let selectionSource = 'project';
 let vehicleSelectionId = null;
 /** @type {InspectionBridge|null} */
 let inspectionBridge = null;
+/** @type {object|null} */
+let c01State = null;
+/** @type {Promise<void>|null} */
+let c01LoadInflight = null;
+/** @type {object|null} */
+let legacySeed = null;
 
 function canInspectGeometry() {
-  if (selectionSource === 'vehicle' && vehicleCtx && vehicleSelectionId) {
-    return vehicleCtx.isInspectable(vehicleSelectionId);
+  if (selectionSource === 'vehicle' && vehicleSelectionId) {
+    if (c01State?.active && c01State.verified && c01State.instanceIds?.has(vehicleSelectionId)) {
+      return true;
+    }
+    if (vehicleCtx) return vehicleCtx.isInspectable(vehicleSelectionId);
   }
-  return Boolean(store?.selectedId);
+  if (selectionSource === 'project' && c01State?.active && store?.selectedId) {
+    return c01State.instanceIds?.has(store.selectedId);
+  }
+  return Boolean(store?.selectedId) && !c01State?.active;
+}
+
+function updateC01TreeHelp() {
+  const help = el('vehicleTreeHelp');
+  if (!help) return;
+  if (c01State?.verified && c01State.binding) {
+    help.textContent = '278 实例 · C-01 绑定已通过 · 九件 PI 可切入静态工装';
+  } else if (c01State?.blockedReason) {
+    help.textContent = `C-01 不可用（${c01State.blockedReason}）· 保持原三件 DEMO`;
+  }
+}
+
+async function ensureC01Assets() {
+  if (c01State?.verified && c01State.binding && c01State.seed) return;
+  if (!c01LoadInflight) {
+    c01LoadInflight = loadC01ViewportAssets(fetch, { glbObjectUrlToRevoke: c01State?.glbObjectUrl })
+      .then((pack) => {
+        c01State = { ...pack, active: false, saved: c01State?.active ? c01State.saved : null, blockedReason: null };
+        window.__CARLAB_C01_READY__ = true;
+        window.__CARLAB_C01_BLOCKED__ = null;
+        updateC01TreeHelp();
+      })
+      .catch((error) => {
+        if (!c01State?.verified && !c01State?.active) blockC01Load(error);
+        throw error;
+      })
+      .finally(() => { c01LoadInflight = null; });
+  }
+  await c01LoadInflight;
+  if (!c01State?.verified || !c01State.binding || !c01State.seed) {
+    throw new Error(c01State?.loadError || 'C-01 绑定未通过');
+  }
+}
+
+function blockC01Load(error) {
+  const code = error?.code || error?.name || 'E_BINDING_FAILED';
+  const message = error?.message || String(error);
+  revokeC01VerifiedGlbUrl(c01State?.glbObjectUrl);
+  c01State = {
+    verified: false,
+    binding: null,
+    seed: null,
+    active: false,
+    saved: null,
+    blockedReason: code,
+    loadError: message
+  };
+  window.__CARLAB_C01_READY__ = false;
+  window.__CARLAB_C01_BLOCKED__ = code;
+  updateC01TreeHelp();
+}
+
+async function enterC01Mode(partInstanceId) {
+  await ensureC01Assets();
+  if (!c01State?.verified || !c01State.binding || !c01State.seed) {
+    throw new Error('C-01 绑定未通过，已阻止视窗切换');
+  }
+  if (!c01State.active) {
+    c01State.saved = { seed: legacySeed || seed, doc: store.exportDocument(), metadata };
+    seed = c01State.seed;
+    metadata = null;
+    await viewport.load(seed);
+    swapEngineeringStore(createDemoProject(seed), seed);
+    renderCatalog();
+    c01State.active = true;
+    el('workbenchHeading').textContent = 'C-01 静态工装';
+    el('workbenchDescription').textContent = 'STATIC_WORKHOLDING_DEMO · 非整车坐标 · 运动禁用';
+    window.__CARLAB_C01_ACTIVE__ = true;
+    toast('已载入 C-01 九实例静态样板（DEMO_ASSUMPTION）');
+  }
+  store.select(partInstanceId);
+  refresh(store.snapshot());
+  viewport.focus(partInstanceId);
+}
+
+function swapEngineeringStore(project, newSeed) {
+  seed = newSeed;
+  store = new ProjectStore(project, seed.catalog);
+  store.subscribe(refresh);
+}
+
+async function exitC01Mode() {
+  if (!c01State?.active || !c01State.saved) return;
+  revokeC01VerifiedGlbUrl(c01State.glbObjectUrl);
+  seed = c01State.saved.seed;
+  metadata = c01State.saved.metadata;
+  swapEngineeringStore(JSON.parse(c01State.saved.doc), seed);
+  renderCatalog();
+  await viewport.load(seed);
+  c01State.active = false;
+  el('workbenchHeading').textContent = '工程装配';
+  el('workbenchDescription').textContent = '按照工程对象组织零件。现有轮端零件属于 DEMO，完整整车装配正在构建。';
+  window.__CARLAB_C01_ACTIVE__ = false;
 }
 
 function toast(message, duration = 3000) {
@@ -104,13 +210,14 @@ function renderTree(snapshot) {
   el('tree').innerHTML = whole;
 }
 function renderCatalog() {
+  const readOnlyC01 = c01State?.active;
   el('catalog').innerHTML = seed.catalog.map((part) => `
     <div class="catalog-card">
       <div class="catalog-icon">◇</div>
       <div class="catalog-text"><strong>${escapeHTML(part.displayName)}</strong>
         <small>${escapeHTML(part.subtitle)}</small></div>
-      <button class="add-part-btn" data-add="${escapeHTML(part.partKey)}"
-        title="把${escapeHTML(part.displayName)}添加到工程" aria-label="添加${escapeHTML(part.displayName)}">+</button>
+      ${readOnlyC01 ? '' : `<button class="add-part-btn" data-add="${escapeHTML(part.partKey)}"
+        title="把${escapeHTML(part.displayName)}添加到工程" aria-label="添加${escapeHTML(part.displayName)}">+</button>`}
     </div>`).join('');
 }
 function field(label, value) {
@@ -138,8 +245,11 @@ function renderVehicleInspector(partInstanceId) {
   if (!inst) return;
   const name = vehicleCtx.getPartName(inst.partId);
   const demo = vehicleCtx.getDemoCad(partInstanceId);
-  const inspectable = vehicleCtx.isInspectable(partInstanceId);
-  const geom = inst.geometryStatus || 'NO_GEOMETRY';
+  const c01Bound = c01State?.active && c01State.binding?.getInstanceView?.(partInstanceId);
+  const inspectable = c01Bound?.binding
+    ? true
+    : vehicleCtx.isInspectable(partInstanceId);
+  const geom = c01Bound?.binding ? 'DEMO_SUBSTITUTE' : (inst.geometryStatus || 'NO_GEOMETRY');
   el('inspector').innerHTML = `
     <div class="selected-icon">◈</div>
     <h3 class="selected-name vehicle-inspector-title">${escapeHTML(name)}</h3>
@@ -150,8 +260,9 @@ function renderVehicleInspector(partInstanceId) {
       ${field('总成实例', inst.assemblyInstanceId)}
       ${field('角位', inst.corner || '—')}
       ${field('几何', geom)}
-      ${field('展示与检查', inspectable ? '可测距/剖切（演示 GLB）' : '无工程几何 — 禁用')}
-      ${field('CAD', demo?.cadUrl ? '演示替代（非 OEM）' : '未建立')}
+      ${field('展示与检查', inspectable ? '可测距/剖切（C-01 演示）' : '无工程几何 — 禁用')}
+      ${field('CAD', c01Bound?.binding ? 'C-01 wheel-end.glb' : (demo?.cadUrl ? '演示替代（非 OEM）' : '未建立'))}
+      ${c01Bound ? field('绑定', c01Bound.bindingStatus) : ''}
       ${field('证据', inst.evidenceInherited || inst.evidence?.evidenceInherited || '—')}
     </div>
     <p class="part-desc">选择键为 R-27 规范 <strong>partInstanceId</strong>（PI-*）。${demo ? '当前仅桥接至可编辑工程轮毂节点作视觉参考，不代表 PI 已获得真实几何。' : '不得生成占位网格。'}</p>
@@ -159,13 +270,34 @@ function renderVehicleInspector(partInstanceId) {
   `;
 }
 
-function onVehicleSelect(partInstanceId) {
+async function onVehicleSelect(partInstanceId) {
   selectionSource = 'vehicle';
   vehicleSelectionId = partInstanceId;
-  const bridgeId = DEMO_VIEWPORT_BRIDGE[partInstanceId];
-  if (bridgeId && store) store.select(bridgeId);
-  else if (store) store.select(null);
-  else refresh(store?.snapshot());
+  try {
+    if (!isC01PartInstance(partInstanceId)) {
+      if (c01State?.active) await exitC01Mode();
+      const bridgeId = DEMO_VIEWPORT_BRIDGE[partInstanceId];
+      if (bridgeId && store) store.select(bridgeId);
+      else if (store) store.select(null);
+      refresh(store.snapshot());
+      return;
+    }
+    try {
+      await enterC01Mode(partInstanceId);
+    } catch (error) {
+      blockC01Load(error);
+      toast(`C-01 未载入：${error.code || error.message}`, 6000);
+      selectionSource = 'vehicle';
+      vehicleSelectionId = partInstanceId;
+      renderVehicleInspector(partInstanceId);
+      if (store) store.select(null);
+      refresh(store.snapshot());
+      return;
+    }
+  } catch (error) {
+    window.__CARLAB_C01_LAST_ERROR = error.message || String(error);
+    toast(error.message || String(error), 6000);
+  }
 }
 
 function renderInspector(snapshot) {
@@ -217,6 +349,7 @@ async function boot() {
     const response = await fetch('./fixtures/wheel-end-demo.json');
     if (!response.ok) throw new Error('工程数据 HTTP ' + response.status);
     seed = await response.json();
+    legacySeed = seed;
     const sample = createDemoProject(seed);
     try {
       const saved = localStorage.getItem(STORAGE);
@@ -233,7 +366,24 @@ async function boot() {
     metadata = await fetch(seed.metadata).then((x) => x.ok ? x.json() : null).catch(() => null);
     renderCatalog();
     viewport = new EngineeringViewport(el('viewport'), el('viewCanvas'), (id) => {
-      safeAction(() => store.select(id));
+      safeAction(() => {
+        if (c01State?.active && c01State.instanceIds?.has(id)) {
+          selectionSource = 'vehicle';
+          vehicleSelectionId = id;
+          if (vehicleTreeUI) {
+            vehicleTreeUI.selectedId = id;
+            vehicleTreeUI.render();
+          }
+        } else if (!c01State?.active) {
+          selectionSource = 'project';
+          vehicleSelectionId = null;
+          if (vehicleTreeUI) {
+            vehicleTreeUI.selectedId = null;
+            vehicleTreeUI.render();
+          }
+        }
+        store.select(id);
+      });
     });
     store.subscribe(refresh);
     await viewport.load(seed);
@@ -272,6 +422,10 @@ async function boot() {
       console.warn('整车快照未载入', e);
       el('vehicleTreeHelp').textContent = '整车快照载入失败（可编辑工程仍可用）';
     });
+  ensureC01Assets().catch((e) => {
+    console.warn('C-01 预载失败', e);
+    window.__CARLAB_C01_ERROR__ = String(e?.message || e);
+  });
     window.__CARLAB_V2_READY__ = true;
   } catch (error) {
     el('loadingStatus').textContent = '模型未能载入：' + error.message;
@@ -290,7 +444,12 @@ document.addEventListener('click', (e) => {
         vehicleTreeUI.selectedId = null;
         vehicleTreeUI.render();
       }
-      return store.select(button.dataset.select);
+      const id = button.dataset.select;
+      if (c01State?.active) {
+        void exitC01Mode().then(() => store.select(id));
+        return;
+      }
+      return store.select(id);
     }
     if (button.dataset.visibility) return store.toggleVisibility(button.dataset.visibility);
     if (button.dataset.add) {
@@ -341,10 +500,18 @@ el('blankBtn').addEventListener('click', () => {
 el('loadDemoBtn').addEventListener('click', () => {
   if (!store) return;
   if (!confirm('载入示例工程会替换当前工作区。确定继续？')) return;
-  store.replace(createDemoProject(seed));
-  window.CARLAB_SHELL?.switchTo('model');
-  viewport.focus();
-  toast('已恢复原始轮端装配示例');
+  void (async () => {
+    if (c01State?.active) await exitC01Mode();
+    seed = legacySeed || seed;
+    swapEngineeringStore(createDemoProject(seed), seed);
+    metadata = await fetch(seed.metadata).then((x) => x.ok ? x.json() : null).catch(() => null);
+    await viewport.load(seed);
+    renderCatalog();
+    refresh(store.snapshot());
+    window.CARLAB_SHELL?.switchTo('model');
+    viewport.focus();
+    toast('已恢复原始轮端装配示例');
+  })();
 });
 el('saveBtn').addEventListener('click', () => {
   if (!store) return;

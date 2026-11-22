@@ -1,0 +1,208 @@
+{
+  "status": "PASS",
+  "packageId": "c06-2df2c4ba3bd882bab8f5",
+  "variantPackageId": "c06-f9b20d9fa889e80af742",
+  "cases": [
+    "default-build-and-independent-verify",
+    "step-neutral-centers-signed-offset-and-units",
+    "inner-outer-deferred-and-playback-boundary",
+    "twenty-millimetre-inboard-placement-variant",
+    "reject-mixed-unit-config",
+    "reject-wrong-corner-pair",
+    "reject-wrong-inboard-sign",
+    "reject-same-id-different-c05-manifest",
+    "reject-substituted-outer-end",
+    "reject-premature-playback",
+    "reject-edited-step"
+  ],
+  "default": {
+    "status": "PASS",
+    "independentStepSolids": 2,
+    "neutral": {
+      "poseId": "C06-FL-NOMINAL-STATIC",
+      "corner": "FL",
+      "valueBasis": "DEMO_ASSUMPTION",
+      "innerBallCenter": {
+        "role": "REFERENCE_POINT",
+        "artifactId": "C06-FL-INNER-BALL-DATUM-PIN",
+        "partLocalMm": [
+          0.0,
+          0.0,
+          22.0
+        ],
+        "workholdingMm": [
+          -287.0,
+          142.0,
+          36.0
+        ],
+        "workholdingYUpM": [
+          -0.287,
+          0.036,
+          -0.142
+        ]
+      },
+      "outerBallCenter": {
+        "role": "REFERENCE_POINT",
+        "artifactId": "C05-FL-STEERING-OUTER-BALL-STUD",
+        "partLocalMm": [
+          0.0,
+          0.0,
+          20.0
+        ],
+        "workholdingMm": [
+          -27.0,
+          112.0,
+          24.0
+        ],
+        "workholdingYUpM": [
+          -0.027,
+          0.024,
+          -0.112
+        ]
+      },
+      "innerMinusOuterWorkholdingMm": [
+        -260.0,
+        30.0,
+        12.0
+      ],
+      "innerMinusOuterWorkholdingYUpM": [
+        -0.26,
+        0.012,
+        -0.03
+      ],
+      "signedInnerFromOuterAlongOutboardAxisMm": -260.0,
+      "innerToOuterDirectionWorkholding": [
+        0.9923664122,
+        -0.1145038168,
+        -0.0458015267
+      ],
+      "innerToOuterDirectionYUp": [
+        0.9923664122,
+        -0.0458015267,
+        0.1145038168
+      ],
+      "nominalCenterDistanceMm": 262.0,
+      "nominalCenterDistanceM": 0.262
+    },
+    "fit": {
+      "boreDiameterMm": 14.2,
+      "stemDiameterMm": 14.0,
+      "radialGapMm": 0.1,
+      "blindBoreDepthMm": 19.0,
+      "seatedTipGapMm": 1.0
+    },
+    "assembly": {
+      "seatedLocatorVsUpstreamPairs": 13,
+      "maximumLocatorOverlapMm3": 0,
+      "approachSamplesMm": [
+        20,
+        18,
+        9.0,
+        2,
+        0
+      ],
+      "pinInsertionPairChecks": 70,
+      "maximumPinOverlapMm3": 0,
+      "clashToleranceMm3": 0.01,
+      "stopContactAreaMm2": 372.56147279,
+      "shortSeatMinimumClearanceMm": 0.05,
+      "overrunMm": 0.1,
+      "overrunOverlapMm3": 37.25614728
+    }
+  },
+  "variant": {
+    "status": "PASS",
+    "independentStepSolids": 2,
+    "neutral": {
+      "poseId": "C06-FL-NOMINAL-STATIC",
+      "corner": "FL",
+      "valueBasis": "DEMO_ASSUMPTION",
+      "innerBallCenter": {
+        "role": "REFERENCE_POINT",
+        "artifactId": "C06-FL-INNER-BALL-DATUM-PIN",
+        "partLocalMm": [
+          0.0,
+          0.0,
+          22.0
+        ],
+        "workholdingMm": [
+          -307.0,
+          142.0,
+          36.0
+        ],
+        "workholdingYUpM": [
+          -0.307,
+          0.036,
+          -0.142
+        ]
+      },
+      "outerBallCenter": {
+        "role": "REFERENCE_POINT",
+        "artifactId": "C05-FL-STEERING-OUTER-BALL-STUD",
+        "partLocalMm": [
+          0.0,
+          0.0,
+          20.0
+        ],
+        "workholdingMm": [
+          -27.0,
+          112.0,
+          24.0
+        ],
+        "workholdingYUpM": [
+          -0.027,
+          0.024,
+          -0.112
+        ]
+      },
+      "innerMinusOuterWorkholdingMm": [
+        -280.0,
+        30.0,
+        12.0
+      ],
+      "innerMinusOuterWorkholdingYUpM": [
+        -0.28,
+        0.012,
+        -0.03
+      ],
+      "signedInnerFromOuterAlongOutboardAxisMm": -280.0,
+      "innerToOuterDirectionWorkholding": [
+        0.993407604,
+        -0.106436529,
+        -0.0425746116
+      ],
+      "innerToOuterDirectionYUp": [
+        0.993407604,
+        -0.0425746116,
+        0.106436529
+      ],
+      "nominalCenterDistanceMm": 281.858120337,
+      "nominalCenterDistanceM": 0.281858120337
+    },
+    "fit": {
+      "boreDiameterMm": 14.2,
+      "stemDiameterMm": 14.0,
+      "radialGapMm": 0.1,
+      "blindBoreDepthMm": 19.0,
+      "seatedTipGapMm": 1.0
+    },
+    "assembly": {
+      "seatedLocatorVsUpstreamPairs": 13,
+      "maximumLocatorOverlapMm3": 0,
+      "approachSamplesMm": [
+        20,
+        18,
+        9.0,
+        2,
+        0
+      ],
+      "pinInsertionPairChecks": 70,
+      "maximumPinOverlapMm3": 0,
+      "clashToleranceMm3": 0.01,
+      "stopContactAreaMm2": 372.56147279,
+      "shortSeatMinimumClearanceMm": 0.05,
+      "overrunMm": 0.1,
+      "overrunOverlapMm3": 37.25614728
+    }
+  }
+}

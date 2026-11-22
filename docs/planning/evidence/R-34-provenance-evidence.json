@@ -1,0 +1,307 @@
+{
+  "task": "R-34",
+  "displayCode": "03.36",
+  "owner": "gemini-3-8-flash",
+  "timestamp": "2026-11-22T10:50:00+08:00",
+  "c01PackageVerified": "c01-c5d74da77c293aa5321f",
+  "sourceGradeAccepted": "DEMO_ASSUMPTION",
+  "r08EquivalentTier": "DEMO_ESTIMATE",
+  "suiteSummary": {
+    "totalTests": 15,
+    "passedTests": 15,
+    "failedTests": 0,
+    "allPassed": true
+  },
+  "negativeChecksCovered": [
+    "ERR_INPUT_SCHEMA_INVALID",
+    "ERR_PROVENANCE_CONTRADICTION",
+    "ERR_PACKAGE_PART_GRADE_MISMATCH",
+    "ERR_INPUT_TEST_FIXTURE_IN_PRODUCTION",
+    "ERR_UNVERIFIED_VEHICLE_CLAIM",
+    "ERR_ASSET_HASH_MISMATCH",
+    "ERR_SNAPSHOT_BINDING_MISMATCH",
+    "ERR_INPUT_EMPTY_ASSET_HASHES",
+    "ERR_INPUT_MISSING_CORE_ASSET_HASH",
+    "ERR_INPUT_MISSING_PART_ASSET_HASH",
+    "ERR_PACKAGE_DIRECTORY_REQUIRED",
+    "ERR_PACKAGE_DIRECTORY_NOT_FOUND",
+    "ERR_SNAPSHOT_FILE_REQUIRED",
+    "ERR_SNAPSHOT_FILE_NOT_FOUND"
+  ],
+  "testCases": [
+    {
+      "testName": "POSITIVE_C01_AUTHENTIC_PACKAGE",
+      "description": "Authentic C-01 package verified cleanly with 7 physical hashes, snapshot binding, and DEMO_ASSUMPTION grade in FULL_PACKAGE_RELEASE mode.",
+      "passed": true,
+      "result": {
+        "passed": true,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": null,
+        "message": "Package 'c01-c5d74da77c293aa5321f' PASSES full package release quality gate as verified DEMO_ASSUMPTION demonstration asset with 7 disk files and snapshot binding validated.",
+        "details": {
+          "verificationMode": "FULL_PACKAGE_RELEASE"
+        },
+        "provenanceSummary": {
+          "packageId": "c01-c5d74da77c293aa5321f",
+          "packageSourceGrade": "DEMO_ASSUMPTION",
+          "verificationMode": "FULL_PACKAGE_RELEASE",
+          "r08EquivalentTier": "DEMO_ESTIMATE",
+          "mappingStatus": "DEMO_SUBSTITUTE",
+          "sameVehicleClaim": false,
+          "partCount": 5,
+          "instanceCount": 9,
+          "externalMountCount": 2,
+          "verifiedFilesCount": 7,
+          "demonstrationNotice": "All components verified as DEMO_ASSUMPTION demonstration assets. No OEM engineering production drawings released. Safe for viewer consumption and isolated staging."
+        }
+      }
+    },
+    {
+      "testName": "POSITIVE_METADATA_ONLY_MODE",
+      "description": "Explicit metadata-only verification successfully validates schema, vocabulary, and manifest declarations without requiring disk files, distinctly marked from full package release.",
+      "passed": true,
+      "result": {
+        "passed": true,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": null,
+        "message": "Package 'c01-c5d74da77c293aa5321f' PASSES metadata-only quality gate (schema, vocabulary, and manifest hashes verified; disk assets not validated).",
+        "details": {
+          "verificationMode": "METADATA_ONLY"
+        },
+        "provenanceSummary": {
+          "packageId": "c01-c5d74da77c293aa5321f",
+          "packageSourceGrade": "DEMO_ASSUMPTION",
+          "verificationMode": "METADATA_ONLY",
+          "r08EquivalentTier": "DEMO_ESTIMATE",
+          "mappingStatus": "DEMO_SUBSTITUTE",
+          "sameVehicleClaim": false,
+          "partCount": 5,
+          "instanceCount": 9,
+          "externalMountCount": 2,
+          "verifiedFilesCount": 0,
+          "demonstrationNotice": "All components verified as DEMO_ASSUMPTION demonstration assets. No OEM engineering production drawings released. Safe for viewer consumption and isolated staging."
+        }
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_MISSING_PACKAGE_SOURCE_GRADE",
+      "expectedErrorCode": "ERR_INPUT_SCHEMA_INVALID",
+      "actualErrorCode": "ERR_INPUT_SCHEMA_INVALID",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_INPUT_SCHEMA_INVALID",
+        "message": "Package manifest is missing mandatory section: 'sourceGrade'.",
+        "details": {
+          "missingSection": "sourceGrade"
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_PROVENANCE_CONTRADICTION",
+      "expectedErrorCode": "ERR_PROVENANCE_CONTRADICTION",
+      "actualErrorCode": "ERR_PROVENANCE_CONTRADICTION",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_PROVENANCE_CONTRADICTION",
+        "message": "Package 'c01-c5d74da77c293aa5321f' is DEMO_ASSUMPTION, but part 'PART-30-006' claims OEM_SPEC without registered evidence in registry.",
+        "details": {
+          "packageGrade": "DEMO_ASSUMPTION",
+          "partId": "PART-30-006",
+          "partGrade": "OEM_SPEC"
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_PACKAGE_PART_GRADE_MISMATCH",
+      "expectedErrorCode": "ERR_PACKAGE_PART_GRADE_MISMATCH",
+      "actualErrorCode": "ERR_PACKAGE_PART_GRADE_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_PACKAGE_PART_GRADE_MISMATCH",
+        "message": "Package 'c01-c5d74da77c293aa5321f' claims OEM_SPEC, but constituent part 'PART-20-016' has non-OEM grade 'DEMO_ASSUMPTION'.",
+        "details": {
+          "packageGrade": "OEM_SPEC",
+          "partId": "PART-20-016",
+          "partGrade": "DEMO_ASSUMPTION"
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_TEST_FIXTURE_IN_PRODUCTION",
+      "expectedErrorCode": "ERR_INPUT_TEST_FIXTURE_IN_PRODUCTION",
+      "actualErrorCode": "ERR_INPUT_TEST_FIXTURE_IN_PRODUCTION",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_INPUT_TEST_FIXTURE_IN_PRODUCTION",
+        "message": "Part 'PART-30-006' uses test fixture source 'SRC-TEST-GENUINE-EVIDENCE-FILE-01' in production mode.",
+        "details": {
+          "partId": "PART-30-006",
+          "sourceId": "SRC-TEST-GENUINE-EVIDENCE-FILE-01"
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_UNVERIFIED_VEHICLE_CLAIM",
+      "expectedErrorCode": "ERR_UNVERIFIED_VEHICLE_CLAIM",
+      "actualErrorCode": "ERR_UNVERIFIED_VEHICLE_CLAIM",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_UNVERIFIED_VEHICLE_CLAIM",
+        "message": "Package 'c01-c5d74da77c293aa5321f' has DEMO sourceGrade 'DEMO_ASSUMPTION' but declares sameVehicleClaim=true! Demonstration models cannot certify same-vehicle production release.",
+        "details": {
+          "sourceGrade": "DEMO_ASSUMPTION",
+          "sameVehicleClaim": true
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_ASSET_HASH_MISMATCH",
+      "expectedErrorCode": "ERR_ASSET_HASH_MISMATCH",
+      "actualErrorCode": "ERR_ASSET_HASH_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_ASSET_HASH_MISMATCH",
+        "message": "Physical asset 'wheel-end.glb' SHA-256 hash mismatch! Actual: c11da5170450979ba0d1b444af18e32679cc3e9fce11a941bb1172f8427710c3, expected: bad000000000000000000000000000000000000000000000000000000000dead.",
+        "details": {
+          "file": "wheel-end.glb",
+          "actualSha256": "c11da5170450979ba0d1b444af18e32679cc3e9fce11a941bb1172f8427710c3",
+          "expectedSha256": "bad000000000000000000000000000000000000000000000000000000000dead"
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_SNAPSHOT_BINDING_MISMATCH",
+      "expectedErrorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+      "actualErrorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_SNAPSHOT_BINDING_MISMATCH",
+        "message": "Snapshot binding SHA-256 mismatch! Package claims '111122223333444455556666777788889999aaaabbbbccccddddeeeeffff0000', disk snapshot is 'f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4'.",
+        "details": {
+          "actual": "f60d977efc2f5aefb878610b6b5a0bedb7579146f41a6a65528470e8b6a507c4",
+          "expected": "111122223333444455556666777788889999aaaabbbbccccddddeeeeffff0000"
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_PACKAGE_OEM_WITH_UNKNOWN_PARTS",
+      "expectedErrorCode": "ERR_PACKAGE_PART_GRADE_MISMATCH",
+      "actualErrorCode": "ERR_PACKAGE_PART_GRADE_MISMATCH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_PACKAGE_PART_GRADE_MISMATCH",
+        "message": "Package 'c01-c5d74da77c293aa5321f' claims OEM_SPEC, but constituent part 'PART-20-016' has untrusted/non-OEM grade 'UNKNOWN'.",
+        "details": {
+          "packageGrade": "OEM_SPEC",
+          "partId": "PART-20-016",
+          "partGrade": "UNKNOWN"
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_EMPTY_SHA256_MANIFEST",
+      "expectedErrorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+      "actualErrorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_INPUT_EMPTY_ASSET_HASHES",
+        "message": "Package 'c01-c5d74da77c293aa5321f' sha256 asset hash manifest is empty or invalid.",
+        "details": {
+          "sha256": {}
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_NONEXISTENT_PACKAGE_DIRECTORY",
+      "expectedErrorCode": "ERR_PACKAGE_DIRECTORY_NOT_FOUND",
+      "actualErrorCode": "ERR_PACKAGE_DIRECTORY_NOT_FOUND",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_PACKAGE_DIRECTORY_NOT_FOUND",
+        "message": "Package directory 'F:\\tmp\\non_existent_c01_package_directory_xyz' does not exist on disk or is not a directory.",
+        "details": {
+          "packageDir": "F:\\tmp\\non_existent_c01_package_directory_xyz"
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_MISSING_PART_ASSET_HASH",
+      "expectedErrorCode": "ERR_INPUT_MISSING_PART_ASSET_HASH",
+      "actualErrorCode": "ERR_INPUT_MISSING_PART_ASSET_HASH",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_INPUT_MISSING_PART_ASSET_HASH",
+        "message": "Package 'c01-c5d74da77c293aa5321f' is missing required asset hash for part 'PART-20-016' STEP file 'parts/PART-20-016.step'.",
+        "details": {
+          "partId": "PART-20-016",
+          "missingPartAsset": "parts/PART-20-016.step"
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_OMITTED_SNAPSHOT_FILE",
+      "expectedErrorCode": "ERR_SNAPSHOT_FILE_REQUIRED",
+      "actualErrorCode": "ERR_SNAPSHOT_FILE_REQUIRED",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_SNAPSHOT_FILE_REQUIRED",
+        "message": "Real package verification for 'c01-c5d74da77c293aa5321f' requires 'snapshot_file'. Pass metadata_only=True for standalone metadata check.",
+        "details": {
+          "snapshotFile": null
+        },
+        "provenanceSummary": {}
+      }
+    },
+    {
+      "testName": "INJECTED_ERR_OMITTED_PACKAGE_DIRECTORY",
+      "expectedErrorCode": "ERR_PACKAGE_DIRECTORY_REQUIRED",
+      "actualErrorCode": "ERR_PACKAGE_DIRECTORY_REQUIRED",
+      "passed": true,
+      "result": {
+        "passed": false,
+        "packageId": "c01-c5d74da77c293aa5321f",
+        "errorCode": "ERR_PACKAGE_DIRECTORY_REQUIRED",
+        "message": "Real package verification for 'c01-c5d74da77c293aa5321f' requires 'package_dir'. Pass metadata_only=True for standalone metadata check.",
+        "details": {
+          "packageDir": null
+        },
+        "provenanceSummary": {}
+      }
+    }
+  ]
+}

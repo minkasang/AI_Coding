@@ -1,0 +1,22 @@
+{
+  "unit": "mm",
+  "sourceGrade": "DEMO_ASSUMPTION",
+  "upper": {
+    "ballDiameter": 26,
+    "ballCenterOffset": 24,
+    "neckDiameter": 14,
+    "collarDiameter": 28,
+    "collarThickness": 3.5,
+    "radialGap": 0.08,
+    "tipAxialAllowance": 0.8
+  },
+  "lower": {
+    "ballDiameter": 30,
+    "ballCenterOffset": 27,
+    "neckDiameter": 16,
+    "collarDiameter": 31,
+    "collarThickness": 4,
+    "radialGap": 0.10,
+    "tipAxialAllowance": 1
+  }
+}
