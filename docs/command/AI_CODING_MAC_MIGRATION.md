@@ -2,9 +2,13 @@
 
 ## 恢复工作区
 
-在 Windows 上，`AI_Coding/` 下已确认的内容是 `car/` Git 仓库和 `.workbuddy/memory/` 项目记忆。仓库包含 CARLAB 源码、规则、决策、任务卡、审核、报告和发布数据。迁移后的 IDE 应打开同一份 `AI_Coding`，各执行会话进入其中的 `car`。以后新增子项目时，也要检查其仓库及本机独有交付物。
+在 Mac 上新开一个能操作本机文件和终端的 Codex 会话，发下面这句话即可。接任的 AI 负责执行本页命令，并在验证恢复结果后开始履行总控职责。
 
-在 Mac 选好父目录后执行全历史克隆。C-04 及后续 CAD 的校验需要读取 R-27 的历史提交。
+> 请接管整个 AI Coding 项目。仓库是 https://github.com/minkasang/AI_Coding 。请你在这台 Mac 上自行定位工作区或新建工作区，克隆或同步仓库，按 `docs/command/AI_CODING_MAC_MIGRATION.md` 下载并恢复完整交接包，再按 `docs/command/CONTROLLER_HANDOFF_PROMPT.md` 全量审核和续派。已有本机文件先核对，仅在确实缺权限或需我决定时问我。
+
+Git 仓库里的 `main` 保存源码、任务卡、报告和决策。Release 的完整 ZIP 保存 Git 通常忽略的 CAD 导出、额外审核证据、WorkBuddy 项目记忆和 Git 分支备份。本机恢复后，项目结构为 `AI_Coding/car/` 与 `AI_Coding/.workbuddy/`。迁移后的执行会话进入同一份 `car`。新增子项目时也要检查它的仓库和本机独有交付物。
+
+接任 AI 先识别已经存在的工作区和 `car` 仓库。在新建工作区时执行全历史克隆。C-04 及后续 CAD 校验需要读取 R-27 的历史提交。已有仓库先核对远端和工作树状态，再同步兼容的更新。
 
 ```bash
 mkdir -p AI_Coding
@@ -14,23 +18,18 @@ git -C car status --short --branch
 git -C car cat-file -t 3524e32116019cca2a2decd91d6dfad4b180a2b2
 ```
 
-可以从 [GitHub 下载轮端 CAD 产物包](https://github.com/minkasang/AI_Coding/releases/download/mac-handoff-2026-11-22/AI_Coding-mac-cad-assets.zip)。它包含 C-01 和 C-03 至 C-07 的 28 个 STEP、GLB 和 JSON 文件，保留原有字节和路径。把压缩包放到 `AI_Coding` 根目录后解压并校验。
+接任 AI 在工作区根目录下载并校验 [完整交接 ZIP](https://github.com/minkasang/AI_Coding/releases/download/mac-handoff-2026-11-22/AI_Coding-mac-handoff.zip)。如果本机已有 ZIP，先校验并复用。先检视归档，再解压到工作区根目录。现有同名文件使用 `unzip -n` 保留。出现哈希差异时查明来源，只对冲突项单独处理。
 
 ```bash
-unzip -n AI_Coding-mac-cad-assets.zip
-shasum -a 256 -c mac-handoff/CAD-SHA256SUMS.txt
-```
-
-完整迁移使用 [GitHub 上的加密交接包](https://github.com/minkasang/AI_Coding/releases/download/mac-handoff-2026-11-22/AI_Coding-mac-handoff.zip.gpg)。把下载的文件放到 `AI_Coding` 根目录，与 `car` 同级。密码由发起迁移的会话单独提供。在 Mac 的 `AI_Coding` 目录运行下方命令，并在提示时输入密码。Mac 已装 Homebrew 且缺少 `gpg` 时，可先执行 `brew install gnupg`。[Homebrew 的 GnuPG 安装说明](https://formulae.brew.sh/formula/gnupg)
-
-```bash
-gpg --output AI_Coding-mac-handoff.zip --decrypt AI_Coding-mac-handoff.zip.gpg
-```
-
-也可以直接从 Windows 工作区复制原始 `AI_Coding-mac-handoff.zip` 到同一目录。完整包还包含本机审核证据、WorkBuddy 项目记忆、其他 CAD 导出和 Git 分支备份。若 Mac 已有同一路径的记忆或产物，先比较内容再还原。
-
-```bash
+curl --fail --location --output AI_Coding-mac-handoff.zip \
+  https://github.com/minkasang/AI_Coding/releases/download/mac-handoff-2026-11-22/AI_Coding-mac-handoff.zip
+printf '%s  %s\n' 7e96e97ce7570dc294f74254e73e3b44821b36eef695b622abf200ff8254dc42 AI_Coding-mac-handoff.zip | shasum -a 256 -c -
 unzip -l AI_Coding-mac-handoff.zip
+```
+
+哈希通过且归档路径符合预期后恢复和复核。
+
+```bash
 unzip -n AI_Coding-mac-handoff.zip
 shasum -a 256 -c mac-handoff/SHA256SUMS.txt
 git -C car bundle verify ../mac-handoff/car-windows-history.bundle
@@ -73,6 +72,6 @@ CARLAB 按 ADR-007 推进可编辑车辆工程、零件身份、装配/约束、
 
 ## 首次接管
 
-1. 在新机器厘清项目根目录、Git 状态、本地归档、服务入口及每个工作位实际会话。核对 [工作位路由](../../agent-workspace/WORKSTATION_ROUTES.md)，暂停旧机上对同一任务的并行写入。
-2. 把 [总控交接提示词](CONTROLLER_HANDOFF_PROMPT.md) 代码块完整发给接任总控的新会话。让它根据全量任务卡判断并完成能做的审核、返工或续派。
+1. 接任 AI 恢复工作区后核对 Git 状态、本地归档、服务入口及每个工作位实际会话。根据 [工作位路由](../../agent-workspace/WORKSTATION_ROUTES.md) 确认绑定和各任务的写入者。
+2. 接任 AI 直接读取 [总控交接提示词](CONTROLLER_HANDOFF_PROMPT.md)，根据全量任务卡判断并完成能做的审核、返工或续派。
 3. 总控直接接续可达的 Codex CAD 执行会话。用户依总控给出的名单，对已绑定且有任务的外部会话发送「继续 CARLAB」。以后更换总控时复用同一提示词和最新项目记录。
