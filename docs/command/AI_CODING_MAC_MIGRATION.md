@@ -21,7 +21,13 @@ unzip -n AI_Coding-mac-cad-assets.zip
 shasum -a 256 -c mac-handoff/CAD-SHA256SUMS.txt
 ```
 
-完整迁移使用 Windows 工作区里的 `AI_Coding-mac-handoff.zip`。完整包还包含本机审核证据、WorkBuddy 项目记忆、其他 CAD 导出和 Git 分支备份。复制到 Mac 后，在克隆好的 `AI_Coding` 根目录解压。若 Mac 已有同一路径的记忆或产物，先比较内容再还原。
+完整迁移使用 [GitHub 上的加密交接包](https://github.com/minkasang/AI_Coding/releases/download/mac-handoff-2026-11-22/AI_Coding-mac-handoff.zip.gpg)。把下载的文件放到 `AI_Coding` 根目录，与 `car` 同级。密码由发起迁移的会话单独提供。在 Mac 的 `AI_Coding` 目录运行下方命令，并在提示时输入密码。Mac 已装 Homebrew 且缺少 `gpg` 时，可先执行 `brew install gnupg`。[Homebrew 的 GnuPG 安装说明](https://formulae.brew.sh/formula/gnupg)
+
+```bash
+gpg --output AI_Coding-mac-handoff.zip --decrypt AI_Coding-mac-handoff.zip.gpg
+```
+
+也可以直接从 Windows 工作区复制原始 `AI_Coding-mac-handoff.zip` 到同一目录。完整包还包含本机审核证据、WorkBuddy 项目记忆、其他 CAD 导出和 Git 分支备份。若 Mac 已有同一路径的记忆或产物，先比较内容再还原。
 
 ```bash
 unzip -l AI_Coding-mac-handoff.zip
