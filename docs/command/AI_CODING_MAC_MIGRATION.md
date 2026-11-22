@@ -14,7 +14,14 @@ git -C car status --short --branch
 git -C car cat-file -t 3524e32116019cca2a2decd91d6dfad4b180a2b2
 ```
 
-另外把 Windows 工作区里的 `AI_Coding-mac-handoff.zip` 复制到 Mac 并检视归档。它包含本机 CAD 导出、保留的审核证据、项目记忆、核对清单和分支备份。解压目录应选克隆好的 `AI_Coding`，以便归档的 `car/cad/…/out/`、`car/.cache/` 内的审核证据和 `.workbuddy/memory/` 落在原相对位置。归档应通过自己的文件传输途径复制。若 Mac 已有同一路径的记忆或产物，先比较内容再还原。
+可以从 [GitHub 下载轮端 CAD 产物包](https://github.com/minkasang/AI_Coding/releases/download/mac-handoff-2026-11-22/AI_Coding-mac-cad-assets.zip)。它包含 C-01 和 C-03 至 C-07 的 28 个 STEP、GLB 和 JSON 文件，保留原有字节和路径。把压缩包放到 `AI_Coding` 根目录后解压并校验。
+
+```bash
+unzip -n AI_Coding-mac-cad-assets.zip
+shasum -a 256 -c mac-handoff/CAD-SHA256SUMS.txt
+```
+
+完整迁移使用 Windows 工作区里的 `AI_Coding-mac-handoff.zip`。完整包还包含本机审核证据、WorkBuddy 项目记忆、其他 CAD 导出和 Git 分支备份。复制到 Mac 后，在克隆好的 `AI_Coding` 根目录解压。若 Mac 已有同一路径的记忆或产物，先比较内容再还原。
 
 ```bash
 unzip -l AI_Coding-mac-handoff.zip
